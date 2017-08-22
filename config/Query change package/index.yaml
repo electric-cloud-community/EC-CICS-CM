@@ -1,0 +1,17 @@
+- name: Query change package
+  stepName: QueryPackage
+  description: Query a change package for names, groups and types of resource definitions within the package
+  endpoint: '/some/endpoint'
+  method: POST
+  $ref: REUSE/basic_procedure_config.yaml
+  resultProperty:
+    default: /myJob/queryPackage
+    $ref: REUSE/basic_result_property_config.yaml
+  parameters:
+    - property: Change Package
+      Label: Change Package
+      documentation: |-
+        The name of the change package to be installed
+      in: body
+      type: entry
+      required: 1

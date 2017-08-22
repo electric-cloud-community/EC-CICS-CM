@@ -1,0 +1,24 @@
+- name: Ready change package
+  stepName: ReadyPackage
+  description: Ready a change package for migration
+  endpoint: '/some/endpoint'
+  method: POST
+  $ref: REUSE/basic_procedure_config.yaml
+  resultProperty:
+    default: /myJob/readyPackage
+    $ref: REUSE/basic_result_property_config.yaml
+  parameters:
+    - property: Change Package
+      Label: Change Package
+      documentation: |-
+        The name of the change package to be installed
+      in: body
+      type: entry
+      required: 1
+    - property: Migration Scheme
+      Label: Migration Scheme
+      documentation: |-
+        The name of the migration scheme to be used in the migration
+      in: body
+      type: entry
+      required: 1

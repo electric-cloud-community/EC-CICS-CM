@@ -17,6 +17,18 @@ Dynamically create a migration scheme with a single migration path
 
 Install the resource definitions in a change package from a CSD configuration
 
+## Migrate change package
+
+Migrate a change package
+
+## Query change package
+
+Query a change package for names, groups and types of resource definitions within the package
+
+## Ready change package
+
+Ready a change package for migration
+
 
 
 # Building the plugin
