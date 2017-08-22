@@ -23,7 +23,9 @@
 <!-- LINKS END -->
         <h1>Contents</h1>
         <ul>
-        <!-- TOC BEGIN --><!-- TOC END -->
+        <!-- TOC BEGIN --><li><a href="#Backoutchangepackage">Backout change package</a></li>
+<li><a href="#Createmigrationscheme">Create migration scheme</a></li>
+<li><a href="#Installchangepackage">Install change package</a></li><!-- TOC END -->
         </ul>
         <h2>Configuration</h2>
         <div id="CreateConfiguration">
@@ -101,7 +103,108 @@
         </div>
         <h1>Procedures</h1>
         <!-- PROCEDURES BEGIN -->
-        <!-- PROCEDURES END -->
+            <div id="Backoutchangepackage">
+                <a name="Backoutchangepackage" id="Backoutchangepackage" />
+                <!-- Backoutchangepackage METADATA BEGIN -->
+            <h3>Backout change package</h3>
+            <p>Backout a change package to reverse a migration event</p>
+                <!-- Backoutchangepackage METADATA END -->
+                <!-- Backoutchangepackage BEGIN -->
+            <table class="grid">
+                <thead>
+                    <tr>
+                        <th>Parameter</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td class="required"></td>
+                    <td>The name of the change package to be backed out</td>
+                </tr>
+                <tr>
+                    <td class="required"></td>
+                    <td>The name of the migration scheme used in the migration event that is to be backed out</td>
+                </tr>
+                 </tbody>
+            </table>
+                <!-- Backoutchangepackage END -->
+            </div>
+            <div id="Createmigrationscheme">
+                <a name="Createmigrationscheme" id="Createmigrationscheme" />
+                <!-- Createmigrationscheme METADATA BEGIN -->
+            <h3>Create migration scheme</h3>
+            <p>Dynamically create a migration scheme with a single migration path</p>
+                <!-- Createmigrationscheme METADATA END -->
+                <!-- Createmigrationscheme BEGIN -->
+            <table class="grid">
+                <thead>
+                    <tr>
+                        <th>Parameter</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td></td>
+                    <td>The description of the new migration scheme. By default, the description is: 'UCD: Auto-generated migration scheme.'</td>
+                </tr>
+                <tr>
+                    <td class="required"></td>
+                    <td>The name of the source configuration</td>
+                </tr>
+                <tr>
+                    <td class="required"></td>
+                    <td>The name of the target configuration</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>The name of the transformation rule set</td>
+                </tr>
+                 </tbody>
+            </table>
+                <!-- Createmigrationscheme END -->
+            </div>
+            <div id="Installchangepackage">
+                <a name="Installchangepackage" id="Installchangepackage" />
+                <!-- Installchangepackage METADATA BEGIN -->
+            <h3>Install change package</h3>
+            <p>Install the resource definitions in a change package from a CSD configuration</p>
+                <!-- Installchangepackage METADATA END -->
+                <!-- Installchangepackage BEGIN -->
+            <table class="grid">
+                <thead>
+                    <tr>
+                        <th>Parameter</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td class="required"></td>
+                    <td>The name of the connection from the CSD configuration to a particular CICS region</td>
+                </tr>
+                <tr>
+                    <td class="required"></td>
+                    <td>The name of the change package to be installed</td>
+                </tr>
+                <tr>
+                    <td>Disable and Close resources</td>
+                    <td>Disable and close resources before installation</td>
+                </tr>
+                <tr>
+                    <td>Discard resources</td>
+                    <td>Discard resources before installation</td>
+                </tr>
+                <tr>
+                    <td class="required"></td>
+                    <td>The name of the target configuration</td>
+                </tr>
+                 </tbody>
+            </table>
+                <!-- Installchangepackage END -->
+            </div>
+<!-- PROCEDURES END -->
     </div>
     <!-- RELEASE NOTES BEGIN -->
     <!-- RELEASE NOTES END -->

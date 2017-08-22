@@ -5,6 +5,18 @@ This plugin allows to work with CICS CM
 
 # Procedures
 
+## Backout change package
+
+Backout a change package to reverse a migration event
+
+## Create migration scheme
+
+Dynamically create a migration scheme with a single migration path
+
+## Install change package
+
+Install the resource definitions in a change package from a CSD configuration
+
 
 
 # Building the plugin

@@ -1,0 +1,61 @@
+- name: Install change package
+  stepName: InstallPackage
+  description: Install the resource definitions in a change package from a CSD configuration
+  endpoint: '/some/endpoint'
+  method: POST
+  $ref: REUSE/basic_procedure_config.yaml
+  resultProperty:
+    default: /myJob/installPackage
+    $ref: REUSE/basic_result_property_config.yaml
+  parameters:
+    - property: CSD Connection
+      Label: CSD Connection
+      documentation: |-
+        The name of the connection from the CSD configuration to a particular CICS region
+      in: body
+      type: entry
+      required: 1
+    - property: Change Package
+      Label: Change Package
+      documentation: |-
+        The name of the change package to be installed
+      in: body
+      type: entry
+      required: 1
+    - property: Disable and Close resources
+      label: Disable and Close resources
+      documentation: |-
+        Disable and close resources before installation
+      required: 0
+      in: body
+      refiners: 
+        - convert_to_boolean
+        - remove_blank
+      type: select
+      option:
+        - name: True
+          value: true
+        - name: False
+          value: false
+    - property: Discard resources
+      label: Discard resources
+      documentation: |-
+        Discard resources before installation
+      required: 0
+      in: body
+      refiners: 
+        - convert_to_boolean
+        - remove_blank
+      type: select
+      option:
+        - name: True
+          value: true
+        - name: False
+          value: false
+    - property: Target Configuration
+      Label: Target Configuration
+      documentation: |-
+        The name of the target configuration
+      in: body
+      type: entry
+      required: 1

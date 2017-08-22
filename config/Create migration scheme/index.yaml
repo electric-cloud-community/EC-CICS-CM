@@ -1,0 +1,38 @@
+- name: Create migration scheme
+  stepName: CreateScheme
+  description: Dynamically create a migration scheme with a single migration path
+  endpoint: '/some/endpoint'
+  method: POST
+  $ref: REUSE/basic_procedure_config.yaml
+  resultProperty:
+    default: /myJob/createScheme
+    $ref: REUSE/basic_result_property_config.yaml
+  parameters:
+    - property: Migration Scheme Description
+      Label: Migration Scheme Description
+      documentation: |-
+        The description of the new migration scheme. By default, the description is: 'UCD: Auto-generated migration scheme.'
+      in: body
+      type: entry
+      required: 0
+    - property: Source Configuration
+      Label: Source Configuration
+      documentation: |-
+        The name of the source configuration
+      in: body
+      type: entry
+      required: 1
+    - property: Target Configuration
+      Label: Target Configuration
+      documentation: |-
+        The name of the target configuration
+      in: body
+      type: entry
+      required: 1
+    - property: Transformation Rule Set
+      Label: Transformation Rule Set
+      documentation: |-
+        The name of the transformation rule set
+      in: body
+      type: entry
+      required: 0

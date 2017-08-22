@@ -1,1 +1,198 @@
-{}
+{
+   "ChangePackage" : {
+      "fields" : [
+         "Change Package",
+         "Migration Scheme"
+      ],
+      "method" : "POST",
+      "description" : "Backout a change package to reverse a migration event",
+      "basicAuth" : "true",
+      "name" : "Backout change package",
+      "parameters" : [
+         {
+            "type" : "entry",
+            "in" : "body",
+            "documentation" : "The name of the change package to be backed out",
+            "required" : "1",
+            "property" : "Change Package",
+            "Label" : "Change Package"
+         },
+         {
+            "required" : "1",
+            "Label" : "Migration Scheme",
+            "property" : "Migration Scheme",
+            "in" : "body",
+            "type" : "entry",
+            "documentation" : "The name of the migration scheme used in the migration event that is to be backed out"
+         }
+      ],
+      "attachCredentials" : "true",
+      "stepName" : "ChangePackage",
+      "endpoint" : "/some/endpoint",
+      "resultProperty" : {
+         "format" : [
+            "json",
+            "propertySheet"
+         ],
+         "show" : "true",
+         "default" : "/myJob/changePackage"
+      },
+      "hasConfig" : "true",
+      "contentType" : "application/json"
+   },
+   "CreateScheme" : {
+      "hasConfig" : "true",
+      "contentType" : "application/json",
+      "endpoint" : "/some/endpoint",
+      "resultProperty" : {
+         "format" : [
+            "json",
+            "propertySheet"
+         ],
+         "show" : "true",
+         "default" : "/myJob/createScheme"
+      },
+      "basicAuth" : "true",
+      "parameters" : [
+         {
+            "type" : "entry",
+            "in" : "body",
+            "documentation" : "The description of the new migration scheme. By default, the description is: 'UCD: Auto-generated migration scheme.'",
+            "required" : "0",
+            "property" : "Migration Scheme Description",
+            "Label" : "Migration Scheme Description"
+         },
+         {
+            "required" : "1",
+            "Label" : "Source Configuration",
+            "property" : "Source Configuration",
+            "type" : "entry",
+            "in" : "body",
+            "documentation" : "The name of the source configuration"
+         },
+         {
+            "property" : "Target Configuration",
+            "Label" : "Target Configuration",
+            "required" : "1",
+            "documentation" : "The name of the target configuration",
+            "in" : "body",
+            "type" : "entry"
+         },
+         {
+            "property" : "Transformation Rule Set",
+            "Label" : "Transformation Rule Set",
+            "required" : "0",
+            "documentation" : "The name of the transformation rule set",
+            "type" : "entry",
+            "in" : "body"
+         }
+      ],
+      "name" : "Create migration scheme",
+      "attachCredentials" : "true",
+      "stepName" : "CreateScheme",
+      "fields" : [
+         "Migration Scheme Description",
+         "Source Configuration",
+         "Target Configuration",
+         "Transformation Rule Set"
+      ],
+      "method" : "POST",
+      "description" : "Dynamically create a migration scheme with a single migration path"
+   },
+   "InstallPackage" : {
+      "method" : "POST",
+      "fields" : [
+         "CSD Connection",
+         "Change Package",
+         "Disable and Close resources",
+         "Discard resources",
+         "Target Configuration"
+      ],
+      "description" : "Install the resource definitions in a change package from a CSD configuration",
+      "stepName" : "InstallPackage",
+      "attachCredentials" : "true",
+      "basicAuth" : "true",
+      "parameters" : [
+         {
+            "documentation" : "The name of the connection from the CSD configuration to a particular CICS region",
+            "type" : "entry",
+            "in" : "body",
+            "property" : "CSD Connection",
+            "Label" : "CSD Connection",
+            "required" : "1"
+         },
+         {
+            "type" : "entry",
+            "in" : "body",
+            "documentation" : "The name of the change package to be installed",
+            "required" : "1",
+            "property" : "Change Package",
+            "Label" : "Change Package"
+         },
+         {
+            "type" : "select",
+            "refiners" : [
+               "convert_to_boolean",
+               "remove_blank"
+            ],
+            "documentation" : "Disable and close resources before installation",
+            "option" : [
+               {
+                  "name" : "True",
+                  "value" : "true"
+               },
+               {
+                  "value" : "false",
+                  "name" : "False"
+               }
+            ],
+            "property" : "Disable and Close resources",
+            "in" : "body",
+            "required" : "0",
+            "label" : "Disable and Close resources"
+         },
+         {
+            "property" : "Discard resources",
+            "option" : [
+               {
+                  "value" : "true",
+                  "name" : "True"
+               },
+               {
+                  "name" : "False",
+                  "value" : "false"
+               }
+            ],
+            "documentation" : "Discard resources before installation",
+            "type" : "select",
+            "refiners" : [
+               "convert_to_boolean",
+               "remove_blank"
+            ],
+            "label" : "Discard resources",
+            "required" : "0",
+            "in" : "body"
+         },
+         {
+            "property" : "Target Configuration",
+            "Label" : "Target Configuration",
+            "required" : "1",
+            "documentation" : "The name of the target configuration",
+            "type" : "entry",
+            "in" : "body"
+         }
+      ],
+      "name" : "Install change package",
+      "resultProperty" : {
+         "show" : "true",
+         "format" : [
+            "json",
+            "propertySheet"
+         ],
+         "default" : "/myJob/installPackage"
+      },
+      "endpoint" : "/some/endpoint",
+      "contentType" : "application/json",
+      "hasConfig" : "true"
+   }
+}

@@ -1,0 +1,4 @@
+contentType: application/json
+hasConfig: true
+attachCredentials: true
+basicAuth: true
