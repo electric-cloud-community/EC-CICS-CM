@@ -1,0 +1,14 @@
+help:
+  title: Electric Flow integration with CICS CM
+  description: |
+    This plugin allows to work with CICS CM
+  links:
+    - https://www.ibm.com/bs-en/marketplace/cics-configuration-management-tool
+  hasConfig: true
+procedures:
+  - { $ref: ./Backout change package/index.yaml }
+  - { $ref: ./Create migration scheme/index.yaml }
+  - { $ref: ./Install change package/index.yaml }
+  - { $ref: ./Migrate change package/index.yaml }
+  - { $ref: ./Query change package/index.yaml }
+  - { $ref: ./Ready change package/index.yaml }
