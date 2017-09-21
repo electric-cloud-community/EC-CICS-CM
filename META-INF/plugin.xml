@@ -1,12 +1,12 @@
 <plugin>
   <key>EC-CICS-CM</key>
   <label>EC-CICS-CM</label>
-  <version>1.0.0</version>
+  <version>1.0.0.3</version>
   <author>Electric Cloud</author>
-  <authorUrl>https://electric-cloud.com/support</authorUrl>
+  <authorUrl>http://www.electric-cloud.com/support</authorUrl>
   <category>Mainframe</category>
   <commander-version min="6.0" />
-  <description></description>
+  <description>Integrates CICS Configuration Manager into ElectricFlow</description>
   <configure>ec_config</configure>
   <pluginWizardBased>false</pluginWizardBased>
   <depends min="1.4.1">EC-PluginManager</depends>

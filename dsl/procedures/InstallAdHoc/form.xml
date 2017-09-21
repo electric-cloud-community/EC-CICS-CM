@@ -1,0 +1,270 @@
+<!--
+
+     Copyright 2016 Electric Cloud, Inc.
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+
+         http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+
+-->
+<!--
+Each form element represents a procedure parameter. 
+The corresponding procedure parameters will be created automatically when 
+the plugin in installed and promoted.
+
+formElement nested elements:
+============================
+property:   formal parameter name
+type    :   entry|textarea|checkbox|select|radio|credential
+label   :   String-type. Parameter label value
+required:   1|0
+value   : Parameter default value
+documentation : Help text for the parameter
+-->
+<editor>
+    <formElement>
+        <type>entry</type>
+        <label>Output Property Sheet:</label>
+        <property>outputPropertySheet</property>
+        <required>1</required>
+        <documentation>Property sheet that results will be returned into</documentation>
+    </formElement>
+    #### Update to next mmarker
+    <formElement>
+        <type>entry</type>
+        <label>Change Package ID:</label>
+        <property>CPID</property>
+        <required>1</required>
+        <documentation>Change package to migrate</documentation>
+    </formElement>
+    <formElement>
+        <type>entry</type>
+        <label>Scheme:</label>
+        <property>Scheme</property>
+        <required>1</required>
+        <documentation>Migration scheme to use</documentation>
+    </formElement>
+    <formElement>
+        <type>checkbox</type>
+        <label>Quiesce:</label>
+        <property>Quiesce</property>
+        <required>0</required>
+        <documentation>CSD-based CICS Configurations only: specifies whether to set each resource to a (resource-type-dependent) status that allows its definition to be installed (for example, disabled, closed, or out of service), before attempting to install to it. If you do not specify this "quiesce" option, and a resource is in a status that does not allow the install action, then the install action for that resource definition will fail</documentation>
+	<checkedValue>YES</checkedValue>
+	<uncheckedValue>NO</uncheckedValue>
+        <initiallyChecked>0</initiallyChecked>
+        <value>NO</value>
+    </formElement> 
+    <formElement>
+        <type>entry</type>
+        <label>Qualification Data:</label>
+        <property>QualificationData</property>
+        <required>1</required>
+        <documentation>Qualification Data is optional data passed through the Install operations qualification exit point. The needs of your organization determine whether you use an exit program and what processing it performs</documentation>
+    </formElement>
+    <formElement>
+        <type>checkbox</type>
+        <label>Discard:</label>
+        <property>Discard</property>
+        <required>0</required>
+        <documentation>Whether to discard the resource definition before attempting to install it</documentation>
+	<checkedValue>YES</checkedValue>
+	<uncheckedValue>NO</uncheckedValue>
+        <initiallyChecked>0</initiallyChecked>
+        <value>NO</value>
+    </formElement> 
+    <formElement>
+        <type>checkbox</type>
+        <label>Force:</label>
+        <property>Force</property>
+        <required>0</required>
+        <documentation>Applies only to Context-based CICS configurations</documentation>
+	<checkedValue>YES</checkedValue>
+	<uncheckedValue>NO</uncheckedValue>
+        <initiallyChecked>0</initiallyChecked>
+        <value>NO</value>
+    </formElement>
+    #### Update above here
+    <formElement>
+        <type>entry</type>
+        <label>Target Scope:</label>
+        <property>TargetScope</property>
+        <required>0</required>
+        <documentation>Required for Context-based CICS configurations, ommit for CDS-based CICS configurations</documentation>
+    </formElement>
+    <formElement>
+        <type>entry</type>
+        <label>Resource Group Object Type:</label>
+        <property>ResGroupObjectType</property>
+        <required>0</required>
+        <value>*</value>
+        <documentation>Filter to select resource definitions of a particular type, excluding any other types of resource definition in the ResGroup, applies only to Context-based CICS configurations</documentation>
+    </formElement>
+    <formElement>
+        <type>entry</type>
+        <label>CONNDEF Resource Assignment:</label>
+        <property>CONNDEF_RefAssign</property>
+        <required>0</required>
+        <documentation>Applies only to Context-based CICS configurations</documentation>
+    </formElement>    
+    <formElement>
+        <type>entry</type>
+        <label>FILEDEF Related Scope:</label>
+        <property>FILEDEF_RelatedScope</property>
+        <required>0</required>
+        <documentation>Applies only to Context-based CICS configurations</documentation>
+    </formElement>
+    <formElement>
+        <type>radio</type>
+        <label>FILEDEF Usage:</label>
+        <property>FILEDEF_Usage</property>
+        <required>0</required>
+        <documentation>Applies only to Context-based CICS configurations</documentation>
+        <option>
+            <name>Local</name>
+            <value>LOCAL</value>
+        </option>
+        <option>
+            <name>Remote</name>
+            <value>REMOTE</value>
+        </option>
+        <value>LOCAL</value>
+    </formElement>
+    <formElement>
+        <type>entry</type>
+        <label>PROGDEF Related Scope:</label>
+        <property>PROGDEF_RelatedScope</property>
+        <required>0</required>
+        <documentation>Applies only to Context-based CICS configurations</documentation>
+    </formElement>
+    <formElement>
+        <type>radio</type>
+        <label>PROGDEF Usage:</label>
+        <property>PROGDEF_Usage</property>
+        <required>0</required>
+        <documentation>Applies only to Context-based CICS configurations</documentation>
+        <option>
+            <name>Local</name>
+            <value>LOCAL</value>
+        </option>
+        <option>
+            <name>Remote</name>
+            <value>REMOTE</value>
+        </option>
+        <value>LOCAL</value>
+    </formElement>
+    <formElement>
+        <type>radio</type>
+        <label>PROGDEF Mode:</label>
+        <property>PROGDEF_Mode</property>
+        <required>0</required>
+        <documentation>Applies only to Context-based CICS configurations</documentation>
+        <option>
+            <name>N/A</name>
+            <value>N/A</value>
+        </option>
+        <option>
+            <name>Auto</name>
+            <value>AUTO</value>
+        </option>
+        <value>N/A</value>
+    </formElement>
+    <formElement>
+        <type>entry</type>
+        <label>TDQDEF Related Scope:</label>
+        <property>TDQDEF_RelatedScope</property>
+        <required>0</required>
+        <documentation>Applies only to Context-based CICS configurations</documentation>
+    </formElement>
+    <formElement>
+        <type>radio</type>
+        <label>TDQDEF Usage:</label>
+        <property>TDQDEF_Usage</property>
+        <required>0</required>
+        <documentation>Applies only to Context-based CICS configurations</documentation>
+        <option>
+            <name>Local</name>
+            <value>LOCAL</value>
+        </option>
+        <option>
+            <name>Remote</name>
+            <value>REMOTE</value>
+        </option>
+        <value>LOCAL</value>
+    </formElement>
+    <formElement>
+        <type>radio</type>
+        <label>TDQDEF Mode:</label>
+        <property>TDQDEF_Mode</property>
+        <required>0</required>
+        <documentation>Applies only to Context-based CICS configurations</documentation>
+        <option>
+            <name>N/A</name>
+            <value>N/A</value>
+        </option>
+        <option>
+            <name>Ind</name>
+            <value>IND</value>
+        </option>
+        <option>
+            <name>Intra</name>
+            <value>INTRA</value>
+        </option>
+        <option>
+            <name>Extra</name>
+            <value>EXTRA</value>
+        </option>
+        <value>N/A</value>
+    </formElement>
+    <formElement>
+        <type>entry</type>
+        <label>TRANDEF Related Scope:</label>
+        <property>TRANDEF_RelatedScope</property>
+        <required>0</required>
+        <documentation>Applies only to Context-based CICS configurations</documentation>
+    </formElement>
+    <formElement>
+        <type>radio</type>
+        <label>TRANDEF Usage:</label>
+        <property>TRANDEF_Usage</property>
+        <required>0</required>
+        <documentation>Applies only to Context-based CICS configurations</documentation>
+        <option>
+            <name>Local</name>
+            <value>LOCAL</value>
+        </option>
+        <option>
+            <name>Remote</name>
+            <value>REMOTE</value>
+        </option>
+        <value>LOCAL</value>
+    </formElement>
+    <formElement>
+        <type>radio</type>
+        <label>TRANDEF Mode:</label>
+        <property>TRANDEF_Mode</property>
+        <required>0</required>
+        <documentation>Applies only to Context-based CICS configurations</documentation>
+        <option>
+            <name>N/A</name>
+            <value>N/A</value>
+        </option>
+        <option>
+            <name>Dynam</name>
+            <value>DYNAM</value>
+        </option>
+        <option>
+            <name>Stat</name>
+            <value>STAT</value>
+        </option>
+        <value>N/A</value>
+    </formElement>
+</editor>

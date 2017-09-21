@@ -1,0 +1,6 @@
+
+# Shared Metadata
+# ---------------
+
+# Hash of regular expressions defining allowed values for parameters, keyed by parameter name
+my %valid;

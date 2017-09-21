@@ -31,11 +31,25 @@
         <documentation>Description for the plugin configuration.</documentation>
     </formElement>
     <formElement>
+        <type>entry</type>
+        <label>Server IP Address or Host-Name:</label>
+        <property>server</property>
+        <required>1</required>
+        <documentation>CICS Configuration Manager server IP address or host name.</documentation>
+    </formElement>
+    <formElement>
+        <type>entry</type>
+        <label>Server Port Number:</label>
+        <property>port</property>
+        <required>1</required>
+        <documentation>CICS Configuration Manager server SOAP API port number.</documentation>
+    </formElement>
+    <formElement>
         <type>credential</type>
         <label>Credential:</label>
         <property>credential</property>
         <required>1</required>
-        <documentation>Credentials to connect</documentation>
+        <documentation>Credentials to connect.</documentation>
         <attachedAsParameterToStep>createAndAttachCredential</attachedAsParameterToStep>
     </formElement>
 </editor>
