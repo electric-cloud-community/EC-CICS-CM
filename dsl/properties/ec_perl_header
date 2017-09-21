@@ -12,4 +12,7 @@ $| = 1;
 
 # Create a single instance of the Perl access to ElectricCommander
 my $ec = new ElectricCommander({'format' => "xml"});
-
+my $pluginConfig = {
+   namespace => 'http://localhost',
+   endpoint => 'http://localhost'
+};

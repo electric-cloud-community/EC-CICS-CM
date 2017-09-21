@@ -3,9 +3,9 @@
 # -------------------
 
 # Make the SOAP call
-my ($NAMESPACE, $endpoint) = ('', '');
-my $soap = SOAP::Lite->uri($NAMESPACE)
-                     ->proxy($endpoint);
+
+my $soap = SOAP::Lite->uri($pluginConfig->{namespace})
+                     ->proxy($pluginConfig->{endpoint});
 my $som = $soap->$soapMethodName($data);
 
 # TODO Check for and handle error responses

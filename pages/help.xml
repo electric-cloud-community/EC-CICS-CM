@@ -24,13 +24,9 @@
             <ul>
                 <!-- TOC BEGIN -->
                 <li><a href="#Backout">Backout</a></li>
-                <li><a href="#Createmigrationscheme">Create migration scheme</a></li>
                 <li><a href="#InstallChgPackage">Install change package</a></li>
-                <li><a href="#Migratechangepackage">Migrate change package</a></li>
-                <li><a href="#Querychangepackage">Query change package</a></li>
+                <li><a href="#Migrate">Migrate change package</a></li>
                 <li><a href="#Ready">Ready change package</a></li>
-                <li><a href="#Migrate">Migrate</a></li>
-                <li><a href="#Read">Read</a></li>
                 <!-- TOC END -->
             </ul>
             <h2>Configuration</h2>
@@ -130,6 +126,10 @@
                     </thead>
                     <tbody>
                         <tr>
+                            <td class="required">Configuration Name</td>
+                            <td>Configuration to use.</td>
+                        </tr>
+                        <tr>
                             <td class="required">Output Property Sheet</td>
                             <td>Property sheet that results will be returned into</td>
                         </tr>
@@ -149,41 +149,7 @@
                 </table>
                 <!-- Backout END -->
             </div>
-            <div id="Createmigrationscheme">
-                <a name="Createmigrationscheme" id="Createmigrationscheme" />
-                <!-- Createmigrationscheme METADATA BEGIN -->
-                <h3>Create migration scheme</h3>
-                <p>Dynamically create a migration scheme with a single migration path</p>
-                <!-- Createmigrationscheme METADATA END -->
-                <!-- Createmigrationscheme BEGIN -->
-                <table class="grid">
-                    <thead>
-                        <tr>
-                            <th>Parameter</th>
-                            <th>Description</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td></td>
-                            <td>The description of the new migration scheme. By default, the description is: 'UCD: Auto-generated migration scheme.'</td>
-                        </tr>
-                        <tr>
-                            <td class="required"></td>
-                            <td>The name of the source configuration</td>
-                        </tr>
-                        <tr>
-                            <td class="required"></td>
-                            <td>The name of the target configuration</td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td>The name of the transformation rule set</td>
-                        </tr>
-                    </tbody>
-                </table>
-                <!-- Createmigrationscheme END -->
-            </div>
+
             <div id="InstallChgPackage">
                 <a name="InstallChgPackage" id="InstallChgPackage" />
                 <!-- Installchangepackage METADATA BEGIN -->
@@ -199,6 +165,10 @@
                         </tr>
                     </thead>
                     <tbody>
+                        <tr>
+                            <td class="required">Configuration Name</td>
+                            <td>Configuration to use.</td>
+                        </tr>
                         <tr>
                             <td class="required">Output Property Sheet</td>
                             <td>Property sheet that results will be returned into</td>
@@ -308,13 +278,10 @@
                 </table>
                 <!-- Installchangepackage END -->
             </div>
-            <div id="Migratechangepackage">
-                <a name="Migratechangepackage" id="Migratechangepackage" />
-                <!-- Migratechangepackage METADATA BEGIN -->
-                <h3>Migrate change package</h3>
-                <p>Migrate a change package</p>
-                <!-- Migratechangepackage METADATA END -->
-                <!-- Migratechangepackage BEGIN -->
+            <div id="Migrate">
+                <a name="Migrate" id="Migrate" />
+                <h3>Migrate</h3>
+                <p>Migrate</p>
                 <table class="grid">
                     <thead>
                         <tr>
@@ -323,6 +290,10 @@
                         </tr>
                     </thead>
                     <tbody>
+                        <tr>
+                            <td class="required">Configuration Name</td>
+                            <td>Configuration to use.</td>
+                        </tr>
                         <tr>
                             <td class="required">Output Property Sheet</td>
                             <td>Property sheet that results will be returned into</td>
@@ -341,29 +312,6 @@
                 </table>
                 <!-- Migratechangepackage END -->
             </div>
-            <div id="Querychangepackage">
-                <a name="Querychangepackage" id="Querychangepackage" />
-                <!-- Querychangepackage METADATA BEGIN -->
-                <h3>Query change package</h3>
-                <p>Query a change package for names, groups and types of resource definitions within the package</p>
-                <!-- Querychangepackage METADATA END -->
-                <!-- Querychangepackage BEGIN -->
-                <table class="grid">
-                    <thead>
-                        <tr>
-                            <th>Parameter</th>
-                            <th>Description</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td class="required"></td>
-                            <td>The name of the change package to be installed</td>
-                        </tr>
-                    </tbody>
-                </table>
-                <!-- Querychangepackage END -->
-            </div>
             <div id="Ready">
                 <a name="Ready" id="Ready" />
                 <h3>Ready change package</h3>
@@ -376,6 +324,10 @@
                         </tr>
                     </thead>
                     <tbody>
+                        <tr>
+                            <td class="required">Configuration Name</td>
+                            <td>Configuration to use.</td>
+                        </tr>
                         <tr>
                             <td class="required">Output Property Sheet</td>
                             <td>Property sheet that results will be returned into</td>
