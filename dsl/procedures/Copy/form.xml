@@ -1,0 +1,138 @@
+<!--
+
+     Copyright 2016 Electric Cloud, Inc.
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+
+         http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+
+-->
+<!--
+Each form element represents a procedure parameter. 
+The corresponding procedure parameters will be created automatically when 
+the plugin in installed and promoted.
+
+formElement nested elements:
+============================
+property:   formal parameter name
+type    :   entry|textarea|checkbox|select|radio|credential
+label   :   String-type. Parameter label value
+required:   1|0
+value   : Parameter default value
+documentation : Help text for the parameter
+-->
+<editor>
+    <formElement>
+        <type>entry</type>
+        <label>Output Property Sheet:</label>
+        <property>outputPropertySheet</property>
+        <required>1</required>
+        <documentation>Property sheet that results will be returned into</documentation>
+    </formElement> 
+    <formElement>
+        <type>entry</type>
+        <label>Location Name:</label>
+        <property>LocationName</property>
+        <required>1</required>
+        <documentation>Source(s) to copy from: location name</documentation>
+    </formElement>
+    <formElement>
+        <type>radio</type>
+        <label>Location Type:</label>
+        <property>LocationType</property>
+        <required>1</required>
+        <documentation>Source(s) to copy from: location type</documentation>
+        <option>
+            <name>CConfig</name>
+            <value>CConfig</value>
+        </option>
+        <option>
+            <name>Context</name>
+            <value>Context</value>
+        </option>
+        <option>
+            <name>CSD</name>
+            <value>CSD</value>
+        </option>
+    </formElement>
+    <formElement>
+        <type>textarea</type>
+        <label>Serialized Resource Object Criteria:</label>
+        <property>ObjectCriteria</property>
+        <required>0</required>
+        <documentation>Additional source(s) to copy from: XML serialized list of resource object criteria created using procedure SerializeOtherObjectCriteria (optional, the object specified below is appended to this)</documentation>
+    </formElement> 
+    <formElement>
+        <type>entry</type>
+        <label>Object Name:</label>
+        <property>ObjName</property>
+        <required>1</required>
+        <documentation>Source to copy from: resource name</documentation>
+    </formElement> 
+    <formElement>
+        <type>entry</type>
+        <label>Object Group:</label>
+        <property>ObjGroup</property>
+        <required>1</required>
+        <documentation>Source to copy from: resource group</documentation>
+    </formElement> 
+    <formElement>
+        <type>entry</type>
+        <label>Object Type:</label>
+        <property>ObjType</property>
+        <required>1</required>
+        <documentation>Source to copy from: resource type</documentation>
+    </formElement> 
+    <formElement>
+        <type>entry</type>
+        <label>Target Location Name:</label>
+        <property>TargetLocationName</property>
+        <required>1</required>
+        <documentation>Destination to copy to: location name</documentation>
+    </formElement> 
+    <formElement>
+        <type>radio</type>
+        <label>Target Location Type:</label>
+        <property>TargetLocationType</property>
+        <required>1</required>
+        <documentation>Destination to copy to: location type</documentation>
+        <option>
+            <name>CConfig</name>
+            <value>CConfig</value>
+        </option>
+        <option>
+            <name>Context</name>
+            <value>Context</value>
+        </option>
+        <option>
+            <name>CSD</name>
+            <value>CSD</value>
+        </option>
+    </formElement> 
+    <formElement>
+        <type>entry</type>
+        <label>Target Group:</label>
+        <property>TargetGroup</property>
+        <required>0</required>
+        <documentation>Destination to copy to: resource group (optional unless source and target locations are the same)</documentation>
+    </formElement> 
+    <formElement>
+        <type>checkbox</type>
+        <label>Replace:</label>
+        <property>Replace</property>
+        <required>0</required>
+        <documentation>Whether to overwrite existing resource definitions at the target location</documentation>
+	<checkedValue>YES</checkedValue>
+	<uncheckedValue>NO</uncheckedValue>
+        <initiallyChecked>0</initiallyChecked>
+        <value>NO</value>
+    </formElement> 
+</editor>
