@@ -8,13 +8,13 @@ my $soapMethodName = 'Add';
 
 # List of the names of optional paramters
 my @optionalParams = (
-    'ObjDefVer',
 
 );
 my @mandatoryParams = (
-    'LocationName',
-    'ContainerName',
-    'ContainerType',
+    'config',
+    'Change Package',
+    'resultPropertySheet',
+    'resultFormat',
 
 );
 $[/myPlugin/project/ec_perl_metadata]

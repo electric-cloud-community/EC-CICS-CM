@@ -4,17 +4,18 @@ $[/myPlugin/project/ec_perl_header]
 # ---------------------------
 
 # Name of SOAP method to call
-my $soapMethodName = 'Add';
+my $soapMethodName = 'Delete';
 
 # List of the names of optional paramters
 my @optionalParams = (
-    'ObjDefVer',
 
 );
 my @mandatoryParams = (
-    'LocationName',
-    'ContainerName',
-    'ContainerType',
+    'config',
+    'Change Package',
+    'Migration Scheme',
+    'resultPropertySheet',
+    'resultFormat',
 
 );
 $[/myPlugin/project/ec_perl_metadata]
