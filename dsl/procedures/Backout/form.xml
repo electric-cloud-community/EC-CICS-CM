@@ -56,6 +56,6 @@ documentation : Help text for the parameter
         <label>Event ID:</label>
         <property>EventID</property>
         <required>0</required>
-        <documentation>Selection criteria for what to back out: identify a unique execution of the Migrate command for the specified change package and migration scheme (if omitted, it defaults to the most resent Migrate command for that change package and migration scheme)</documentation>
+        <documentation>Selection criteria for what to back out: identify a unique execution of the Migrate command for the specified change package and migration scheme (if omitted, it defaults to the most resent Migrate command for that change package and migration scheme).</documentation>
     </formElement> 
 </editor>

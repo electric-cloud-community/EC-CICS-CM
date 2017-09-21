@@ -1,292 +1,400 @@
-<!-- HELP GEN VERSION 1 -->
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-    <meta content="text/html; charset=us-ascii" http-equiv="content-type" />
-    <title><!-- TITLE BEGIN -->Electric Flow integration with CICS CM<!-- TITLE END --></title>
-    <link rel="stylesheet" href="../../plugins/@PLUGIN_KEY@/pluginhelp.css" type="text/css" media="screen" />
-</head>
-<!-- REST PLUGIN WIZARD HELP -->
-<body>
-    <div class="help">
-        <h1>@PLUGIN_KEY@</h1>
-        <p>Plugin Version @PLUGIN_VERSION@</p>
-        <hr style="margin-left: -10px; margin-top: 10px; height: 1px; width: 100%; color: #5981BD;" noshade="noshade" />
-        <p>Revised on <!-- REVISION DATE BEGIN -->August 22, 2017<!-- REVISION DATE END --></p>
-        <p>
-            <!-- DESCRIPTION BEGIN -->This plugin allows to work with CICS CM
-<!-- DESCRIPTION END -->
-        </p>
-        <h2>Links</h2>
-        <!-- LINKS BEGIN -->
-<a href="https://www.ibm.com/bs-en/marketplace/cics-configuration-management-tool" target="_blank">https://www.ibm.com/bs-en/marketplace/cics-configuration-management-tool</a>
-<!-- LINKS END -->
-        <h1>Contents</h1>
-        <ul>
-        <!-- TOC BEGIN --><li><a href="#Backoutchangepackage">Backout change package</a></li>
-<li><a href="#Createmigrationscheme">Create migration scheme</a></li>
-<li><a href="#Installchangepackage">Install change package</a></li>
-<li><a href="#Migratechangepackage">Migrate change package</a></li>
-<li><a href="#Querychangepackage">Query change package</a></li>
-<li><a href="#Readychangepackage">Ready change package</a></li><!-- TOC END -->
-        </ul>
-        <h2>Configuration</h2>
-        <div id="CreateConfiguration">
-            <a name="CreateConfiguration" id="CreateConfigurationLink"></a>
-            <h2>Plugin Configurations</h2>
+    <head>
+        <meta content="text/html; charset=us-ascii" http-equiv="content-type" />
+        <title><!-- TITLE BEGIN -->Electric Flow integration with CICS CM<!-- TITLE END --></title>
+        <link rel="stylesheet" href="../../plugins/@PLUGIN_KEY@/pluginhelp.css" type="text/css" media="screen" />
+    </head>
+    <!-- REST PLUGIN WIZARD HELP -->
+    <body>
+        <div class="help">
+            <h1>@PLUGIN_KEY@</h1>
+            <p>Plugin Version @PLUGIN_VERSION@</p>
+            <hr style="margin-left: -10px; margin-top: 10px; height: 1px; width: 100%; color: #5981BD;" noshade="noshade" />
+            <p>Revised on <!-- REVISION DATE BEGIN -->August 22, 2017<!-- REVISION DATE END --></p>
             <p>
-                Plugin configurations are sets of parameters that apply
-                across some or all of the plugin procedures. They
-                reduce repetition of common values, create
-                predefined parameter sets for end users, and
-                securely store credentials where needed. Each configuration
-                is given a unique name that is entered in designated
-                parameters on procedures that use them.<br /><br />
+                <!-- DESCRIPTION BEGIN -->This plugin allows to work with CICS CM
+                <!-- DESCRIPTION END -->
             </p>
-            <h3>Creating Plugin Configurations</h3>
-            <p>To create plugin configurations in ElectricFlow,
-            do these steps:</p>
-            <ol>
-                <li>Go to <b>Administration</b> &gt; <b>Plugins</b> to open the Plugin Manager.</li>
-                <li>Find the @PLUGIN_KEY@ row.</li>
-                <li>Click <b>Configure</b> to open the
-                @PLUGIN_KEY@ Configurations page.</li>
-                <li>Click <b>Create Configuration</b>.</li>
-                <li>To enable ElectricFlow server to communicate with the API,
-                enter the following information:<br /></li>
-                <!-- CONFIG PARAMS BEGIN -->
-    <table class="grid">
-        <thead>
-            <tr>
-                <th>Parameter</th>
-                <th>Description</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td class="required">
-                    Configuration:
-                </td>
-                <td>
-                    Unique name for the plugin configuration.
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    Description:
-                </td>
-                <td>
-                    Description for the plugin configuration.
-                </td>
-            </tr>
-            <tr>
-                <td class="required">
-                    Credential:
-                </td>
-                <td>
-                    Credentials to connect
-                </td>
-            </tr>
-        </tbody>
-    </table><!-- CONFIG PARAMS END -->
-            </ol>
-            <p>The @PLUGIN_KEY@ Configurations page now shows the new configuration.</p>
-            <h3>Editing Plugin Configurations</h3>
-            <p>To edit plugin configurations in ElectricFlow,
-            do these steps:</p>
-            <ol>
-                <li>Go to <b>Administration</b> &gt; <b>Plugins</b> to open the Plugin Manager.</li>
-                <li>Find the @PLUGIN_KEY@ row.</li>
-                <li>Click <b>Configure</b> to open the Configurations page.</li>
-                <li>Find the configuration that you want to edit.</li>
-                <li>Click <b>Edit</b>.</li>
-                <li>Edit the parameters in the configuration.</li>
-                <li>Click <b>OK</b> to save the modified configuration.</li>
-            </ol>
-        </div>
-        <h1>Procedures</h1>
-        <!-- PROCEDURES BEGIN -->
-            <div id="Backoutchangepackage">
-                <a name="Backoutchangepackage" id="Backoutchangepackage" />
-                <!-- Backoutchangepackage METADATA BEGIN -->
-            <h3>Backout change package</h3>
-            <p>Backout a change package to reverse a migration event</p>
-        <!-- Backoutchangepackage METADATA END -->
-                <!-- Backoutchangepackage BEGIN -->
-            <table class="grid">
-                <thead>
-                    <tr>
-                        <th>Parameter</th>
-                        <th>Description</th>
-                    </tr>
-                </thead>
-                <tbody>
-                <tr>
-                    <td class="required"></td>
-                    <td>The name of the change package to be backed out</td>
-                </tr>
-                <tr>
-                    <td class="required"></td>
-                    <td>The name of the migration scheme used in the migration event that is to be backed out</td>
-                </tr>
-                 </tbody>
-            </table>
-        <!-- Backoutchangepackage END -->
+            <h2>Links</h2>
+            <!-- LINKS BEGIN -->
+            <a href="https://www.ibm.com/bs-en/marketplace/cics-configuration-management-tool" target="_blank">https://www.ibm.com/bs-en/marketplace/cics-configuration-management-tool</a>
+            <!-- LINKS END -->
+            <h1>Contents</h1>
+            <ul>
+                <!-- TOC BEGIN -->
+                <li><a href="#Backout">Backout</a></li>
+                <li><a href="#Createmigrationscheme">Create migration scheme</a></li>
+                <li><a href="#InstallChgPackage">Install change package</a></li>
+                <li><a href="#Migratechangepackage">Migrate change package</a></li>
+                <li><a href="#Querychangepackage">Query change package</a></li>
+                <li><a href="#Ready">Ready change package</a></li>
+                <li><a href="#Migrate">Migrate</a></li>
+                <li><a href="#Read">Read</a></li>
+                <!-- TOC END -->
+            </ul>
+            <h2>Configuration</h2>
+            <div id="CreateConfiguration">
+                <a name="CreateConfiguration" id="CreateConfigurationLink"></a>
+                <h2>Plugin Configurations</h2>
+                <p>
+                    Plugin configurations are sets of parameters that apply
+                    across some or all of the plugin procedures. They
+                    reduce repetition of common values, create
+                    predefined parameter sets for end users, and
+                    securely store credentials where needed. Each configuration
+                    is given a unique name that is entered in designated
+                    parameters on procedures that use them.<br /><br />
+                </p>
+                <h3>Creating Plugin Configurations</h3>
+                <p>To create plugin configurations in ElectricFlow,
+                do these steps:</p>
+                <ol>
+                    <li>Go to <b>Administration</b> &gt; <b>Plugins</b> to open the Plugin Manager.</li>
+                    <li>Find the @PLUGIN_KEY@ row.</li>
+                    <li>Click <b>Configure</b> to open the
+                    @PLUGIN_KEY@ Configurations page.</li>
+                    <li>Click <b>Create Configuration</b>.</li>
+                    <li>To enable ElectricFlow server to communicate with the API,
+                    enter the following information:<br /></li>
+                    <!-- CONFIG PARAMS BEGIN -->
+                    <table class="grid">
+                        <thead>
+                            <tr>
+                                <th>Parameter</th>
+                                <th>Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="required">Configuration</td>
+                                <td>Unique name for the plugin configuration.</td>
+                            </tr>
+
+                            <tr>
+                                <td>Description</td>
+                                <td>Description for the plugin configuration.</td>
+                            </tr>
+
+                            <tr>
+                                <td class="required">CICS CM Hostname</td>
+                                <td>The host name or IP address of the CICS CM server to connect to.</td>
+                            </tr>
+
+                            <tr>
+                                <td class="required">CICS CM Port</td>
+                                <td>The CICS CM port number to connect to.</td>
+                            </tr>
+
+                            <tr>
+                                <td class="required">Name of the connection</td>
+                                <td>The name of the connection from the CSD to a specific CICS region.</td>
+                            </tr>
+
+                            <tr>
+                                <td class="required">Credential</td>
+                                <td>Credentials to connect.</td>
+                            </tr>
+                        </tbody>
+                    </table><!-- CONFIG PARAMS END -->
+                </ol>
+                <p>The @PLUGIN_KEY@ Configurations page now shows the new configuration.</p>
+                <h3>Editing Plugin Configurations</h3>
+                <p>To edit plugin configurations in ElectricFlow,
+                do these steps:</p>
+                <ol>
+                    <li>Go to <b>Administration</b> &gt; <b>Plugins</b> to open the Plugin Manager.</li>
+                    <li>Find the @PLUGIN_KEY@ row.</li>
+                    <li>Click <b>Configure</b> to open the Configurations page.</li>
+                    <li>Find the configuration that you want to edit.</li>
+                    <li>Click <b>Edit</b>.</li>
+                    <li>Edit the parameters in the configuration.</li>
+                    <li>Click <b>OK</b> to save the modified configuration.</li>
+                </ol>
+            </div>
+            <h1>Procedures</h1>
+            <!-- PROCEDURES BEGIN -->
+            <div id="Backout">
+                <a name="Backout" id="Backout" />
+                <!-- Backout METADATA BEGIN -->
+                <h3>Backout change package</h3>
+                <p>Backout a change package to reverse a migration event</p>
+                <!-- Backout METADATA END -->
+                <!-- Backout BEGIN -->
+                <table class="grid">
+                    <thead>
+                        <tr>
+                            <th>Parameter</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="required">Output Property Sheet</td>
+                            <td>Property sheet that results will be returned into</td>
+                        </tr>
+                        <tr>
+                            <td class="required">Change Package ID</td>
+                            <td>Selection criteria for what to back out: change package ID.</td>
+                        </tr>
+                        <tr>
+                            <td class="required">Scheme</td>
+                            <td>Selection criteria for what to back out: migration scheme.</td>
+                        </tr>
+                        <tr>
+                            <td>Event ID</td>
+                            <td>Selection criteria for what to back out: identify a unique execution of the Migrate command for the specified change package and migration scheme (if omitted, it defaults to the most resent Migrate command for that change package and migration scheme).</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <!-- Backout END -->
             </div>
             <div id="Createmigrationscheme">
                 <a name="Createmigrationscheme" id="Createmigrationscheme" />
                 <!-- Createmigrationscheme METADATA BEGIN -->
-            <h3>Create migration scheme</h3>
-            <p>Dynamically create a migration scheme with a single migration path</p>
-        <!-- Createmigrationscheme METADATA END -->
+                <h3>Create migration scheme</h3>
+                <p>Dynamically create a migration scheme with a single migration path</p>
+                <!-- Createmigrationscheme METADATA END -->
                 <!-- Createmigrationscheme BEGIN -->
-            <table class="grid">
-                <thead>
-                    <tr>
-                        <th>Parameter</th>
-                        <th>Description</th>
-                    </tr>
-                </thead>
-                <tbody>
-                <tr>
-                    <td></td>
-                    <td>The description of the new migration scheme. By default, the description is: 'UCD: Auto-generated migration scheme.'</td>
-                </tr>
-                <tr>
-                    <td class="required"></td>
-                    <td>The name of the source configuration</td>
-                </tr>
-                <tr>
-                    <td class="required"></td>
-                    <td>The name of the target configuration</td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td>The name of the transformation rule set</td>
-                </tr>
-                 </tbody>
-            </table>
-        <!-- Createmigrationscheme END -->
+                <table class="grid">
+                    <thead>
+                        <tr>
+                            <th>Parameter</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td></td>
+                            <td>The description of the new migration scheme. By default, the description is: 'UCD: Auto-generated migration scheme.'</td>
+                        </tr>
+                        <tr>
+                            <td class="required"></td>
+                            <td>The name of the source configuration</td>
+                        </tr>
+                        <tr>
+                            <td class="required"></td>
+                            <td>The name of the target configuration</td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td>The name of the transformation rule set</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <!-- Createmigrationscheme END -->
             </div>
-            <div id="Installchangepackage">
-                <a name="Installchangepackage" id="Installchangepackage" />
+            <div id="InstallChgPackage">
+                <a name="InstallChgPackage" id="InstallChgPackage" />
                 <!-- Installchangepackage METADATA BEGIN -->
-            <h3>Install change package</h3>
-            <p>Install the resource definitions in a change package from a CSD configuration</p>
-        <!-- Installchangepackage METADATA END -->
+                <h3>Install change package</h3>
+                <p>Install the resource definitions in a change package from a CSD configuration</p>
+                <!-- Installchangepackage METADATA END -->
                 <!-- Installchangepackage BEGIN -->
-            <table class="grid">
-                <thead>
-                    <tr>
-                        <th>Parameter</th>
-                        <th>Description</th>
-                    </tr>
-                </thead>
-                <tbody>
-                <tr>
-                    <td class="required"></td>
-                    <td>The name of the connection from the CSD configuration to a particular CICS region</td>
-                </tr>
-                <tr>
-                    <td class="required"></td>
-                    <td>The name of the change package to be installed</td>
-                </tr>
-                <tr>
-                    <td>Disable and Close resources</td>
-                    <td>Disable and close resources before installation</td>
-                </tr>
-                <tr>
-                    <td>Discard resources</td>
-                    <td>Discard resources before installation</td>
-                </tr>
-                <tr>
-                    <td class="required"></td>
-                    <td>The name of the target configuration</td>
-                </tr>
-                 </tbody>
-            </table>
-        <!-- Installchangepackage END -->
+                <table class="grid">
+                    <thead>
+                        <tr>
+                            <th>Parameter</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="required">Output Property Sheet</td>
+                            <td>Property sheet that results will be returned into</td>
+                        </tr>
+
+                        <tr>
+                            <td class="required">Change Package ID</td>
+                            <td>Change package to migrate</td>
+                        </tr>
+
+                        <tr>
+                            <td class="required">Scheme</td>
+                            <td>Migration scheme to use</td>
+                        </tr>
+
+                        <tr>
+                            <td>Quiesce</td>
+                            <td>CSD-based CICS Configurations only: specifies whether to set each resource to a (resource-type-dependent) status that allows its definition to be installed (for example, disabled, closed, or out of service), before attempting to install to it. If you do not specify this "quiesce" option, and a resource is in a status that does not allow the install action, then the install action for that resource definition will fail</td>
+                        </tr>
+
+                        <tr>
+                            <td class="required">Qualification Data</td>
+                            <td>Qualification Data is optional data passed through the Install operations qualification exit point. The needs of your organization determine whether you use an exit program and what processing it performs</td>
+                        </tr>
+
+                        <tr>
+                            <td>Discard</td>
+                            <td>Whether to discard the resource definition before attempting to install it</td>
+                        </tr>
+
+                        <tr>
+                            <td>Force</td>
+                            <td>Applies only to Context-based CICS configurations</td>
+                        </tr>
+
+                        <tr>
+                            <td>Target Scope</td>
+                            <td>Required for Context-based CICS configurations, ommit for CDS-based CICS configurations</td>
+                        </tr>
+
+                        <tr>
+                            <td>Resource Group Object Type</td>
+                            <td>Filter to select resource definitions of a particular type, excluding any other types of resource definition in the ResGroup, applies only to Context-based CICS configurations</td>
+                        </tr>
+
+                        <tr>
+                            <td>CONNDEF Resource Assignment</td>
+                            <td>Applies only to Context-based CICS configurations</td>
+                        </tr>
+
+                        <tr>
+                            <td>FILEDEF Related Scope</td>
+                            <td>Applies only to Context-based CICS configurations</td>
+                        </tr>
+
+                        <tr>
+                            <td>FILEDEF Usage</td>
+                            <td>Applies only to Context-based CICS configurations</td>
+                        </tr>
+
+                        <tr>
+                            <td>PROGDEF Related Scope</td>
+                            <td>Applies only to Context-based CICS configurations</td>
+                        </tr>
+
+                        <tr>
+                            <td>PROGDEF Usage</td>
+                            <td>Applies only to Context-based CICS configurations</td>
+                        </tr>
+
+                        <tr>
+                            <td>PROGDEF Mode</td>
+                            <td>Applies only to Context-based CICS configurations</td>
+                        </tr>
+
+                        <tr>
+                            <td>TDQDEF Related Scope</td>
+                            <td>Applies only to Context-based CICS configurations</td>
+                        </tr>
+
+                        <tr>
+                            <td>TDQDEF Usage</td>
+                            <td>Applies only to Context-based CICS configurations</td>
+                        </tr>
+
+                        <tr>
+                            <td>TDQDEF Mode</td>
+                            <td>Applies only to Context-based CICS configurations</td>
+                        </tr>
+
+                        <tr>
+                            <td>TRANDEF Related Scope</td>
+                            <td>Applies only to Context-based CICS configurations</td>
+                        </tr>
+
+                        <tr>
+                            <td>TRANDEF Usage</td>
+                            <td>Applies only to Context-based CICS configurations</td>
+                        </tr>
+
+                        <tr>
+                            <td>TRANDEF Mode</td>
+                            <td>Applies only to Context-based CICS configurations</td>
+                        </tr>
+
+                    </tbody>
+                </table>
+                <!-- Installchangepackage END -->
             </div>
             <div id="Migratechangepackage">
                 <a name="Migratechangepackage" id="Migratechangepackage" />
                 <!-- Migratechangepackage METADATA BEGIN -->
-            <h3>Migrate change package</h3>
-            <p>Migrate a change package</p>
-        <!-- Migratechangepackage METADATA END -->
+                <h3>Migrate change package</h3>
+                <p>Migrate a change package</p>
+                <!-- Migratechangepackage METADATA END -->
                 <!-- Migratechangepackage BEGIN -->
-            <table class="grid">
-                <thead>
-                    <tr>
-                        <th>Parameter</th>
-                        <th>Description</th>
-                    </tr>
-                </thead>
-                <tbody>
-                <tr>
-                    <td class="required"></td>
-                    <td>The name of the change package to be installed</td>
-                </tr>
-                <tr>
-                    <td class="required"></td>
-                    <td>The name of the migration scheme to be used in the migration</td>
-                </tr>
-                 </tbody>
-            </table>
-        <!-- Migratechangepackage END -->
+                <table class="grid">
+                    <thead>
+                        <tr>
+                            <th>Parameter</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="required">Output Property Sheet</td>
+                            <td>Property sheet that results will be returned into</td>
+                        </tr>
+                        
+                        <tr>
+                            <td class="required">Change Package ID</td>
+                            <td>Change package to migrate</td>
+                        </tr>
+
+                        <tr>
+                            <td class="required">Scheme</td>
+                            <td>Migration scheme to use</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <!-- Migratechangepackage END -->
             </div>
             <div id="Querychangepackage">
                 <a name="Querychangepackage" id="Querychangepackage" />
                 <!-- Querychangepackage METADATA BEGIN -->
-            <h3>Query change package</h3>
-            <p>Query a change package for names, groups and types of resource definitions within the package</p>
-        <!-- Querychangepackage METADATA END -->
+                <h3>Query change package</h3>
+                <p>Query a change package for names, groups and types of resource definitions within the package</p>
+                <!-- Querychangepackage METADATA END -->
                 <!-- Querychangepackage BEGIN -->
-            <table class="grid">
-                <thead>
-                    <tr>
-                        <th>Parameter</th>
-                        <th>Description</th>
-                    </tr>
-                </thead>
-                <tbody>
-                <tr>
-                    <td class="required"></td>
-                    <td>The name of the change package to be installed</td>
-                </tr>
-                 </tbody>
-            </table>
-        <!-- Querychangepackage END -->
+                <table class="grid">
+                    <thead>
+                        <tr>
+                            <th>Parameter</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="required"></td>
+                            <td>The name of the change package to be installed</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <!-- Querychangepackage END -->
             </div>
-            <div id="Readychangepackage">
-                <a name="Readychangepackage" id="Readychangepackage" />
-                <!-- Readychangepackage METADATA BEGIN -->
-            <h3>Ready change package</h3>
-            <p>Ready a change package for migration</p>
-        <!-- Readychangepackage METADATA END -->
-                <!-- Readychangepackage BEGIN -->
-            <table class="grid">
-                <thead>
-                    <tr>
-                        <th>Parameter</th>
-                        <th>Description</th>
-                    </tr>
-                </thead>
-                <tbody>
-                <tr>
-                    <td class="required"></td>
-                    <td>The name of the change package to be installed</td>
-                </tr>
-                <tr>
-                    <td class="required"></td>
-                    <td>The name of the migration scheme to be used in the migration</td>
-                </tr>
-                 </tbody>
-            </table>
-        <!-- Readychangepackage END -->
+            <div id="Ready">
+                <a name="Ready" id="Ready" />
+                <h3>Ready change package</h3>
+                <p>Ready a change package for migration</p>
+                <table class="grid">
+                    <thead>
+                        <tr>
+                            <th>Parameter</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="required">Output Property Sheet</td>
+                            <td>Property sheet that results will be returned into</td>
+                        </tr>
+                        <tr>
+                            <td class="required">Change Package ID</td>
+                            <td>Change package to make ready</td>
+                        </tr>
+                        <tr>
+                            <td class="required">Scheme</td>
+                            <td>Migration scheme to use.</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <!-- Readychangepackage END -->
             </div>
-<!-- PROCEDURES END -->
-    </div>
-    <!-- RELEASE NOTES BEGIN -->
-    <!-- RELEASE NOTES END -->
-</body>
+            <!-- PROCEDURES END -->
+        </div>
+        <!-- RELEASE NOTES BEGIN -->
+        <!-- RELEASE NOTES END -->
+    </body>
 </html>

@@ -22,7 +22,7 @@ $[/myPlugin/project/ec_perl_code_block_1]
 
 my $data  =
 SOAP::Data->name('LocationCriteria' => \SOAP::Data->value(
-    SOAP::Data->name('LocationType' => $params{'LocationType')
+    SOAP::Data->name('LocationType' => $params{'LocationType'})
 )) .
 SOAP::Data->name('ObjectCriteria' => \SOAP::Data->value(
     SoapData('CConfig'),

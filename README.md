@@ -5,7 +5,7 @@ This plugin allows to work with CICS CM
 
 # Procedures
 
-## Backout change package
+## Backout
 
 Backout a change package to reverse a migration event
 
@@ -29,6 +29,9 @@ Query a change package for names, groups and types of resource definitions withi
 
 Ready a change package for migration
 
+## InstallChgPackage
+
+Install change package
 
 
 # Building the plugin

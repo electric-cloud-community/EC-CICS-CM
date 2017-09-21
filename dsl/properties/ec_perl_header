@@ -6,6 +6,8 @@ use ElectricCommander;
 use Data::Dumper;
 use SOAP::Lite;
 use XML::XPath;
+use List::Util;
+
 $| = 1;
 
 # Create a single instance of the Perl access to ElectricCommander

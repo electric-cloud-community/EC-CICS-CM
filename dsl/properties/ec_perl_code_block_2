@@ -3,6 +3,7 @@
 # -------------------
 
 # Make the SOAP call
+my ($NAMESPACE, $endpoint) = ('', '');
 my $soap = SOAP::Lite->uri($NAMESPACE)
                      ->proxy($endpoint);
 my $som = $soap->$soapMethodName($data);
@@ -14,6 +15,6 @@ my $result = "";
 foreach my $part (${$som->parts}) {
     $result .= $part->stringify . "\n\n";
 }
-$ec->setProperty($params{$[outputPropertySheet]}, $result); # TODO Add ResultPropertyPath parameter to all forms
+$ec->setProperty('$[outputPropertySheet]', $result); # TODO Add ResultPropertyPath parameter to all forms
 
 # TODO Implement optionally parsing the XML results into a property sheet structure, depending on a result type parameter

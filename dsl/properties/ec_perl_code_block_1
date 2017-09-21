@@ -2,11 +2,11 @@
 # -------------------
 
 # Fetch input parameters into a hash
-
+my $jobId = $ENV{COMMANDER_JOBID};
 my $xpath =  $ec->getActualParameters({jobId => $jobId}); # TODO This should probably be the step or procedure
 
 my %params;
-foreach my $node($prop_xpath->find('//actualParameter')->get_nodelist()) {
+foreach my $node($xpath->find('//actualParameter')->get_nodelist()) {
     my $paramName = $node-> find('actualParameterName')->string_value();
     my $paramValue = $node-> find('value')->string_value();
     $params{$paramName} = $paramValue;
@@ -18,17 +18,17 @@ my $errorsFound = 0;
 my @names = keys %params;
 for my $name (@names) {
     # If parameter is optional, allow undefined or empty value
-    if any {$_ eq $names} @optionalParams {
-       continue if ((!defined $params{$name}) || ($params{$name} eq ''));
+    if (any {$_ eq $name} @optionalParams) {
+       next if ((!defined $params{$name}) || ($params{$name} eq ''));
     }
     
     # If there is a regexp defined for $name in %valid, emit an error if the value doesn't match it
-    if defined $valid{$name} {
+    if (defined $valid{$name}) {
         if ($params{$name} !~ $valid{$name}) {
             $errorsFound++;
             print "ERROR: actual parameter named $name with value '$params{$name}' does not match the regular espression $valid{$name} defining allowed values!\n";
         }
-    }            
+    }
 }
 
 # Stop if we found any errors
@@ -39,5 +39,5 @@ exit -1 if ($errorsFound);
 # Marshal the input parameters into SOAP::Data
 
 sub SoapData {
-    return SOAP::Data->name($_[0]) => $params{$_[0]);
+    return SOAP::Data->name($_[0] => $params{$_[0]});
 }

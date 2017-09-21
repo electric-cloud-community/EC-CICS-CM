@@ -32,17 +32,24 @@
     </formElement>
     <formElement>
         <type>entry</type>
-        <label>Server IP Address or Host-Name:</label>
+        <label>CICS CM Hostname:</label>
         <property>server</property>
         <required>1</required>
-        <documentation>CICS Configuration Manager server IP address or host name.</documentation>
+        <documentation>The host name or IP address of the CICS CM server to connect to.</documentation>
     </formElement>
     <formElement>
         <type>entry</type>
-        <label>Server Port Number:</label>
+        <label>CICS CM Port:</label>
         <property>port</property>
         <required>1</required>
-        <documentation>CICS Configuration Manager server SOAP API port number.</documentation>
+        <documentation>The CICS CM port number to connect to.</documentation>
+    </formElement>
+    <formElement>
+        <type>entry</type>
+        <label>Name of the connection:</label>
+        <property>csdConnectionName</property>
+        <required>1</required>
+        <documentation>The name of the connection from the CSD to a specific CICS region.</documentation>
     </formElement>
     <formElement>
         <type>credential</type>

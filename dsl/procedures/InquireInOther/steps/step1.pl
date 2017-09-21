@@ -29,9 +29,9 @@ for my $p (@optionalParams, @mandatoryParams) {
     }
 }
 
-my $data  =
+my $data =
 SOAP::Data->name('LocationCriteria' => \SOAP::Data->value(
-    SOAP::Data->name('LocationType' => $params{'LocationType')
+    SOAP::Data->name('LocationType' => $params{'LocationType'})
 )) .
 SOAP::Data->name('ObjectCriteria' => \SOAP::Data->value(
     SoapData('CConfig'),
@@ -41,9 +41,9 @@ SOAP::Data->name('ObjectCriteria' => \SOAP::Data->value(
             SoapData('ObjGroup'),
             SoapData('ObjType'),
             SoapData('ObjName')
-        )
-    )
-)) .
+        ))
+      ))
+  )) .
 SOAP::Data->name('InputData' => \SOAP::Data->value(
     @paramsForRequest
 ));
