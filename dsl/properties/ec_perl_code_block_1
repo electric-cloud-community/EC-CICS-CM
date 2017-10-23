@@ -2,8 +2,8 @@
 # -------------------
 
 # Fetch input parameters into a hash
-my $jobId = $ENV{COMMANDER_JOBID};
-my $xpath =  $ec->getActualParameters({jobId => $jobId}); # TODO This should probably be the step or procedure
+my $jobStepId = $ENV{COMMANDER_JOBSTEPID};
+my $xpath =  $ec->getActualParameters({jobStepId => $jobStepId});
 
 my %params;
 foreach my $node($xpath->find('//actualParameter')->get_nodelist()) {
@@ -34,10 +34,26 @@ for my $name (@names) {
 # Stop if we found any errors
 exit -1 if ($errorsFound);
 
-# TODO Fetch plugin config values using $param{'configurationName'} and set $endpoint
+# Fetch plugin config values using $param{'configurationName'}
+my $server = $ec->getProperty("/plugins/EC-CICS-CM/project/ec_plugin_cfgs/$param{'configurationName'}/server")
+                ->findnodes(“//value”)
+                ->string_value();
+my $port = $ec->getProperty("/plugins/EC-CICS-CM/project/ec_plugin_cfgs/$param{'configurationName'}/port")
+              ->findnodes(“//value”)
+              ->string_value();
+my $endpoint = $server . ':' . $port;
+my $credentialName = $ec->getProperty("/plugins/EC-CICS-CM/project/ec_plugin_cfgs/$param{'configurationName'}/credential")
+                        ->findnodes(“//value”)
+                        ->string_value();
+my $fullCredential = $ec->getFullCredential"/plugins/EC-CICS-CM/project/credentials/$credentialName", {value => "password"});
+my $username = $fullCredential->find("//user");
+my $password = $fullCredential->find("//password");
+
+# TODO Handle nonstandard code page 1047 XML escaping of unusual characters
 
 # Marshal the input parameters into SOAP::Data
 
+# Subroutine for a common pattern in SOAP::Data
 sub SoapData {
     return SOAP::Data->name($_[0] => $params{$_[0]});
 }

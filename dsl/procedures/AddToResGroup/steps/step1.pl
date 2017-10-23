@@ -11,6 +11,7 @@ my @optionalParams = (
     'ObjDefVer',
 
 );
+# TODO Get rid of this -- we shouldn't need it, we already have a list of all parameters and a list of which are optional
 my @mandatoryParams = (
     'LocationName',
     'ContainerName',

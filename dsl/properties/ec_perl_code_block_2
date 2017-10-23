@@ -6,15 +6,22 @@
 
 my $soap = SOAP::Lite->uri($pluginConfig->{namespace})
                      ->proxy($pluginConfig->{endpoint});
+
+$self->plugin->logger->debug('Request body', $soap);
+                     
 my $som = $soap->$soapMethodName($data);
 
-# TODO Check for and handle error responses
+# Check for and handle error response
+if ($som->fault) {
+    print("ERROR: $som->faultcode from $som->faultactor returned $som->faultstring ($som->faultdetail)");
+    exit -1;
+}
 
 # Return the XML result as a property
 my $result = "";
 foreach my $part (${$som->parts}) {
     $result .= $part->stringify . "\n\n";
 }
-$ec->setProperty('$[outputPropertySheet]', $result); # TODO Add ResultPropertyPath parameter to all forms
+$ec->setProperty('$[outputPropertySheet]', $result); # TODO Check all forms have outputPropertySheet parameter
 
 # TODO Implement optionally parsing the XML results into a property sheet structure, depending on a result type parameter
