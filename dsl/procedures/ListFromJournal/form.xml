@@ -31,6 +31,14 @@ documentation : Help text for the parameter
 -->
 <editor>
     <formElement>
+      <documentation>Previously defined plugin configuration.</documentation>
+      <label>Configuration name:</label>
+      <property>configurationName</property>
+      <propertyReference>/plugins/@PLUGIN_NAME@/project/ec_plugin_cfgs</propertyReference>
+      <required>1</required>
+      <type>entry</type>
+    </formElement>
+    <formElement>
         <type>entry</type>
         <label>Output Property Sheet:</label>
         <property>outputPropertySheet</property>

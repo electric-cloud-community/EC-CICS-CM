@@ -11,6 +11,8 @@ foreach my $node($xpath->find('//actualParameter')->get_nodelist()) {
     my $paramValue = $node-> find('value')->string_value();
     $params{$paramName} = $paramValue;
 }
+$self->plugin->logger->debug('Params', $xpath);
+
 
 # Do value checking and error reporting on input parameters
 
@@ -34,18 +36,18 @@ for my $name (@names) {
 # Stop if we found any errors
 exit -1 if ($errorsFound);
 
-# Fetch plugin config values using $param{'configurationName'}
-my $server = $ec->getProperty("/plugins/EC-CICS-CM/project/ec_plugin_cfgs/$param{'configurationName'}/server")
-                ->findnodes(“//value”)
+# Fetch plugin config values using $params{'configurationName'}
+my $server = $ec->getProperty("/plugins/EC-CICS-CM/project/ec_plugin_cfgs/$params{'configurationName'}/server")
+                ->findnodes("//value")
                 ->string_value();
-my $port = $ec->getProperty("/plugins/EC-CICS-CM/project/ec_plugin_cfgs/$param{'configurationName'}/port")
-              ->findnodes(“//value”)
+my $port = $ec->getProperty("/plugins/EC-CICS-CM/project/ec_plugin_cfgs/$params{'configurationName'}/port")
+              ->findnodes("//value")
               ->string_value();
 my $endpoint = $server . ':' . $port;
-my $credentialName = $ec->getProperty("/plugins/EC-CICS-CM/project/ec_plugin_cfgs/$param{'configurationName'}/credential")
-                        ->findnodes(“//value”)
+my $credentialName = $ec->getProperty("/plugins/EC-CICS-CM/project/ec_plugin_cfgs/$params{'configurationName'}/credential")
+                        ->findnodes("//value")
                         ->string_value();
-my $fullCredential = $ec->getFullCredential"/plugins/EC-CICS-CM/project/credentials/$credentialName", {value => "password"});
+my $fullCredential = $ec->getFullCredential("/plugins/EC-CICS-CM/project/credentials/$credentialName", {value => "password"});
 my $username = $fullCredential->find("//user");
 my $password = $fullCredential->find("//password");
 
