@@ -2,8 +2,8 @@
 # -------------------
 
 # Fetch input parameters into a hash
-my $jobStepId = $ENV{COMMANDER_JOBSTEPID};
-my $xpath =  $ec->getActualParameters({jobStepId => $jobStepId});
+my $jobId = $ENV{COMMANDER_JOBID};
+my $xpath =  $ec->getActualParameters({jobId => $jobId});
 
 my %params;
 foreach my $node($xpath->find('//actualParameter')->get_nodelist()) {
@@ -11,9 +11,6 @@ foreach my $node($xpath->find('//actualParameter')->get_nodelist()) {
     my $paramValue = $node-> find('value')->string_value();
     $params{$paramName} = $paramValue;
 }
-$self->plugin->logger->debug('Params', $xpath);
-
-
 # Do value checking and error reporting on input parameters
 
 my $errorsFound = 0;
