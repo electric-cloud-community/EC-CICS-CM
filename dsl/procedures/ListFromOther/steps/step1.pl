@@ -19,7 +19,7 @@ $[/myPlugin/project/ec_perl_code_block_1]
 # -----------------------
 
 my @paramsForRequest;
-for $name (@names) {
+for my $name (@names) {
     if (defined $params{$name}) {
         push @paramsForRequest, SoapData($name);
     }
