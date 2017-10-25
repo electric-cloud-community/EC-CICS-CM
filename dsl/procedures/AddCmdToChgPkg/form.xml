@@ -64,7 +64,7 @@ documentation : Help text for the parameter
         <documentation>Additional command(s) to add: XML serialized list of resource object criteria created using procedure SerializeRepositoryObjectCriteria (optional, the command specified below is appended to this)</documentation>
     </formElement> 
     <formElement>
-        <type>dropdown</type>
+        <type>select</type>
         <label>Command:</label>
         <property>Command</property>
         <required>1</required>

@@ -4,12 +4,12 @@ $[/myPlugin/project/ec_perl_header]
 # ---------------------------
 
 # Name of SOAP method to call
-my $soapMethodName = 'Add'; 
+my $soapMethodName = 'List';
 
 # List of the names of optional paramters
-my @optionalParams = ('ObjectCriteria');
-
-# TODO Add more procedure-specific metadata: how to structure XML, etc ?
+my @optionalParams = (
+    'ObjGroup', 'ObjDefVer', 'RestrictionCriteria'
+);
 
 $[/myPlugin/project/ec_perl_metadata]
 
@@ -18,26 +18,30 @@ $[/myPlugin/project/ec_perl_code_block_1]
 # Procedure-specific Code
 # -----------------------
 
-# TODO Can we figure out a way to drive this with metadata so it could be shared?
+my @paramsForRequest;
+for $name (@names) {
+    if (defined $params{$name}) {
+        push @paramsForRequest, SoapData($name);
+    }
+}
 
-my $data  =
+my $data =
 SOAP::Data->name('LocationCriteria' => \SOAP::Data->value(
     SOAP::Data->name('LocationType' => $params{'LocationType'})
 )),
 SOAP::Data->name('ObjectCriteria' => \SOAP::Data->value(
     SoapData('CConfig'),
-    SOAP::Data->name('ListCount' => 1), # TODO Handle ObjectCriteria non-empty case
+    SOAP::Data->name('ListCount' => 1),
     SOAP::Data->name('ListElement' => \SOAP::Data->value(
         SOAP::Data->name('DefA' => \SOAP::Data->value(
             SoapData('ObjGroup'),
             SoapData('ObjType'),
             SoapData('ObjName')
-        )
-    )
+        ))
+    ))
 )),
 SOAP::Data->name('InputData' => \SOAP::Data->value(
-    SoapData('ContainerName'),
-    SoapData('ContainerType')
+    @paramsForRequest
 ));
 
 $[/myPlugin/project/ec_perl_code_block_2]

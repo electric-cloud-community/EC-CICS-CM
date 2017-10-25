@@ -50,144 +50,37 @@ documentation : Help text for the parameter
         <label>Location Type:</label>
         <property>LocationType</property>
         <required>1</required>
-        <documentation>Location to list from: location type must be 'Journal' for this procedure (to list from other
-            location types, use the ListFromRepository or ListFromOther procedure instead).</documentation>
+        <documentation>Location to list from: (to list from a Journal use ListFromJournal, to list from a Reposititory use ListFromRepository instead)
+        </documentation>
         <option>
-            <name>Journal</name>
-            <value>Journal</value>
+            <name>CSD</name>
+            <value>CSD</value>
         </option>
-        <value>Journal</value>
+        <option>
+            <name>Context</name>
+            <value>Context</value>
+        </option>
+        <option>
+            <name>CConfig</name>
+            <value>CConfig</value>
+        </option>
+        <value>CSD</value>
     </formElement>
     <formElement>
         <type>entry</type>
         <label>Location Name:</label>
         <property>LocationName</property>
         <required>1</required>
-        <documentation>Configuration name, CSD location, or CICSPlex Context, depending on Location Type value.</documentation>
-    </formElement>
-    <formElement>
-        <type>dropdown</type>
-        <label>Journal Record Type:</label>
-        <property>JnlRecType</property>
-        <required>0</required>
-        <documentation>Journal record criteria (optional)</documentation>
-        <option>
-            <name>*</name>
-            <value></value> <!-- #### Correct? -->
-        </option>
-        <option>
-            <name>EventStart</name>
-            <value>EventStart</value>
-        </option>
-        <option>
-            <name>BAImage</name>
-            <value>BAImage</value>
-        </option>
-        <option>
-            <name>EventData</name>
-            <value>EventData</value>
-        </option>
-        <option>
-            <name>EventEnd</name>
-            <value>EventEnd</value>
-        </option>
-        <!-- <value></value> #### Correct? -->
+        <documentation>Configuration name, CSD location, CICSPlex Context, depending on Location Type value.</documentation>
     </formElement>
     <formElement>
         <type>entry</type>
-        <label>Journal CCV Release:</label>
-        <property>JnlCCVRel</property>
-        <required>0</required>
-        <documentation>Journal record criteria (optional)</documentation>
-    </formElement>
-    <formElement>
-        <type>entry</type>
-        <label>Journal CICS Release:</label>
-        <property>JnlCICSRel</property>
-        <required>0</required>
-        <documentation>Journal record criteria (optional)</documentation>
-    </formElement>
-    <formElement>
-        <type>entry</type>
-        <label>Journal Change Package ID:</label>
-        <property>JnlCPID</property>
-        <required>0</required>
-        <documentation>Journal record criteria (optional)</documentation>
-    </formElement>
-    <formElement>
-        <type>entry</type>
-        <label>Journal Scheme:</label>
-        <property>JnlScheme</property>
-        <required>0</required>
-        <documentation>Journal record criteria (optional)</documentation>
-    </formElement>
-    <formElement>
-        <type>entry</type>
-        <label>Journal User ID:</label>
-        <property>JnlUserID</property>
-        <required>0</required>
-        <documentation>Journal record criteria (optional)</documentation>
-    </formElement>
-    <formElement>
-        <type>entry</type>
-        <label>Journal Resource Group:</label>
-        <property>JnlObjGroup</property>
-        <required>0</required>
-        <documentation>Journal record criteria (optional)</documentation>
-    </formElement>
-    <formElement>
-        <type>entry</type>
-        <label>Journal Resource Name:</label>
-        <property>JnlObjName</property>
-        <required>0</required>
-        <documentation>Journal record criteria (optional)</documentation>
-    </formElement>
-    <formElement>
-        <type>entry</type>
-        <label>Journal Resource Type:</label>
-        <property>JnlObjType</property>
-        <required>0</required>
-        <documentation>Journal record criteria (optional)</documentation>
-    </formElement>
-    <formElement>
-        <type>entry</type>
-        <label>Journal CSD Dataset Name:</label>
-        <property>JnlCSD</property>
-        <required>0</required>
-        <documentation>Journal record criteria (optional)</documentation>
-    </formElement>
-    <formElement>
-        <type>entry</type>
-        <label>Journal Context Name:</label>
-        <property>JnlContext</property>
-        <required>0</required>
-        <documentation>Journal record criteria (optional)</documentation>
-    </formElement>
-    <!-- #### If Journal Criteria are omitted then how are the object criteria used? Are the descriptions below still accurate then? #### -->
-    <formElement>
-        <type>select</type>
         <label>Resource Type:</label>
         <property>ObjType</property>
         <required>1</required>
-	<option>
-	    <name>EventStart</name>
-	    <value>EventStart</value>
-	</option>
-	<option>
-	    <name>BAImage</name>
-	    <value>BAImage</value>
-	</option>
-	<option>
-	    <name>EventData</name>
-	    <value>EventData</value>
-	</option>
-	<option>
-	    <name>EventEnd</name>
-	    <value>EventEnd</value>
-	</option>
         <documentation>(Optional) resource object criteria for a resource definition embedded in a BAImage: resource
             type
-        </documentation>
+        </documentation> <!-- #### Make this a select -->
     </formElement>
     <formElement>
         <type>entry</type>

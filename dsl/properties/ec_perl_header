@@ -6,7 +6,7 @@ use ElectricCommander;
 use Data::Dumper;
 use SOAP::Lite;
 use XML::XPath;
-use List::Util;
+# use List::Util;
 
 $| = 1;
 

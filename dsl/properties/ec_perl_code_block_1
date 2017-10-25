@@ -11,13 +11,14 @@ foreach my $node($xpath->find('//actualParameter')->get_nodelist()) {
     my $paramValue = $node-> find('value')->string_value();
     $params{$paramName} = $paramValue;
 }
+
 # Do value checking and error reporting on input parameters
 
 my $errorsFound = 0;
 my @names = keys %params;
 for my $name (@names) {
-    # If parameter is optional, allow undefined or empty value
-    if (any {$_ eq $name} @optionalParams) {
+    # If parameter is optional, allow undefined or empty value    
+    if (grep( /^$name$/, @optionalParams)) {
        next if ((!defined $params{$name}) || ($params{$name} eq ''));
     }
     
@@ -44,7 +45,9 @@ my $endpoint = $server . ':' . $port;
 my $credentialName = $ec->getProperty("/plugins/EC-CICS-CM/project/ec_plugin_cfgs/$params{'configurationName'}/credential")
                         ->findnodes("//value")
                         ->string_value();
-my $fullCredential = $ec->getFullCredential("/plugins/EC-CICS-CM/project/credentials/$credentialName", {value => "password"});
+my $plugin = $ec->getPlugin("EC-CICS-CM");
+my $projectName = $plugin->find("//projectName");
+my $fullCredential = $ec->getFullCredential("/projects/$projectName/credentials/$credentialName", {value => "password"});
 my $username = $fullCredential->find("//user");
 my $password = $fullCredential->find("//password");
 
