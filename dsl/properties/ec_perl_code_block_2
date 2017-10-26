@@ -1,14 +1,14 @@
-
 # Shared Code Block 2
 # -------------------
 
 # Make the SOAP call
 
-my $soap = SOAP::Lite->uri($pluginConfig->{namespace})
-                     ->proxy($pluginConfig->{endpoint});
+my $soap = SOAP::Lite->proxy($endpoint);
 
-#### TODO Figure out what this is supposed to do, and fix it
-#### $self->plugin->logger->debug('Request body', $soap);
+print"\$soap object before request:\n";
+print Dumper($soap);
+print"\n\$data object before request:\n";
+print Dumper($data);
                      
 my $som = $soap->$soapMethodName($data);
 

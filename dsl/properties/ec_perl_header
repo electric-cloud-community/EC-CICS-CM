@@ -4,9 +4,10 @@
 use strict;
 use ElectricCommander;
 use Data::Dumper;
-use SOAP::Lite;
+#### TODO use SOAP::Lite;
+use SOAP::Lite on_debug => sub{print@_};
+$SOAP::Constants::DO_NOT_CHECK_CONTENT_TYPE = 1;
 use XML::XPath;
-# use List::Util;
 
 $| = 1;
 
@@ -14,7 +15,3 @@ my ($self) = @_;
 
 # Create a single instance of the Perl access to ElectricCommander
 my $ec = new ElectricCommander({'format' => "xml"});
-my $pluginConfig = {
-   namespace => 'http://localhost',
-   endpoint => 'http://localhost'
-};

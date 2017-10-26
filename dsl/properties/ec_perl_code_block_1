@@ -41,7 +41,7 @@ my $server = $ec->getProperty("/plugins/EC-CICS-CM/project/ec_plugin_cfgs/$param
 my $port = $ec->getProperty("/plugins/EC-CICS-CM/project/ec_plugin_cfgs/$params{'configurationName'}/port")
               ->findnodes("//value")
               ->string_value();
-my $endpoint = $server . ':' . $port;
+my $endpoint = 'http://' . $server . ':' . $port;
 my $credentialName = $ec->getProperty("/plugins/EC-CICS-CM/project/ec_plugin_cfgs/$params{'configurationName'}/credential")
                         ->findnodes("//value")
                         ->string_value();
@@ -51,7 +51,7 @@ my $fullCredential = $ec->getFullCredential("/projects/$projectName/credentials/
 my $username = $fullCredential->find("//user");
 my $password = $fullCredential->find("//password");
 
-# TODO Handle nonstandard code page 1047 XML escaping of unusual characters
+#### TODO Handle nonstandard code page 1047 XML escaping of unusual characters
 
 # Marshal the input parameters into SOAP::Data
 
