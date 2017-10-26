@@ -36,22 +36,20 @@ for my $p (@optionalParams, @mandatoryParams) {
 }
 
 my $data =
-SOAP::Data->name('LocationCriteria' => \SOAP::Data->value(
-    SOAP::Data->name('LocationType' => $params{'LocationType'})
-)) .
-SOAP::Data->name('ObjectCriteria' => \SOAP::Data->value(
-    SoapData('CConfig'),
-    SOAP::Data->name('ListCount' => 1),
-    SOAP::Data->name('ListElement' => \SOAP::Data->value(
-        SOAP::Data->name('DefA' => \SOAP::Data->value(
-            SoapData('ObjGroup'),
-            SoapData('ObjType'),
-            SoapData('ObjName')
-        ))
-      ))
-  )) .
-SOAP::Data->name('InputData' => \SOAP::Data->value(
-    @paramsForRequest
+SOAP::Data->name('CCV530' => \SOAP::Data->value(
+    SOAP::Data->name('LocationCriteria' => \SOAP::Data->value(
+        SOAP::Data->name('LocationName' => $params{'LocationName'}),
+        SOAP::Data->name('LocationType' => $params{'LocationType'})
+    )) ,
+    SOAP::Data->name('ObjectCriteria' => \SOAP::Data->value(
+        SOAP::Data->name('ObjName' => $params{'ObjName'}),
+        SOAP::Data->name('ObjGroup' => $params{'ObjGroup'}),
+        SOAP::Data->name('ObjType' => $params{'ObjType'}),
+  )) ,
+  SOAP::Data->name('InputData' => \SOAP::Data->value(
+        @paramsForRequest
+        #  SoapData('ObjectData') //TODO decide how to get specific values for necessary ObjectData.
+    ))
 ));
 
 $[/myPlugin/project/ec_perl_code_block_2]

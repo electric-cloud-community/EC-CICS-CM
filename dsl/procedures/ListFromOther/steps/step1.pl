@@ -28,7 +28,7 @@ for my $name (@names) {
 }
 
 my $data =
-SOAP::Data->name('CCV510' => \SOAP::Data->value(
+SOAP::Data->name('CCV530' => \SOAP::Data->value(
     SOAP::Data->name('LocationCriteria' => \SOAP::Data->value(
         SoapData('LocationName'),
         SoapData('LocationType')

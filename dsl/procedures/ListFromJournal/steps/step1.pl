@@ -28,7 +28,7 @@ for my $name (@names) {
 }
 
 my $data =
-SOAP::Data->name('CCV510' => \SOAP::Data->value( #### TODO This produces <List><CCV510>...</CCV510></List>, but we actually need them nested in the opposite order -- I don't know how to make SOAP::Lite do that
+SOAP::Data->name('CCV530' => \SOAP::Data->value( #### TODO This produces <List><CCV510>...</CCV510></List>, but we actually need them nested in the opposite order -- I don't know how to make SOAP::Lite do that
     SOAP::Data->name('LocationCriteria' => \SOAP::Data->value(
         SoapData('LocationName'),
         SoapData('LocationType')
