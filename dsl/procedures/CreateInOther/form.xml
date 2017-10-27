@@ -75,13 +75,13 @@ documentation : Help text for the parameter
             <value>Repository</value>
         </option>
     </formElement>
-    <formElement>
-        <type>textarea</type>
-        <label>Serialized Resource Object Criteria:</label>
-        <property>ObjectCriteria</property>
-        <required>0</required>
-        <documentation>Additional objects(s) to create: XML serialized list of resource object criteria created using procedure SerializeOtherObjectCriteria (optional, the object specified below is appended to this)</documentation>
-    </formElement>
+    <!--<formElement>-->
+        <!--<type>textarea</type>-->
+        <!--<label>Serialized Resource Object Criteria:</label>-->
+        <!--<property>ObjectCriteria</property>-->
+        <!--<required>0</required>-->
+        <!--<documentation>Additional objects(s) to create: XML serialized list of resource object criteria created using procedure SerializeOtherObjectCriteria (optional, the object specified below is appended to this)</documentation>-->
+    <!--</formElement>-->
     <formElement>
         <type>entry</type>
         <label>Object Type:</label>
@@ -111,91 +111,91 @@ documentation : Help text for the parameter
         <required>1</required>
         <documentation>Name-value pairs to set in the resource definition object being created, one per line in NAME=VALUE format</documentation>
     </formElement>
-    <formElement>
-        <type>entry</type>
-        <label>CSYSDEF Model:</label>
-        <property>CSYSDEFModel</property>
-        <required>0</required>
-        <documentation>Optional, applies only to CSYSDEF objects</documentation>
-    </formElement>
-    <formElement>
-        <type>select</type>
-        <label>Mon Spec Inherit:</label>
-        <property>MonSpecInherit</property>
-        <required>0</required>
-        <documentation>Optional, applies only to CSGLCGCS objects</documentation>
-        <option>
-            <name>Keep</name>
-            <value>KEEP</value>
-        </option>
-        <option>
-            <name>Force</name>
-            <value>FORCE</value>
-        </option>
-        <option>
-            <name>Null</name>
-            <value>NULL</value>
-        </option>
-        <value>KEEP</value>
-    </formElement>
-    <formElement>
-        <type>select</type>
-        <label>RTA Spec Inherit:</label>
-        <property>RTASpecInherit</property>
-        <required>0</required>
-        <documentation>Optional, applies only to CSGLCGCS objects</documentation>
-        <option>
-            <name>Keep</name>
-            <value>KEEP</value>
-        </option>
-        <option>
-            <name>Force</name>
-            <value>FORCE</value>
-        </option>
-        <option>
-            <name>Null</name>
-            <value>NULL</value>
-        </option>
-        <value>KEEP</value>
-    </formElement>
-    <formElement>
-        <type>select</type>
-        <label>WLM Spec Inherit:</label>
-        <property>WLMSpecInherit</property>
-        <required>0</required>
-        <documentation>Optional, applies only to CSGLCGCS objects</documentation>
-        <option>
-            <name>Keep</name>
-            <value>KEEP</value>
-        </option>
-        <option>
-            <name>Force</name>
-            <value>FORCE</value>
-        </option>
-        <option>
-            <name>Null</name>
-            <value>NULL</value>
-        </option>
-        <value>KEEP</value>
-    </formElement>
-    <formElement>
-        <type>select</type>
-        <label>LNKSWSCG Parameter:</label>
-        <property>LNKSWSCGParm</property>
-        <required>0</required>
-        <documentation>Optional, applies only to LNKSWSCG objects</documentation>
-        <option>
-            <name>None</name>
-            <value>NONE</value>
-        </option>
-        <option>
-            <name>Force</name>
-            <value>FORCE</value>
-        </option>
-        <option>
-            <name>Null</name>
-            <value>NULL</value>
-        </option>
-        <value>NONE</value>
-    </formElement>
+    <!--<formElement>-->
+        <!--<type>entry</type>-->
+        <!--<label>CSYSDEF Model:</label>-->
+        <!--<property>CSYSDEFModel</property>-->
+        <!--<required>0</required>-->
+        <!--<documentation>Optional, applies only to CSYSDEF objects</documentation>-->
+    <!--</formElement>-->
+    <!--<formElement>-->
+        <!--<type>select</type>-->
+        <!--<label>Mon Spec Inherit:</label>-->
+        <!--<property>MonSpecInherit</property>-->
+        <!--<required>0</required>-->
+        <!--<documentation>Optional, applies only to CSGLCGCS objects</documentation>-->
+        <!--<option>-->
+            <!--<name>Keep</name>-->
+            <!--<value>KEEP</value>-->
+        <!--</option>-->
+        <!--<option>-->
+            <!--<name>Force</name>-->
+            <!--<value>FORCE</value>-->
+        <!--</option>-->
+        <!--<option>-->
+            <!--<name>Null</name>-->
+            <!--<value>NULL</value>-->
+        <!--</option>-->
+        <!--<value></value>-->
+    <!--</formElement>-->
+    <!--<formElement>-->
+        <!--<type>select</type>-->
+        <!--<label>RTA Spec Inherit:</label>-->
+        <!--<property>RTASpecInherit</property>-->
+        <!--<required>0</required>-->
+        <!--<documentation>Optional, applies only to CSGLCGCS objects</documentation>-->
+        <!--<option>-->
+            <!--<name>Keep</name>-->
+            <!--<value>KEEP</value>-->
+        <!--</option>-->
+        <!--<option>-->
+            <!--<name>Force</name>-->
+            <!--<value>FORCE</value>-->
+        <!--</option>-->
+        <!--<option>-->
+            <!--<name>Null</name>-->
+            <!--<value>NULL</value>-->
+        <!--</option>-->
+        <!--<value></value>-->
+    <!--</formElement>-->
+    <!--<formElement>-->
+        <!--<type>select</type>-->
+        <!--<label>WLM Spec Inherit:</label>-->
+        <!--<property>WLMSpecInherit</property>-->
+        <!--<required>0</required>-->
+        <!--<documentation>Optional, applies only to CSGLCGCS objects</documentation>-->
+        <!--<option>-->
+            <!--<name>Keep</name>-->
+            <!--<value>KEEP</value>-->
+        <!--</option>-->
+        <!--<option>-->
+            <!--<name>Force</name>-->
+            <!--<value>FORCE</value>-->
+        <!--</option>-->
+        <!--<option>-->
+            <!--<name>Null</name>-->
+            <!--<value>NULL</value>-->
+        <!--</option>-->
+        <!--<value></value>-->
+    <!--</formElement>-->
+    <!--<formElement>-->
+        <!--<type>select</type>-->
+        <!--<label>LNKSWSCG Parameter:</label>-->
+        <!--<property>LNKSWSCGParm</property>-->
+        <!--<required>0</required>-->
+        <!--<documentation>Optional, applies only to LNKSWSCG objects</documentation>-->
+        <!--<option>-->
+            <!--<name>None</name>-->
+            <!--<value>NONE</value>-->
+        <!--</option>-->
+        <!--<option>-->
+            <!--<name>Force</name>-->
+            <!--<value>FORCE</value>-->
+        <!--</option>-->
+        <!--<option>-->
+            <!--<name>Null</name>-->
+            <!--<value>NULL</value>-->
+        <!--</option>-->
+        <!--<value>NONE</value>-->
+    <!--</formElement>-->
 </editor>
