@@ -35,15 +35,8 @@ SOAP::Data->name($soapMethodName => \SOAP::Data->value(
         SoapData('LocationType')
     )),
     SOAP::Data->name('ObjectCriteria' => \SOAP::Data->value(
-       # SoapData('CConfig'),
-       # SOAP::Data->name('ListCount' => 1),
-       # SOAP::Data->name('ListElement' => \SOAP::Data->value(
-       #     SOAP::Data->name('DefA' => \SOAP::Data->value(
-             #   SoapData('ObjGroup'),
                 SoapData('ObjType'),
                 SoapData('Scheme')
-            #))
-        #  ))
     )) ,
     SOAP::Data->name('InputData' => \SOAP::Data->value(
         @paramsForRequest
