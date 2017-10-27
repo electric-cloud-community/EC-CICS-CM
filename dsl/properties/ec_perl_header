@@ -4,14 +4,14 @@
 use strict;
 use ElectricCommander;
 use Data::Dumper;
-#### TODO use SOAP::Lite;
-use SOAP::Lite on_debug => sub{print@_};
+#### TODO use SOAP::Lite; 
+use SOAP::Lite on_debug => sub{print@_}; #### TODO Remove debugging output
 $SOAP::Constants::DO_NOT_CHECK_CONTENT_TYPE = 1;
 use XML::XPath;
 
 $| = 1;
 
-my ($self) = @_;
+#### my ($self) = @_; TODO Remove?
 
 # Create a single instance of the Perl access to ElectricCommander
 my $ec = new ElectricCommander({'format' => "xml"});

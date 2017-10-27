@@ -32,17 +32,23 @@
     </formElement>
     <formElement>
         <type>entry</type>
-        <label>CICS CM Hostname:</label>
-        <property>server</property>
+        <label>CICS CM SOAP URL:</label>
+        <property>ccUrl</property>
         <required>1</required>
-        <documentation>The host name or IP address of the CICS CM server to connect to.</documentation>
+        <value>http://&lt;server&gt;:&lt;port&gt;/CICS/CWBA/CCVWSDSH/CCVADISP</value>
+        <documentation>The URL of the SOAP interface of the CICS CM server to connect to (this should normally be of the format http://[server]:[port]/CICS/CWBA/CCVWSDSH/CCVADISP ).</documentation>
     </formElement>
     <formElement>
-        <type>entry</type>
-        <label>CICS CM Port:</label>
-        <property>port</property>
+        <type>select</type>
+        <label>CICS CM Version:</label>
+        <property>ccVersion</property>
         <required>1</required>
-        <documentation>The CICS CM port number to connect to.</documentation>
+        <option>
+            <name>V5.3</name>
+            <value>CCV530</value>
+        </option>
+        <value>CCV530</value>
+        <documentation>The CICS CM version number (normally the same as the CICS version number).</documentation>
     </formElement>
     <formElement>
         <type>entry</type>

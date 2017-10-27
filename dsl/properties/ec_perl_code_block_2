@@ -1,28 +1,81 @@
 # Shared Code Block 2
 # -------------------
 
+# Handle basic authentication
+if (length($password)) {
+    # This is insecure unless $endpoint starts with 'https://'
+    if ($endpoint !~ m|^https://|) { 
+        print "WARNING: Sending a password via basic authentication over http:// protocol is insecure (unless you are using a fully trusted network)\n";
+    }
+
+    sub SOAP::Transport::HTTP::Client::get_basic_credentials {
+        return $username => $password;
+    }
+}
+
 # Make the SOAP call
 
 my $soap = SOAP::Lite->proxy($endpoint);
+$soap->autotype(0); # Don't automatically add parameter type annotations
+$soap->readable(1); # Pretty-print the XML
+$soap->outputxml(1); # Don't automatically deserialize the returned xml (since it's unhelpfully designed for that)
 
-print"\$soap object before request:\n";
-print Dumper($soap);
-print"\n\$data object before request:\n";
-print Dumper($data);
+# print"\$soap object before request:\n"; #### TODO Remove debugging output
+# print Dumper($soap);
+print"\n\@data objects before request:\n";
+print Dumper(@data);
                      
-my $som = $soap->$soapMethodName($data);
+my $xml = $soap->call($ccVersion, @data);
 
-# Check for and handle error response
+# print"\$xml:\n$xml\n"; #### TODO Remove debugging output
+
+my $deserializer = SOAP::Deserializer->new;
+my $som = $deserializer ->deserialize($xml);
+
+# print"\n\$som object after deserialization:\n"; #### TODO Remove debugging output
+# print Dumper($som);
+
+# Check for and handle SOAP error response
 if ($som->fault) {
-    print("ERROR: $som->faultcode from $som->faultactor returned $som->faultstring ($som->faultdetail)");
+    print("ERROR: $som->faultcode from $som->faultactor returned $som->faultstring ($som->faultdetail)\n");
     exit -1;
 }
 
-# Return the XML result as a property
-my $result = "";
-foreach my $part (${$som->parts}) {
-    $result .= $part->stringify . "\n\n";
-}
-$ec->setProperty('$[outputPropertySheet]', $result); #### TODO Check all forms have outputPropertySheet parameter
+# Check for and handle missing CICS CM return code value
+my $result = $som->result;
 
-#### TODO Implement optionally parsing the XML results into a property sheet structure, depending on a result type parameter
+# print"\$result:\n"; #### TODO Remove debugging output
+# print Dumper($result);
+
+if (!defined($result) || !defined($result->{'OUTPUTDATA'}) || !defined($result->{'OUTPUTDATA'}->{'RETURNCODE'})) {
+    print("ERROR: Invalid response: cannot locate return code value!\n$xml");
+    exit -1;
+}
+my $returnCode = $result->{'OUTPUTDATA'}->{'RETURNCODE'};
+
+# Return the XML result as a property
+
+# Remove uninteresting wrapper parts of the XML (if possible)
+my $upperSoapMethodName = uc($soapMethodName);
+# print"\$xml:\n$xml\n"; #### TODO Remove debugging output
+# print "<SOAP-ENV:Body>\\s*<$ccVersion>\\s*<$upperSoapMethodName>\\s*<OUTPUTDATA>\n";
+if ($xml =~ m!<SOAP-ENV:Body>\s*<$ccVersion>\s*<$upperSoapMethodName>\s*<OUTPUTDATA>\s*(<.*)</OUTPUTDATA>\s*</$upperSoapMethodName>\s*</$ccVersion>\s*</SOAP-ENV:Body>!s) {
+    $xml = $1;
+    $xml =~ s/\s+$//; # Trim any trailing whitespace (this should be faster than doing it above, since it avoids speculative matching)
+    # print"\$xml:\n$xml\n"; #### TODO Remove debugging output
+}
+
+my $outputPropertyOrPropertySheet = $params{'outputPropertySheet'};  #### TODO Check all forms have outputPropertySheet parameter
+$ec->setProperty($outputPropertyOrPropertySheet, $xml);
+
+#### TODO Implement optionally parsing the results into a property sheet structure, depending on a result type parameter -- this will require us to first modify LISTELEMENT tags to add a counter to them
+
+# Check for and handle nonzero CICS CM return code value
+# 
+# We do this _after_ outputting the XML, in case a Commander error 
+# handling step wants to access the return code or reason code
+
+if ($returnCode != '00000000') {
+    print "\ERROR: Result with non-zero return code '$returnCode':\n" . Dumper($result);
+    exit -1;
+}
