@@ -20,24 +20,26 @@ $[/myPlugin/project/ec_perl_code_block_1]
 
 # TODO Can we figure out a way to drive this with metadata so it could be shared?
 
-my $data  =
-SOAP::Data->name('LocationCriteria' => \SOAP::Data->value(
-    SOAP::Data->name('LocationType' => $params{'LocationType')
-)) .
-SOAP::Data->name('ObjectCriteria' => \SOAP::Data->value(
-    SoapData('CConfig'),
-    SOAP::Data->name('ListCount' => 1), # TODO Handle ObjectCriteria non-empty case
-    SOAP::Data->name('ListElement' => \SOAP::Data->value(
-        SOAP::Data->name('DefA' => \SOAP::Data->value(
-            SoapData('ObjGroup'),
-            SoapData('ObjType'),
-            SoapData('ObjName')
-        )
-    )
-)) .
-SOAP::Data->name('InputData' => \SOAP::Data->value(
-    SoapData('ContainerName'),
-    SoapData('ContainerType')
+my @data  =
+SOAP::Data->name($soapMethodName => \SOAP::Data->value(
+    SOAP::Data->name('LocationCriteria' => \SOAP::Data->value(
+            SoapData('LocationType')
+    )),
+    SOAP::Data->name('ObjectCriteria' => \SOAP::Data->value(
+        SoapData('CConfig'),
+#        SOAP::Data->name('ListCount' => 1), # TODO Handle ObjectCriteria non-empty case
+#        SOAP::Data->name('ListElement' => \SOAP::Data->value(
+            SOAP::Data->name('keya' => \SOAP::Data->value(
+                SoapData('ObjName'),
+                SoapData('ObjType'),
+                SoapData('ObjDefVer'),
+            )),
+#        )),
+    )),
+    SOAP::Data->name('InputData' => \SOAP::Data->value(
+        SoapData('ContainerName'),
+        SoapData('ContainerType')
+    ))
 ));
 
 $[/myPlugin/project/ec_perl_code_block_2]

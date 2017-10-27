@@ -45,7 +45,7 @@ documentation : Help text for the parameter
         <documentation>Property sheet that results will be returned into</documentation>
     </formElement> 
     <formElement>
-        <type>radio</type>
+        <type>select</type>
         <label>Location Type:</label>
         <property>LocationType</property>
         <required>1</required>
@@ -63,20 +63,13 @@ documentation : Help text for the parameter
         <required>1</required>
         <documentation>The CICS configuration that contains the resource definitions that you want to add to the change package</documentation>
     </formElement>
-    <formElement>
-        <type>textarea</type>
-        <label>Serialized Resource Object Criteria:</label>
-        <property>ObjectCriteria</property>
-        <required>0</required>
-        <documentation>Additional command(s) to add: XML serialized list of resource object criteria created using procedure SerializeOtherObjectCriteria (optional, the resource definition specified below is appended to this)</documentation>
-    </formElement> 
-    <formElement>
-        <type>entry</type>
-        <label>Object Group:</label>
-        <property>ObjGroup</property>
-        <required>1</required>
-        <documentation>Resource definition to add: resource group</documentation>
-    </formElement> 
+    <!--<formElement>-->
+        <!--<type>textarea</type>-->
+        <!--<label>Serialized Resource Object Criteria:</label>-->
+        <!--<property>ObjectCriteria</property>-->
+        <!--<required>0</required>-->
+        <!--<documentation>Additional command(s) to add: XML serialized list of resource object criteria created using procedure SerializeOtherObjectCriteria (optional, the resource definition specified below is appended to this)</documentation>-->
+    <!--</formElement> -->
     <formElement>
         <type>entry</type>
         <label>Object Type:</label>
@@ -90,16 +83,23 @@ documentation : Help text for the parameter
         <property>ObjName</property>
         <required>1</required>
         <documentation>Resource definition to add: resource name</documentation>
-    </formElement> 
+    </formElement>
+    <formElement>
+        <type>entry</type>
+        <label>Resource Definition Version:</label>
+        <property>ObjDefVer</property>
+        <required>1</required>
+        <documentation>Resource definition to add: resource group</documentation>
+    </formElement>
     <formElement>
         <type>entry</type>
         <label>Change Package ID:</label>
         <property>ContainerName</property>
         <required>1</required>
         <documentation>The ID of the change package to add the resource definition(s) to</documentation>
-    </formElement> 
+    </formElement>
     <formElement>
-        <type>radio</type>
+        <type>select</type>
         <label>Container Type:</label>
         <property>ContainerType</property>
         <required>1</required>
@@ -109,5 +109,5 @@ documentation : Help text for the parameter
             <value>ChgPkg</value>
         </option>
         <value>ChgPkg</value>
-    </formElement>    
+    </formElement>
 </editor>
