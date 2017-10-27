@@ -31,6 +31,14 @@ documentation : Help text for the parameter
 -->
 <editor>
     <formElement>
+        <documentation>Previously defined plugin configuration.</documentation>
+        <label>Configuration name:</label>
+        <property>configurationName</property>
+        <propertyReference>/plugins/@PLUGIN_NAME@/project/ec_plugin_cfgs</propertyReference>
+        <required>1</required>
+        <type>entry</type>
+    </formElement>
+    <formElement>
         <type>entry</type>
         <label>Output Property Sheet:</label>
         <property>outputPropertySheet</property>
@@ -38,7 +46,7 @@ documentation : Help text for the parameter
         <documentation>Property sheet that results will be returned into</documentation>
     </formElement> 
     <formElement>
-        <type>radio</type>
+        <type>select</type>
         <label>Location Type:</label>
         <property>LocationType</property>
         <required>1</required>
@@ -55,28 +63,28 @@ documentation : Help text for the parameter
         <property>ObjType</property>
         <required>1</required>
         <documentation>Object to create: object type</documentation>
-    </formElement> 
-    <formElement>
-        <type>entry</type>
-        <label>Object Name:</label>
-        <property>ObjName</property>
-        <required>0</required>
-        <documentation>Object to create: object name (applies to object types AProfile, CConfig, Exits, Scheme, TFGroup, and TFRule)</documentation>
-    </formElement> 
+    </formElement>
     <formElement>
         <type>entry</type>
         <label>Change Package ID:</label>
         <property>CPID</property>
         <required>0</required>
         <documentation>Object to create: object change package ID (applies to object types ChgPkg, PScheme, and ReadyLst)</documentation>
-    </formElement> 
-    <formElement>
-        <type>entry</type>
-        <label>Scheme:</label>
-        <property>Scheme</property>
-        <required>0</required>
-        <documentation>Object to create: object scheme (applies to object types PScheme and ReadyLst)</documentation>
-    </formElement> 
+    </formElement>
+    <!--<formElement>-->
+        <!--<type>entry</type>-->
+        <!--<label>Object Name:</label>-->
+        <!--<property>ObjName</property>-->
+        <!--<required>0</required>-->
+        <!--<documentation>Object to create: object name (applies to object types AProfile, CConfig, Exits, Scheme, TFGroup, and TFRule)</documentation>-->
+    <!--</formElement>-->
+    <!--<formElement>-->
+        <!--<type>entry</type>-->
+        <!--<label>Scheme:</label>-->
+        <!--<property>Scheme</property>-->
+        <!--<required>0</required>-->
+        <!--<documentation>Object to create: object scheme (applies to object types PScheme and ReadyLst)</documentation>-->
+    <!--</formElement> -->
     <formElement>
         <type>textarea</type>
         <label>Name-Value Pairs:</label>
