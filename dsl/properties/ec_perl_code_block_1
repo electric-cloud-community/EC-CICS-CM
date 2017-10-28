@@ -26,7 +26,7 @@ for my $name (@names) {
     if (defined $valid{$name}) {
         if ($params{$name} !~ $valid{$name}) {
             $errorsFound++;
-            print "ERROR: actual parameter named $name with value '$params{$name}' does not match the regular espression $valid{$name} defining allowed values!\n";
+            print "ERROR: actual parameter named $name with value '$params{$name}' does not match the regular expression $valid{$name} defining allowed values!\n";
         }
     }
 }

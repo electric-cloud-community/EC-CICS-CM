@@ -74,13 +74,13 @@ documentation : Help text for the parameter
         <documentation>Configuration name, CSD location, CICSPlex Context, depending on Location Type value.</documentation>
     </formElement>
     <formElement>
-        <type>entry</type>
+        <type>entry</type> <!-- #### Make this a select -->
         <label>Resource Type:</label>
         <property>ObjType</property>
         <required>1</required>
         <documentation>(Optional) resource object criteria for a resource definition embedded in a BAImage: resource
             type
-        </documentation> <!-- #### Make this a select -->
+        </documentation> <!-- #### Correct the documentation -->
     </formElement>
     <formElement>
         <type>entry</type>
@@ -89,7 +89,7 @@ documentation : Help text for the parameter
         <required>1</required>
         <documentation>(Optional) resource object criteria for a resource definition embedded in a BAImage: resource
             name
-        </documentation>
+        </documentation> <!-- #### Correct the documentation -->
     </formElement>
     <formElement>
         <type>entry</type>
@@ -98,7 +98,7 @@ documentation : Help text for the parameter
         <required>0</required>
         <documentation>(Optional) resource object criteria for a resource definition embedded in a BAImage: resource
             group
-        </documentation>
+        </documentation> <!-- #### Correct the documentation -->
     </formElement>
     <formElement>
         <type>entry</type>
@@ -107,7 +107,7 @@ documentation : Help text for the parameter
         <required>0</required>
         <documentation>(Optional) resource object criteria for a resource definition embedded in a BAImage: resource
             definition version
-        </documentation>
+        </documentation> <!-- #### Correct the documentation -->
     </formElement>
     <formElement>
         <type>textarea</type>

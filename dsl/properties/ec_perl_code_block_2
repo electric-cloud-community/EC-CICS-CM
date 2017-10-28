@@ -76,6 +76,8 @@ $ec->setProperty($outputPropertyOrPropertySheet, $xml);
 # handling step wants to access the return code or reason code
 
 if ($returnCode != '00000000') {
-    print "\ERROR: Result with non-zero return code '$returnCode':\n" . Dumper($result);
+    #### TODO Certain combinations of return code and reason code should probably be treated as warnings rather than errors, or possibly even ignored.
+    #### For example return code 00000004 with a reason code ending in 0003 that an object was not found, and return code 00000004 with a reason code ending in 0004 indicates that no matching objects were found
+    print "ERROR: Result with non-zero return code '$returnCode':\n" . Dumper($result);
     exit -1;
 }
