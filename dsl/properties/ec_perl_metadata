@@ -21,11 +21,9 @@ sub contains {
 sub makeAddObjectCriteria {
     my($objectCriteria, $elementWrapper, @validCriteriaKeys) = @_;
 
-    # TODO implement next case: Specify <ListCount> followed by one or more <ListElement>. Each <ListElement> must identify a single object, with no masking
-    # TODO implement next case: <TContainer> ("target container") is relevant only when packaging an Add command. It identifies the ResGroup to which you want the resource definitions added.
-    my @criteria = split '\n', $objectCriteria;
+    my @criteria = grep { /\S/ } split(/\n/,$objectCriteria);
+    my $numberOfCriteria = scalar(@criteria);
     my @result;
-    my $listCount = 0;
 
     print "elementWrapper: $elementWrapper \n";
 
@@ -33,14 +31,11 @@ sub makeAddObjectCriteria {
         if($crt ne "") {
 
             if(contains('ObjGroup', $crt) and contains('ObjDefVer', $crt)) {
-                print "ERROR: When referring to a context-based resource definition, specify either <ObjDefVer> or <ObjGroup>.
-                Specifying <ObjDefVer> enables you to refer to a specific version of a context-based resource definition, even
-                when the resource definition is an orphan (does not belong to any ResGroup).
+                print "ERROR: When referring to a context-based resource definition, specify either <ObjDefVer> or <ObjGroup>. Specifying <ObjDefVer> enables you to refer to a specific version of a context-based resource definition, even when the resource definition is an orphan (does not belong to any ResGroup).
                 https://www.ibm.com/support/knowledgecenter/en/SS2L7A_5.3.0/com.ibm.cics.cm.doc/ccv-api-cmd-add.html";
                 exit -1;
             }
 
-            $listCount++;
             my @listElement;
             foreach my $elem (split ' ', $crt) {
                 my @keyValue = split '=', $elem;
@@ -56,18 +51,32 @@ sub makeAddObjectCriteria {
                     print "ERROR: value for $key should not be empty";
                     exit -1;
                 }
+
+                if(contains('TContainer', $crt) and uc($key) eq 'COMMAND' and uc($value) ne 'ADD') {
+                    print "ERROR: 'TContainer' ('target container') is relevant only when packaging an Add command. It identifies the ResGroup to which you want the resource definitions added.";
+                    exit -1;
+                }
+
                 push (@listElement, SOAP::Data->name($key => $value));
             }
-            push (@result,
-                SOAP::Data->name('ListElement' => \SOAP::Data->value(
-                        SOAP::Data->name("$elementWrapper" => \SOAP::Data->value(
-                                @listElement
-                            ))
-                    )));
+            if($numberOfCriteria > 1) {
+                push (@result,
+                    SOAP::Data->name('ListElement' => \SOAP::Data->value(
+                            SOAP::Data->name("$elementWrapper" => \SOAP::Data->value(
+                                    @listElement
+                                ))
+                        )));
+            }
+            else {
+                push (@result, SOAP::Data->name("$elementWrapper" => \SOAP::Data->value(@listElement)));
+
+            }
 
         }
     }
-    unshift (@result, SOAP::Data->name('ListCount' => $listCount));
+    if($numberOfCriteria > 1) {
+        unshift (@result, SOAP::Data->name('ListCount' => $numberOfCriteria));
+    }
     return @result;
 
 }
