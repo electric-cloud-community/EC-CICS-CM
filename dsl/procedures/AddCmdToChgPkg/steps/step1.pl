@@ -9,7 +9,6 @@ my $soapMethodName = 'Add';
 # List of the names of optional paramters
 my @optionalParams = ('ObjectCriteria');
 
-# TODO Add more procedure-specific metadata: how to structure XML, etc ?
 
 $[/myPlugin/project/ec_perl_metadata]
 
@@ -18,26 +17,25 @@ $[/myPlugin/project/ec_perl_code_block_1]
 # Procedure-specific Code
 # -----------------------
 
-# TODO Can we figure out a way to drive this with metadata so it could be shared?
+my @validCriteriaKeys = ('Command' ,'ObjGroup', 'ObjType', 'ObjName', 'ObjDefVer', 'TContainer');
 
-my $data  =
-SOAP::Data->name('LocationCriteria' => \SOAP::Data->value(
-    SOAP::Data->name('LocationType' => $params{'LocationType'})
-)),
-SOAP::Data->name('ObjectCriteria' => \SOAP::Data->value(
-    SoapData('CConfig'),
-    SOAP::Data->name('ListCount' => 1), # TODO Handle ObjectCriteria non-empty case
-    SOAP::Data->name('ListElement' => \SOAP::Data->value(
-        SOAP::Data->name('DefA' => \SOAP::Data->value(
-            SoapData('ObjGroup'),
-            SoapData('ObjType'),
-            SoapData('ObjName')
-        )
-    )
-)),
-SOAP::Data->name('InputData' => \SOAP::Data->value(
-    SoapData('ContainerName'),
-    SoapData('ContainerType')
-));
+my @result = makeAddObjectCriteria($params{'ObjectCriteria'}, 'CmdAPost', @validCriteriaKeys);
+
+my @data =
+    SOAP::Data->name($soapMethodName => \SOAP::Data->value(
+            SOAP::Data->name('LocationCriteria' => \SOAP::Data->value(
+                    SoapData('LocationType')
+                )) ,
+            SOAP::Data->name('ObjectCriteria' => \SOAP::Data->value(
+                    SoapData('CConfig'),
+                    SOAP::Data->value(
+                        @result
+                    )
+                )) ,
+            SOAP::Data->name('InputData' => \SOAP::Data->value(
+                    SoapData('ContainerName'),
+                    SoapData('ContainerType')
+                ))
+        ));
 
 $[/myPlugin/project/ec_perl_code_block_2]

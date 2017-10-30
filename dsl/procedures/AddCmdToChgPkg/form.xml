@@ -46,7 +46,7 @@ documentation : Help text for the parameter
         <documentation>The property that results will be returned into.</documentation>
     </formElement>
     <formElement>
-        <type>radio</type>
+        <type>select</type>
         <label>Location Type:</label>
         <property>LocationType</property>
         <required>1</required>
@@ -68,62 +68,13 @@ documentation : Help text for the parameter
         <type>textarea</type>
         <label>Serialized Repository Object Criteria:</label>
         <property>ObjectCriteria</property>
-        <required>0</required>
-        <documentation>Additional command(s) to add: XML serialized list of resource object criteria created using procedure SerializeRepositoryObjectCriteria (optional, the command specified below is appended to this)</documentation>
-    </formElement> 
-    <formElement>
-        <type>select</type>
-        <label>Command:</label>
-        <property>Command</property>
         <required>1</required>
-        <documentation>Command to add: command name</documentation>
-        <option>
-            <name>Add</name>
-            <value>Add</value>
-        </option>
-        <option>
-            <name>Remove</name>
-            <value>Remove</value>
-        </option>
-        <option>
-            <name>Delete</name>
-            <value>Delete</value>
-        </option>
-    </formElement> 
-    <formElement>
-        <type>entry</type>
-        <label>Object Type:</label>
-        <property>ObjType</property>
-        <required>1</required>
-        <documentation>Command to add: resource type</documentation>
-    </formElement> 
-    <formElement>
-        <type>entry</type>
-        <label>Object Name:</label>
-        <property>ObjName</property>
-        <required>1</required>
-        <documentation>Command to add: resource name</documentation>
-    </formElement> 
-    <formElement>
-        <type>entry</type>
-        <label>Object Group:</label>
-        <property>ObjGroup</property>
-        <required>0</required>
-        <documentation>Command to add: resource group (required unless the resource is in a Context, for a Context you can specify either this or Object Definition Version)</documentation>
-    </formElement> 
-    <formElement>
-        <type>entry</type>
-        <label>Object Definition Version:</label>
-        <property>ObjDefVer</property>
-        <required>0</required>
-        <documentation>Command to add: resource definition version (omit unless the resource is in a Context, for a Context you can specify either this or Object Group)</documentation>
-    </formElement> 
-    <formElement>
-        <type>entry</type>
-        <label>Target Resource Group For Add:</label>
-        <property>TContainer</property>
-        <required>0</required>
-        <documentation>Relevant only when packaging an Add command: it identifies the ResGroup to which you want the resource definitions added</documentation>
+        <documentation>Name-value pairs to set in the resource definition object being created, one per line in NAME=VALUE format.
+            Write each restriction criteria per one line. For example: Command=Add ObjGroup=value ObjType=value ObjName=value.
+            Valid keys are: [Command, ObjGroup, ObjType, ObjName, ObjDefVer, TContainer], specify either 'ObjDefVer' or 'ObjGroup'.
+            'TContainer' ("target container") is relevant only when packaging an Add command. It identifies the ResGroup to which
+            you want the resource definitions added. Command can be one of [Add, Remove, Delete].
+        </documentation>
     </formElement> 
     <formElement>
         <type>entry</type>
@@ -133,7 +84,7 @@ documentation : Help text for the parameter
         <documentation>The ID of the change package to add the command(s) to</documentation>
     </formElement> 
     <formElement>
-        <type>radio</type>
+        <type>select</type>
         <label>Container Type:</label>
         <property>ContainerType</property>
         <required>1</required>

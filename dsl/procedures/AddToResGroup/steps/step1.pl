@@ -7,19 +7,13 @@ $[/myPlugin/project/ec_perl_header]
 my $soapMethodName = 'Add';
 
 # List of the names of optional paramters
-my @optionalParams = (
-   # 'ObjDefVer',
+my @mandatoryParams = (
     'ContainerName',
     'ContainerType'
-
 );
-# TODO Get rid of this -- we shouldn't need it, we already have a list of all parameters and a list of which are optional
-my @mandatoryParams = (
-  #  'LocationName',
-  #  'ContainerName',
-  #  'ContainerType',
 
-);
+my @optionalParams = ();
+
 $[/myPlugin/project/ec_perl_metadata]
 
 $[/myPlugin/project/ec_perl_code_block_1]
@@ -27,8 +21,12 @@ $[/myPlugin/project/ec_perl_code_block_1]
 # Procedure-specific Code
 # -----------------------
 
+my @validCriteriaKeys = ('ObjGroup', 'ObjType', 'ObjName', 'ObjDefVer');
+
+my @result = makeAddObjectCriteria($params{'ObjectCriteria'}, 'DefA', @validCriteriaKeys);
+
 my @paramsForRequest;
-for my $p (@optionalParams, @mandatoryParams) {
+for my $p (@mandatoryParams) {
     if (defined $params{$p}) {
         push @paramsForRequest, SoapData($p);
     }
@@ -41,16 +39,7 @@ SOAP::Data->name($soapMethodName => \SOAP::Data->value(
             SoapData('LocationType')
     )) ,
     SOAP::Data->name('ObjectCriteria' => \SOAP::Data->value(
-        #SoapData('CConfig'),
-        SOAP::Data->name('ListCount' => 1),
-        SOAP::Data->name('ListElement' => \SOAP::Data->value(
-            SOAP::Data->name('DefA' => \SOAP::Data->value(
-                SoapData('ObjGroup'),
-                SoapData('ObjType'),
-                SoapData('ObjName'),
-                SoapData('ObjDefVer')
-            ))
-        ))
+            @result
     )) ,
     SOAP::Data->name('InputData' => \SOAP::Data->value(
         @paramsForRequest

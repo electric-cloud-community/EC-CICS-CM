@@ -71,41 +71,16 @@ documentation : Help text for the parameter
             <value>CSD</value>
         </option>
     </formElement>
-    <!--<formElement>-->
-        <!--<type>textarea</type>-->
-        <!--<label>Serialized Resource Object Criteria:</label>-->
-        <!--<property>ObjectCriteria</property>-->
-        <!--<required>0</required>-->
-        <!--<documentation>Additional resource definition(s) to add: XML serialized list of resource object criteria created using procedure SerializeOtherObjectCriteria (optional, the resource group specified below is appended to this)</documentation>-->
-    <!--</formElement>-->
     <formElement>
-        <type>entry</type>
-        <label>Object Type:</label>
-        <property>ObjType</property>
+        <type>textarea</type>
+        <label>Serialized Resource Object Criteria:</label>
+        <property>ObjectCriteria</property>
         <required>1</required>
-        <documentation>Resource definition to add: resource type</documentation>
-    </formElement> 
-    <formElement>
-        <type>entry</type>
-        <label>Object Name:</label>
-        <property>ObjName</property>
-        <required>1</required>
-        <documentation>Resource definition to add: resource name</documentation>
+        <documentation>Name-value pairs to set in the resource definition object being created, one per line in NAME=VALUE format.
+            Write each restriction criteria per one line. For example: ObjGroup=value ObjType=value ObjName=value.
+            Valid keys are: [ObjGroup, ObjType, ObjName, ObjDefVer], specify either 'ObjDefVer' or 'ObjGroup'.
+        </documentation>
     </formElement>
-    <formElement>
-        <type>entry</type>
-        <label>Object Group:</label>
-        <property>ObjGroup</property>
-        <required>0</required>
-        <documentation>Resource definition to add: resource group (required unless Location Type is Context, for a Context you can specify either this or Object Definition Version)</documentation>
-    </formElement> 
-    <formElement>
-        <type>entry</type>
-        <label>Object Definition Version:</label>
-        <property>ObjDefVer</property>
-        <required>0</required>
-        <documentation>Resource definition to add: resource definition version (omit unless Location Type is Context, for a Context you can specify either this or Object Group)</documentation>
-    </formElement> 
     <formElement>
         <type>entry</type>
         <label>Resource Container Name:</label>
