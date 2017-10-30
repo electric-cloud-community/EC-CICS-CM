@@ -21,8 +21,8 @@ sub contains {
 sub makeAddObjectCriteria {
     my($objectCriteria, $elementWrapper, @validCriteriaKeys) = @_;
 
-    // TODO implement next case: Specify <ListCount> followed by one or more <ListElement>. Each <ListElement> must identify a single object, with no masking
-    // TODO implement next case: <TContainer> ("target container") is relevant only when packaging an Add command. It identifies the ResGroup to which you want the resource definitions added.
+    # TODO implement next case: Specify <ListCount> followed by one or more <ListElement>. Each <ListElement> must identify a single object, with no masking
+    # TODO implement next case: <TContainer> ("target container") is relevant only when packaging an Add command. It identifies the ResGroup to which you want the resource definitions added.
     my @criteria = split '\n', $objectCriteria;
     my @result;
     my $listCount = 0;
