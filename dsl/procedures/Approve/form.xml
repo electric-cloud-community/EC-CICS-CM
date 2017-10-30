@@ -32,30 +32,38 @@ documentation : Help text for the parameter
 <editor>
     <formElement>
         <type>entry</type>
-        <label>Output Property Sheet:</label>
-        <property>outputPropertySheet</property>
+        <label>Configuration name:</label>
+        <property>configurationName</property>
+        <propertyReference>/plugins/@PLUGIN_NAME@/project/ec_plugin_cfgs</propertyReference>
         <required>1</required>
-        <documentation>Property sheet that results will be returned into</documentation>
-    </formElement> 
+        <documentation>The EC-CICS-CM configuration to use.</documentation>
+    </formElement>
+    <formElement>
+        <type>entry</type>
+        <label>Output Property:</label>
+        <property>outputProperty</property>
+        <required>1</required>
+        <documentation>The property that results will be returned into.</documentation>
+    </formElement>
     <formElement>
         <type>entry</type>
         <label>Change Package ID:</label>
         <property>CPID</property>
         <required>1</required>
-        <documentation>Selection criteria for what to approve: change package ID</documentation>
+        <documentation>Approve the migration of this change package.</documentation>
     </formElement>
     <formElement>
         <type>entry</type>
-        <label>Scheme:</label>
+        <label>Migration Scheme:</label>
         <property>Scheme</property>
         <required>1</required>
-        <documentation>Selection criteria for where to approve: migration scheme</documentation>
-    </formElement> 
+        <documentation>Approve the migration of the above change package using this migration scheme.</documentation>
+    </formElement>
     <formElement>
         <type>entry</type>
         <label>Role:</label>
         <property>Role</property>
         <required>1</required>
-        <documentation>Approve as: approver role</documentation>
+        <documentation>The approver role to approve as.</documentation>
     </formElement> 
 </editor>

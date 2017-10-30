@@ -31,26 +31,26 @@ documentation : Help text for the parameter
 -->
 <editor>
     <formElement>
-      <documentation>Previously defined plugin configuration.</documentation>
-      <label>Configuration name:</label>
-      <property>configurationName</property>
-      <propertyReference>/plugins/@PLUGIN_NAME@/project/ec_plugin_cfgs</propertyReference>
-      <required>1</required>
-      <type>entry</type>
+        <type>entry</type>
+        <label>Configuration name:</label>
+        <property>configurationName</property>
+        <propertyReference>/plugins/@PLUGIN_NAME@/project/ec_plugin_cfgs</propertyReference>
+        <required>1</required>
+        <documentation>The EC-CICS-CM configuration to use.</documentation>
     </formElement>
     <formElement>
         <type>entry</type>
-        <label>Output Property Sheet:</label>
-        <property>outputPropertySheet</property>
+        <label>Output Property:</label>
+        <property>outputProperty</property>
         <required>1</required>
-        <documentation>Property sheet that results will be returned into</documentation>
+        <documentation>The property that results will be returned into.</documentation>
     </formElement>
     <formElement>
         <type>radio</type>
         <label>Location Type:</label>
         <property>LocationType</property>
         <required>1</required>
-        <documentation>Location to list from: (to list from a Journal use ListFromJournal, to list from a Reposititory use ListFromRepository instead)
+        <documentation>The location to list from: (to list from a Journal use ListFromJournal, to list from a Reposititory use ListFromRepository instead)
         </documentation>
         <option>
             <name>CSD</name>
@@ -71,7 +71,7 @@ documentation : Help text for the parameter
         <label>Location Name:</label>
         <property>LocationName</property>
         <required>1</required>
-        <documentation>Configuration name, CSD location, CICSPlex Context, depending on Location Type value.</documentation>
+        <documentation>The configuration name, CSD location, or CICSPlex Context, depending on Location Type value.</documentation>
     </formElement>
     <formElement>
         <type>entry</type> <!-- #### Make this a select -->

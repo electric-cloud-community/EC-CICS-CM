@@ -1,6 +1,6 @@
 import java.io.File
 
-def procName = 'Discard'
+def procName = 'DiscardAdHoc'
 procedure procName, {
 
 	step 'step1',

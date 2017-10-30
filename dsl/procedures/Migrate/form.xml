@@ -32,30 +32,31 @@ documentation : Help text for the parameter
 <editor>
     <formElement>
         <type>entry</type>
-        <label>Configuration Name:</label>
-        <property>config</property>
+        <label>Configuration name:</label>
+        <property>configurationName</property>
+        <propertyReference>/plugins/@PLUGIN_NAME@/project/ec_plugin_cfgs</propertyReference>
         <required>1</required>
-        <documentation>Configuration to use.</documentation>
-    </formElement> 
+        <documentation>The EC-CICS-CM configuration to use.</documentation>
+    </formElement>
     <formElement>
         <type>entry</type>
-        <label>Output Property Sheet:</label>
-        <property>outputPropertySheet</property>
+        <label>Output Property:</label>
+        <property>outputProperty</property>
         <required>1</required>
-        <documentation>Property sheet that results will be returned into</documentation>
-    </formElement> 
+        <documentation>The property that results will be returned into.</documentation>
+    </formElement>
     <formElement>
         <type>entry</type>
         <label>Change Package ID:</label>
         <property>CPID</property>
         <required>1</required>
-        <documentation>Change package to migrate</documentation>
+        <documentation>The change package to migrate.</documentation>
     </formElement>
     <formElement>
         <type>entry</type>
-        <label>Scheme:</label>
+        <label>Migration Scheme:</label>
         <property>Scheme</property>
         <required>1</required>
-        <documentation>Migration scheme to use</documentation>
+        <documentation>The migration scheme decribing where and how to migrate the change package.</documentation>
     </formElement>
 </editor>

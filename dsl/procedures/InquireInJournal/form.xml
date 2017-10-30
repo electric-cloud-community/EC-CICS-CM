@@ -32,11 +32,19 @@ documentation : Help text for the parameter
 <editor>
     <formElement>
         <type>entry</type>
-        <label>Output Property Sheet:</label>
-        <property>outputPropertySheet</property>
+        <label>Configuration name:</label>
+        <property>configurationName</property>
+        <propertyReference>/plugins/@PLUGIN_NAME@/project/ec_plugin_cfgs</propertyReference>
         <required>1</required>
-        <documentation>Property sheet that results will be returned into</documentation>
-    </formElement> 
+        <documentation>The EC-CICS-CM configuration to use.</documentation>
+    </formElement>
+    <formElement>
+        <type>entry</type>
+        <label>Output Property:</label>
+        <property>outputProperty</property>
+        <required>1</required>
+        <documentation>The property that results will be returned into.</documentation>
+    </formElement>
     <formElement>
         <type>radio</type>
         <label>Location Type:</label>

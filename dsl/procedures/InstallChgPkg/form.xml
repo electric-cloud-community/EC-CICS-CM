@@ -32,31 +32,32 @@ documentation : Help text for the parameter
 <editor>
     <formElement>
         <type>entry</type>
-        <label>Configuration Name:</label>
-        <property>config</property>
+        <label>Configuration name:</label>
+        <property>configurationName</property>
+        <propertyReference>/plugins/@PLUGIN_NAME@/project/ec_plugin_cfgs</propertyReference>
         <required>1</required>
-        <documentation>Configuration to use.</documentation>
-    </formElement> 
+        <documentation>The EC-CICS-CM configuration to use.</documentation>
+    </formElement>
     <formElement>
         <type>entry</type>
-        <label>Output Property Sheet:</label>
-        <property>outputPropertySheet</property>
+        <label>Output Property:</label>
+        <property>outputProperty</property>
         <required>1</required>
-        <documentation>Property sheet that results will be returned into</documentation>
-    </formElement> 
+        <documentation>The property that results will be returned into.</documentation>
+    </formElement>
     <formElement>
         <type>entry</type>
         <label>Change Package ID:</label>
         <property>CPID</property>
         <required>1</required>
-        <documentation>Change package to migrate</documentation>
+        <documentation>The change package to install.</documentation>
     </formElement>
     <formElement>
         <type>entry</type>
-        <label>Scheme:</label>
+        <label>Migration Scheme:</label>
         <property>Scheme</property>
         <required>1</required>
-        <documentation>Migration scheme to use</documentation>
+        <documentation>The migration scheme to use.</documentation>
     </formElement>
     <formElement>
         <type>checkbox</type>
@@ -64,8 +65,8 @@ documentation : Help text for the parameter
         <property>Quiesce</property>
         <required>0</required>
         <documentation>CSD-based CICS Configurations only: specifies whether to set each resource to a (resource-type-dependent) status that allows its definition to be installed (for example, disabled, closed, or out of service), before attempting to install to it. If you do not specify this "quiesce" option, and a resource is in a status that does not allow the install action, then the install action for that resource definition will fail</documentation>
-	<checkedValue>YES</checkedValue>
-	<uncheckedValue>NO</uncheckedValue>
+        <checkedValue>YES</checkedValue>
+        <uncheckedValue>NO</uncheckedValue>
         <initiallyChecked>0</initiallyChecked>
         <value>NO</value>
     </formElement> 
@@ -73,8 +74,8 @@ documentation : Help text for the parameter
         <type>entry</type>
         <label>Qualification Data:</label>
         <property>QualificationData</property>
-        <required>1</required>
-        <documentation>Qualification Data is optional data passed through the Install operations qualification exit point. The needs of your organization determine whether you use an exit program and what processing it performs</documentation>
+        <required>0</required>
+        <documentation>Qualification Data is optional data passed through the Install operation's qualification exit point. The needs of your organization determine whether you use an exit program and what processing it performs</documentation>
     </formElement>
     <formElement>
         <type>checkbox</type>
@@ -92,7 +93,7 @@ documentation : Help text for the parameter
         <label>Force:</label>
         <property>Force</property>
         <required>0</required>
-        <documentation>Applies only to Context-based CICS configurations</documentation>
+        <documentation>Applies only to Context-based CICS configurations.</documentation>
 	<checkedValue>YES</checkedValue>
 	<uncheckedValue>NO</uncheckedValue>
         <initiallyChecked>0</initiallyChecked>
@@ -103,7 +104,7 @@ documentation : Help text for the parameter
         <label>Target Scope:</label>
         <property>TargetScope</property>
         <required>0</required>
-        <documentation>Required for Context-based CICS configurations, ommit for CDS-based CICS configurations</documentation>
+        <documentation>Required for Context-based CICS configurations, ommit for CDS-based CICS configurations.</documentation>
     </formElement>
     <formElement>
         <type>entry</type>
@@ -118,21 +119,21 @@ documentation : Help text for the parameter
         <label>CONNDEF Resource Assignment:</label>
         <property>CONNDEF_RefAssign</property>
         <required>0</required>
-        <documentation>Applies only to Context-based CICS configurations</documentation>
+        <documentation>Applies only to Context-based CICS configurations.</documentation>
     </formElement>    
     <formElement>
         <type>entry</type>
         <label>FILEDEF Related Scope:</label>
         <property>FILEDEF_RelatedScope</property>
         <required>0</required>
-        <documentation>Applies only to Context-based CICS configurations</documentation>
+        <documentation>Applies only to Context-based CICS configurations.</documentation>
     </formElement>
     <formElement>
         <type>radio</type>
         <label>FILEDEF Usage:</label>
         <property>FILEDEF_Usage</property>
         <required>0</required>
-        <documentation>Applies only to Context-based CICS configurations</documentation>
+        <documentation>Applies only to Context-based CICS configurations.</documentation>
         <option>
             <name>Local</name>
             <value>LOCAL</value>
@@ -148,14 +149,14 @@ documentation : Help text for the parameter
         <label>PROGDEF Related Scope:</label>
         <property>PROGDEF_RelatedScope</property>
         <required>0</required>
-        <documentation>Applies only to Context-based CICS configurations</documentation>
+        <documentation>Applies only to Context-based CICS configurations.</documentation>
     </formElement>
     <formElement>
         <type>radio</type>
         <label>PROGDEF Usage:</label>
         <property>PROGDEF_Usage</property>
         <required>0</required>
-        <documentation>Applies only to Context-based CICS configurations</documentation>
+        <documentation>Applies only to Context-based CICS configurations.</documentation>
         <option>
             <name>Local</name>
             <value>LOCAL</value>
@@ -171,7 +172,7 @@ documentation : Help text for the parameter
         <label>PROGDEF Mode:</label>
         <property>PROGDEF_Mode</property>
         <required>0</required>
-        <documentation>Applies only to Context-based CICS configurations</documentation>
+        <documentation>Applies only to Context-based CICS configurations.</documentation>
         <option>
             <name>N/A</name>
             <value>N/A</value>
@@ -187,14 +188,14 @@ documentation : Help text for the parameter
         <label>TDQDEF Related Scope:</label>
         <property>TDQDEF_RelatedScope</property>
         <required>0</required>
-        <documentation>Applies only to Context-based CICS configurations</documentation>
+        <documentation>Applies only to Context-based CICS configurations.</documentation>
     </formElement>
     <formElement>
         <type>radio</type>
         <label>TDQDEF Usage:</label>
         <property>TDQDEF_Usage</property>
         <required>0</required>
-        <documentation>Applies only to Context-based CICS configurations</documentation>
+        <documentation>Applies only to Context-based CICS configurations.</documentation>
         <option>
             <name>Local</name>
             <value>LOCAL</value>
@@ -210,7 +211,7 @@ documentation : Help text for the parameter
         <label>TDQDEF Mode:</label>
         <property>TDQDEF_Mode</property>
         <required>0</required>
-        <documentation>Applies only to Context-based CICS configurations</documentation>
+        <documentation>Applies only to Context-based CICS configurations.</documentation>
         <option>
             <name>N/A</name>
             <value>N/A</value>
@@ -234,7 +235,7 @@ documentation : Help text for the parameter
         <label>TRANDEF Related Scope:</label>
         <property>TRANDEF_RelatedScope</property>
         <required>0</required>
-        <documentation>Applies only to Context-based CICS configurations</documentation>
+        <documentation>Applies only to Context-based CICS configurations.</documentation>
     </formElement>
     <formElement>
         <type>radio</type>
@@ -257,7 +258,7 @@ documentation : Help text for the parameter
         <label>TRANDEF Mode:</label>
         <property>TRANDEF_Mode</property>
         <required>0</required>
-        <documentation>Applies only to Context-based CICS configurations</documentation>
+        <documentation>Applies only to Context-based CICS configurations.</documentation>
         <option>
             <name>N/A</name>
             <value>N/A</value>

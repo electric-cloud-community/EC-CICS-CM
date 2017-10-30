@@ -65,10 +65,10 @@ if ($xml =~ m!<SOAP-ENV:Body>\s*<$ccVersion>\s*<$upperSoapMethodName>\s*<OUTPUTD
     # print"\$xml:\n$xml\n"; #### TODO Remove debugging output
 }
 
-my $outputPropertyOrPropertySheet = $params{'outputPropertySheet'};  #### TODO Check all forms have outputPropertySheet parameter
+my $outputPropertyOrPropertySheet = $params{'outputProperty'};
 $ec->setProperty($outputPropertyOrPropertySheet, $xml);
 
-#### TODO Implement optionally parsing the results into a property sheet structure, depending on a result type parameter -- this will require us to first modify LISTELEMENT tags to add a counter to them
+#### TODO Implement optionally parsing the results into a property sheet structure, if $outputPropertyOrPropertySheet exists and is a property sheet -- this will require us to first modify LISTELEMENT (and any other potentially dublicated) tags to add a counter to them
 
 # Check for and handle nonzero CICS CM return code value
 # 

@@ -50,20 +50,38 @@ documentation : Help text for the parameter
         <label>Change Package ID:</label>
         <property>CPID</property>
         <required>1</required>
-        <documentation>Withdraw the approval of the migration of this change package.</documentation>
+        <documentation>The change package to discard.</documentation>
     </formElement>
     <formElement>
         <type>entry</type>
         <label>Migration Scheme:</label>
         <property>Scheme</property>
         <required>1</required>
-        <documentation>Withdraw the approval for the migration of the above change package using this migration scheme.</documentation>
+        <documentation>The migration scheme to use.</documentation>
+    </formElement>
+    <formElement>
+        <type>checkbox</type>
+        <label>Quiesce:</label>
+        <property>Quiesce</property>
+        <required>0</required>
+        <documentation>This specifies whether or not to set the resource to a status that allows its definition to be discarded (for example, disabled, closed, or out of service), prior to attempting the action. The status depends on the resource type. If you do not specify this "quiesce" option, and a resource is in a status that does not allow the discard action, then the discard action for that resource definition will fail.</documentation>
+	<checkedValue>YES</checkedValue>
+	<uncheckedValue>NO</uncheckedValue>
+        <initiallyChecked>0</initiallyChecked>
+        <value>NO</value>
+    </formElement> 
+    <formElement>
+        <type>textarea</type>
+        <label>Qualification Data:</label>
+        <property>QualificationData</property>
+        <required>0</required>
+        <documentation>Qualification Data is optional data passed through the Discard operation's qualification exit point. The needs of your organization determine whether you use an exit program and what processing it performs.</documentation>
     </formElement>
     <formElement>
         <type>entry</type>
-        <label>Role:</label>
-        <property>Role</property>
-        <required>1</required>
-        <documentation>The approver role to remove the approve from.</documentation>
-    </formElement> 
+        <label>Target Scope:</label>
+        <property>TargetScope</property>
+        <required>0</required>
+        <documentation>If the change package contains candidates for migration to context-based CICS configurations, Target Scope is required.</documentation>
+    </formElement>    
 </editor>

@@ -32,12 +32,20 @@ documentation : Help text for the parameter
 <editor>
     <formElement>
         <type>entry</type>
-        <label>Output Property Sheet:</label>
-        <property>outputPropertySheet</property>
+        <label>Configuration name:</label>
+        <property>configurationName</property>
+        <propertyReference>/plugins/@PLUGIN_NAME@/project/ec_plugin_cfgs</propertyReference>
         <required>1</required>
-        <documentation>Property sheet that results will be returned into</documentation>
+        <documentation>The EC-CICS-CM configuration to use.</documentation>
     </formElement>
-    #### Update to next mmarker
+    <formElement>
+        <type>entry</type>
+        <label>Output Property:</label>
+        <property>outputProperty</property>
+        <required>1</required>
+        <documentation>The property that results will be returned into.</documentation>
+    </formElement>
+    <!-- #### TODO Update to next marker -->
     <formElement>
         <type>entry</type>
         <label>Change Package ID:</label>
@@ -92,7 +100,7 @@ documentation : Help text for the parameter
         <initiallyChecked>0</initiallyChecked>
         <value>NO</value>
     </formElement>
-    #### Update above here
+    <!-- #### TODO Update above here -->
     <formElement>
         <type>entry</type>
         <label>Target Scope:</label>

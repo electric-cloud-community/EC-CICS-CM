@@ -9,6 +9,7 @@ my $soapMethodName = 'Install';
 # List of the names of optional paramters
 my @optionalParams = (
     'Quiesce',
+    'QualificationData',
     'Discard',
     'Force',
     'TargetScope',
@@ -25,15 +26,8 @@ my @optionalParams = (
     'TRANDEF_RelatedScope',
     'TRANDEF_Usage',
     'TRANDEF_Mode',
-
 );
-# TODO Get rid of this -- we shouldn't need it, we already have a list of all parameters and a list of which are optional
-my @mandatoryParams = (
-    'CPID',
-    'Scheme',
-    'QualificationData',
 
-);
 $[/myPlugin/project/ec_perl_metadata]
 
 $[/myPlugin/project/ec_perl_code_block_1]
@@ -41,30 +35,101 @@ $[/myPlugin/project/ec_perl_code_block_1]
 # Procedure-specific Code
 # -----------------------
 
-my @paramsForRequest;
-for my $p (@optionalParams, @mandatoryParams) {
-    if (defined $params{$p}) {
-        push @paramsForRequest, SoapData($p);
-    }
-}
+# Deal with optional parameters and build output
 
-my $data =
-SOAP::Data->name('LocationCriteria' => \SOAP::Data->value(
-    SOAP::Data->name('LocationType' => $params{'LocationType'})
-)) .
-SOAP::Data->name('ObjectCriteria' => \SOAP::Data->value(
-    SoapData('CConfig'),
-    SOAP::Data->name('ListCount' => 1),
-    SOAP::Data->name('ListElement' => \SOAP::Data->value(
-        SOAP::Data->name('DefA' => \SOAP::Data->value(
-            SoapData('ObjGroup'),
-            SoapData('ObjType'),
-            SoapData('ObjName')
-        ))
-      ))
-  )) .
-SOAP::Data->name('InputData' => \SOAP::Data->value(
-    @paramsForRequest
+my @data = SOAP::Data->name($soapMethodName => \SOAP::Data->value(
+    SOAP::Data->name('SelectionCriteria' => \SOAP::Data->value(
+        SoapData('CPID'),
+        SoapData('Scheme')
+    )),
+    SOAP::Data->name('ProcessParams' => \SOAP::Data->value(
+$[/javascript (('' + myParent.Quiesce).length == 0) ? "" :
+"        SoapData('Quiesce'),  # Optional parameter "
+]
+$[/javascript (('' + myParent.QualificationData).length == 0) ? "" :
+"        SoapData('QualificationData'),  # Optional parameter "
+]
+$[/javascript (('' + myParent.Discard).length == 0) ? "" :
+"        SoapData('Discard'),  # Optional parameter "
+]
+$[/javascript (('' + myParent.Force).length == 0) ? "" :
+"        SoapData('Force'),  # Optional parameter "
+]
+$[/javascript (('' + myParent.TargetScope + myParent.ResGroupObjectType + myParent.CONNDEF_RefAssign
+    + myParent.FILEDEF_RelatedScope + myParent.FILEDEF_Usage
+    + myParent.PROGDEF_RelatedScope + myParent.PROGDEF_Usage + myParent.PROGDEF_Mode
+    + myParent.TDQDEF_RelatedScope + myParent.TDQDEF_Usage + myParent.TDQDEF_Mode
+    + myParent.TRANDEF_RelatedScope + myParent.TRANDEF_Usage + myParent.TRANDEF_Mode).length == 0) ? "" :
+"        SOAP::Data->name('CPSMParms' => \SOAP::Data->value( "
+]
+$[/javascript (('' + myParent.TargetScope).length == 0) ? "" :
+"            SoapData('TargetScope'),  # Optional parameter "
+]
+$[/javascript (('' + myParent.ResGroupObjectType).length == 0) ? "" :
+"            SoapData('ResGroupObjectType'),  # Optional parameter "
+]
+$[/javascript (('' + myParent.CONNDEF_RefAssign).length == 0) ? "" :
+"            SOAP::Data->name('CONNDEF' => \SOAP::Data->value( \n" +
+"                SOAP::Data->name('RefAssign' => $params{'CONNDEF_RefAssign'}) (),  # Optional parameter \n" +
+"            )), "
+]
+$[/javascript (('' + myParent.FILEDEF_RelatedScope + myParent.FILEDEF_Usage).length == 0) ? "" :
+"            SOAP::Data->name('CONNDEF' => \SOAP::Data->value( \n" +
+"                SOAP::Data->name('RelatedScope' => $params{'FILEDEF_RelatedScope'}) (),  # Optional parameter "
+]
+$[/javascript (('' + myParent.FILEDEF_Usage).length == 0) ? "" :
+"                SOAP::Data->name('Usage' => $params{'FILEDEF_Usage'}) (),  # Optional parameter "
+]
+$[/javascript (('' + myParent.FILEDEF_RelatedScope + myParent.FILEDEF_Usage).length == 0) ? "" :
+"            )), "
+]
+$[/javascript (('' + myParent.PROGDEF_RelatedScope + myParent.PROGDEF_Usage + myParent.PROGDEF_Mode).length == 0) ? "" :
+"            SOAP::Data->name('PROGDEF' => \SOAP::Data->value( \n" +
+"                SOAP::Data->name('RelatedScope' => $params{'PROGDEF_RelatedScope'}) (),  # Optional parameter "
+]
+$[/javascript (('' + myParent.PROGDEF_Usage).length == 0) ? "" :
+"                SOAP::Data->name('Usage' => $params{'PROGDEF_Usage'}) (),  # Optional parameter "
+]
+$[/javascript (('' + myParent.PROGDEF_Mode).length == 0) ? "" :
+"                SOAP::Data->name('Mode' => $params{'PROGDEF_Mode'}) (),  # Optional parameter "
+]
+$[/javascript (('' + myParent.PROGDEF_RelatedScope + myParent.PROGDEF_Usage + myParent.PROGDEF_Mode).length == 0) ? "" :
+"            )), "
+]
+$[/javascript (('' + myParent.TDQDEF_RelatedScope + myParent.TDQDEF_Usage + myParent.TDQDEF_Mode).length == 0) ? "" :
+"            SOAP::Data->name('TDQDEF' => \SOAP::Data->value( \n" +
+"                SOAP::Data->name('RelatedScope' => $params{'TDQDEF_RelatedScope'}) (),  # Optional parameter "
+]
+$[/javascript (('' + myParent.TDQDEF_Usage).length == 0) ? "" :
+"                SOAP::Data->name('Usage' => $params{'TDQDEF_Usage'}) (),  # Optional parameter "
+]
+$[/javascript (('' + myParent.TDQDEF_Mode).length == 0) ? "" :
+"                SOAP::Data->name('Mode' => $params{'TDQDEF_Mode'}) (),  # Optional parameter "
+]
+$[/javascript (('' + myParent.TDQDEF_RelatedScope + myParent.TDQDEF_Usage + myParent.TDQDEF_Mode).length == 0) ? "" :
+"            )), "
+]
+$[/javascript (('' + myParent.TRANDEF_RelatedScope + myParent.TRANDEF_Usage + myParent.TRANDEF_Mode).length == 0) ? "" :
+"            SOAP::Data->name('TRANDEF' => \SOAP::Data->value( \n" +
+"                SOAP::Data->name('RelatedScope' => $params{'TRANDEF_RelatedScope'}) (),  # Optional parameter "
+]
+$[/javascript (('' + myParent.TRANDEF_Usage).length == 0) ? "" :
+"                SOAP::Data->name('Usage' => $params{'TRANDEF_Usage'}) (),  # Optional parameter "
+]
+$[/javascript (('' + myParent.TRANDEF_Mode).length == 0) ? "" :
+"                SOAP::Data->name('Mode' => $params{'TRANDEF_Mode'}) (),  # Optional parameter "
+]
+$[/javascript (('' + myParent.TRANDEF_RelatedScope + myParent.TRANDEF_Usage + myParent.TRANDEF_Mode).length == 0) ? "" :
+"            )), "
+]
+$[/javascript (('' + myParent.TargetScope + myParent.ResGroupObjectType + myParent.CONNDEF_RefAssign
+    + myParent.FILEDEF_RelatedScope + myParent.FILEDEF_Usage
+    + myParent.PROGDEF_RelatedScope + myParent.PROGDEF_Usage + myParent.PROGDEF_Mode
+    + myParent.TDQDEF_RelatedScope + myParent.TDQDEF_Usage + myParent.TDQDEF_Mode
+    + myParent.TRANDEF_RelatedScope + myParent.TRANDEF_Usage + myParent.TRANDEF_Mode).length == 0) ? "" :
+"        )), "
+]
+    ))
 ));
 
 $[/myPlugin/project/ec_perl_code_block_2]

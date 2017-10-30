@@ -4,11 +4,11 @@ $[/myPlugin/project/ec_perl_header]
 # ---------------------------
 
 # Name of SOAP method to call
-my $soapMethodName = 'Newcopy';
+my $soapMethodName = 'Discard';
 
 # List of the names of optional paramters
 my @optionalParams = (
-    'PhaseIn',
+    'Quiesce',
     'QualificationData',
     'TargetScope'
 );
@@ -28,8 +28,8 @@ my @data = SOAP::Data->name($soapMethodName => \SOAP::Data->value(
         SoapData('Scheme')
     )),
     SOAP::Data->name('ProcessParams' => \SOAP::Data->value(
-$[/javascript (('' + myParent.PhaseIn).length == 0) ? "" :
-"        SoapData('PhaseIn'),  # Optional parameter "
+$[/javascript (('' + myParent.Quiesce).length == 0) ? "" :
+"        SoapData('Quiesce'),  # Optional parameter "
 ]
 $[/javascript (('' + myParent.QualificationData).length == 0) ? "" :
 "        SoapData('QualificationData'),  # Optional parameter "

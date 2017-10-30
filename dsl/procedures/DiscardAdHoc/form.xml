@@ -66,35 +66,35 @@ documentation : Help text for the parameter
 	    <value>DOCDEF</value>
 	</option>
         <required>1</required>
-        <documentation>Object to newcopy: resource type</documentation>
+        <documentation>Object to discard: resource type</documentation>
     </formElement>
     <formElement>
         <type>entry</type>
         <label>Object Name:</label>
         <property>ObjName</property>
         <required>1</required>
-        <documentation>Object to newcopy: resource name</documentation>
+        <documentation>Object to discard: resource name</documentation>
     </formElement>
     <formElement>
         <type>entry</type>
         <label>Object Group:</label>
         <property>ObjGroup</property>
         <required>1</required> <!-- #### TODO Should this be optional? -->
-        <documentation>Object to newcopy: resource group</documentation>
+        <documentation>Object to discard: resource group</documentation>
     </formElement>
     <formElement>
         <type>textarea</type>
         <label>Serialized Object Criteria:</label>
         <property>ObjectCriteria</property>
         <required>0</required>
-        <documentation>Additional objects(s) to newcopy: XML serialized list of MAPDEF/PROGDEF/PRTNDEF/DOCDEF object criteria created using procedure SerializeOtherObjectCriteria (optional, the object specified above is appended to this)</documentation>-->
+        <documentation>Additional objects(s) to discard: XML serialized list of MAPDEF/PROGDEF/PRTNDEF/DOCDEF object criteria created using procedure SerializeOtherObjectCriteria (optional, the object specified above is appended to this)</documentation>-->
     </formElement>    <!-- #### TODO Integrate Alexey's Javascript to build this up from Object Name + Group + Type -->
     <formElement>
         <type>checkbox</type>
-        <label>Phase-in:</label>
-        <property>PhaseIn</property>
+        <label>Quiesce:</label>
+        <property>Quiesce</property>
         <required>0</required>
-        <documentation>Whether to do a phase-in action instead of a newcopy, to cater for in-use programs. For details, see the CICS documentation.</documentation>
+        <documentation>This specifies whether or not to set the resource to a status that allows its definition to be discarded (for example, disabled, closed, or out of service), prior to attempting the action. The status depends on the resource type. If you do not specify this "quiesce" option, and a resource is in a status that does not allow the discard action, then the discard action for that resource definition will fail.</documentation>
 	<checkedValue>YES</checkedValue>
 	<uncheckedValue>NO</uncheckedValue>
         <initiallyChecked>0</initiallyChecked>
@@ -105,7 +105,7 @@ documentation : Help text for the parameter
         <label>Qualification Data:</label>
         <property>QualificationData</property>
         <required>0</required>
-        <documentation>Qualification Data is optional data passed through the Newcopy operations qualification exit point. The needs of your organization determine whether you use an exit program and what processing it performs</documentation>
+        <documentation>Qualification Data is optional data passed through the Discard operation's qualification exit point. The needs of your organization determine whether you use an exit program and what processing it performs</documentation>
     </formElement>
     <formElement>
         <type>select</type>
@@ -125,7 +125,7 @@ documentation : Help text for the parameter
 	</option>
 	<value>All</value>
         <required>0</required>
-        <documentation>The CSD-based CICS regions on which to perform this action. 'All': performs the action via all of the remote system connections defined in the CICS configuration (default), 'Local': performs the action on the CICS region that is running the CICS Configuration Manager server (Location Name mustspecify a CICS configuration that refers to the CSD file used by the CICS Configuration Manager server, 'Named': Performs the action via the remote system connections named in Connection Names.</documentation>
+        <documentation>The CSD-based CICS regions on which to perform the discard. 'All': performs the discard via all of the remote system connections defined in the CICS configuration (default), 'Local': performs the discard on the CICS region that is running the CICS Configuration Manager server (Location Name mustspecify a CICS configuration that refers to the CSD file used by the CICS Configuration Manager server, 'Named': Performs the discard via the remote system connections named in Connection Names.</documentation>
     </formElement>
     <formElement>
         <type>textarea</type>), 

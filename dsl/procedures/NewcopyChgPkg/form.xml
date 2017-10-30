@@ -32,31 +32,39 @@ documentation : Help text for the parameter
 <editor>
     <formElement>
         <type>entry</type>
-        <label>Output Property Sheet:</label>
-        <property>outputPropertySheet</property>
+        <label>Configuration name:</label>
+        <property>configurationName</property>
+        <propertyReference>/plugins/@PLUGIN_NAME@/project/ec_plugin_cfgs</propertyReference>
         <required>1</required>
-        <documentation>Property sheet that results will be returned into</documentation>
-    </formElement> 
+        <documentation>The EC-CICS-CM configuration to use.</documentation>
+    </formElement>
+    <formElement>
+        <type>entry</type>
+        <label>Output Property:</label>
+        <property>outputProperty</property>
+        <required>1</required>
+        <documentation>The property that results will be returned into.</documentation>
+    </formElement>
     <formElement>
         <type>entry</type>
         <label>Change Package ID:</label>
         <property>CPID</property>
         <required>1</required>
-        <documentation>Change package to migrate</documentation>
+        <documentation>The change package to newcopy.</documentation>
     </formElement>
     <formElement>
         <type>entry</type>
-        <label>Scheme:</label>
+        <label>Migration Scheme:</label>
         <property>Scheme</property>
         <required>1</required>
-        <documentation>Migration scheme to use</documentation>
+        <documentation>The migration scheme to use.</documentation>
     </formElement>
     <formElement>
         <type>checkbox</type>
-        <label>Replace:</label>
-        <property>Replace</property>
-        <required>1</required>
-        <documentation>Whether to do a phase-in instead of a newcopy, to cater for in-use programs. For details, see the CICS documentation</documentation>
+        <label>Phase-in:</label>
+        <property>PhaseIn</property>
+        <required>0</required>
+        <documentation>Whether to do a phase-in action instead of a newcopy, to cater for in-use programs. For details, see the CICS documentation.</documentation>
 	<checkedValue>YES</checkedValue>
 	<uncheckedValue>NO</uncheckedValue>
         <initiallyChecked>0</initiallyChecked>
@@ -74,6 +82,6 @@ documentation : Help text for the parameter
         <label>Target Scope:</label>
         <property>TargetScope</property>
         <required>0</required>
-        <documentation>If the change package contains candidates for migration to context-based CICS configurations, Target Scope is required</documentation>
+        <documentation>If the change package contains candidates for migration to context-based CICS configurations, Target Scope is required.</documentation>
     </formElement>    
 </editor>
