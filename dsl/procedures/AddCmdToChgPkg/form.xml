@@ -133,7 +133,7 @@ documentation : Help text for the parameter
         <documentation>The ID of the change package to add the command(s) to</documentation>
     </formElement> 
     <formElement>
-        <type>radio</type>
+        <type>select</type>
         <label>Container Type:</label>
         <property>ContainerType</property>
         <required>1</required>
