@@ -2,9 +2,13 @@
 # -------------------
 
 # Fetch input parameters into a hash
-my $jobId = $ENV{COMMANDER_JOBID};
-my $xpath =  $ec->getActualParameters({jobId => $jobId});
-
+my $xpath;
+if ( $[/javascript (typeof(myParent.jobStepId) == "undefined") ? "1":"0"] ) {
+    $xpath = $ec->getActualParameters({jobId => $ENV{COMMANDER_JOBID}});
+}
+else {
+    $xpath = $ec->getActualParameters({jobStepId => '$[/javascript myParent.jobStepId]'});
+}
 my %params;
 foreach my $node($xpath->find('//actualParameter')->get_nodelist()) {
     my $paramName = $node-> find('actualParameterName')->string_value();

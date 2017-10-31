@@ -52,6 +52,7 @@ if (!defined($result) || !defined($result->{'OUTPUTDATA'}) || !defined($result->
     exit -1;
 }
 my $returnCode = $result->{'OUTPUTDATA'}->{'RETURNCODE'};
+my $reasonCode = $result->{'OUTPUTDATA'}->{'REASONCODE'};
 
 # Return the XML result as a property
 
@@ -75,9 +76,21 @@ $ec->setProperty($outputPropertyOrPropertySheet, $xml);
 # We do this _after_ outputting the XML, in case a Commander error 
 # handling step wants to access the return code or reason code
 
-if ($returnCode != '00000000') {
-    #### TODO Certain combinations of return code and reason code should probably be treated as warnings rather than errors, or possibly even ignored.
-    #### For example return code 00000004 with a reason code ending in 0003 that an object was not found, and return code 00000004 with a reason code ending in 0004 indicates that no matching objects were found
-    print "ERROR: Result with non-zero return code '$returnCode':\n" . Dumper($result);
+if ($returnCode ne '00000000') {
+
+    # Return code '00000004' with certain reason codes should be treated as warnings rather than errors (or possibly even ignored).
+    if ($returnCode eq '00000004') {
+        my $conditionCode = substr($reasonCode, 4);
+        if ($conditionCode eq  '00AC') {
+            if ($soapMethodName eq 'Ready') {
+                print "WARNING: Readied a change package that was already ready!\n";
+                exit 0;
+            }
+        }
+        #### TODO return code 00000004 with a reason code ending in 0003 indicates that an object was not found
+        #### TODO return code 00000004 with a reason code ending in 0004 indicates that no matching objects were found
+    }
+
+    print "ERROR: Result with non-zero return code '$returnCode' ans reason code '$reasonCode':\n" . Dumper($result);
     exit -1;
 }
