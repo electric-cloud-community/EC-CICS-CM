@@ -46,25 +46,43 @@ documentation : Help text for the parameter
         <documentation>The property that results will be returned into.</documentation>
     </formElement>
     <formElement>
+        <type>entry</type>
+        <label>Location Name:</label>
+        <property>LocationName</property>
+        <required>1</required>
+        <documentation>Name of location to create in</documentation>
+    </formElement>
+    <formElement>
+        <type>select</type>
+        <label>Location Type:</label>
+        <property>LocationType</property>
+        <required>1</required>
+        <documentation>Location to create in (to create in the Repository, use procedure CreateInRepository instead)</documentation>
+        <option>
+            <name>CConfig</name>
+            <value>CConfig</value>
+        </option>
+    </formElement>
+    <formElement>
         <type>select</type>
         <label>Object Type:</label>
         <property>ObjType</property>
-	<option>
-	    <name>MapDef</name>
-	    <value>MAPDEF</value>
-	</option>
-	<option>
-	    <name>ProgDef</name>
-	    <value>PROGDEF</value>
-	</option>
-	<option>
-	    <name>PrtnDef</name>
-	    <value>PRTNDEF</value>
-	</option>
-	<option>
-	    <name>DocDef</name>
-	    <value>DOCDEF</value>
-	</option>
+        <option>
+            <name>MapDef</name>
+            <value>MAPDEF</value>
+        </option>
+        <option>
+            <name>ProgDef</name>
+            <value>PROGDEF</value>
+        </option>
+        <option>
+            <name>PrtnDef</name>
+            <value>PRTNDEF</value>
+        </option>
+        <option>
+            <name>DocDef</name>
+            <value>DOCDEF</value>
+        </option>
         <required>1</required>
         <documentation>Object to newcopy: resource type</documentation>
     </formElement>
@@ -88,6 +106,25 @@ documentation : Help text for the parameter
         <property>ObjectCriteria</property>
         <required>0</required>
         <documentation>Additional objects(s) to newcopy: XML serialized list of MAPDEF/PROGDEF/PRTNDEF/DOCDEF object criteria created using procedure SerializeOtherObjectCriteria (optional, the object specified above is appended to this)</documentation>-->
+        <htmlDocumentation>
+            &lt;input name="Add" style=&quot;color: #ffffff;padding: 3px 15px 3px 15px;border: none;font-size:14px;height: 48px;min-width: 150px;background: #3e99df;&quot; value=&quot;Add criteria&quot; onclick='
+            var $ogValue = document.getElementsByName(&quot;ObjGroup&quot;)[0].value;
+            var $otValue = document.getElementsByName(&quot;ObjType&quot;)[0].value;
+            var $onValue = document.getElementsByName(&quot;ObjName&quot;)[0].value;
+            var $og=&quot;&lt;ObjGroup&gt;&quot;.concat($ogValue).concat(&quot;&lt;/ObjGroup&gt;\n&quot;);
+            var $ot=&quot;&lt;ObjType&gt;&quot;.concat($otValue).concat(&quot;&lt;/ObjType&gt;\n&quot;);
+            var $on=&quot;&lt;ObjName&gt;&quot;.concat($onValue).concat(&quot;&lt;/ObjName&gt;\n&quot;);
+            document.getElementsByName(&quot;ObjectCriteria&quot;)[0].value =
+            document.getElementsByName(&quot;ObjectCriteria&quot;)[0].value.concat(&quot;&lt;ListElement&gt;\n\t&lt;ObjectData&gt;\n&quot;)
+            .concat($ogValue.length===0?&quot;&quot;:&quot;\t\t&quot;.concat($og))
+            .concat($otValue.length===0?&quot;&quot;:&quot;\t\t&quot;.concat($ot))
+            .concat($onValue.length===0?&quot;&quot;:&quot;\t\t&quot;.concat($on))
+            .concat(&quot;\t&lt;/ObjectData&gt;\n&lt;/ListElement&gt;\n&quot;);
+            document.getElementsByName(&quot;ObjGroup&quot;)[0].value = &quot;&quot;;
+            document.getElementsByName(&quot;ObjType&quot;)[0].value=&quot;&quot;;
+            document.getElementsByName(&quot;ObjName&quot;)[0].value=&quot;&quot;;
+            ' type=button /&gt;
+        </htmlDocumentation>
     </formElement>    <!-- #### TODO Integrate Alexey's Javascript to build this up from Object Name + Group + Type -->
     <formElement>
         <type>checkbox</type>

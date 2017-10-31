@@ -75,33 +75,50 @@ documentation : Help text for the parameter
             <value>Repository</value>
         </option>
     </formElement>
-    <!-- #### TODO <formElement>-->
-        <!--<type>textarea</type>-->
-        <!--<label>Serialized Resource Object Criteria:</label>-->
-        <!--<property>ObjectCriteria</property>-->
-        <!--<required>0</required>-->
-        <!--<documentation>Additional objects(s) to create: XML serialized list of resource object criteria created using procedure SerializeOtherObjectCriteria (optional, the object specified below is appended to this)</documentation>-->
-    <!--</formElement>-->
     <formElement>
         <type>entry</type>
         <label>Object Type:</label>
         <property>ObjType</property>
-        <required>1</required>
+        <required>0</required>
         <documentation>Object to create: resource type</documentation>
     </formElement>
     <formElement>
         <type>entry</type>
         <label>Object Name:</label>
         <property>ObjName</property>
-        <required>1</required>
+        <required>0</required>
         <documentation>Object to create: resource name</documentation>
     </formElement>
     <formElement>
         <type>entry</type>
         <label>Object Group:</label>
         <property>ObjGroup</property>
-        <required>1</required> #### Should this be optional?
+        <required>0</required> #### Should this be optional?
         <documentation>Object to create: resource group</documentation>
+    </formElement>
+    <formElement>
+        <type>textarea</type>
+        <label>Serialized Resource Object Criteria:</label>
+        <property>ObjectCriteria</property>
+        <required>0</required>
+        <documentation>Additional objects(s) to create: XML serialized list of resource object criteria created using procedure SerializeOtherObjectCriteria (optional, the object specified below is appended to this)</documentation>
+        <htmlDocumentation>
+            &lt;input name="Add" style=&quot;color: #ffffff;padding: 3px 15px 3px 15px;border: none;font-size:14px;height: 48px;min-width: 150px;background: #3e99df;&quot; value=&quot;Add criteria&quot; onclick='
+            var $ogValue = document.getElementsByName(&quot;ObjGroup&quot;)[0].value;
+            var $otValue = document.getElementsByName(&quot;ObjType&quot;)[0].value;
+            var $onValue = document.getElementsByName(&quot;ObjName&quot;)[0].value;
+            var $og=&quot;&lt;ObjGroup&gt;&quot;.concat($ogValue).concat(&quot;&lt;/ObjGroup&gt;\n&quot;);
+            var $ot=&quot;&lt;ObjType&gt;&quot;.concat($otValue).concat(&quot;&lt;/ObjType&gt;\n&quot;);
+            var $on=&quot;&lt;ObjName&gt;&quot;.concat($onValue).concat(&quot;&lt;/ObjName&gt;\n&quot;);
+            document.getElementsByName(&quot;ObjectCriteria&quot;)[0].value = &quot;&quot;
+            .concat($ogValue.length===0?&quot;&quot;:$og)
+            .concat($otValue.length===0?&quot;&quot;:$ot)
+            .concat($onValue.length===0?&quot;&quot;:$on)
+            document.getElementsByName(&quot;ObjGroup&quot;)[0].value = &quot;&quot;;
+            document.getElementsByName(&quot;ObjType&quot;)[0].value=&quot;&quot;;
+            document.getElementsByName(&quot;ObjName&quot;)[0].value=&quot;&quot;;
+            ' type=button /&gt;
+        </htmlDocumentation>
     </formElement>
     #### Is the omission of ObjDefVer correct? That requires all CICSPlex SM context resources to initially be created as part of a resource group
     <formElement>
@@ -110,92 +127,93 @@ documentation : Help text for the parameter
         <property>ObjectData</property>
         <required>1</required>
         <documentation>Name-value pairs to set in the resource definition object being created, one per line in NAME=VALUE format</documentation>
+        <!--TODO change documentation-->
     </formElement>
-    <!--<formElement>-->
-        <!--<type>entry</type>-->
-        <!--<label>CSYSDEF Model:</label>-->
-        <!--<property>CSYSDEFModel</property>-->
-        <!--<required>0</required>-->
-        <!--<documentation>Optional, applies only to CSYSDEF objects</documentation>-->
-    <!--</formElement>-->
-    <!--<formElement>-->
-        <!--<type>select</type>-->
-        <!--<label>Mon Spec Inherit:</label>-->
-        <!--<property>MonSpecInherit</property>-->
-        <!--<required>0</required>-->
-        <!--<documentation>Optional, applies only to CSGLCGCS objects</documentation>-->
-        <!--<option>-->
-            <!--<name>Keep</name>-->
-            <!--<value>KEEP</value>-->
-        <!--</option>-->
-        <!--<option>-->
-            <!--<name>Force</name>-->
-            <!--<value>FORCE</value>-->
-        <!--</option>-->
-        <!--<option>-->
-            <!--<name>Null</name>-->
-            <!--<value>NULL</value>-->
-        <!--</option>-->
-        <!--<value></value>-->
-    <!--</formElement>-->
-    <!--<formElement>-->
-        <!--<type>select</type>-->
-        <!--<label>RTA Spec Inherit:</label>-->
-        <!--<property>RTASpecInherit</property>-->
-        <!--<required>0</required>-->
-        <!--<documentation>Optional, applies only to CSGLCGCS objects</documentation>-->
-        <!--<option>-->
-            <!--<name>Keep</name>-->
-            <!--<value>KEEP</value>-->
-        <!--</option>-->
-        <!--<option>-->
-            <!--<name>Force</name>-->
-            <!--<value>FORCE</value>-->
-        <!--</option>-->
-        <!--<option>-->
-            <!--<name>Null</name>-->
-            <!--<value>NULL</value>-->
-        <!--</option>-->
-        <!--<value></value>-->
-    <!--</formElement>-->
-    <!--<formElement>-->
-        <!--<type>select</type>-->
-        <!--<label>WLM Spec Inherit:</label>-->
-        <!--<property>WLMSpecInherit</property>-->
-        <!--<required>0</required>-->
-        <!--<documentation>Optional, applies only to CSGLCGCS objects</documentation>-->
-        <!--<option>-->
-            <!--<name>Keep</name>-->
-            <!--<value>KEEP</value>-->
-        <!--</option>-->
-        <!--<option>-->
-            <!--<name>Force</name>-->
-            <!--<value>FORCE</value>-->
-        <!--</option>-->
-        <!--<option>-->
-            <!--<name>Null</name>-->
-            <!--<value>NULL</value>-->
-        <!--</option>-->
-        <!--<value></value>-->
-    <!--</formElement>-->
-    <!--<formElement>-->
-        <!--<type>select</type>-->
-        <!--<label>LNKSWSCG Parameter:</label>-->
-        <!--<property>LNKSWSCGParm</property>-->
-        <!--<required>0</required>-->
-        <!--<documentation>Optional, applies only to LNKSWSCG objects</documentation>-->
-        <!--<option>-->
-            <!--<name>None</name>-->
-            <!--<value>NONE</value>-->
-        <!--</option>-->
-        <!--<option>-->
-            <!--<name>Force</name>-->
-            <!--<value>FORCE</value>-->
-        <!--</option>-->
-        <!--<option>-->
-            <!--<name>Null</name>-->
-            <!--<value>NULL</value>-->
-        <!--</option>-->
-        <!--<value>NONE</value>-->
-    <!--</formElement>-->
+    <formElement>
+        <type>entry</type>
+        <label>CSYSDEF Model:</label>
+        <property>CSYSDEFModel</property>
+        <required>0</required>
+        <documentation>Optional, applies only to CSYSDEF objects</documentation>
+    </formElement>
+    <formElement>
+        <type>select</type>
+        <label>Mon Spec Inherit:</label>
+        <property>MonSpecInherit</property>
+        <required>0</required>
+        <documentation>Optional, applies only to CSGLCGCS objects</documentation>
+        <option>
+            <name>Keep</name>
+            <value>KEEP</value>
+        </option>
+        <option>
+            <name>Force</name>
+            <value>FORCE</value>
+        </option>
+        <option>
+            <name>Null</name>
+            <value>NULL</value>
+        </option>
+        <value></value>
+    </formElement>
+    <formElement>
+        <type>select</type>
+        <label>RTA Spec Inherit:</label>
+        <property>RTASpecInherit</property>
+        <required>0</required>
+        <documentation>Optional, applies only to CSGLCGCS objects</documentation>
+        <option>
+            <name>Keep</name>
+            <value>KEEP</value>
+        </option>
+        <option>
+            <name>Force</name>
+            <value>FORCE</value>
+        </option>
+        <option>
+            <name>Null</name>
+            <value>NULL</value>
+        </option>
+        <value></value>
+    </formElement>
+    <formElement>
+        <type>select</type>
+        <label>WLM Spec Inherit:</label>
+        <property>WLMSpecInherit</property>
+        <required>0</required>
+        <documentation>Optional, applies only to CSGLCGCS objects</documentation>
+        <option>
+            <name>Keep</name>
+            <value>KEEP</value>
+        </option>
+        <option>
+            <name>Force</name>
+            <value>FORCE</value>
+        </option>
+        <option>
+            <name>Null</name>
+            <value>NULL</value>
+        </option>
+        <value></value>
+    </formElement>
+    <formElement>
+        <type>select</type>
+        <label>LNKSWSCG Parameter:</label>
+        <property>LNKSWSCGParm</property>
+        <required>0</required>
+        <documentation>Optional, applies only to LNKSWSCG objects</documentation>
+        <option>
+            <name>None</name>
+            <value>NONE</value>
+        </option>
+        <option>
+            <name>Force</name>
+            <value>FORCE</value>
+        </option>
+        <option>
+            <name>Null</name>
+            <value>NULL</value>
+        </option>
+        <value></value>
+    </formElement>
 </editor>

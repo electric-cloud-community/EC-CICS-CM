@@ -89,7 +89,7 @@ my @data = SOAP::Data->name($soapMethodName => \SOAP::Data->value(
         SoapData('LocationType')
     )),
     SOAP::Data->name('ObjectCriteria' => @ObjectCriteria),
-    SOAP::Data->name('ProcessParams' => \SOAP::Data->value(
+    SOAP::Data->name('ProcessParms' => \SOAP::Data->value(
 $[/javascript (('' + myParent.PhaseIn).length == 0) ? "" :
 "        SoapData('PhaseIn'),  # Optional parameter "
 ]
