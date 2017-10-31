@@ -64,7 +64,6 @@ documentation : Help text for the parameter
         <required>1</required>
         <documentation>The CICS configuration that contains the resource definitions that you want to add to the change package</documentation>
     </formElement>
-<<<<<<< HEAD
     <formElement>
         <type>entry</type>
         <label>Object Group:</label>
@@ -92,16 +91,6 @@ documentation : Help text for the parameter
         <property>ObjectCriteria</property>
         <required>0</required>
         <documentation>Additional command(s) to add: XML serialized list of resource object criteria created using procedure SerializeOtherObjectCriteria (optional, the resource definition specified below is appended to this)</documentation>-->
-=======
-    <formElement>
-        <type>textarea</type>
-        <label>Serialized Resource Object Criteria:</label>
-        <property>ObjectCriteria</property>
-        <required>1</required>
-        <documentation>Name-value pairs to set in the resource definition object being created, one per line in NAME=VALUE format.
-            Write each restriction criteria per one line. For example: ObjGroup=value ObjType=value ObjName=value.
-            Valid keys are: [ObjGroup, ObjType, ObjName].</documentation>
->>>>>>> ab0b686652ee6e3b8d81e4f784ff46eed057ef76
     </formElement>
     <formElement>
         <type>entry</type>
