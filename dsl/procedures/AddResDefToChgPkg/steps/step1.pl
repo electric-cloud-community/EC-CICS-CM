@@ -22,6 +22,7 @@ if ($params{'ObjectCriteria'}.length == 0) {
     
     # No ObjectCriteria, so we only have one element, and can ommit the <ListCount> and <ListElement>
     @ObjectCriteria = SOAP::Data->name('ObjectCriteria' => \SOAP::Data->value(
+        SoapData('CConfig'),
         SOAP::Data->name('KeyA' => \SOAP::Data->value(
             SoapData('ObjGroup'),
             SoapData('ObjType'),
@@ -36,6 +37,7 @@ if ($params{'ObjectCriteria'}.length == 0) {
     my @matches = $objectCriteria =~ m/<ObjectData>/si;
     my $listCount = 1 + @matches;
     @ObjectCriteria = SOAP::Data->name('ObjectCriteria' => \SOAP::Data->value(
+        SoapData('CConfig'),
         SOAP::Data->name('ListCount' => $listCount),
         SOAP::Data->name('KeyA' => \SOAP::Data->value(
             SoapData('ObjGroup'),
