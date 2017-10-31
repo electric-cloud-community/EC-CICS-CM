@@ -91,6 +91,6 @@ if ($returnCode ne '00000000') {
         #### TODO return code 00000004 with a reason code ending in 0004 indicates that no matching objects were found
     }
 
-    print "ERROR: Result with non-zero return code '$returnCode' ans reason code '$reasonCode':\n" . Dumper($result);
+    print "ERROR: Result with non-zero return code '$returnCode' and reason code '$reasonCode':\n" . Dumper($result);
     exit -1;
 }
