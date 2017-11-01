@@ -46,7 +46,14 @@ documentation : Help text for the parameter
         <documentation>The property that results will be returned into.</documentation>
     </formElement>
     <formElement>
-        <type>radio</type>
+        <type>entry</type>
+        <label>Location Name:</label>
+        <property>LocationName</property>
+        <required>1</required>
+        <documentation>Name of location to create in</documentation>
+    </formElement>
+    <formElement>
+        <type>select</type>
         <label>Location Type:</label>
         <property>LocationType</property>
         <required>1</required>
@@ -64,13 +71,6 @@ documentation : Help text for the parameter
             <value>CSD</value>
         </option>
     </formElement>
-    <formElement>
-        <type>textarea</type>
-        <label>Serialized Resource Object Criteria:</label>
-        <property>ObjectCriteria</property>
-        <required>0</required>
-        <documentation>Additional objects(s) to delete: XML serialized list of resource object criteria created using procedure SerializeOtherObjectCriteria (optional, the object specified below is appended to this)</documentation>
-    </formElement> 
     <formElement>
         <type>entry</type>
         <label>Object Name:</label>
@@ -91,14 +91,21 @@ documentation : Help text for the parameter
         <property>ObjGroup</property>
         <required>0</required>
         <documentation>Object to delete: object group (omit if if Location Type is Context and Object Definition Version is supplied)</documentation>
-    </formElement> 
+    </formElement>
     <formElement>
         <type>entry</type>
         <label>Object Definition Version:</label>
         <property>ObjDefVer</property>
         <required>0</required>
         <documentation>Object to delete: definition version (optional, can be used instead of Object Group if Location Type is Context)</documentation>
-    </formElement> 
+    </formElement>
+    <formElement>
+        <type>textarea</type>
+        <label>Serialized Resource Object Criteria:</label>
+        <property>ObjectCriteria</property>
+        <required>0</required>
+        <documentation>Additional objects(s) to delete: XML serialized list of resource object criteria created using procedure SerializeOtherObjectCriteria (optional, the object specified below is appended to this)</documentation>
+    </formElement>
     <formElement>
         <type>entry</type>
         <label>Integrity Token:</label>
@@ -107,55 +114,55 @@ documentation : Help text for the parameter
         <documentation>Object to delete: object integrity token (optional, ignored if more than one object is specified or wildcard masking is used for objects)</documentation>
     </formElement>
     <formElement>
-        <type>radio</type>
+        <type>select</type>
         <label>Mon Spec Inherit:</label>
         <property>MonSpecInherit</property>
         <required>0</required>
         <documentation>Optional, applies only to CSGLCGCS objects</documentation>
         <option>
             <name>None</name>
-            <value>NONEL</value>
+            <value>NONE</value>
         </option>
         <option>
             <name>Keep</name>
             <value>KEEP</value>
         </option>
-        <value>NONE</value>
+        <value></value>
     </formElement>
     <formElement>
-        <type>radio</type>
+        <type>select</type>
         <label>RTA Spec Inherit:</label>
         <property>RTASpecInherit</property>
         <required>0</required>
         <documentation>Optional, applies only to CSGLCGCS objects</documentation>
         <option>
             <name>None</name>
-            <value>NONEL</value>
+            <value>NONE</value>
         </option>
         <option>
             <name>Keep</name>
             <value>KEEP</value>
         </option>
-        <value>NONE</value>
+        <value></value>
     </formElement>
     <formElement>
-        <type>radio</type>
+        <type>select</type>
         <label>WLM Spec Inherit:</label>
         <property>WLMSpecInherit</property>
         <required>0</required>
         <documentation>Optional, applies only to CSGLCGCS objects</documentation>
         <option>
             <name>None</name>
-            <value>NONEL</value>
+            <value>NONE</value>
         </option>
         <option>
             <name>Keep</name>
             <value>KEEP</value>
         </option>
-        <value>NONE</value>
+        <value></value>
     </formElement>
     <formElement>
-        <type>radio</type>
+        <type>select</type>
         <label>LNKSWSCG Parameter:</label>
         <property>LNKSWSCGParm</property>
         <required>0</required>
@@ -168,6 +175,6 @@ documentation : Help text for the parameter
             <name>None</name>
             <value>NONE</value>
         </option>
-        <value>KEEP</value>
+        <value></value>
     </formElement>
 </editor>

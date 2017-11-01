@@ -46,7 +46,14 @@ documentation : Help text for the parameter
         <documentation>The property that results will be returned into.</documentation>
     </formElement>
     <formElement>
-        <type>radio</type>
+        <type>entry</type>
+        <label>Location Name:</label>
+        <property>LocationName</property>
+        <required>1</required>
+        <documentation>Configuration name, CSD location, or CICSPlex Context, depending on Location Type value.</documentation>
+    </formElement>
+    <formElement>
+        <type>select</type>
         <label>Location Type:</label>
         <property>LocationType</property>
         <required>1</required>
@@ -59,22 +66,11 @@ documentation : Help text for the parameter
         <value>Journal</value>
     </formElement>
     <formElement>
-        <type>entry</type>
-        <label>Location Name:</label>
-        <property>LocationName</property>
-        <required>1</required>
-        <documentation>Configuration name, CSD location, or CICSPlex Context, depending on Location Type value.</documentation>
-    </formElement>
-    <formElement>
-        <type>dropdown</type>
+        <type>select</type>
         <label>Journal Record Type:</label>
         <property>JnlRecType</property>
         <required>0</required>
         <documentation>Journal record criteria (optional)</documentation>
-        <option>
-            <name>*</name>
-            <value></value> <!-- #### Correct? -->
-        </option>
         <option>
             <name>EventStart</name>
             <value>EventStart</value>
@@ -91,7 +87,7 @@ documentation : Help text for the parameter
             <name>EventEnd</name>
             <value>EventEnd</value>
         </option>
-        <!-- <value></value> #### Correct? -->
+        <value></value>
     </formElement>
     <formElement>
         <type>entry</type>

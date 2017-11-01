@@ -46,7 +46,7 @@ documentation : Help text for the parameter
         <documentation>The property that results will be returned into.</documentation>
     </formElement>
     <formElement>
-        <type>radio</type>
+        <type>select</type>
         <label>Location Type:</label>
         <property>LocationType</property>
         <required>1</required>
@@ -60,7 +60,7 @@ documentation : Help text for the parameter
     <formElement>
         <type>entry</type>
         <label>Object Type:</label>
-        <property>ObjName</property>
+        <property>ObjType</property>
         <required>1</required>
         <documentation>Object to inquire contents of: resource type</documentation>
     </formElement> 
@@ -71,41 +71,41 @@ documentation : Help text for the parameter
         <required>0</required>
         <documentation>Object to inquire contents of: object name (applies to object types AProfile, CConfig, Exits, Scheme, TFGroup, and TFRule)</documentation>
     </formElement> 
-    <formElement>
-        <type>entry</type>
-        <label>Change Package ID:</label>
-        <property>CPID</property>
-        <required>0</required>
-        <documentation>Object to inquire contents of: object change package ID (applies to object types ChgPkg, CmdAssociation, KeyAssociation, PScheme, and ReadyLst)</documentation>
-    </formElement>
-    <formElement>
-        <type>entry</type>
-        <label>CConfig:</label>
-        <property>CConfig</property>
-        <required>0</required>
-        <documentation>Object to inquire contents of: object CConfig (applies to object types CmdAssociation and KeyAssociation)</documentation>
-    </formElement>
-    <formElement>
-        <type>entry</type>
-        <label>CICS Group:</label>
-        <property>CICSGroup</property>
-        <required>0</required>
-        <documentation>Object to inquire contents of: object CICS group (applies to object types CmdAssociation and KeyAssociation)</documentation>
-    </formElement>
-    <formElement>
-        <type>entry</type>
-        <label>CICS Object Type:</label>
-        <property>CICSObjType</property>
-        <required>0</required>
-        <documentation>Object to inquire contents of: object CICS object type (applies to object types CmdAssociation and KeyAssociation)</documentation>
-    </formElement>
-    <formElement>
-        <type>entry</type>
-        <label>CICS Object Name:</label>
-        <property>CICSObjName</property>
-        <required>0</required>
-        <documentation>Object to inquire contents of: object CICS object name (applies to object types CmdAssociation and KeyAssociation)</documentation>
-    </formElement>       
+    <!--<formElement>-->
+        <!--<type>entry</type>-->
+        <!--<label>Change Package ID:</label>-->
+        <!--<property>CPID</property>-->
+        <!--<required>0</required>-->
+        <!--<documentation>Object to inquire contents of: object change package ID (applies to object types ChgPkg, CmdAssociation, KeyAssociation, PScheme, and ReadyLst)</documentation>-->
+    <!--</formElement>-->
+    <!--<formElement>-->
+        <!--<type>entry</type>-->
+        <!--<label>CConfig:</label>-->
+        <!--<property>CConfig</property>-->
+        <!--<required>0</required>-->
+        <!--<documentation>Object to inquire contents of: object CConfig (applies to object types CmdAssociation and KeyAssociation)</documentation>-->
+    <!--</formElement>-->
+    <!--<formElement>-->
+        <!--<type>entry</type>-->
+        <!--<label>CICS Group:</label>-->
+        <!--<property>CICSGroup</property>-->
+        <!--<required>0</required>-->
+        <!--<documentation>Object to inquire contents of: object CICS group (applies to object types CmdAssociation and KeyAssociation)</documentation>-->
+    <!--</formElement>-->
+    <!--<formElement>-->
+        <!--<type>entry</type>-->
+        <!--<label>CICS Object Type:</label>-->
+        <!--<property>CICSObjType</property>-->
+        <!--<required>0</required>-->
+        <!--<documentation>Object to inquire contents of: object CICS object type (applies to object types CmdAssociation and KeyAssociation)</documentation>-->
+    <!--</formElement>-->
+    <!--<formElement>-->
+        <!--<type>entry</type>-->
+        <!--<label>CICS Object Name:</label>-->
+        <!--<property>CICSObjName</property>-->
+        <!--<required>0</required>-->
+        <!--<documentation>Object to inquire contents of: object CICS object name (applies to object types CmdAssociation and KeyAssociation)</documentation>-->
+    <!--</formElement>       -->
     <formElement>
         <type>entry</type>
         <label>Scheme:</label>
@@ -119,5 +119,12 @@ documentation : Help text for the parameter
         <property>ObjectInstance</property>
         <required>0</required>
         <documentation>Object to inquire contents of: optional, if it is omitted the contents of the latest instance will be returned</documentation>
-    </formElement>    
+    </formElement>
+    <formElement>
+        <type>textarea</type>
+        <label>Serialized Resource Object Criteria:</label>
+        <property>ObjectCriteria</property>
+        <required>0</required>
+        <documentation>Additional objects(s) to delete: XML serialized list of resource object criteria created using procedure SerializeOtherObjectCriteria (optional, the object specified below is appended to this)</documentation>
+    </formElement>
 </editor>

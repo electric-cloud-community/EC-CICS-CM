@@ -8,17 +8,9 @@ my $soapMethodName = 'Inquire';
 
 # List of the names of optional paramters
 my @optionalParams = (
-    'CPID',
-    'CConfig',
-    'CICSGroup',
-    'Scheme',
-    'ObjectInstance',
 
 );
-# TODO Get rid of this -- we shouldn't need it, we already have a list of all parameters and a list of which are optional
-my @mandatoryParams = (
 
-);
 $[/myPlugin/project/ec_perl_metadata]
 
 $[/myPlugin/project/ec_perl_code_block_1]
@@ -26,30 +18,34 @@ $[/myPlugin/project/ec_perl_code_block_1]
 # Procedure-specific Code
 # -----------------------
 
-my @paramsForRequest;
-for my $p (@optionalParams, @mandatoryParams) {
-    if (defined $params{$p}) {
-        push @paramsForRequest, SoapData($p);
-    }
+my @ObjectCriteria;
+if (length $params{'ObjectCriteria'} == 0) {
+
+    # No ObjectCriteria, so we only have one element, and can ommit the <ListCount> and <ListElement>
+    @ObjectCriteria = SOAP::Data->name('ObjectCriteria' => \SOAP::Data->value(
+            SoapData('ObjType'),
+            SoapData('ObjName'),
+            SoapData('Scheme')
+        ));
+} else {
+
+    # Combine ObjName, ObjGroup, ObjType, and ObjectCriteria into @ObjectCriteria
+    my $objectCriteria = $params{'ObjectCriteria'};
+    @ObjectCriteria = SOAP::Data->name('ObjectCriteria' => \SOAP::Data->value(
+            SoapData('ObjType'),
+            SoapData('ObjName'),
+            SoapData('Scheme'),
+            SOAP::Data->type('xml' => $objectCriteria)
+        ));
 }
 
-my $data =
-SOAP::Data->name('LocationCriteria' => \SOAP::Data->value(
-    SOAP::Data->name('LocationType' => $params{'LocationType'})
-)) .
-SOAP::Data->name('ObjectCriteria' => \SOAP::Data->value(
-    SoapData('CConfig'),
-    SOAP::Data->name('ListCount' => 1),
-    SOAP::Data->name('ListElement' => \SOAP::Data->value(
-        SOAP::Data->name('DefA' => \SOAP::Data->value(
-            SoapData('ObjGroup'),
-            SoapData('ObjType'),
-            SoapData('ObjName')
-        ))
-      ))
-  )) .
-SOAP::Data->name('InputData' => \SOAP::Data->value(
-    @paramsForRequest
-));
+my @data =
+    SOAP::Data->name($soapMethodName => \SOAP::Data->value(
+            SOAP::Data->name('LocationCriteria' => \SOAP::Data->value(
+                    SoapData('LocationType')
+                )),
+            SOAP::Data->name('ObjectCriteria' => @ObjectCriteria)
+
+        ));
 
 $[/myPlugin/project/ec_perl_code_block_2]
