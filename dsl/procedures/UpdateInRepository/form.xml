@@ -46,11 +46,18 @@ documentation : Help text for the parameter
         <documentation>The property that results will be returned into.</documentation>
     </formElement>
     <formElement>
-        <type>radio</type>
+        <type>entry</type>
+        <label>Location Name:</label>
+        <property>LocationName</property>
+        <required>1</required>
+        <documentation>Name of location to create in</documentation>
+    </formElement>
+    <formElement>
+        <type>select</type>
         <label>Location Type:</label>
         <property>LocationType</property>
         <required>1</required>
-        <documentation>Location to create in (for this procedure this must be 'Repository', to create in other locations use procedure CreateInOther instead)</documentation>
+        <documentation>Location to create in (to create in the Repository, use procedure CreateInRepository instead)</documentation>
         <option>
             <name>Repository</name>
             <value>Repository</value>
@@ -62,34 +69,34 @@ documentation : Help text for the parameter
         <label>Object Type:</label>
         <property>ObjType</property>
         <required>1</required>
-        <documentation>Object to create: object type</documentation>
-    </formElement> 
+        <documentation>Object to create: resource type</documentation>
+    </formElement>
+    <formElement>
+        <type>textarea</type>
+        <label>Serialized Resource Object Criteria:</label>
+        <property>ObjectCriteria</property>
+        <required>0</required>
+        <documentation>Additional objects(s) to create: XML serialized list of resource object criteria created using procedure SerializeOtherObjectCriteria (optional, the object specified below is appended to this)</documentation>
+    </formElement>
     <formElement>
         <type>entry</type>
-        <label>Object Name:</label>
-        <property>ObjName</property>
+        <label>Integrity Token:</label>
+        <property>IntegrityToken</property>
         <required>0</required>
-        <documentation>Object to create: object name (applies to object types AProfile, CConfig, Exits, Scheme, TFGroup, and TFRule)</documentation>
-    </formElement> 
+        <documentation>Object to delete: object integrity token (optional, ignored if more than one object is specified or wildcard masking is used for objects)</documentation>
+    </formElement>
     <formElement>
         <type>entry</type>
-        <label>Change Package ID:</label>
-        <property>CPID</property>
+        <label>Data's Object Type:</label>
+        <property>DataObjType</property>
         <required>0</required>
-        <documentation>Object to create: object change package ID (applies to object types ChgPkg, PScheme, and ReadyLst)</documentation>
-    </formElement> 
-    <formElement>
-        <type>entry</type>
-        <label>Scheme:</label>
-        <property>Scheme</property>
-        <required>0</required>
-        <documentation>Object to create: object scheme (applies to object types PScheme and ReadyLst)</documentation>
-    </formElement> 
+        <documentation> Specifying this "wrapper" element allows you to use the supplied schema to validate the contents of the 'ObjectData' element for that object type</documentation>
+    </formElement>
     <formElement>
         <type>textarea</type>
         <label>Name-Value Pairs:</label>
         <property>ObjectData</property>
         <required>1</required>
         <documentation>Name-value pairs to set in the object being created, one per line in NAME=VALUE format</documentation>
-    </formElement> 
+    </formElement>
 </editor>

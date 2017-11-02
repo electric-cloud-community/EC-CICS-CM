@@ -46,7 +46,14 @@ documentation : Help text for the parameter
         <documentation>The property that results will be returned into.</documentation>
     </formElement>
     <formElement>
-        <type>radio</type>
+        <type>entry</type>
+        <label>Location Name:</label>
+        <property>LocationName</property>
+        <required>1</required>
+        <documentation>Configuration name, CSD location, CICSPlex Context, depending on Location Type value.</documentation>
+    </formElement>
+    <formElement>
+        <type>select</type>
         <label>Location Type:</label>
         <property>LocationType</property>
         <required>1</required>
@@ -67,20 +74,18 @@ documentation : Help text for the parameter
         <value>CSD</value>
     </formElement>
     <formElement>
-        <type>entry</type>
-        <label>Location Name:</label>
-        <property>LocationName</property>
-        <required>1</required>
-        <documentation>Configuration name, CSD location, CICSPlex Context, depending on Location Type value.</documentation>
-    </formElement>
-    <formElement>
-        <type>entry</type>
+        <type>select</type>
         <label>Resource Type:</label>
         <property>ObjType</property>
         <required>1</required>
         <documentation>(Optional) resource object criteria for a resource definition embedded in a BAImage: resource
             type
-        </documentation> <!-- #### Make this a select -->
+        </documentation>
+        <option>
+            <name>ResGroup</name>
+            <value>ResGroup</value>
+        </option>
+        <value>ResGroup</value>
     </formElement>
     <formElement>
         <type>entry</type>
@@ -93,15 +98,6 @@ documentation : Help text for the parameter
     </formElement>
     <formElement>
         <type>entry</type>
-        <label>Resource Group:</label>
-        <property>ObjGroup</property>
-        <required>0</required>
-        <documentation>(Optional) resource object criteria for a resource definition embedded in a BAImage: resource
-            group
-        </documentation>
-    </formElement>
-    <formElement>
-        <type>entry</type>
         <label>Resource Definition Version:</label>
         <property>ObjDefVer</property>
         <required>0</required>
@@ -110,17 +106,22 @@ documentation : Help text for the parameter
         </documentation>
     </formElement>
     <formElement>
-        <type>textarea</type>
-        <label>Restriction Criteria:</label>
-        <property>RestrictionCriteria</property>
-        <required>0</required>
-        <documentation>(Optional) restriction criteria, one per line in #### Is using . OK? #### &lt;NAME&gt;.&lt;COMPARATOR&gt;.&lt;VALUE&gt;
-            format. Valid &lt;COMPARATOR&gt; values are EQ, NE, LT, GT, LE, and GE. Restriction criteria on consecutive
-            lines are combined using logical AND. Groups of restriction critera separated by at least one blank line are
-            combined using logical OR. When listing BAImage journal records, you must prefix the field names of the
-            embedded resource definitions with B_ for before or A_ for after images. For eaxmple, to limit the list to
-            journal records whose before resource definition was chnaged after 26 June 2004, specify
-            B_ChangeTime.GT.2004/06/26
-        </documentation>
+        <type>entry</type>
+        <label>Change Package ID:</label>
+        <property>ContainerName</property>
+        <required>1</required>
+        <documentation>The ID of the change package to add the command(s) to</documentation>
+    </formElement>
+    <formElement>
+        <type>select</type>
+        <label>Container Type:</label>
+        <property>ContainerType</property>
+        <required>1</required>
+        <documentation>Container type to add the resource definition(s) to: must be 'Change Package' for this procedure (to add to other container types, use other Add... procedures instead)</documentation>
+        <option>
+            <name>ResDesc</name>
+            <value>ResDesc</value>
+        </option>
+        <value>ResDesc</value>
     </formElement>
 </editor>

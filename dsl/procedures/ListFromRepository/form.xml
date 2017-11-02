@@ -46,7 +46,14 @@ documentation : Help text for the parameter
         <documentation>The property that results will be returned into.</documentation>
     </formElement>
     <formElement>
-        <type>radio</type>
+        <type>entry</type>
+        <label>Location Name:</label>
+        <property>LocationName</property>
+        <required>1</required>
+        <documentation>Configuration name, CSD location, CICSPlex Context, depending on Location Type value.</documentation>
+    </formElement>
+    <formElement>
+        <type>select</type>
         <label>Location Type:</label>
         <property>LocationType</property>
         <required>1</required>
@@ -58,13 +65,6 @@ documentation : Help text for the parameter
             <value>Repository</value>
         </option>
         <value>Repository</value>
-    </formElement>
-    <formElement>
-        <type>entry</type>
-        <label>Location Name:</label>
-        <property>locationName</property>
-        <required>1</required>
-        <documentation>Configuration name, CSD location, CICSPlex Context, depending on Location Type value.</documentation>
     </formElement>
     <formElement>
         <type>entry</type>
@@ -104,6 +104,13 @@ documentation : Help text for the parameter
     </formElement>
     <formElement>
         <type>textarea</type>
+        <label>Serialized Repository Object Criteria:</label>
+        <property>ObjectCriteria</property>
+        <required>0</required>
+        <documentation>Additional command(s) to add: XML serialized list of resource object criteria created using procedure SerializeRepositoryObjectCriteria (optional, the command specified below is appended to this)</documentation>
+    </formElement>
+    <formElement>
+        <type>textarea</type>
         <label>Restriction Criteria:</label>
         <property>RestrictionCriteria</property>
         <required>0</required>
@@ -114,6 +121,113 @@ documentation : Help text for the parameter
             embedded resource definitions with B_ for before or A_ for after images. For eaxmple, to limit the list to
             journal records whose before resource definition was chnaged after 26 June 2004, specify
             B_ChangeTime.GT.2004/06/26
+        </documentation>
+    </formElement>
+    <formElement>
+        <type>select</type>
+        <label>Hashing Scope:</label>
+        <property>HashingScope</property>
+        <required>0</required>
+        <documentation> Determines whether or not the List command response contains a 'HashingValue' element with a checksum for each selected object, and which fields it uses to calculate the checksum
+        </documentation>
+        <option>
+            <name>None</name>
+            <value>None</value>
+        </option>
+        <option>
+            <name>Full</name>
+            <value>Full</value>
+        </option>
+        <option>
+            <name>Partial</name>
+            <value>Partial</value>
+        </option>
+        <option>
+            <name>Group</name>
+            <value>Group</value>
+        </option>
+        <option>
+            <name>Name</name>
+            <value>Name</value>
+        </option>
+        <option>
+            <name>List</name>
+            <value>List</value>
+        </option>
+        <option>
+            <name>Critical</name>
+            <value>Critical</value>
+        </option>
+        <value></value>
+    </formElement>
+    <formElement>
+        <type>select</type>
+        <label>Object History:</label>
+        <property>ObjectHistory</property>
+        <required>0</required>
+        <documentation>
+            Specifies whether to return all versions of an object from the repository, or only the current version.
+        </documentation>
+        <option>
+            <name>No</name>
+            <value>No</value>
+        </option>
+        <option>
+            <name>Yes</name>
+            <value>Yes</value>
+        </option>
+        <value></value>
+    </formElement>
+    <formElement>
+        <type>select</type>
+        <label>CPID Formula:</label>
+        <property>CPIDFormula</property>
+        <required>0</required>
+        <documentation>
+            CPIDFormula is relevant only when listing change packages.
+        </documentation>
+        <option>
+            <name>APPROVE</name>
+            <value>APPROVE?</value>
+        </option>
+        <option>
+            <name>MIGRATE</name>
+            <value>MIGRATE?</value>
+        </option>
+        <value></value>
+    </formElement>
+    <formElement>
+        <type>select</type>
+        <label>Counts:</label>
+        <property>Counts</property>
+        <required>0</required>
+        <documentation>
+            All Counts requests the server to include various count values in the response
+        </documentation>
+        <option>
+            <name>None</name>
+            <value>None</value>
+        </option>
+        <option>
+            <name>All</name>
+            <value>All</value>
+        </option>
+        <value></value>
+    </formElement>
+    <formElement>
+        <type>entry</type>
+        <label>Filter Date:</label>
+        <property>FilterDate</property>
+        <required>0</required>
+        <documentation>(Optional) limits the objects returned by List to those changed on or before the specified date and time. You can use this instead of, or in addition to, restriction criteria for change time. Format: yyyy/mm/dd.hh:mm
+        </documentation>
+    </formElement>
+    <formElement>
+        <type>entry</type>
+        <label>Limit:</label>
+        <property>Limit</property>
+        <required>0</required>
+        <documentation>(Optional) sets an upper limit to the number of resource definitions returned by List. If the number of resource definitions that match the specifications of the List command exceeds this limit, then the List command returns an error, with no resource definitions. This avoids the problems associated with returning a subset of objects that match the specifications: for example, depending on how a client sorts the results of the List command, omissions might not be apparent to the end user.
         </documentation>
     </formElement>
 </editor>

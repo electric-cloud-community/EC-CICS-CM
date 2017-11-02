@@ -46,7 +46,14 @@ documentation : Help text for the parameter
         <documentation>The property that results will be returned into.</documentation>
     </formElement>
     <formElement>
-        <type>radio</type>
+        <type>entry</type>
+        <label>Location Name:</label>
+        <property>LocationName</property>
+        <required>1</required>
+        <documentation>Configuration name, CSD location, CICSPlex Context, depending on Location Type value.</documentation>
+    </formElement>
+    <formElement>
+        <type>select</type>
         <label>Location Type:</label>
         <property>LocationType</property>
         <required>1</required>
@@ -68,22 +75,6 @@ documentation : Help text for the parameter
     </formElement>
     <formElement>
         <type>entry</type>
-        <label>Location Name:</label>
-        <property>LocationName</property>
-        <required>1</required>
-        <documentation>Configuration name, CSD location, CICSPlex Context, depending on Location Type value.</documentation>
-    </formElement>
-    <formElement>
-        <type>entry</type>
-        <label>Resource Type:</label>
-        <property>ObjType</property>
-        <required>1</required>
-        <documentation>(Optional) resource object criteria for a resource definition embedded in a BAImage: resource
-            type
-        </documentation> <!-- #### Make this a select -->
-    </formElement>
-    <formElement>
-        <type>entry</type>
         <label>Resource Name:</label>
         <property>ObjName</property>
         <required>1</required>
@@ -93,34 +84,44 @@ documentation : Help text for the parameter
     </formElement>
     <formElement>
         <type>entry</type>
-        <label>Resource Group:</label>
-        <property>ObjGroup</property>
-        <required>0</required>
-        <documentation>(Optional) resource object criteria for a resource definition embedded in a BAImage: resource
-            group
+        <label>Resource Type:</label>
+        <property>ObjType</property>
+        <required>1</required>
+        <documentation>resource object criteria for a resource definition embedded in a BAImage: resource
+            type
         </documentation>
     </formElement>
     <formElement>
         <type>entry</type>
-        <label>Resource Definition Version:</label>
-        <property>ObjDefVer</property>
-        <required>0</required>
-        <documentation>(Optional) resource object criteria for a resource definition embedded in a BAImage: resource
-            definition version
-        </documentation>
+        <label>Source Name:</label>
+        <property>SourceName</property>
+        <required>1</required>
+        <documentation>        </documentation> <!--TODO Add documentation -->
     </formElement>
     <formElement>
-        <type>textarea</type>
-        <label>Restriction Criteria:</label>
-        <property>RestrictionCriteria</property>
-        <required>0</required>
-        <documentation>(Optional) restriction criteria, one per line in #### Is using . OK? #### &lt;NAME&gt;.&lt;COMPARATOR&gt;.&lt;VALUE&gt;
-            format. Valid &lt;COMPARATOR&gt; values are EQ, NE, LT, GT, LE, and GE. Restriction criteria on consecutive
-            lines are combined using logical AND. Groups of restriction critera separated by at least one blank line are
-            combined using logical OR. When listing BAImage journal records, you must prefix the field names of the
-            embedded resource definitions with B_ for before or A_ for after images. For eaxmple, to limit the list to
-            journal records whose before resource definition was chnaged after 26 June 2004, specify
-            B_ChangeTime.GT.2004/06/26
-        </documentation>
+        <type>entry</type>
+        <label>Source Type:</label>
+        <property>SourceType</property>
+        <required>1</required>
+        <documentation>        </documentation> <!--TODO Add documentation -->
     </formElement>
+    <formElement>
+        <type>entry</type>
+        <label>Target Group:</label>
+        <property>TargetGroup</property>
+        <required>1</required>
+        <documentation>        </documentation> <!--TODO Add documentation -->
+    </formElement>
+    <formElement>
+        <type>checkbox</type>
+        <label>Replace:</label>
+        <property>Replace</property>
+        <required>0</required>
+        <documentation>Whether to overwrite existing resource definitions at the target location</documentation>
+        <checkedValue>YES</checkedValue>
+        <uncheckedValue>NO</uncheckedValue>
+        <initiallyChecked>0</initiallyChecked>
+        <value>NO</value>
+    </formElement>
+
 </editor>

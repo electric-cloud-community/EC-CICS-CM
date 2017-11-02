@@ -10,11 +10,7 @@ my $soapMethodName = 'Alter';
 my @optionalParams = (
 
 );
-my @mandatoryParams = (
-    'LocationName',
-    'ObjectData',
 
-);
 $[/myPlugin/project/ec_perl_metadata]
 
 $[/myPlugin/project/ec_perl_code_block_1]

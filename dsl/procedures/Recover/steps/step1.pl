@@ -4,16 +4,11 @@ $[/myPlugin/project/ec_perl_header]
 # ---------------------------
 
 # Name of SOAP method to call
-my $soapMethodName = 'List';
+my $soapMethodName = 'Recover';
 
 # List of the names of optional paramters
 my @optionalParams = (
-    'HashingScope',
-    'ObjectHistory',
-    'CPIDFormula',
-    'Counts',
-    'FilterDate',
-    'Limit'
+
 );
 
 $[/myPlugin/project/ec_perl_metadata]
@@ -23,9 +18,7 @@ $[/myPlugin/project/ec_perl_code_block_1]
 # Procedure-specific Code
 # -----------------------
 
-# Split and parse optional RestrictionCriteria
-my @restrictionCriteria = makeRestrictionCriteria($params{'RestrictionCriteria'});
-
+# Build @ObjectCriteria
 my @ObjectCriteria;
 if (length $params{'ObjectCriteria'} == 0) {
 
@@ -34,7 +27,8 @@ if (length $params{'ObjectCriteria'} == 0) {
             SoapData('ObjName'),
             SoapData('ObjGroup'),
             SoapData('ObjType'),
-            SoapData('ObjDefVer')
+            SoapData('ObjectInstance')
+
         ));
 } else {
 
@@ -48,36 +42,22 @@ if (length $params{'ObjectCriteria'} == 0) {
                     SoapData('ObjName'),
                     SoapData('ObjGroup'),
                     SoapData('ObjType'),
-                    SoapData('ObjDefVer')
+                    SoapData('ObjectInstance')
                 )),
             SOAP::Data->type('xml' => $objectCriteria)
         ));
 }
 
-# Handle optional parametrs
-my @paramsForRequest;
-for my $p (@optionalParams) {
-    if ($params{$p} ne "") {
-        push @paramsForRequest, "<$p>$params{$p}</$p>";
-    }
-}
-if(scalar(@paramsForRequest) > 0) {
-    unshift @paramsForRequest, "<ProcessParms>";
-    push @paramsForRequest, "</ProcessParms>";
-}
-my $processParmsXml = "@paramsForRequest";
-
 my @data =
     SOAP::Data->name($soapMethodName => \SOAP::Data->value(
         SOAP::Data->name('LocationCriteria' => \SOAP::Data->value(
-            SoapData('LocationName'),
-            SoapData('LocationType')
-        )),
+                SoapData('LocationType')
+            )),
         SOAP::Data->name('ObjectCriteria' => @ObjectCriteria),
-        $[/javascript ((('' + myParent.RestrictionCriteria).length == 0) || !(new RegExp("[^\.\s]+\.[^\.\s]+\.[^\.\s]+").test(myParent.RestrictionCriteria))) ? "" : // Check for presence of the pattern we parse
-            "    @restrictionCriteria,  # Optional section "
-        ],
-        SOAP::Data->type('xml' => $processParmsXml )
-));
+        SOAP::Data->name('ProcessParms' => \SOAP::Data->value(
+                SoapData('RecoverImage'),
+                SoapData('RollbackOption')
+        ))
+    ));
 
 $[/myPlugin/project/ec_perl_code_block_2]

@@ -24,7 +24,7 @@ my @data = SOAP::Data->name($soapMethodName => \SOAP::Data->value(
         SoapData('CPID'),
         SoapData('Scheme')
     )),
-    SOAP::Data->name('SelectionCriteria' => \SOAP::Data->value(
+    SOAP::Data->name('InputData' => \SOAP::Data->value(
         SoapData('Role')
     ))
 

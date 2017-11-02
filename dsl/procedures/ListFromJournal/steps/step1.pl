@@ -8,7 +8,25 @@ my $soapMethodName = 'List';
 
 # List of the names of optional paramters
 my @optionalParams = (
-    'ObjGroup', 'ObjDefVer', 'RestrictionCriteria'
+    'HashingScope',
+    'ObjectHistory',
+    'CPIDFormula',
+    'Counts',
+    'FilterDate',
+    'Limit'
+);
+
+my @jnlCriteriaParams = (
+    'JnlCCVRel',
+    'JnlCICSRel',
+    'JnlCPID',
+    'JnlScheme',
+    'JnlUserID',
+    'JnlObjGroup',
+    'JnlObjName',
+    'JnlObjType',
+    'JnlCSD',
+    'JnlContext'
 );
 
 $[/myPlugin/project/ec_perl_metadata]
@@ -20,12 +38,63 @@ $[/myPlugin/project/ec_perl_code_block_1]
 
 #### TODO If restrictionCriteria is non-empty, split and parse its contents, and add them to $data
 
+# Split and parse optional RestrictionCriteria
+my @restrictionCriteria = makeRestrictionCriteria($params{'RestrictionCriteria'});
+
+my @ObjectCriteria;
+if (length $params{'ObjectCriteria'} == 0) {
+
+    # No ObjectCriteria, so we only have one element, and can ommit the <ListCount> and <ListElement>
+    @ObjectCriteria = SOAP::Data->name('ObjectCriteria' => \SOAP::Data->value(
+            SoapData('ObjName'),
+            SoapData('ObjGroup'),
+            SoapData('ObjType'),
+            SoapData('ObjDefVer')
+        ));
+} else {
+
+    # Combine ObjName, ObjGroup, ObjType, and ObjectCriteria into @ObjectCriteria
+    my $objectCriteria = $params{'ObjectCriteria'};
+    my @matches = $objectCriteria =~ m/<ListElement>/si;
+    my $listCount = 1 + @matches;
+    @ObjectCriteria = SOAP::Data->name('ObjectCriteria' => \SOAP::Data->value(
+            SOAP::Data->name('ListCount' => $listCount),
+            SOAP::Data->name('ListElement' => \SOAP::Data->value(
+                    SoapData('ObjName'),
+                    SoapData('ObjGroup'),
+                    SoapData('ObjType'),
+                    SoapData('ObjDefVer')
+                )),
+            SOAP::Data->type('xml' => $objectCriteria)
+        ));
+}
+
+# Handle optional parametrs
 my @paramsForRequest;
-for my $name (@names) {
-    if (defined $params{$name}) {
-        push @paramsForRequest, SoapData($name);
+for my $p (@optionalParams) {
+    if ($params{$p} ne "") {
+        push @paramsForRequest, "<$p>$params{$p}</$p>";
     }
 }
+if(scalar(@paramsForRequest) > 0) {
+    unshift @paramsForRequest, "<ProcessParms>";
+    push @paramsForRequest, "</ProcessParms>";
+}
+my $processParmsXml = "@paramsForRequest";
+
+
+# Handle Journal parametrs
+my @jnlCriteriaParamsForRequest;
+for my $p (@jnlCriteriaParams) {
+    if ($params{$p} ne "") {
+        push @jnlCriteriaParamsForRequest, "<$p>$params{$p}</$p>";
+    }
+}
+if(scalar(@jnlCriteriaParamsForRequest) > 0) {
+    unshift @jnlCriteriaParamsForRequest, "<JnlCriteria>";
+    push @jnlCriteriaParamsForRequest, "</JnlCriteria>";
+}
+my $jnlCriteriaXml = "@jnlCriteriaParamsForRequest";
 
 my @data =
     SOAP::Data->name($soapMethodName => \SOAP::Data->value(
@@ -33,22 +102,12 @@ my @data =
             SoapData('LocationName'),
             SoapData('LocationType')
         )),
-        SOAP::Data->name('ObjectCriteria' => \SOAP::Data->value(
-
-        )),
-        SOAP::Data->name('ObjectCriteria' => \SOAP::Data->value(
-            SOAP::Data->name('ListCount' => 1),
-            SOAP::Data->name('ListElement' => \SOAP::Data->value(
-                SOAP::Data->name('DefA' => \SOAP::Data->value(
-                    SoapData('ObjGroup'),
-                    SoapData('ObjType'),
-                    SoapData('ObjName')
-                ))
-            ))
-        )) #### ,
-####    SOAP::Data->name('InputData' => \SOAP::Data->value( #### TODO Why is this here? I don't think it's needed
-####       @paramsForRequest
-####    ))
+        SOAP::Data->type('xml' => $jnlCriteriaXml ),
+        SOAP::Data->name('ObjectCriteria' => @ObjectCriteria),
+        $[/javascript ((('' + myParent.RestrictionCriteria).length == 0) || !(new RegExp("[^\.\s]+\.[^\.\s]+\.[^\.\s]+").test(myParent.RestrictionCriteria))) ? "" : // Check for presence of the pattern we parse
+            "    @restrictionCriteria,  # Optional section "
+        ],
+        SOAP::Data->type('xml' => $processParmsXml )
 ));
 
 $[/myPlugin/project/ec_perl_code_block_2]

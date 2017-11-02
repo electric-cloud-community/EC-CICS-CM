@@ -46,23 +46,40 @@ documentation : Help text for the parameter
         <documentation>The property that results will be returned into.</documentation>
     </formElement>
     <formElement>
-        <type>radio</type>
-        <label>Location Type:</label>
-        <property>LocationType</property>
-        <required>1</required>
-        <documentation>Location to import from: must be 'CConfig'</documentation>
-        <option>
-            <name>Repository</name>
-            <value>Repository</value>
-        </option>
-        <value>Repository</value>
-    </formElement>
-    <formElement>
         <type>entry</type>
         <label>Export File Name:</label>
         <property>LocationName</property>
         <required>1</required>
         <documentation>The CICS Configuration Manager export file to import from</documentation>
+    </formElement>
+    <formElement>
+        <type>radio</type>
+        <label>Select resource definitions:</label>
+        <property>resDefinition</property>
+        <required>1</required>
+        <documentation>Specify either: [SelectionCriteria to select resource definitions to import based on which change packages they belong to.]
+            or [ObjectCriteria to select resource definitions to import based on filter criteria for name, group, and type. To import all resource definitions in the export file, specify an asterisk (*) for name, group, and type].</documentation>
+        <option>
+            <name>Selection Criteria</name>
+            <value>SelectionCriteria</value>
+        </option>
+        <option>
+            <name>Object Criteria</name>
+            <value>ObjectCriteria</value>
+        </option>
+        <value>SelectionCriteria</value>
+    </formElement>
+    <formElement>
+        <type>select</type>
+        <label>Location Type:</label>
+        <property>LocationType</property>
+        <required>1</required>
+        <documentation>Location to import from: must be 'CConfig'</documentation>
+        <option>
+            <name>CConfig</name>
+            <value>CConfig</value>
+        </option>
+        <value>CConfig</value>
     </formElement>
     <formElement>
         <type>entry</type>
@@ -82,25 +99,25 @@ documentation : Help text for the parameter
         <type>entry</type>
         <label>Resource Name:</label>
         <property>ObjName</property>
-        <required>1</required>
+        <required>0</required>
         <documentation>Resource definition to import: resource name (optional, specify either this plus Resource Type and Resource Group, or CPID)</documentation>
     </formElement> 
     <formElement>
         <type>entry</type>
         <label>Resource Type:</label>
         <property>ObjType</property>
-        <required>1</required>
+        <required>0</required>
         <documentation>Resource definition to import: resource type (optional, specify either this plus Resource Name and Resource Group, or CPID)</documentation>
     </formElement> 
     <formElement>
         <type>entry</type>
         <label>Resource Group:</label>
         <property>ObjGroup</property>
-        <required>1</required>
+        <required>0</required>
         <documentation>Resource definition to import: resource group (optional, specify either this plus Resource Name and Resource Type, or CPID)</documentation>
     </formElement>
     <formElement>
-        <type>radio</type>
+        <type>select</type>
         <label>Target Location Type:</label>
         <property>TargetLocationType</property>
         <required>1</required>
@@ -131,8 +148,8 @@ documentation : Help text for the parameter
         <property>RegisterCPID</property>
         <required>0</required>
         <documentation>If importing a change package, should it be registered in the repository?</documentation>
-	<checkedValue>YES</checkedValue>
-	<uncheckedValue>NO</uncheckedValue>
+        <checkedValue>YES</checkedValue>
+        <uncheckedValue>NO</uncheckedValue>
         <initiallyChecked>0</initiallyChecked>
         <value>NO</value>
     </formElement>
@@ -142,8 +159,8 @@ documentation : Help text for the parameter
         <property>PurgeImportedRecords</property>
         <required>1</required>
         <documentation>Purge imported records?</documentation>
-	<checkedValue>YES</checkedValue>
-	<uncheckedValue>NO</uncheckedValue>
+	    <checkedValue>YES</checkedValue>
+	    <uncheckedValue>NO</uncheckedValue>
         <initiallyChecked>0</initiallyChecked>
         <value>NO</value>
     </formElement>

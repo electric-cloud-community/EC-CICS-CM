@@ -46,41 +46,17 @@ documentation : Help text for the parameter
         <documentation>The property that results will be returned into.</documentation>
     </formElement>
     <formElement>
-        <type>radio</type>
+        <type>select</type>
         <label>Location Type:</label>
         <property>LocationType</property>
         <required>1</required>
         <documentation>Location to list from: (to list from a Journal use ListFromJournal, to list from a Reposititory use ListFromRepository instead)
         </documentation>
         <option>
-            <name>CSD</name>
-            <value>CSD</value>
+            <name>Journal</name>
+            <value>Journal</value>
         </option>
-        <option>
-            <name>Context</name>
-            <value>Context</value>
-        </option>
-        <option>
-            <name>CConfig</name>
-            <value>CConfig</value>
-        </option>
-        <value>CSD</value>
-    </formElement>
-    <formElement>
-        <type>entry</type>
-        <label>Location Name:</label>
-        <property>LocationName</property>
-        <required>1</required>
-        <documentation>Configuration name, CSD location, CICSPlex Context, depending on Location Type value.</documentation>
-    </formElement>
-    <formElement>
-        <type>entry</type>
-        <label>Resource Type:</label>
-        <property>ObjType</property>
-        <required>1</required>
-        <documentation>(Optional) resource object criteria for a resource definition embedded in a BAImage: resource
-            type
-        </documentation> <!-- #### Make this a select -->
+        <value>Journal</value>
     </formElement>
     <formElement>
         <type>entry</type>
@@ -95,32 +71,62 @@ documentation : Help text for the parameter
         <type>entry</type>
         <label>Resource Group:</label>
         <property>ObjGroup</property>
-        <required>0</required>
+        <required>1</required>
         <documentation>(Optional) resource object criteria for a resource definition embedded in a BAImage: resource
             group
         </documentation>
     </formElement>
     <formElement>
         <type>entry</type>
-        <label>Resource Definition Version:</label>
-        <property>ObjDefVer</property>
-        <required>0</required>
+        <label>Resource Type:</label>
+        <property>ObjType</property>
+        <required>1</required>
         <documentation>(Optional) resource object criteria for a resource definition embedded in a BAImage: resource
-            definition version
-        </documentation>
+            type
+        </documentation> <!-- #### Make this a select -->
+    </formElement>
+    <formElement>
+        <type>entry</type>
+        <label>Resource Instance:</label>
+        <property>ObjectInstance</property>
+        <required>1</required>
+        <documentation>Resource object criteria to append: resource instance (optional, valid only for use with the Recover procedure)</documentation>
     </formElement>
     <formElement>
         <type>textarea</type>
-        <label>Restriction Criteria:</label>
-        <property>RestrictionCriteria</property>
+        <label>Serialized Resource Object Criteria:</label>
+        <property>ObjectCriteria</property>
         <required>0</required>
-        <documentation>(Optional) restriction criteria, one per line in #### Is using . OK? #### &lt;NAME&gt;.&lt;COMPARATOR&gt;.&lt;VALUE&gt;
-            format. Valid &lt;COMPARATOR&gt; values are EQ, NE, LT, GT, LE, and GE. Restriction criteria on consecutive
-            lines are combined using logical AND. Groups of restriction critera separated by at least one blank line are
-            combined using logical OR. When listing BAImage journal records, you must prefix the field names of the
-            embedded resource definitions with B_ for before or A_ for after images. For eaxmple, to limit the list to
-            journal records whose before resource definition was chnaged after 26 June 2004, specify
-            B_ChangeTime.GT.2004/06/26
+        <documentation>Additional objects(s) to create: XML serialized list of resource object criteria created using procedure SerializeOtherObjectCriteria (optional, the object specified below is appended to this)</documentation>
+    </formElement>
+    <formElement>
+        <type>select</type>
+        <label>Recover Image:</label>
+        <property>RecoverImage</property>
+        <required>1</required>
+        <documentation>
+            Specify whether to recover the before image (undo the change) or the after image (redo the change).
         </documentation>
+        <option>
+            <name>Before</name>
+            <value>Before</value>
+        </option>
+        <option>
+            <name>After</name>
+            <value>After</value>
+        </option>
+        <value>Before</value>
+    </formElement>
+    <formElement>
+        <type>checkbox</type>
+        <label>Rollback Option:</label>
+        <property>RollbackOption</property>
+        <required>0</required>
+        <documentation>The rollback option applies only when recovering before images.
+            The rollback option protects you from unintentionally overwriting changes that are outside of the set you have selected. Specifically, the rollback option ensures that the selected changes for a resource definition form an unbroken chain that begins at the current resource definition and ends at the before image of the oldest selected change.</documentation>
+        <checkedValue>YES</checkedValue>
+        <uncheckedValue>NO</uncheckedValue>
+        <initiallyChecked>0</initiallyChecked>
+        <value>NO</value>
     </formElement>
 </editor>

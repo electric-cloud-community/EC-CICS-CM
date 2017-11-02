@@ -80,3 +80,62 @@ sub makeAddObjectCriteria {
     return @result;
 
 }
+
+sub makeRestrictionCriteria {
+    my($rCriteria) = @_;
+
+    my @RestrictionCriteria;
+
+    if (length($rCriteria) > 0) {
+
+        # First go through and collect all the counts
+        my $restrictionCount = 0;
+        my %listCount;
+        my @lines = split(/$/, $rCriteria); # Split into lines
+        foreach my $line (@lines) {
+            $listCount{$line} = 0;
+            my @parts = split(/\s+/, $line); # Split on whitespace
+            foreach my $part (@parts) {
+                my @pieces = split(/\./, $part, 3); # Split at first two .'s into field, operator, and value
+                if (@pieces == 3) {
+                    $listCount{$line}++;
+                }
+            else
+            {
+                print "ERROR: Unable to parse Restriction Criteria near '$part'!";
+                exit -1;
+            }
+            }
+            if ($listCount{$line} > 0) {
+                $restrictionCount++;
+            }
+        }
+
+        if ($restrictionCount > 0) {
+
+            # Now we have counts, go through again and build the actual output
+            push(@RestrictionCriteria, SOAP::Data->name('RestrictionCount' => $restrictionCount));
+            foreach my $line (@lines) {
+                if ($listCount{$line} > 0) {
+                    my @RestrictionElement;
+                    push(@RestrictionElement, SOAP::Data->name('ListCount' => $listCount{$line}));
+                    my @parts = split(/\s+/, $line); # Split on whitespace
+                    foreach my $part (@parts) {
+                        my @pieces = split(/\./, $part, 3); # Split at first two .'s into field, operator, and value
+                        if (@pieces == 3) {
+                            push(@RestrictionElement, SOAP::Data->name('ListElement' => \SOAP::Data->value(
+                                SOAP::Data->name('RestrictionField' => $pieces[0]),
+                                SOAP::Data->name('RestrictionOperator' => $pieces[1]),
+                                SOAP::Data->name('RestrictionValue' => $pieces[2])
+                            )));
+                        }
+                    }
+                    push(@RestrictionCriteria, SOAP::Data->name('RestrictionElement' => \SOAP::Data->value(@RestrictionElement)));
+                }
+            }
+        }
+    }
+    my @result;
+    push(@result, SOAP::Data->name('RestrictionCriteria' => \SOAP::Data->value(@RestrictionCriteria)));
+    return @result;
+}
