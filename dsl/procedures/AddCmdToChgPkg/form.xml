@@ -46,7 +46,7 @@ documentation : Help text for the parameter
         <documentation>The property that results will be returned into.</documentation>
     </formElement>
     <formElement>
-        <type>radio</type>
+        <type>select</type>
         <label>Location Type:</label>
         <property>LocationType</property>
         <required>1</required>
@@ -64,13 +64,6 @@ documentation : Help text for the parameter
         <required>1</required>
         <documentation>The CICS configuration associated with the commands that you want to add to the change package</documentation>
     </formElement>
-    <formElement>
-        <type>textarea</type>
-        <label>Serialized Repository Object Criteria:</label>
-        <property>ObjectCriteria</property>
-        <required>0</required>
-        <documentation>Additional command(s) to add: XML serialized list of resource object criteria created using procedure SerializeRepositoryObjectCriteria (optional, the command specified below is appended to this)</documentation>
-    </formElement> 
     <formElement>
         <type>select</type>
         <label>Command:</label>
@@ -124,7 +117,14 @@ documentation : Help text for the parameter
         <property>TContainer</property>
         <required>0</required>
         <documentation>Relevant only when packaging an Add command: it identifies the ResGroup to which you want the resource definitions added</documentation>
-    </formElement> 
+    </formElement>
+    <formElement>
+        <type>textarea</type>
+        <label>Serialized Repository Object Criteria:</label>
+        <property>ObjectCriteria</property>
+        <required>0</required>
+        <documentation>Additional command(s) to add: XML serialized list of resource object criteria created using procedure SerializeRepositoryObjectCriteria (optional, the command specified below is appended to this)</documentation>
+    </formElement>
     <formElement>
         <type>entry</type>
         <label>Change Package ID:</label>

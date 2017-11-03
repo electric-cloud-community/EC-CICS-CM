@@ -47,7 +47,7 @@ if (length $params{'ObjectCriteria'} == 0) {
 }
 
 # Combine ObjName, ObjGroup, ObjType, and ObjectCriteria into @ObjectCriteria
-my $inputData = $params{'InputData'};
+my $inputData = $params{'ObjectData'};
 my @matchesTarget = $inputData =~ m/<TargetElement>/si;
 my $targetCount = 1 + @matchesTarget;
 my @InputData = SOAP::Data->name('ObjectCriteria' => \SOAP::Data->value(

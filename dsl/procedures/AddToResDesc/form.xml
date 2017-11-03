@@ -72,10 +72,28 @@ documentation : Help text for the parameter
         </option>
     </formElement>
     <formElement>
+        <type>entry</type>
+        <label>Resource Type:</label>
+        <property>ObjType</property>
+        <required>1</required>
+        <documentation>Resource object criteria for a resource definition embedded in a BAImage: resource
+            type
+        </documentation>
+    </formElement>
+    <formElement>
+        <type>entry</type>
+        <label>Resource Name:</label>
+        <property>ObjName</property>
+        <required>1</required>
+        <documentation>Resource object criteria for a resource definition embedded in a BAImage: resource
+            name
+        </documentation>
+    </formElement>
+    <formElement>
         <type>textarea</type>
         <label>Serialized Resource Object Criteria:</label>
         <property>ObjectCriteria</property>
-        <required>1</required>
+        <required>0</required>
         <documentation>Name-value pairs to set in the resource definition object being created, one per line in NAME=VALUE format.
             Write each restriction criteria per one line. For example: ObjType=value ObjName=value.
             Valid keys are: [ObjType, ObjName].</documentation>

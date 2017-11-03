@@ -38,6 +38,42 @@ if (length($params{'ObjDefVer'}) > 0 ) {
 # Split and parse optional RestrictionCriteria
 my @restrictionCriteria = makeRestrictionCriteria($params{'RestrictionCriteria'});
 
+my @ObjectCriteria;
+if (length $params{'ObjectCriteria'} == 0) {
+
+    # No ObjectCriteria, so we only have one element, and can ommit the <ListCount> and <ListElement>
+    @ObjectCriteria = SOAP::Data->name('ObjectCriteria' => \SOAP::Data->value(
+        SoapData('ObjName'),
+        $[/javascript (('' + myParent.ObjGroup).length == 0) ? "" :
+                        "        SoapData('ObjGroup'),  # Optional parameter "
+                        ],
+                SoapData('ObjType'),
+        $[/javascript (('' + myParent.ObjDefVer).length == 0) ? "" :
+                        "        SoapData('ObjDefVer'),  # Optional parameter "
+                        ],
+        ));
+} else {
+
+    # Combine ObjName, ObjGroup, ObjType, and ObjectCriteria into @ObjectCriteria
+        my $objectCriteria = $params{'ObjectCriteria'};
+    my @matches = $objectCriteria =~ m/<ListElement>/si;
+    my $listCount = 1 + @matches;
+        @ObjectCriteria = SOAP::Data->name('ObjectCriteria' => \SOAP::Data->value(
+            SOAP::Data->name('ListCount' => $listCount),
+            SOAP::Data->name('ListElement' => \SOAP::Data->value(
+                    SoapData('ObjName'),
+        $[/javascript (('' + myParent.ObjGroup).length == 0) ? "" :
+                                "        SoapData('ObjGroup'),  # Optional parameter "
+                                ],
+                        SoapData('ObjType'),
+        $[/javascript (('' + myParent.ObjDefVer).length == 0) ? "" :
+                                "        SoapData('ObjDefVer'),  # Optional parameter "
+                                ],
+                )),
+            SOAP::Data->type('xml' => $objectCriteria)
+        ));
+}
+
 # Handle optional parametrs
 my @paramsForRequest;
 for my $p (@optionalParams) {
@@ -58,16 +94,7 @@ my @data = SOAP::Data->name($soapMethodName => \SOAP::Data->value(
         SoapData('LocationName'),
         SoapData('LocationType')
     )),
-    SOAP::Data->name('ObjectCriteria' => \SOAP::Data->value(
-    	SoapData('ObjType'),
-$[/javascript (('' + myParent.ObjGroup).length == 0) ? "" :
-"        SoapData('ObjGroup'),  # Optional parameter "
-]
-    	SoapData('ObjName'),
-$[/javascript (('' + myParent.ObjDefVer).length == 0) ? "" :
-"        SoapData('ObjDefVer'),  # Optional parameter "
-]
-    )),
+    SOAP::Data->name('ObjectCriteria' => @ObjectCriteria),
 $[/javascript ((('' + myParent.RestrictionCriteria).length == 0) || !(new RegExp("[^\.\s]+\.[^\.\s]+\.[^\.\s]+").test(myParent.RestrictionCriteria))) ? "" : // Check for presence of the pattern we parse
 "    @restrictionCriteria,  # Optional section "
 ],

@@ -36,8 +36,6 @@ $[/myPlugin/project/ec_perl_code_block_1]
 # Procedure-specific Code
 # -----------------------
 
-#### TODO If restrictionCriteria is non-empty, split and parse its contents, and add them to $data
-
 # Split and parse optional RestrictionCriteria
 my @restrictionCriteria = makeRestrictionCriteria($params{'RestrictionCriteria'});
 
@@ -47,9 +45,13 @@ if (length $params{'ObjectCriteria'} == 0) {
     # No ObjectCriteria, so we only have one element, and can ommit the <ListCount> and <ListElement>
     @ObjectCriteria = SOAP::Data->name('ObjectCriteria' => \SOAP::Data->value(
             SoapData('ObjName'),
-            SoapData('ObjGroup'),
-            SoapData('ObjType'),
-            SoapData('ObjDefVer')
+            $[/javascript (('' + myParent.ObjGroup).length == 0) ? "" :
+                        "        SoapData('ObjGroup'),  # Optional parameter "
+                        ],
+                SoapData('ObjType'),
+            $[/javascript (('' + myParent.ObjDefVer).length == 0) ? "" :
+                        "        SoapData('ObjDefVer'),  # Optional parameter "
+                        ],
         ));
 } else {
 
@@ -61,9 +63,13 @@ if (length $params{'ObjectCriteria'} == 0) {
             SOAP::Data->name('ListCount' => $listCount),
             SOAP::Data->name('ListElement' => \SOAP::Data->value(
                     SoapData('ObjName'),
-                    SoapData('ObjGroup'),
-                    SoapData('ObjType'),
-                    SoapData('ObjDefVer')
+                    $[/javascript (('' + myParent.ObjGroup).length == 0) ? "" :
+                                "        SoapData('ObjGroup'),  # Optional parameter "
+                                ],
+                        SoapData('ObjType'),
+                    $[/javascript (('' + myParent.ObjDefVer).length == 0) ? "" :
+                                "        SoapData('ObjDefVer'),  # Optional parameter "
+                                ],
                 )),
             SOAP::Data->type('xml' => $objectCriteria)
         ));

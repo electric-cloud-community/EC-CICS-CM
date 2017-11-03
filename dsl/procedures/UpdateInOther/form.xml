@@ -99,6 +99,13 @@ documentation : Help text for the parameter
     </formElement>
     <formElement>
         <type>entry</type>
+        <label>CSYSDEF Model:</label>
+        <property>CSYSDEFModel</property>
+        <required>0</required>
+        <documentation>Applies only to CSYSDEF objects and is optional.</documentation>
+    </formElement>
+    <formElement>
+        <type>entry</type>
         <label>Data's Object Type:</label>
         <property>DataObjType</property>
         <required>0</required>

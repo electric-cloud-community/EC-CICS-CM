@@ -52,6 +52,18 @@ else {
         ));
 }
 
+my @processParms;
+if($params{'CSYSDEFModel'} or $params{'IntegrityToken'}) {
+    SOAP::Data->name('ProcessParms' => \SOAP::Data->value(
+        $[/javascript (('' + myParent.IntegrityToken).length == 0) ? "" :
+                        "        SoapData('IntegrityToken'),  # Optional parameter "
+                    ],
+                    $[/javascript (('' + myParent.CSYSDEFModel).length == 0) ? "" :
+                        "        SoapData('CSYSDEFModel'),  # Optional parameter "
+                    ]
+                ));
+}
+
 my @data =
     SOAP::Data->name($soapMethodName => \SOAP::Data->value(
             SOAP::Data->name('LocationCriteria' => \SOAP::Data->value(
@@ -59,10 +71,7 @@ my @data =
                     SoapData('LocationType')
                 )),
             SOAP::Data->name('ObjectCriteria' => @ObjectCriteria),
-            SOAP::Data->name('ProcessParms' => \SOAP::Data->value(
-                    SoapData('IntegrityToken'),
-                    SoapData('CSYSDEFModel')
-                )),
+            @processParms,
             SOAP::Data->name('InputData' => \SOAP::Data->value(
                     $inputData
                 ))

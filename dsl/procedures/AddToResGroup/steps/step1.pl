@@ -21,9 +21,37 @@ $[/myPlugin/project/ec_perl_code_block_1]
 # Procedure-specific Code
 # -----------------------
 
-my @validCriteriaKeys = ('ObjGroup', 'ObjType', 'ObjName', 'ObjDefVer');
+my @ObjectCriteria;
+if (length $params{'ObjectCriteria'} == 0) {
 
-my @result = makeAddObjectCriteria($params{'ObjectCriteria'}, 'DefA', @validCriteriaKeys);
+    # No ObjectCriteria, so we only have one element, and can ommit the <ListCount> and <ListElement>
+    @ObjectCriteria = SOAP::Data->name('ObjectCriteria' => \SOAP::Data->value(
+        SOAP::Data->name('DefA' => \SOAP::Data->value(
+            SoapData('ObjGroup'),
+            SoapData('ObjName'),
+            SoapData('ObjType'),
+            SoapData('ObjDefVer')
+            ))
+        ));
+} else {
+
+    # Combine ObjName, ObjGroup, ObjType, and ObjectCriteria into @ObjectCriteria
+    my $objectCriteria = $params{'ObjectCriteria'};
+    my @matches = $objectCriteria =~ m/<ListElement>/si;
+    my $listCount = 1 + @matches;
+    @ObjectCriteria = SOAP::Data->name('ObjectCriteria' => \SOAP::Data->value(
+            SOAP::Data->name('ListCount' => $listCount),
+            SOAP::Data->name('ListElement' => \SOAP::Data->value(
+                    SOAP::Data->name('DefA' => \SOAP::Data->value(
+                            SoapData('ObjGroup'),
+                            SoapData('ObjName'),
+                            SoapData('ObjType'),
+                            SoapData('ObjDefVer')
+                        ))
+                )),
+            SOAP::Data->type('xml' => $objectCriteria)
+        ));
+}
 
 my @paramsForRequest;
 for my $p (@mandatoryParams) {
@@ -38,9 +66,7 @@ SOAP::Data->name($soapMethodName => \SOAP::Data->value(
             SoapData('LocationName'),
             SoapData('LocationType')
     )) ,
-    SOAP::Data->name('ObjectCriteria' => \SOAP::Data->value(
-            @result
-    )) ,
+    SOAP::Data->name('ObjectCriteria' => @ObjectCriteria),
     SOAP::Data->name('InputData' => \SOAP::Data->value(
         @paramsForRequest
     ))

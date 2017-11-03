@@ -89,7 +89,7 @@ documentation : Help text for the parameter
         <label>Resource Type:</label>
         <property>ObjType</property>
         <required>1</required>
-        <documentation>(Optional) resource object criteria for a resource definition embedded in a BAImage: resource
+        <documentation>Resource object criteria for a resource definition embedded in a BAImage: resource
             type
         </documentation> <!-- #### Make this a select -->
     </formElement>
@@ -98,7 +98,7 @@ documentation : Help text for the parameter
         <label>Resource Name:</label>
         <property>ObjName</property>
         <required>1</required>
-        <documentation>(Optional) resource object criteria for a resource definition embedded in a BAImage: resource
+        <documentation>Resource object criteria for a resource definition embedded in a BAImage: resource
             name
         </documentation>
     </formElement>
@@ -106,8 +106,8 @@ documentation : Help text for the parameter
         <type>entry</type>
         <label>Resource Group:</label>
         <property>ObjGroup</property>
-        <required>0</required>
-        <documentation>(Optional) resource object criteria for a resource definition embedded in a BAImage: resource
+        <required>1</required>
+        <documentation>Resource object criteria for a resource definition embedded in a BAImage: resource
             group
         </documentation>
     </formElement>

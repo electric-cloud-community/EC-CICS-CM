@@ -53,7 +53,7 @@ documentation : Help text for the parameter
         <documentation>Configuration name, CSD location, CICSPlex Context, depending on Location Type value.</documentation>
     </formElement>
     <formElement>
-        <type>radio</type>
+        <type>select</type>
         <label>Location Type:</label>
         <property>LocationType</property>
         <required>1</required>
@@ -129,7 +129,7 @@ documentation : Help text for the parameter
         <type>textarea</type>
         <label>Name-Value Pairs:</label>
         <property>ObjectData</property>
-        <required>1</required>
+        <required>0</required>
         <documentation>Name-value pairs to set in the object being created, one per line in NAME=VALUE format</documentation>
     </formElement>
     <formElement>

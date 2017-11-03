@@ -30,9 +30,33 @@ for my $p (@optionalParams, @mandatoryParams) {
     }
 }
 
-my @validCriteriaKeys = ('ObjType', 'ObjName');
+my @ObjectCriteria;
+if (length $params{'ObjectCriteria'} == 0) {
 
-my @result = makeAddObjectCriteria($params{'ObjectCriteria'}, 'GrpA', @validCriteriaKeys);
+    # No ObjectCriteria, so we only have one element, and can ommit the <ListCount> and <ListElement>
+    @ObjectCriteria = SOAP::Data->name('ObjectCriteria' => \SOAP::Data->value(
+            SOAP::Data->name('GrpA' => \SOAP::Data->value(
+                SoapData('ObjName'),
+                SoapData('ObjType')
+            ))
+        ));
+} else {
+
+    # Combine ObjName, ObjGroup, ObjType, and ObjectCriteria into @ObjectCriteria
+    my $objectCriteria = $params{'ObjectCriteria'};
+    my @matches = $objectCriteria =~ m/<ListElement>/si;
+    my $listCount = 1 + @matches;
+    @ObjectCriteria = SOAP::Data->name('ObjectCriteria' => \SOAP::Data->value(
+            SOAP::Data->name('ListCount' => $listCount),
+            SOAP::Data->name('ListElement' => \SOAP::Data->value(
+                    SOAP::Data->name('GrpA' => \SOAP::Data->value(
+                            SoapData('ObjName'),
+                            SoapData('ObjType')
+                        ))
+                )),
+            SOAP::Data->type('xml' => $objectCriteria)
+        ));
+}
 
 my @data =
 SOAP::Data->name($soapMethodName => \SOAP::Data->value(
@@ -40,9 +64,7 @@ SOAP::Data->name($soapMethodName => \SOAP::Data->value(
             SoapData('LocationName'),
             SoapData('LocationType')
     )) ,
-    SOAP::Data->name('ObjectCriteria' => \SOAP::Data->value(
-        @result
-    )),
+    SOAP::Data->name('ObjectCriteria' => @ObjectCriteria),
     SOAP::Data->name('InputData' => \SOAP::Data->value(
         @paramsForRequest
     ))

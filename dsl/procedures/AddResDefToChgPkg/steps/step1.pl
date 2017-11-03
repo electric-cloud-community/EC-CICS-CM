@@ -34,7 +34,7 @@ if ($params{'ObjectCriteria'}.length == 0) {
     # Combine ObjName, ObjGroup, ObjType, and ObjectCriteria into @ObjectCriteria
     my $objectCriteria = $params{'ObjectCriteria'};
     #### TODO Confirm $objectCriteria is a valid XML fragment matching the expected schema for this method
-    my @matches = $objectCriteria =~ m/<ObjectData>/si;
+    my @matches = $objectCriteria =~ m/<ListElement>/si;
     my $listCount = 1 + @matches;
     @ObjectCriteria = SOAP::Data->name('ObjectCriteria' => \SOAP::Data->value(
         SoapData('CConfig'),

@@ -95,8 +95,8 @@ documentation : Help text for the parameter
         <type>entry</type>
         <label>Resource Group:</label>
         <property>ObjGroup</property>
-        <required>0</required>
-        <documentation>(Optional) resource object criteria for a resource definition embedded in a BAImage: resource
+        <required>1</required>
+        <documentation>Resource object criteria for a resource definition embedded in a BAImage: resource
             group
         </documentation>
     </formElement>

@@ -19,13 +19,28 @@ $[/myPlugin/project/ec_perl_code_block_1]
 
 if(($params{'resDefinition'} eq 'SelectionCriteria')) {
     if(!$params{'CPID'} || !$params{'EventID'}) {
-        print "ERROR: 'CPID' and 'EventId' should be specified."
+        print "ERROR: 'CPID' and 'EventId' should be specified.";
         exit -1;
     }
 }
 elsif(!$params{'ObjName'} || !$params{'ObjType'} || !$params{'ObjGroup'}) {
-    print "ERROR: 'ObjName', 'ObjType' and 'ObjGroup' should be specified."
+    print "ERROR: 'ObjName', 'ObjType' and 'ObjGroup' should be specified.";
     exit -1;
+}
+
+my @criteria;
+if($params{'resDefinition'} eq 'SelectionCriteria') {
+    @criteria = SOAP::Data->name('SelectionCriteria' => \SOAP::Data->value(
+            SoapData('CPID'),
+            SoapData('EventID')
+        ));
+}
+else {
+    @criteria = SOAP::Data->name('ObjectCriteria' => \SOAP::Data->value(
+            SoapData('ObjName'),
+            SoapData('ObjType'),
+            SoapData('ObjGroup')
+        ));
 }
 
 # Procedure-specific Code
@@ -37,15 +52,7 @@ my @data =
                     SoapData('LocationType'),
                     SoapData('LocationName')
                 )),
-            SOAP::Data->name('SelectionCriteria' => \SOAP::Data->value(
-                    SoapData('CPID'),
-                    SoapData('EventID')
-                )),
-            SOAP::Data->name('ObjectCriteria' => \SOAP::Data->value(
-                    SoapData('ObjName'),
-                    SoapData('ObjType'),
-                    SoapData('ObjGroup')
-                )),
+            @criteria,
             SOAP::Data->name('InputData' => \SOAP::Data->value(
                     SoapData('TargetLocationType'),
                     SoapData('TargetLocationName')

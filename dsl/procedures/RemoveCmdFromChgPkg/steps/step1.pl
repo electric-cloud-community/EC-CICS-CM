@@ -47,13 +47,18 @@ if (length $params{'ObjectCriteria'} == 0) {
 
     # No ObjectCriteria, so we only have one element, and can ommit the <ListCount> and <ListElement>
     @ObjectCriteria = SOAP::Data->name('ObjectCriteria' => \SOAP::Data->value(
+            SoapData('CConfig'),
             SOAP::Data->name('CmdAPost' => \SOAP::Data->value(
                     SoapData('Command'),
                     SoapData('ObjGroup'),
                     SoapData('ObjType'),
                     SoapData('ObjName'),
-                    SoapData('ObjDefVer'),
-                    SoapData('TContainer')
+                    $[/javascript (('' + myParent.ObjDefVer).length == 0) ? "" :
+                        "        SoapData('ObjDefVer'),  # Optional parameter "
+                    ],
+                    $[/javascript (('' + myParent.TContainer).length == 0) ? "" :
+                        "        SoapData('TContainer'),  # Optional parameter "
+                    ]
                 ))
         ));
 } else {
@@ -63,6 +68,7 @@ if (length $params{'ObjectCriteria'} == 0) {
     my @matches = $objectCriteria =~ m/<ListElement>/si;
     my $listCount = 1 + @matches;
     @ObjectCriteria = SOAP::Data->name('ObjectCriteria' => \SOAP::Data->value(
+            SoapData('CConfig'),
             SOAP::Data->name('ListCount' => $listCount),
             SOAP::Data->name('ListElement' => \SOAP::Data->value(
                     SOAP::Data->name('CmdAPost' => \SOAP::Data->value(
@@ -70,8 +76,12 @@ if (length $params{'ObjectCriteria'} == 0) {
                         SoapData('ObjGroup'),
                         SoapData('ObjType'),
                         SoapData('ObjName'),
-                        SoapData('ObjDefVer'),
-                        SoapData('TContainer')
+                        $[/javascript (('' + myParent.ObjDefVer).length == 0) ? "" :
+                                        "        SoapData('ObjDefVer'),  # Optional parameter "
+                        ],
+                        $[/javascript (('' + myParent.TContainer).length == 0) ? "" :
+                                        "        SoapData('TContainer'),  # Optional parameter "
+                        ]
                     ))
                 )),
             SOAP::Data->type('xml' => $objectCriteria)
@@ -83,10 +93,7 @@ SOAP::Data->name($soapMethodName => \SOAP::Data->value(
     SOAP::Data->name('LocationCriteria' => \SOAP::Data->value(
         SoapData('LocationType')
     )),
-    SOAP::Data->name('ObjectCriteria' => \SOAP::Data->value(
-        SoapData('CConfig'),
-        @ObjectCriteria
-    )),
+    @ObjectCriteria,
     SOAP::Data->name('InputData' => \SOAP::Data->value(
         SoapData('ContainerName'),
         SoapData('ContainerType')
