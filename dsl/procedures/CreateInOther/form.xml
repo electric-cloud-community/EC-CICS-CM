@@ -102,23 +102,6 @@ documentation : Help text for the parameter
         <property>ObjectCriteria</property>
         <required>0</required>
         <documentation>Additional objects(s) to create: XML serialized list of resource object criteria created using procedure SerializeOtherObjectCriteria (optional, the object specified below is appended to this)</documentation>
-        <htmlDocumentation>
-            &lt;input name="Add" style=&quot;color: #ffffff;padding: 3px 15px 3px 15px;border: none;font-size:14px;height: 48px;min-width: 150px;background: #3e99df;&quot; value=&quot;Add criteria&quot; onclick='
-            var $ogValue = document.getElementsByName(&quot;ObjGroup&quot;)[0].value;
-            var $otValue = document.getElementsByName(&quot;ObjType&quot;)[0].value;
-            var $onValue = document.getElementsByName(&quot;ObjName&quot;)[0].value;
-            var $og=&quot;&lt;ObjGroup&gt;&quot;.concat($ogValue).concat(&quot;&lt;/ObjGroup&gt;\n&quot;);
-            var $ot=&quot;&lt;ObjType&gt;&quot;.concat($otValue).concat(&quot;&lt;/ObjType&gt;\n&quot;);
-            var $on=&quot;&lt;ObjName&gt;&quot;.concat($onValue).concat(&quot;&lt;/ObjName&gt;\n&quot;);
-            document.getElementsByName(&quot;ObjectCriteria&quot;)[0].value = &quot;&quot;
-            .concat($ogValue.length===0?&quot;&quot;:$og)
-            .concat($otValue.length===0?&quot;&quot;:$ot)
-            .concat($onValue.length===0?&quot;&quot;:$on)
-            document.getElementsByName(&quot;ObjGroup&quot;)[0].value = &quot;&quot;;
-            document.getElementsByName(&quot;ObjType&quot;)[0].value=&quot;&quot;;
-            document.getElementsByName(&quot;ObjName&quot;)[0].value=&quot;&quot;;
-            ' type=button /&gt;
-        </htmlDocumentation>
     </formElement>
     #### Is the omission of ObjDefVer correct? That requires all CICSPlex SM context resources to initially be created as part of a resource group
     <formElement>
