@@ -139,3 +139,61 @@ sub makeRestrictionCriteria {
     push(@result, SOAP::Data->name('RestrictionCriteria' => \SOAP::Data->value(@RestrictionCriteria)));
     return @result;
 }
+
+sub createObjectCriteria {
+    my ($mandatory, $addCConfig, $wrapper, %params) = @_;
+    
+    my @mandatory = @{$mandatory};   
+    
+    my @soapParams;
+    if($wrapper ne "") {
+        @soapParams =  SOAP::Data->name($wrapper => \SOAP::Data->value(
+              getSoapParameters(\@mandatory, %params)
+            ));
+    }
+    else {
+        @soapParams =  (
+           getSoapParameters(\@mandatory, %params)
+        );
+    }
+    my @configValue;
+    if($addCConfig eq '1') {
+        push(@configValue, SoapData('CConfig'));
+    }
+
+    my @ObjectCriteria;
+    if (length $params{'ObjectCriteria'} == 0) {
+
+        # No ObjectCriteria, so we only have one element, and can omit the <ListCount> and <ListElement>
+        @ObjectCriteria = SOAP::Data->name('ObjectCriteria' => \SOAP::Data->value(
+                @configValue,
+                @soapParams
+            ));
+    } else {
+
+        my $objectCriteria = $params{'ObjectCriteria'};
+        my @matches = $objectCriteria =~ m/<ListElement>/si;
+        my $listCount = 1 + @matches;
+        @ObjectCriteria = SOAP::Data->name('ObjectCriteria' => \SOAP::Data->value(
+                @configValue,
+                SOAP::Data->name('ListCount' => $listCount),
+                SOAP::Data->name('ListElement' => \SOAP::Data->value(
+                        @soapParams
+                    )),
+                SOAP::Data->type('xml' => $objectCriteria)
+            ));
+    }
+    return @ObjectCriteria;
+}
+
+sub getSoapParameters {
+    my ($params, %paramsForEvaluate) = @_;
+    my @paramsForRequest;
+    for my $p (@{$params}) {
+        if (defined $paramsForEvaluate{$p} && $paramsForEvaluate{$p} ne "") {
+            print "\n--" . $paramsForEvaluate{$p} . "--\n";
+            push @paramsForRequest, SoapData($p);
+        }
+    }
+    return @paramsForRequest;
+}

@@ -30,51 +30,9 @@ for my $p (@optionalParams, @mandatoryParams) {
     }
 }
 
-my @ObjectCriteria;
-if (length $params{'ObjectCriteria'} == 0) {
+my @mParams = ('Command', 'ObjGroup', 'ObjName', 'ObjType', 'ObjDefVer', 'TContainer');
 
-    # No ObjectCriteria, so we only have one element, and can ommit the <ListCount> and <ListElement>
-    @ObjectCriteria = SOAP::Data->name('ObjectCriteria' => \SOAP::Data->value(
-            SoapData('CConfig'),
-            SOAP::Data->name('CmdAPost' => \SOAP::Data->value(
-                    SoapData('Command'),
-                    SoapData('ObjGroup'),
-                    SoapData('ObjName'),
-                    SoapData('ObjType'),
-                    $[/javascript (('' + myParent.ObjDefVer).length == 0) ? "" :
-                        "        SoapData('ObjDefVer'),  # Optional parameter "
-                    ],
-                    $[/javascript (('' + myParent.TContainer).length == 0) ? "" :
-                        "        SoapData('TContainer'),  # Optional parameter "
-                    ]
-                ))
-        ));
-} else {
-
-    # Combine ObjName, ObjGroup, ObjType, and ObjectCriteria into @ObjectCriteria
-    my $objectCriteria = $params{'ObjectCriteria'};
-    my @matches = $objectCriteria =~ m/<ListElement>/si;
-    my $listCount = 1 + @matches;
-    @ObjectCriteria = SOAP::Data->name('ObjectCriteria' => \SOAP::Data->value(
-            SoapData('CConfig'),
-            SOAP::Data->name('ListCount' => $listCount),
-            SOAP::Data->name('ListElement' => \SOAP::Data->value(
-                    SOAP::Data->name('CmdAPost' => \SOAP::Data->value(
-                            SoapData('Command'),
-                            SoapData('ObjGroup'),
-                            SoapData('ObjName'),
-                            SoapData('ObjType'),
-                            $[/javascript (('' + myParent.ObjDefVer).length == 0) ? "" :
-                                            "        SoapData('ObjDefVer'),  # Optional parameter "
-                            ],
-                            $[/javascript (('' + myParent.TContainer).length == 0) ? "" :
-                                            "        SoapData('TContainer'),  # Optional parameter "
-                            ]
-                        ))
-                )),
-            SOAP::Data->type('xml' => $objectCriteria)
-        ));
-}
+my @ObjectCriteria = createObjectCriteria(\@mParams, 1, "CmdAPost", %params);
 
 my @data =
     SOAP::Data->name($soapMethodName => \SOAP::Data->value(

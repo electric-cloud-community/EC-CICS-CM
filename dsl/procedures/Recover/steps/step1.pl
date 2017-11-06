@@ -19,34 +19,9 @@ $[/myPlugin/project/ec_perl_code_block_1]
 # -----------------------
 
 # Build @ObjectCriteria
-my @ObjectCriteria;
-if (length $params{'ObjectCriteria'} == 0) {
 
-    # No ObjectCriteria, so we only have one element, and can ommit the <ListCount> and <ListElement>
-    @ObjectCriteria = SOAP::Data->name('ObjectCriteria' => \SOAP::Data->value(
-            SoapData('ObjName'),
-            SoapData('ObjGroup'),
-            SoapData('ObjType'),
-            SoapData('ObjectInstance')
-
-        ));
-} else {
-
-    # Combine ObjName, ObjGroup, ObjType, and ObjectCriteria into @ObjectCriteria
-    my $objectCriteria = $params{'ObjectCriteria'};
-    my @matches = $objectCriteria =~ m/<ListElement>/si;
-    my $listCount = 1 + @matches;
-    @ObjectCriteria = SOAP::Data->name('ObjectCriteria' => \SOAP::Data->value(
-            SOAP::Data->name('ListCount' => $listCount),
-            SOAP::Data->name('ListElement' => \SOAP::Data->value(
-                    SoapData('ObjName'),
-                    SoapData('ObjGroup'),
-                    SoapData('ObjType'),
-                    SoapData('ObjectInstance')
-                )),
-            SOAP::Data->type('xml' => $objectCriteria)
-        ));
-}
+my @mParams = ('ObjName', 'ObjGroup', 'ObjType', 'ObjectInstance');
+my @ObjectCriteria = createObjectCriteria(\@mParams, 0, "", %params);
 
 my @data =
     SOAP::Data->name($soapMethodName => \SOAP::Data->value(

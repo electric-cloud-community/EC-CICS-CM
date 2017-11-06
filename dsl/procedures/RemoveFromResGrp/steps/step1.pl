@@ -19,36 +19,8 @@ $[/myPlugin/project/ec_perl_code_block_1]
 # -----------------------
 
 # Build @ObjectCriteria
-my @ObjectCriteria;
-if (length $params{'ObjectCriteria'} == 0) {
-
-    # No ObjectCriteria, so we only have one element, and can ommit the <ListCount> and <ListElement>
-    @ObjectCriteria = SOAP::Data->name('ObjectCriteria' => \SOAP::Data->value(
-            SOAP::Data->name('ListCount' => '1'),
-            SOAP::Data->name('ListElement' => \SOAP::Data->value(
-                    SoapData('ObjGroup'),
-                    SoapData('ObjName'),
-                    SoapData('ObjType')
-                ))
-        ));
-} else {
-
-    # Combine ObjName, ObjGroup, ObjType, and ObjectCriteria into @ObjectCriteria
-    my $objectCriteria = $params{'ObjectCriteria'};
-    my @matches = $objectCriteria =~ m/<ListElement>/si;
-    my $listCount = 1 + @matches;
-    @ObjectCriteria = SOAP::Data->name('ObjectCriteria' => \SOAP::Data->value(
-            SOAP::Data->name('ListCount' => $listCount),
-            SOAP::Data->name('ListElement' => \SOAP::Data->value(
-                    SOAP::Data->name('DefA' => \SOAP::Data->value(
-                            SoapData('ObjGroup'),
-                            SoapData('ObjName'),
-                            SoapData('ObjType')
-                        ))
-                )),
-            SOAP::Data->type('xml' => $objectCriteria)
-        ));
-}
+my @mParams = ('ObjGroup', 'ObjName', 'ObjType');
+my @ObjectCriteria = createObjectCriteria(\@mParams, 0, "DefA", %params);
 
 my @data =
 SOAP::Data->name($soapMethodName => \SOAP::Data->value(

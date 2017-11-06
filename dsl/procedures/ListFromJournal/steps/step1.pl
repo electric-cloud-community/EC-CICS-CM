@@ -39,41 +39,8 @@ $[/myPlugin/project/ec_perl_code_block_1]
 # Split and parse optional RestrictionCriteria
 my @restrictionCriteria = makeRestrictionCriteria($params{'RestrictionCriteria'});
 
-my @ObjectCriteria;
-if (length $params{'ObjectCriteria'} == 0) {
-
-    # No ObjectCriteria, so we only have one element, and can ommit the <ListCount> and <ListElement>
-    @ObjectCriteria = SOAP::Data->name('ObjectCriteria' => \SOAP::Data->value(
-            SoapData('ObjName'),
-            $[/javascript (('' + myParent.ObjGroup).length == 0) ? "" :
-                        "        SoapData('ObjGroup'),  # Optional parameter "
-                        ],
-                SoapData('ObjType'),
-            $[/javascript (('' + myParent.ObjDefVer).length == 0) ? "" :
-                        "        SoapData('ObjDefVer'),  # Optional parameter "
-                        ],
-        ));
-} else {
-
-    # Combine ObjName, ObjGroup, ObjType, and ObjectCriteria into @ObjectCriteria
-    my $objectCriteria = $params{'ObjectCriteria'};
-    my @matches = $objectCriteria =~ m/<ListElement>/si;
-    my $listCount = 1 + @matches;
-    @ObjectCriteria = SOAP::Data->name('ObjectCriteria' => \SOAP::Data->value(
-            SOAP::Data->name('ListCount' => $listCount),
-            SOAP::Data->name('ListElement' => \SOAP::Data->value(
-                    SoapData('ObjName'),
-                    $[/javascript (('' + myParent.ObjGroup).length == 0) ? "" :
-                                "        SoapData('ObjGroup'),  # Optional parameter "
-                                ],
-                        SoapData('ObjType'),
-                    $[/javascript (('' + myParent.ObjDefVer).length == 0) ? "" :
-                                "        SoapData('ObjDefVer'),  # Optional parameter "
-                                ],
-                )),
-            SOAP::Data->type('xml' => $objectCriteria)
-        ));
-}
+my @mParams = ('ObjName', 'ObjGroup', 'ObjDefVer');
+my @ObjectCriteria = createObjectCriteria(\@mParams, 0, "", %params);
 
 # Handle optional parametrs
 my @paramsForRequest;
