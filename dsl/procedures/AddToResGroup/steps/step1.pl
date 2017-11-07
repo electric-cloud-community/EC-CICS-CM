@@ -18,6 +18,17 @@ $[/myPlugin/project/ec_perl_metadata]
 
 $[/myPlugin/project/ec_perl_code_block_1]
 
+# Validation
+
+if(($params{'LocationType'} eq 'Context') and
+    ($params{'ObjDefVer'} and $params{'ObjGroup'}) or
+    (!$params{'ObjDefVer'} and !$params{'ObjGroup'})) {
+    print "ERROR: When referring to a context-based resource definition, specify either <ObjDefVer> or <ObjGroup>.
+    Specifying <ObjDefVer> enables you to refer to a specific version of a context-based resource definition, even
+    when the resource definition is an orphan (does not belong to any ResGroup)";
+    exit -1;
+}
+
 # Procedure-specific Code
 # -----------------------
 

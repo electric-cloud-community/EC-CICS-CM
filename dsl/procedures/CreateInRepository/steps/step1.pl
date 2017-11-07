@@ -33,23 +33,31 @@ if(!$params{'ObjType'} and !contains(uc('ObjType'), uc($params{'ObjectCriteria'}
     exit -1;
 }
 
+my @objCriteriaResult;
+my @objCriteriaParams = ('ObjType', 'ObjName');
+for my $p (@objCriteriaParams) {
+    if (defined $params{$p} && $params{$p} ne "") {
+        push @objCriteriaResult, SoapData($p);
+    }
+}
+
 # Procedure-specific Code
 # -----------------------
 
 # Build @ObjectCriteria
 my @ObjectCriteria;
-if ( $params{'ObjType'}) {
+if ( $params{'ObjType'} && !$params{'ObjectCriteria'}) {
 
     # No ObjectCriteria, so we only have one element, and can ommit the <ListCount> and <ListElement>
     @ObjectCriteria = SOAP::Data->name('ObjectCriteria' => \SOAP::Data->value(
-            SoapData('ObjType'),
-            SoapData('ObjName'),
+            @objCriteriaResult
         ));
 } else {
 
     # Combine ObjName, ObjType, and ObjectCriteria into @ObjectCriteria
     my $objectCriteria = $params{'ObjectCriteria'};
     @ObjectCriteria = SOAP::Data->name('ObjectCriteria' => \SOAP::Data->value(
+            @objCriteriaResult,
             SOAP::Data->type('xml' => $objectCriteria)
         ));
 }

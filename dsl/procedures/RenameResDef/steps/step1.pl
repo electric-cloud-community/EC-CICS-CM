@@ -21,7 +21,7 @@ $[/myPlugin/project/ec_perl_code_block_1]
 # Build @ObjectCriteria
 
 my @mParams = ('ObjName', 'ObjGroup', 'ObjType');
-my @ObjectCriteria = createObjectCriteria(\@mParams, 1, "", %params);
+my @ObjectCriteria = createObjectCriteria(\@mParams, 0, "", %params);
 
 # Combine ObjName, ObjGroup, ObjType, and ObjectCriteria into @ObjectCriteria
 my $inputData = $params{'ObjectData'};

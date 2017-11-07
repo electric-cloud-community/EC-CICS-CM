@@ -172,6 +172,7 @@ sub createObjectCriteria {
     } else {
 
         my $objectCriteria = $params{'ObjectCriteria'};
+        validateXML($objectCriteria);
         my @matches = $objectCriteria =~ m/<ListElement>/si;
         my $listCount = 1 + @matches;
         @ObjectCriteria = SOAP::Data->name('ObjectCriteria' => \SOAP::Data->value(
@@ -191,9 +192,15 @@ sub getSoapParameters {
     my @paramsForRequest;
     for my $p (@{$params}) {
         if (defined $paramsForEvaluate{$p} && $paramsForEvaluate{$p} ne "") {
-            print "\n--" . $paramsForEvaluate{$p} . "--\n";
             push @paramsForRequest, SoapData($p);
         }
     }
     return @paramsForRequest;
+}
+
+sub validateXML {
+	my ($str) = @_;
+	my $parser = XML::LibXML->new;
+	$parser->validation(0);
+	$parser->parse_string($str);
 }

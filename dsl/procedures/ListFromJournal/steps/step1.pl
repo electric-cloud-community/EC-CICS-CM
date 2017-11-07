@@ -39,8 +39,31 @@ $[/myPlugin/project/ec_perl_code_block_1]
 # Split and parse optional RestrictionCriteria
 my @restrictionCriteria = makeRestrictionCriteria($params{'RestrictionCriteria'});
 
-my @mParams = ('ObjName', 'ObjGroup', 'ObjDefVer');
-my @ObjectCriteria = createObjectCriteria(\@mParams, 0, "", %params);
+my @objCriteriaResult;
+my @objCriteriaParams = ('ObjName', 'ObjGroup', 'ObjDefVer');
+for my $p (@objCriteriaParams) {
+    if (defined $params{$p} && $params{$p} ne "") {
+        push @objCriteriaResult, SoapData($p);
+    }
+}
+
+my @ObjectCriteria;
+if ( $params{'ObjType'} && !$params{'ObjectCriteria'}) {
+
+    # No ObjectCriteria, so we only have one element, and can ommit the <ListCount> and <ListElement>
+    @ObjectCriteria = SOAP::Data->name('ObjectCriteria' => \SOAP::Data->value(
+            @objCriteriaResult
+        ));
+} else {
+
+    # Combine ObjName, ObjGroup, ObjType, and ObjectCriteria into @ObjectCriteria
+    my $objectCriteria = $params{'ObjectCriteria'};
+    @ObjectCriteria = SOAP::Data->name('ObjectCriteria' => \SOAP::Data->value(
+            @objCriteriaResult,
+            SOAP::Data->type('xml' => $objectCriteria)
+        ));
+}
+
 
 # Handle optional parametrs
 my @paramsForRequest;

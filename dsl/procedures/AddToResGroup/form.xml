@@ -102,7 +102,7 @@ documentation : Help text for the parameter
         <type>entry</type>
         <label>Resource Definition Version:</label>
         <property>ObjDefVer</property>
-        <required>1</required>
+        <required>0</required>
         <documentation>(Optional) resource object criteria for a resource definition embedded in a BAImage: resource
             definition version
         </documentation>

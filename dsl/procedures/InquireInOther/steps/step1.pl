@@ -18,23 +18,27 @@ $[/myPlugin/project/ec_perl_code_block_1]
 # Procedure-specific Code
 # -----------------------
 
+my @objCriteriaResult;
+my @objCriteriaParams = ('ObjGroup', 'ObjType', 'ObjName');
+for my $p (@objCriteriaParams) {
+    if (defined $params{$p} && $params{$p} ne "") {
+        push @objCriteriaResult, SoapData($p);
+    }
+}
+
 my @ObjectCriteria;
 if (length $params{'ObjectCriteria'} == 0) {
 
     # No ObjectCriteria, so we only have one element, and can ommit the <ListCount> and <ListElement>
     @ObjectCriteria = SOAP::Data->name('ObjectCriteria' => \SOAP::Data->value(
-            SoapData('ObjName'),
-            SoapData('ObjGroup'),
-            SoapData('ObjType')
+            @objCriteriaResult
         ));
 } else {
 
     # Combine ObjName, ObjGroup, ObjType, and ObjectCriteria into @ObjectCriteria
     my $objectCriteria = $params{'ObjectCriteria'};
     @ObjectCriteria = SOAP::Data->name('ObjectCriteria' => \SOAP::Data->value(
-            SoapData('ObjName'),
-            SoapData('ObjGroup'),
-            SoapData('ObjType'),
+            @objCriteriaResult,
             SOAP::Data->type('xml' => $objectCriteria)
         ));
 }

@@ -157,7 +157,7 @@ documentation : Help text for the parameter
         <type>checkbox</type>
         <label>Purge Imported Records:</label>
         <property>PurgeImportedRecords</property>
-        <required>1</required>
+        <required>0</required>
         <documentation>Purge imported records?</documentation>
 	    <checkedValue>YES</checkedValue>
 	    <uncheckedValue>NO</uncheckedValue>

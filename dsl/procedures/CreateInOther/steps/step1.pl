@@ -48,20 +48,28 @@ if((!$params{'ObjType'} and !$params{'ObjName'} and !$params{'ObjGroup'}) or !$p
 # -----------------------
 
 # Build @ObjectCriteria
+
+my @objCriteriaResult;
+my @objCriteriaParams = ('ObjGroup', 'ObjType', 'ObjName');
+for my $p (@objCriteriaParams) {
+    if (defined $params{$p} && $params{$p} ne "") {
+        push @objCriteriaResult, SoapData($p);
+    }
+}
+
 my @ObjectCriteria;
-if ( $params{'ObjType'}) {
+if ( $params{'ObjType'} && !$params{'ObjectCriteria'}) {
 
     # No ObjectCriteria, so we only have one element, and can ommit the <ListCount> and <ListElement>
     @ObjectCriteria = SOAP::Data->name('ObjectCriteria' => \SOAP::Data->value(
-        SoapData('ObjGroup'),
-        SoapData('ObjType'),
-        SoapData('ObjName'),
+            @objCriteriaResult
     ));
 } else {
 
     # Combine ObjName, ObjGroup, ObjType, and ObjectCriteria into @ObjectCriteria
     my $objectCriteria = $params{'ObjectCriteria'};
     @ObjectCriteria = SOAP::Data->name('ObjectCriteria' => \SOAP::Data->value(
+            @objCriteriaResult,
             SOAP::Data->type('xml' => $objectCriteria)
         ));
 }

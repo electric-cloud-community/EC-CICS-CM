@@ -23,6 +23,14 @@ $[/myPlugin/project/ec_perl_code_block_1]
 # Procedure-specific Code
 # -----------------------
 
+
+# Validation
+
+if(($params{'Command'} ne 'Add') and $params{'TContainer'}) {
+    print "ERROR: 'target container' is relevant only when packaging an Add command. It identifies the ResGroup to which you want the resource definitions added.";
+    exit -1;
+}
+
 my @paramsForRequest;
 for my $p (@optionalParams, @mandatoryParams) {
     if (defined $params{$p}) {
