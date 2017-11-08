@@ -42,28 +42,12 @@ if(length($params{'LNKSWSCGParm'}) and uc($params{'ResTableName'}) ne "LNKSWSCG"
 
 # Split and parse ObjectData
 
-my @ObjectData;
-if (length($params{'ObjectData'}) == 0) {
-    print "ERROR: Object Data Name-Value Pairs missing!";
-    exit -1;
-} else {
-    # Build @ObjectData
-    my @parts = split(/\s+/s, $params{'ObjectData'}); # Split at whitesapece (including line breaks)
-    foreach my $part (@parts) {
-        my @pieces = split(/=/, $part, 2); # Split at first = into name and value
-        if (@pieces == 2) {
-            push(@ObjectData, SOAP::Data->name($pieces[0] => $pieces[1]));
-        } else {
-            print "ERROR: Unable to parse Object Data Name-Value Pairs near '$part'!";
-            exit -1;
-        }
-    }
-}
+my @ObjectData = createObjectData($params{'ObjectData'});
 
 # Build @ObjectCriteria
 
 my @objCriteriaResult;
-my @objCriteriaParams = ('ObjGroup', 'ObjType', 'ObjName');
+my @objCriteriaParams = ('ObjGroup', 'ObjType', 'ObjName', 'ObjDefVer');
 for my $p (@objCriteriaParams) {
     if (defined $params{$p} && $params{$p} ne "") {
         push @objCriteriaResult, SoapData($p);

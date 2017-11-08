@@ -11,24 +11,12 @@ my @optionalParams = (
 
 );
 
-my @mandatoryParams = (
-    'ContainerName',
-    'ContainerType',
-);
-
 $[/myPlugin/project/ec_perl_metadata]
 
 $[/myPlugin/project/ec_perl_code_block_1]
 
 # Procedure-specific Code
 # -----------------------
-
-my @paramsForRequest; #### TODO Why has this not been removed?
-for my $p (@optionalParams, @mandatoryParams) {
-    if (defined $params{$p}) {
-        push @paramsForRequest, SoapData($p);
-    }
-}
 
 my @mParams = ('ObjName', 'ObjType');
 
@@ -42,7 +30,8 @@ SOAP::Data->name($soapMethodName => \SOAP::Data->value(
     )) ,
     SOAP::Data->name('ObjectCriteria' => @ObjectCriteria),
     SOAP::Data->name('InputData' => \SOAP::Data->value(
-        @paramsForRequest
+            SoapData('ContainerName'),
+            SoapData('ContainerType')
     ))
 ));
 

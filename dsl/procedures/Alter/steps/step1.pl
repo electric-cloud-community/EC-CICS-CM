@@ -23,19 +23,20 @@ my @mParams = ('ObjName', 'ObjGroup', 'ObjType');
 
 my @ObjectCriteria = createObjectCriteria(\@mParams, 0, "", %params);
 
+my @ObjectData = createObjectData($params{'ObjectData'});
 
 my $inputData;
 my $dataObjectType = $params{'DataObjType'};
 if($dataObjectType) {
     $inputData = SOAP::Data->name($dataObjectType => \SOAP::Data->value(
                     SOAP::Data->name('ObjectData' => \SOAP::Data->value(
-                            SOAP::Data->type('xml' => $params{'ObjectData'})
+                            @ObjectData
                     )),
                 ));
 }
 else {
     $inputData = SOAP::Data->name('ObjectData' => \SOAP::Data->value(
-            SOAP::Data->type('xml' => $params{'ObjectData'})
+            @ObjectData
         ));
 }
 

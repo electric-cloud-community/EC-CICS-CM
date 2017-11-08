@@ -78,13 +78,15 @@ documentation : Help text for the parameter
         <required>0</required>
         <documentation>Object to create: object name (applies to object types AProfile, CConfig, Exits, Scheme, TFGroup, and TFRule)</documentation>
     </formElement>
-    <!--<formElement>-->
-        <!--<type>entry</type>-->
-        <!--<label>Scheme:</label>-->
-        <!--<property>Scheme</property>-->
-        <!--<required>0</required>-->
-        <!--<documentation>Object to create: object scheme (applies to object types PScheme and ReadyLst)</documentation>-->
-    <!--</formElement>-->
+    <formElement>
+        <type>entry</type>
+        <label>Resource Group:</label>
+        <property>ObjGroup</property>
+        <required>0</required>
+        <documentation>(Optional) resource object criteria for a resource definition embedded in a BAImage: resource
+            group
+        </documentation>
+    </formElement>
     <formElement>
         <type>textarea</type>
         <label>Serialized Resource Object Criteria:</label>

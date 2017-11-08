@@ -6,12 +6,6 @@ $[/myPlugin/project/ec_perl_header]
 # Name of SOAP method to call
 my $soapMethodName = 'Add';
 
-# List of the names of optional paramters
-my @mandatoryParams = (
-    'ContainerName',
-    'ContainerType'
-);
-
 my @optionalParams = ();
 
 $[/myPlugin/project/ec_perl_metadata]
@@ -32,13 +26,6 @@ if(($params{'LocationType'} eq 'Context') and
 # Procedure-specific Code
 # -----------------------
 
-my @paramsForRequest; #### TODO Why has this not been removed?
-for my $p (@mandatoryParams) {
-    if (defined $params{$p}) {
-        push @paramsForRequest, SoapData($p);
-    }
-}
-
 my @mParams = ('ObjGroup', 'ObjName', 'ObjType', 'ObjDefVer');
 
 my @ObjectCriteria = createObjectCriteria(\@mParams, 0, "DefA", %params);
@@ -51,7 +38,8 @@ SOAP::Data->name($soapMethodName => \SOAP::Data->value(
     )) ,
     SOAP::Data->name('ObjectCriteria' => @ObjectCriteria),
     SOAP::Data->name('InputData' => \SOAP::Data->value(
-        @paramsForRequest
+            SoapData('ContainerName'),
+            SoapData('ContainerType')
     ))
 ));
 

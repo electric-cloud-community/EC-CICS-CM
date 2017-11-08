@@ -207,3 +207,25 @@ sub validateXML {
 	$parser->validation(0);
 	$parser->parse_string($str);
 }
+
+sub createObjectData {
+    my ($objData) = @_;
+    my @ObjectData;
+    if (length($objData) == 0) {
+        print "ERROR: Object Data Name-Value Pairs missing!";
+        exit -1;
+    } else {
+        # Build @ObjectData
+        my @parts = split(/\s+/s, $objData); # Split at whitesapece (including line breaks)
+        foreach my $part (@parts) {
+            my @pieces = split(/=/, $part, 2); # Split at first = into name and value
+            if (@pieces == 2) {
+                push(@ObjectData, SOAP::Data->name($pieces[0] => $pieces[1]));
+            } else {
+                print "ERROR: Unable to parse Object Data Name-Value Pairs near '$part'!";
+                exit -1;
+            }
+        }
+    }
+    return @ObjectData;
+}

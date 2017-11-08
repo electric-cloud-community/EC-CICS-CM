@@ -20,7 +20,7 @@ $[/myPlugin/project/ec_perl_code_block_1]
 #-----------------------------
 
 my @objCriteriaResult;
-my @objCriteriaParams = ('ObjType', 'ObjName', 'CPID'); #### TODO Why is ObjGroup not included?
+my @objCriteriaParams = ('ObjType', 'ObjName', 'CPID', 'ObjGroup');
 for my $p (@objCriteriaParams) {
     if (defined $params{$p} && $params{$p} ne "") {
         push @objCriteriaResult, SoapData($p);
@@ -48,6 +48,8 @@ if ( $params{'ObjType'} && !$params{'ObjectCriteria'}) {
         ));
 }
 
+my @ObjectData = createObjectData($params{'ObjectData'});
+
 my @data =
 SOAP::Data->name($soapMethodName => \SOAP::Data->value(
     SOAP::Data->name('LocationCriteria' => \SOAP::Data->value(
@@ -56,7 +58,7 @@ SOAP::Data->name($soapMethodName => \SOAP::Data->value(
     SOAP::Data->name('ObjectCriteria' => @ObjectCriteria),
     SOAP::Data->name('InputData' => \SOAP::Data->value(
             SOAP::Data->name('ObjectData' => \SOAP::Data->value(
-                    SOAP::Data->type('xml' => $params{'ObjectData'})
+                    @ObjectData
                 )),
         ))
 ));

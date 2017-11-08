@@ -37,18 +37,20 @@ if (length $params{'ObjectCriteria'} == 0) {
         ));
 }
 
+my @ObjectData = createObjectData($params{'ObjectData'});
+
 my $inputData;
 my $dataObjectType = $params{'DataObjType'};
 if($dataObjectType) {
     $inputData = SOAP::Data->name($dataObjectType => \SOAP::Data->value(
             SOAP::Data->name('ObjectData' => \SOAP::Data->value(
-                    SOAP::Data->type('xml' => $params{'ObjectData'})
+                    @ObjectData
                 )),
         ));
 }
 else {
     $inputData = SOAP::Data->name('ObjectData' => \SOAP::Data->value(
-            SOAP::Data->type('xml' => $params{'ObjectData'})
+            @ObjectData
         ));
 }
 
@@ -57,7 +59,7 @@ if($params{'CSYSDEFModel'} or $params{'IntegrityToken'}) {
     SOAP::Data->name('ProcessParms' => \SOAP::Data->value(
         $[/javascript (('' + myParent.IntegrityToken).length == 0) ? "" :
                         "        SoapData('IntegrityToken'),  # Optional parameter "
-                    ],
+                    ]
                     $[/javascript (('' + myParent.CSYSDEFModel).length == 0) ? "" :
                         "        SoapData('CSYSDEFModel'),  # Optional parameter "
                     ]

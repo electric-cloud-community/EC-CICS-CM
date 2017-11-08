@@ -103,7 +103,15 @@ documentation : Help text for the parameter
         <required>0</required>
         <documentation>Additional objects(s) to create: XML serialized list of resource object criteria created using procedure SerializeOtherObjectCriteria (optional, the object specified below is appended to this)</documentation>
     </formElement>
-    <!-- #### TODO Is the omission of ObjDefVer correct? That requires all CICSPlex SM context resources to initially be created as part of a resource group -->
+    <formElement>
+        <type>entry</type>
+        <label>Resource Definition Version:</label>
+        <property>ObjDefVer</property>
+        <required>0</required>
+        <documentation>(Optional) resource object criteria for a resource definition embedded in a BAImage: resource
+            definition version
+        </documentation>
+    </formElement>
     <formElement>
         <type>textarea</type>
         <label>Object Data Name-Value Pairs:</label>
