@@ -26,7 +26,7 @@ $[/myPlugin/project/ec_perl_code_block_1]
 # Split and parse optional RestrictionCriteria
 my @restrictionCriteria = makeRestrictionCriteria($params{'RestrictionCriteria'});
 
-my @mParams = ('ObjName', 'ObjGroup', 'ObjDefVer');
+my @mParams = ('ObjName', 'ObjGroup', 'ObjDefVer', 'ObjType', 'ObjDefVer');
 my @ObjectCriteria = createObjectCriteria(\@mParams, 0, "", %params);
 
 # Handle optional parametrs

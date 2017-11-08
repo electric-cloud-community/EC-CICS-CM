@@ -38,7 +38,7 @@ if (length($params{'ObjDefVer'}) > 0 ) {
 # Split and parse optional RestrictionCriteria
 my @restrictionCriteria = makeRestrictionCriteria($params{'RestrictionCriteria'});
 
-my @mParams = ('ObjName', 'ObjGroup', 'ObjDefVer');
+my @mParams = ('ObjName', 'ObjGroup', 'ObjDefVer', 'ObjType');
 my @ObjectCriteria = createObjectCriteria(\@mParams, 0, "", %params);
 
 # Handle optional parametrs

@@ -20,7 +20,7 @@ $[/myPlugin/project/ec_perl_code_block_1]
 #-----------------------------
 
 my @objCriteriaResult;
-my @objCriteriaParams = ('ObjType', 'ObjName'); #### TODO Why is ObjGroup not included?
+my @objCriteriaParams = ('ObjType', 'ObjName', 'CPID'); #### TODO Why is ObjGroup not included?
 for my $p (@objCriteriaParams) {
     if (defined $params{$p} && $params{$p} ne "") {
         push @objCriteriaResult, SoapData($p);
