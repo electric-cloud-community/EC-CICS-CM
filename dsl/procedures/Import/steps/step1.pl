@@ -18,13 +18,13 @@ $[/myPlugin/project/ec_perl_code_block_1]
 # Validateion
 
 if(($params{'resDefinition'} eq 'SelectionCriteria')) {
-    if(!$params{'CPID'} || !$params{'EventID'}) {
-        print "ERROR: 'CPID' and 'EventId' should be specified.";
+    if(!length($params{'CPID'})) {
+        print "ERROR: 'CPID' hould be specified when 'Select resource definitions' is set to 'Selection Criteria'.";
         exit -1;
     }
 }
-elsif(!$params{'ObjName'} || !$params{'ObjType'} || !$params{'ObjGroup'}) {
-    print "ERROR: 'ObjName', 'ObjType' and 'ObjGroup' should be specified.";
+elsif(!lenght($params{'ObjName'}) || !length($params{'ObjType'}) || !length($params{'ObjGroup'})) {
+    print "ERROR: 'Resource Name', 'Resource Type' and 'Resource Group' should be specified when 'Select resource definitions' is set to 'Object Criteria'.";
     exit -1;
 }
 

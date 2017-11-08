@@ -17,26 +17,21 @@ $[/myPlugin/project/ec_perl_code_block_1]
 # Validation
 #-----------------------------
 
-# Uncomment bellow verifications when we start support CICSPlex SM
-#if($params{'CSYSDEFModel'} and uc($params{'ResTableName'}) ne "CSYSDEF") {
-#    print "ERROR: 'CSYSDEFModel' applies only to CSYSDEF objects.";
+#### TODO Uncomment below verifications 
+#if($length(params{'CSYSDEFModel'}) and uc($params{'ResTableName'}) ne "CSYSDEF") {
+#    print "ERROR: 'CSYSDEF Model' applies only to CSYSDEF objects.";
 #    exit -1;
 #}
 #
-#if(($params{'MonSpecInherit'} or $params{'RTASpecInherit'} or $params{'WLMSpecInherit'}) and uc($params{'ResTableName'}) ne "CSGLCGCS") {
-#    print "ERROR: 'MonSpecInherit', 'RTASpecInherit', and 'WLMSpecInherit' apply only to CSGLCGCS.";
+#if((length($params{'MonSpecInherit'}) or length($params{'RTASpecInherit'}) or length($params{'WLMSpecInherit'})) and uc($params{'ResTableName'}) ne "CSGLCGCS") {
+#    print "ERROR: 'Mon Spec Inherit', 'RTA Spec Inherit', and 'WLM Spec Inherit' apply only to CSGLCGCS objects.";
 #    exit -1;
 #}
 #
-#if($params{'LNKSWSCGParm'} and uc($params{'ResTableName'}) ne "LNKSWSCG") {
-#    print "ERROR: 'LNKSWSCGParm' applies only to LNKSWSCG objects.";
+#if(length($params{'LNKSWSCGParm'}) and uc($params{'ResTableName'}) ne "LNKSWSCG") {
+#    print "ERROR: 'LNKSWSCG Parmeter' applies only to LNKSWSCG objects.";
 #    exit -1;
 #}
-
-if((!$params{'ObjType'} and !$params{'ObjName'} and !$params{'ObjGroup'}) or !$params{'ObjectCriteria'}) {
-    print "ERROR: Eeather 'ObjectCrireria' in xml or entry for 'ObjName', 'ObjGroup' and 'ObjType' should be filled.";
-    exit -1;
-}
 
 # Procedure-specific Code
 # -----------------------

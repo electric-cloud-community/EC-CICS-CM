@@ -21,8 +21,8 @@ $[/myPlugin/project/ec_perl_code_block_1]
 # Validation
 
 if(($params{'LocationType'} eq 'Context') and
-    ($params{'ObjDefVer'} and $params{'ObjGroup'}) or
-    (!$params{'ObjDefVer'} and !$params{'ObjGroup'})) {
+    (length($params{'ObjDefVer'}) and length($params{'ObjGroup'})) or
+    (!length($params{'ObjDefVer'}) and !length($params{'ObjGroup'}))) {
     print "ERROR: When referring to a context-based resource definition, specify either <ObjDefVer> or <ObjGroup>.
     Specifying <ObjDefVer> enables you to refer to a specific version of a context-based resource definition, even
     when the resource definition is an orphan (does not belong to any ResGroup)";
@@ -32,7 +32,7 @@ if(($params{'LocationType'} eq 'Context') and
 # Procedure-specific Code
 # -----------------------
 
-my @paramsForRequest;
+my @paramsForRequest; #### TODO Why has this not been removed?
 for my $p (@mandatoryParams) {
     if (defined $params{$p}) {
         push @paramsForRequest, SoapData($p);

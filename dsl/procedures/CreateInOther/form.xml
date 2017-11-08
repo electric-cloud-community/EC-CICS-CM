@@ -79,21 +79,21 @@ documentation : Help text for the parameter
         <type>entry</type>
         <label>Object Type:</label>
         <property>ObjType</property>
-        <required>0</required>
+        <required>1</required>
         <documentation>Object to create: resource type</documentation>
     </formElement>
     <formElement>
         <type>entry</type>
         <label>Object Name:</label>
         <property>ObjName</property>
-        <required>0</required>
+        <required>1</required>
         <documentation>Object to create: resource name</documentation>
     </formElement>
     <formElement>
         <type>entry</type>
         <label>Object Group:</label>
         <property>ObjGroup</property>
-        <required>0</required> #### Should this be optional?
+        <required>1</required> <!-- #### TODO Should this be optional? -->
         <documentation>Object to create: resource group</documentation>
     </formElement>
     <formElement>
@@ -103,10 +103,10 @@ documentation : Help text for the parameter
         <required>0</required>
         <documentation>Additional objects(s) to create: XML serialized list of resource object criteria created using procedure SerializeOtherObjectCriteria (optional, the object specified below is appended to this)</documentation>
     </formElement>
-    #### Is the omission of ObjDefVer correct? That requires all CICSPlex SM context resources to initially be created as part of a resource group
+    <!-- #### TODO Is the omission of ObjDefVer correct? That requires all CICSPlex SM context resources to initially be created as part of a resource group -->
     <formElement>
         <type>textarea</type>
-        <label>Name-Value Pairs:</label>
+        <label>Object Data Name-Value Pairs:</label>
         <property>ObjectData</property>
         <required>1</required>
         <documentation>Name-value pairs to set in the resource definition object being created, one per line in NAME=VALUE format</documentation>
@@ -146,6 +146,10 @@ documentation : Help text for the parameter
         <required>0</required>
         <documentation>Optional, applies only to CSGLCGCS objects</documentation>
         <option>
+            <name></name>
+            <value></value>
+        </option>
+        <option>
             <name>Keep</name>
             <value>KEEP</value>
         </option>
@@ -166,6 +170,10 @@ documentation : Help text for the parameter
         <required>0</required>
         <documentation>Optional, applies only to CSGLCGCS objects</documentation>
         <option>
+            <name></name>
+            <value></value>
+        </option>
+        <option>
             <name>Keep</name>
             <value>KEEP</value>
         </option>
@@ -185,6 +193,10 @@ documentation : Help text for the parameter
         <property>LNKSWSCGParm</property>
         <required>0</required>
         <documentation>Optional, applies only to LNKSWSCG objects</documentation>
+        <option>
+            <name></name>
+            <value></value>
+        </option>
         <option>
             <name>None</name>
             <value>NONE</value>

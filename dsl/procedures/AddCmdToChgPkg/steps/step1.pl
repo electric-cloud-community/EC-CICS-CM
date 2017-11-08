@@ -26,8 +26,8 @@ $[/myPlugin/project/ec_perl_code_block_1]
 
 # Validation
 
-if(($params{'Command'} ne 'Add') and $params{'TContainer'}) {
-    print "ERROR: 'target container' is relevant only when packaging an Add command. It identifies the ResGroup to which you want the resource definitions added.";
+if(($params{'Command'} ne 'Add') and length($params{'TContainer'})) {
+    print "ERROR: 'Target Resource Group For Add' is relevant only when packaging an Add command. It identifies the Resource Group to which you want the resource definitions added.";
     exit -1;
 }
 

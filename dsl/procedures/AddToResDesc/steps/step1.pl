@@ -23,7 +23,7 @@ $[/myPlugin/project/ec_perl_code_block_1]
 # Procedure-specific Code
 # -----------------------
 
-my @paramsForRequest;
+my @paramsForRequest; #### TODO Why has this not been removed?
 for my $p (@optionalParams, @mandatoryParams) {
     if (defined $params{$p}) {
         push @paramsForRequest, SoapData($p);

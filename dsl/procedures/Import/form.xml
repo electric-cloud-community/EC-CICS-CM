@@ -57,8 +57,8 @@ documentation : Help text for the parameter
         <label>Select resource definitions:</label>
         <property>resDefinition</property>
         <required>1</required>
-        <documentation>Specify either: [SelectionCriteria to select resource definitions to import based on which change packages they belong to.]
-            or [ObjectCriteria to select resource definitions to import based on filter criteria for name, group, and type. To import all resource definitions in the export file, specify an asterisk (*) for name, group, and type].</documentation>
+        <documentation>Specify either: 'Selection Criteria' to select resource definitions to import based on which change packages they belong to, 
+            or 'Object Criteria' to select resource definitions to import based on filter criteria for resource name, group, and type. To import all resource definitions in the export file, specify an asterisk (*) for name, group, and type.</documentation>
         <option>
             <name>Selection Criteria</name>
             <value>SelectionCriteria</value>

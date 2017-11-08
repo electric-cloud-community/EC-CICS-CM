@@ -12,10 +12,6 @@ my @optionalParams = (
 #    'Scheme',
 
 );
-my @mandatoryParams = (
-    'ObjectData',
-
-);
 $[/myPlugin/project/ec_perl_metadata]
 
 $[/myPlugin/project/ec_perl_code_block_1]
@@ -23,18 +19,8 @@ $[/myPlugin/project/ec_perl_code_block_1]
 # Validation
 #-----------------------------
 
-if(!$params{'ObjType'}  and !$params{'ObjectCriteria'}) {
-    print "ERROR: Eeather 'ObjectCrireria' in xml or entry for 'ObjType' should be filled.";
-    exit -1;
-}
-
-if(!$params{'ObjType'} and !contains(uc('ObjType'), uc($params{'ObjectCriteria'}))) {
-    print "ERROR: 'ObjType' shoud be specifyed.";
-    exit -1;
-}
-
 my @objCriteriaResult;
-my @objCriteriaParams = ('ObjType', 'ObjName');
+my @objCriteriaParams = ('ObjType', 'ObjName'); #### TODO Why is ObjGroup not included?
 for my $p (@objCriteriaParams) {
     if (defined $params{$p} && $params{$p} ne "") {
         push @objCriteriaResult, SoapData($p);
@@ -60,13 +46,6 @@ if ( $params{'ObjType'} && !$params{'ObjectCriteria'}) {
             @objCriteriaResult,
             SOAP::Data->type('xml' => $objectCriteria)
         ));
-}
-
-my @paramsForRequest;
-for my $p (@optionalParams, @mandatoryParams) {
-    if (defined $params{$p}) {
-        push @paramsForRequest, SoapData($p);
-    }
 }
 
 my @data =

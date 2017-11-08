@@ -13,7 +13,6 @@ my @optionalParams = (
     'RTASpecInherit',
     'WLMSpecInherit',
     'LNKSWSCGParm',
-
 );
 
 $[/myPlugin/project/ec_perl_metadata]
@@ -23,29 +22,43 @@ $[/myPlugin/project/ec_perl_code_block_1]
 # Validation
 #-----------------------------
 
-# Uncomment bellow verifications when we start support CICSPlex SM
-#if($params{'CSYSDEFModel'} and uc($params{'ResTableName'}) ne "CSYSDEF") {
-#    print "ERROR: 'CSYSDEFModel' applies only to CSYSDEF objects.";
-#    exit -1;
-#}
-#
-#if(($params{'MonSpecInherit'} or $params{'RTASpecInherit'} or $params{'WLMSpecInherit'}) and uc($params{'ResTableName'}) ne "CSGLCGCS") {
-#    print "ERROR: 'MonSpecInherit', 'RTASpecInherit', and 'WLMSpecInherit' apply only to CSGLCGCS.";
-#    exit -1;
-#}
-#
-#if($params{'LNKSWSCGParm'} and uc($params{'ResTableName'}) ne "LNKSWSCG") {
-#    print "ERROR: 'LNKSWSCGParm' applies only to LNKSWSCG objects.";
-#    exit -1;
-#}
+if(length($params{'CSYSDEFModel'}) and uc($params{'ResTableName'}) ne "CSYSDEF") {
+    print "ERROR: 'CSYSDEF Model' applies only to CSYSDEF objects.";
+    exit -1;
+}
 
-if((!$params{'ObjType'} and !$params{'ObjName'} and !$params{'ObjGroup'}) or !$params{'ObjectCriteria'}) {
-    print "ERROR: Eeather 'ObjectCrireria' in xml or entry for 'ObjName', 'ObjGroup' and 'ObjType' should be filled.";
+if(((length($params{'MonSpecInherit'}) or length($params{'RTASpecInherit'}) or length($params{'WLMSpecInherit'}))) and uc($params{'ResTableName'}) ne "CSGLCGCS") {
+    print "ERROR: 'Mon Spec Inherit', 'RTA Spec Inherit', and 'WLM Spec Inherit' apply only to CSGLCGCS objects.";
+    exit -1;
+}
+
+if(length($params{'LNKSWSCGParm'}) and uc($params{'ResTableName'}) ne "LNKSWSCG") {
+    print "ERROR: 'LNKSWSCG Parameter' applies only to LNKSWSCG objects.";
     exit -1;
 }
 
 # Procedure-specific Code
 # -----------------------
+
+# Split and parse ObjectData
+
+my @ObjectData;
+if (length($params{'ObjectData'}) == 0) {
+    print "ERROR: Object Data Name-Value Pairs missing!";
+    exit -1;
+} else {
+    # Build @ObjectData
+    my @parts = split(/\s+/s, $params{'ObjectData'}); # Split at whitesapece (including line breaks)
+    foreach my $part (@parts) {
+        my @pieces = split(/=/, $part, 2); # Split at first = into name and value
+        if (@pieces == 2) {
+            push(@ObjectData, SOAP::Data->name($pieces[0] => $pieces[1]));
+        } else {
+            print "ERROR: Unable to parse Object Data Name-Value Pairs near '$part'!";
+            exit -1;
+        }
+    }
+}
 
 # Build @ObjectCriteria
 
@@ -62,16 +75,16 @@ if ( $params{'ObjType'} && !$params{'ObjectCriteria'}) {
 
     # No ObjectCriteria, so we only have one element, and can ommit the <ListCount> and <ListElement>
     @ObjectCriteria = SOAP::Data->name('ObjectCriteria' => \SOAP::Data->value(
-            @objCriteriaResult
+        @objCriteriaResult
     ));
 } else {
 
     # Combine ObjName, ObjGroup, ObjType, and ObjectCriteria into @ObjectCriteria
     my $objectCriteria = $params{'ObjectCriteria'};
     @ObjectCriteria = SOAP::Data->name('ObjectCriteria' => \SOAP::Data->value(
-            @objCriteriaResult,
-            SOAP::Data->type('xml' => $objectCriteria)
-        ));
+        @objCriteriaResult,
+        SOAP::Data->type('xml' => $objectCriteria)
+    ));
 }
 
 # Handle optional parametrs
@@ -96,9 +109,7 @@ SOAP::Data->name($soapMethodName => \SOAP::Data->value(
     )),
     SOAP::Data->name('ObjectCriteria' => @ObjectCriteria),
     SOAP::Data->name('InputData' => \SOAP::Data->value(
-            SOAP::Data->name('ObjectData' => \SOAP::Data->value(
-                    SOAP::Data->type('xml' => $params{'ObjectData'})
-            )),
+        SOAP::Data->name('ObjectData' => \SOAP::Data->value(@ObjectData)),
     )),
     SOAP::Data->type('xml' => $processParmsXml )
 ));

@@ -15,12 +15,46 @@ def pluginDir = getProperty("/projects/$pluginName/pluginDir").value
 //List of procedure steps to which the plugin configuration credentials need to be attached
 // ** steps with attached credentials
 def stepsWithAttachedCredentials = [
-  // [procedureName: 'Create migration scheme', stepName: 'CreateScheme'],
-  // [procedureName: 'Ready change package', stepName: 'ReadyPackage'],
-  // [procedureName: 'Backout change package', stepName: 'ChangePackage'],
-  // [procedureName: 'Migrate change package', stepName: 'MigratePackage'],
-  // [procedureName: 'Query change package', stepName: 'QueryPackage'],
-  // [procedureName: 'Install change package', stepName: 'InstallPackage']
+  [procedureName: 'AddCmdToChgPkg', stepName: 'step1'],
+  [procedureName: 'AddResDefToChgPkg', stepName: 'step1'],
+  [procedureName: 'AddToResDesc', stepName: 'step1'],
+  [procedureName: 'AddToResGroup', stepName: 'step1'],
+  [procedureName: 'Alter', stepName: 'step1'],
+  [procedureName: 'Approve', stepName: 'step1'],
+  [procedureName: 'Backout', stepName: 'step1'],
+  [procedureName: 'Copy', stepName: 'step1'],
+  [procedureName: 'CreateInOther', stepName: 'step1'],
+  [procedureName: 'CreateInRepository', stepName: 'step1'],
+  [procedureName: 'DeleteFromOther', stepName: 'step1'],
+  [procedureName: 'DeleteFromRepository', stepName: 'step1'],
+  [procedureName: 'Disapprove', stepName: 'step1'],
+  [procedureName: 'DiscardAdHoc', stepName: 'step1'],
+  [procedureName: 'DiscardChgPkg', stepName: 'step1'],
+  [procedureName: 'Import', stepName: 'step1'],
+  [procedureName: 'InquireInJournal', stepName: 'step1'],
+  [procedureName: 'InquireInOther', stepName: 'step1'],
+  [procedureName: 'InquireInRepository', stepName: 'step1'],
+  [procedureName: 'InstallAdHoc', stepName: 'step1'],
+  [procedureName: 'InstallChgPkg', stepName: 'step1'],
+  [procedureName: 'ListFromJournal', stepName: 'step1'],
+  [procedureName: 'ListFromOther', stepName: 'step1'],
+  [procedureName: 'ListFromRepository', stepName: 'step1'],
+  [procedureName: 'ListWithinResults', stepName: 'step1'],
+  [procedureName: 'Migrate', stepName: 'step1'],
+  [procedureName: 'NewcopyAdHoc', stepName: 'step1'],
+  [procedureName: 'NewcopyChgPkg', stepName: 'step1'],
+  [procedureName: 'Ready', stepName: 'step1'],
+  [procedureName: 'RemoveCmdFromChgPkg', stepName: 'step1'],
+  [procedureName: 'RemoveFromResDesc', stepName: 'step1'],
+  [procedureName: 'RemoveFromResGrp', stepName: 'step1'],
+  [procedureName: 'RemoveResDefFromChgPkg', stepName: 'step1'],
+  [procedureName: 'RenameFromGroup', stepName: 'step1'],
+  [procedureName: 'RenameResDef', stepName: 'step1'],
+  [procedureName: 'Recover', stepName: 'step1'],
+  [procedureName: 'Unready', stepName: 'step1'],
+  [procedureName: 'UpdateInOther', stepName: 'step1'],
+  [procedureName: 'UpdateInRepository', stepName: 'step1']
+
 ]
 // ** end steps with attached credentials
 

@@ -6,6 +6,9 @@
 # Hash of regular expressions defining allowed values for parameters, keyed by parameter name
 my %valid;
 
+
+#### TODO Move these to ec_perl_code_block_1 wherever possible
+
 sub isKeyValid {
     my ($key,@array) = @_;
     $_=uc for @array;

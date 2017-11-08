@@ -24,7 +24,7 @@ $[/myPlugin/project/ec_perl_code_block_1]
 my @ObjectCriteria;
 if ( !$params{'ObjectCriteria'}) {
 
-    # No ObjectCriteria, so we only have one element, and can ommit the <ListCount> and <ListElement>
+    # No ObjectCriteria, so we only have one element, and can omit the <ListCount> and <ListElement>
     @ObjectCriteria = SOAP::Data->name('ObjectCriteria' => \SOAP::Data->value(
             SoapData('ObjType'),
             $[/javascript (('' + myParent.ObjectInstance).length == 0) ? "" : "SoapData('ObjectInstance')"]
