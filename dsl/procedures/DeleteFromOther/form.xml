@@ -107,13 +107,6 @@ documentation : Help text for the parameter
         <documentation>Additional objects(s) to delete: XML serialized list of resource object criteria created using procedure SerializeOtherObjectCriteria (optional, the object specified below is appended to this)</documentation>
     </formElement>
     <formElement>
-        <type>entry</type>
-        <label>Integrity Token:</label>
-        <property>IntegrityToken</property>
-        <required>0</required>
-        <documentation>Object to delete: object integrity token (optional, ignored if more than one object is specified or wildcard masking is used for objects)</documentation>
-    </formElement>
-    <formElement>
         <type>select</type>
         <label>Mon Spec Inherit:</label>
         <property>MonSpecInherit</property>
@@ -177,4 +170,11 @@ documentation : Help text for the parameter
         </option>
         <value></value>
     </formElement>
+    <formElement>
+        <type>entry</type>
+        <label>Integrity Token:</label>
+        <property>IntegrityToken</property>
+        <required>0</required>
+        <documentation>Object to delete: object integrity token (optional, ignored if more than one object is specified or wildcard masking is used for objects)</documentation>
+    </formElement>    
 </editor>

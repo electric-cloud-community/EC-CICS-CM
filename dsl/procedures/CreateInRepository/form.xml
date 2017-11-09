@@ -98,8 +98,8 @@ documentation : Help text for the parameter
         <type>textarea</type>
         <label>Name-Value Pairs:</label>
         <property>ObjectData</property>
-        <required>1</required>
+        <required>0</required>
         <documentation>Name-value pairs to set in the object being created, one per line in NAME=VALUE format</documentation>
-        <!--TODO Change documentation-->
+        <!-- #### TODO Change documentation-->
     </formElement> 
 </editor>

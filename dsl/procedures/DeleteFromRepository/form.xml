@@ -58,12 +58,57 @@ documentation : Help text for the parameter
         <value>Repository</value>
     </formElement>
     <formElement>
-        <type>entry</type>
+        <type>select</type>
         <label>Object Type:</label>
         <property>ObjType</property>
         <required>1</required>
+        <option>
+            <name>AProfile</name>  <!-- Object criteria: required: ObjName -->
+            <value>AProfile</value>
+        </option>
+        <option>
+            <name>CConfig</name>  <!-- Object criteria: required: ObjName -->
+            <value>CConfig</value>
+        </option>
+        <option>
+            <name>ChgPkg</name>  <!-- #### TODO Object criteria: required: CPID -->
+            <value>ChgPkg</value>
+        </option>
+        <option>
+            <name>CmdAssociation</name>  <!-- #### TODO Object criteria: CPID, CConfig, CICSGroup, CICSObjType, CICSObjName - #### TODO not sure whether any are optional -->
+            <value>CmdAssociation</value>
+        </option>
+        <option>
+            <name>Exits</name>  <!-- Object criteria: required: ObjName -->
+            <value>Exits</value>
+        </option>
+        <option>
+            <name>KeyAssociation</name>  <!-- #### TODO Object criteria: CPID, CConfig, CICSGroup, CICSObjType, CICSObjName - #### TODO not sure whether any are optional -->
+            <value>KeyAssociation</value>
+        </option>
+        <option>
+            <name>PScheme</name>  <!-- #### TODO Object criteria: CPID, Scheme - #### TODO not sure whether any are optional -->
+            <value>PScheme</value>
+        </option>
+        <option>
+            <name>Scheme</name>  <!-- Object criteria: required: ObjName -->
+            <value>Scheme</value>
+        </option>
+        <!-- #### TODO Confirm that this value isn't allowded
+        <option>
+            <name>SysOpts</name>
+            <value>SysOpts</value>
+        </option> -->
+        <option>
+            <name>TFGroup</name>  <!-- Object criteria: required: ObjName -->
+            <value>TFGroup</value>
+        </option>
+        <option>
+            <name>TFRule</name>  <!-- Object criteria: required: ObjName -->
+            <value>TFRule</value>
+        </option>
         <documentation>Object to delete: resource type</documentation>
-    </formElement> 
+    </formElement>
     <formElement>
         <type>entry</type>
         <label>Object Instance:</label>
@@ -72,66 +117,59 @@ documentation : Help text for the parameter
         <documentation>Optional, if it is supplied then the specified object instance and all older instances are deleted, otherwise all versions of the object are deleted</documentation>
     </formElement>
     <formElement>
-        <type>textarea</type>
-        <label>Serialized Resource Object Criteria:</label>
-        <property>ObjectCriteria</property>
+        <type>entry</type>
+        <label>Object Name:</label>
+        <property>ObjName</property>
         <required>0</required>
-        <documentation>Additional objects(s) to delete: XML serialized list of resource object criteria created using procedure SerializeOtherObjectCriteria (optional, the object specified below is appended to this)</documentation>
+        <documentation>Object to delete: object name (applies to object types AProfile, CConfig, Exits, Scheme, TFGroup, and TFRule)</documentation>
     </formElement>
-    <!--<formElement>-->
-        <!--<type>entry</type>-->
-        <!--<label>Object Name:</label>-->
-        <!--<property>ObjName</property>-->
-        <!--<required>0</required>-->
-        <!--<documentation>Object to delete: object name (applies to object types AProfile, CConfig, Exits, Scheme, TFGroup, and TFRule)</documentation>-->
-    <!--</formElement> -->
-    <!--<formElement>-->
-        <!--<type>entry</type>-->
-        <!--<label>Change Package ID:</label>-->
-        <!--<property>CPID</property>-->
-        <!--<required>0</required>-->
-        <!--<documentation>Object to delete: object change package ID (applies to object types ChgPkg, #### valid? CmdAssociation, KeyAssociation ? ####, PScheme, and ReadyLst)</documentation>-->
-    <!--</formElement>-->
-    <!--<formElement>-->
-        <!--<type>entry</type>-->
-        <!--<label>CConfig:</label>-->
-        <!--<property>CConfig</property>-->
-        <!--<required>0</required>-->
-        <!--<documentation>Object to delete: object CConfig (applies to object types #### valid? CmdAssociation and KeyAssociation)</documentation>-->
-    <!--</formElement>-->
-    <!--<formElement>-->
-        <!--<type>entry</type>-->
-        <!--<label>CICS Group:</label>-->
-        <!--<property>CICSGroup</property>-->
-        <!--<required>0</required>-->
-        <!--<documentation>Object to delete: object CICS group (applies to object types CmdAssociation and KeyAssociation)</documentation>-->
-    <!--</formElement>-->
-    <!--<formElement>-->
-        <!--<type>entry</type>-->
-        <!--<label>CICS Object Type:</label>-->
-        <!--<property>CICSObjType</property>-->
-        <!--<required>0</required>-->
-        <!--<documentation>Object to delete: object CICS object type (applies to object types CmdAssociation and KeyAssociation)</documentation>-->
-    <!--</formElement>-->
-    <!--<formElement>-->
-        <!--<type>entry</type>-->
-        <!--<label>CICS Object Name:</label>-->
-        <!--<property>CICSObjName</property>-->
-        <!--<required>0</required>-->
-        <!--<documentation>Object to delete: object CICS object name (applies to object types CmdAssociation and KeyAssociation ? ####)</documentation>-->
-    <!--</formElement>       -->
-    <!--<formElement>-->
-        <!--<type>entry</type>-->
-        <!--<label>Scheme:</label>-->
-        <!--<property>Scheme</property>-->
-        <!--<required>0</required>-->
-        <!--<documentation>Object to delete: object scheme (applies to object types PScheme and ReadyLst)</documentation>-->
-    <!--</formElement>       -->
+    <formElement>
+        <type>entry</type>
+        <label>Change Package ID:</label>
+        <property>CPID</property>
+        <required>0</required>
+        <documentation>Object to delete: object change package ID (applies to object types ChgPkg, #### TODO optional? CmdAssociation, KeyAssociation, and #### TODO optional? PScheme)</documentation>
+    </formElement>
+    <formElement>
+        <type>entry</type>
+        <label>CConfig:</label>
+        <property>CConfig</property>
+        <required>0</required>
+        <documentation>Object to delete: object CConfig (applies to object types #### TODO optional? CmdAssociation and KeyAssociation)</documentation>
+    </formElement>
+    <formElement>
+        <type>entry</type>
+        <label>CICS Group:</label>
+        <property>CICSGroup</property>
+        <required>0</required>
+        <documentation>Object to delete: object CICS group (applies to object types #### TODO optional? CmdAssociation and KeyAssociation)</documentation>
+    </formElement>
+    <formElement>
+        <type>entry</type>
+        <label>CICS Object Type:</label>
+        <property>CICSObjType</property>
+        <required>0</required>
+        <documentation>Object to delete: object CICS object type (applies to object types #### TODO optional? CmdAssociation and KeyAssociation)</documentation>
+    </formElement>
+    <formElement>
+        <type>entry</type>
+        <label>CICS Object Name:</label>
+        <property>CICSObjName</property>
+        <required>0</required>
+        <documentation>Object to delete: object CICS object name (applies to object types #### TODO optional? CmdAssociation and KeyAssociation ? #### TODO)</documentation>
+    </formElement>
+    <formElement>
+        <type>entry</type>
+        <label>Scheme:</label>
+        <property>Scheme</property>
+        <required>0</required>
+        <documentation>Object to delete: object scheme (applies to object type #### TODO optional? PScheme)</documentation>
+    </formElement>
     <formElement>
         <type>entry</type>
         <label>Integrity Token:</label>
         <property>IntegrityToken</property>
         <required>0</required>
-        <documentation>Integrity token (optional, ####used to ensure the object being deleted has not been modified)</documentation>
-    </formElement> 
+        <documentation>Integrity token (optional, #### TODO confirm: used to ensure the object being deleted has not been modified)</documentation>
+    </formElement>
 </editor>
