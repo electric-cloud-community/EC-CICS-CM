@@ -45,62 +45,131 @@ documentation : Help text for the parameter
         <required>1</required>
         <documentation>The property that results will be returned into.</documentation>
     </formElement>
-    <!-- #### TODO Update to next marker -->
     <formElement>
         <type>entry</type>
-        <label>Change Package ID:</label>
-        <property>CPID</property>
+        <label>Location Name:</label>
+        <property>LocationName</property>
         <required>1</required>
-        <documentation>Change package to migrate</documentation>
+        <documentation>The configuration name, CSD location, or CICSPlex Context, depending on Location Type value.</documentation>
+    </formElement>
+    <formElement>
+        <type>select</type>
+        <label>Location Type:</label>
+        <property>LocationType</property>
+        <required>1</required>
+        <documentation>Location to install in (for this procedure this must be 'CConfig')</documentation>
+        <option>
+            <name>CConfig</name>
+            <value>CConfig</value>
+        </option>
+        <value>CConfig</value>
     </formElement>
     <formElement>
         <type>entry</type>
-        <label>Scheme:</label>
-        <property>Scheme</property>
+        <label>Object Name:</label>
+        <property>ObjName</property>
         <required>1</required>
-        <documentation>Migration scheme to use</documentation>
+        <documentation>Object to install: object name</documentation>
     </formElement>
     <formElement>
-        <type>checkbox</type>
+        <type>entry</type>
+        <label>Object Type:</label>
+        <property>ObjType</property>
+        <required>1</required>
+        <documentation>Object to install: object type</documentation>
+    </formElement>
+    <formElement>
+        <type>entry</type>
+        <label>Object Group:</label>
+        <property>ObjGroup</property>
+        <required>1</required>
+        <documentation>Object to install: object group</documentation>
+    </formElement>
+    <formElement>
+        <type>textarea</type>
+        <label>Serialized Resource Object Criteria:</label>
+        <property>ObjectCriteria</property>
+        <required>0</required>
+        <documentation>Additional objects(s) to create: XML serialized list of resource object criteria created using procedure SerializeOtherObjectCriteria (optional, the object specified below is appended to this)</documentation>
+    </formElement>
+    <formElement>
+        <type>select</type>
         <label>Quiesce:</label>
         <property>Quiesce</property>
         <required>0</required>
         <documentation>CSD-based CICS Configurations only: specifies whether to set each resource to a (resource-type-dependent) status that allows its definition to be installed (for example, disabled, closed, or out of service), before attempting to install to it. If you do not specify this "quiesce" option, and a resource is in a status that does not allow the install action, then the install action for that resource definition will fail</documentation>
-	<checkedValue>YES</checkedValue>
-	<uncheckedValue>NO</uncheckedValue>
-        <initiallyChecked>0</initiallyChecked>
-        <value>NO</value>
+        <option>
+            <name>No</name>
+            <value>No</value>
+        </option>
+        <option>
+            <name>Yes</name>
+            <value>Yes</value>
+        </option>
+        <value></value>
     </formElement> 
     <formElement>
         <type>entry</type>
         <label>Qualification Data:</label>
         <property>QualificationData</property>
-        <required>1</required>
+        <required>0</required>
         <documentation>Qualification Data is optional data passed through the Install operations qualification exit point. The needs of your organization determine whether you use an exit program and what processing it performs</documentation>
     </formElement>
     <formElement>
-        <type>checkbox</type>
+        <type>select</type>
         <label>Discard:</label>
         <property>Discard</property>
         <required>0</required>
         <documentation>Whether to discard the resource definition before attempting to install it</documentation>
-	<checkedValue>YES</checkedValue>
-	<uncheckedValue>NO</uncheckedValue>
-        <initiallyChecked>0</initiallyChecked>
-        <value>NO</value>
-    </formElement> 
+        <option>
+            <name>No</name>
+            <value>No</value>
+        </option>
+        <option>
+            <name>Yes</name>
+            <value>Yes</value>
+        </option>
+        <value></value>
+    </formElement>
     <formElement>
-        <type>checkbox</type>
+        <type>select</type>
+        <label>Connection Count:</label>
+        <property>ConnectionCount</property>
+        <required>0</required>
+        <documentation>ConnectionCount specifies the CSD-based CICS regions on which to perform this action: All, element_count, Local. Left empty field for element_count case.</documentation>
+        <option>
+            <name>All</name>
+            <value>All</value>
+        </option>
+        <option>
+            <name>Local</name>
+            <value>Local</value>
+        </option>
+        <value></value>
+    </formElement>
+    <formElement>
+        <type>textarea</type>
+        <label>Serialized Connection Element:</label>
+        <property>ConnectionElement</property>
+        <required>0</required>
+        <documentation>Additional objects(s) to create: XML serialized list of resource connection element. Write connection elements separated by whitespace. </documentation>
+    </formElement>
+    <formElement>
+        <type>select</type>
         <label>Force:</label>
         <property>Force</property>
         <required>0</required>
         <documentation>Applies only to Context-based CICS configurations</documentation>
-	<checkedValue>YES</checkedValue>
-	<uncheckedValue>NO</uncheckedValue>
-        <initiallyChecked>0</initiallyChecked>
-        <value>NO</value>
+        <option>
+            <name>No</name>
+            <value>No</value>
+        </option>
+        <option>
+            <name>Yes</name>
+            <value>Yes</value>
+        </option>
+        <value></value>
     </formElement>
-    <!-- #### TODO Update above here -->
     <formElement>
         <type>entry</type>
         <label>Target Scope:</label>
@@ -113,7 +182,7 @@ documentation : Help text for the parameter
         <label>Resource Group Object Type:</label>
         <property>ResGroupObjectType</property>
         <required>0</required>
-        <value>*</value>
+        <value></value>
         <documentation>Filter to select resource definitions of a particular type, excluding any other types of resource definition in the ResGroup, applies only to Context-based CICS configurations</documentation>
     </formElement>
     <formElement>
@@ -131,7 +200,7 @@ documentation : Help text for the parameter
         <documentation>Applies only to Context-based CICS configurations</documentation>
     </formElement>
     <formElement>
-        <type>radio</type>
+        <type>select</type>
         <label>FILEDEF Usage:</label>
         <property>FILEDEF_Usage</property>
         <required>0</required>
@@ -144,7 +213,7 @@ documentation : Help text for the parameter
             <name>Remote</name>
             <value>REMOTE</value>
         </option>
-        <value>LOCAL</value>
+        <value></value>
     </formElement>
     <formElement>
         <type>entry</type>
@@ -154,7 +223,7 @@ documentation : Help text for the parameter
         <documentation>Applies only to Context-based CICS configurations</documentation>
     </formElement>
     <formElement>
-        <type>radio</type>
+        <type>select</type>
         <label>PROGDEF Usage:</label>
         <property>PROGDEF_Usage</property>
         <required>0</required>
@@ -167,10 +236,10 @@ documentation : Help text for the parameter
             <name>Remote</name>
             <value>REMOTE</value>
         </option>
-        <value>LOCAL</value>
+        <value></value>
     </formElement>
     <formElement>
-        <type>radio</type>
+        <type>select</type>
         <label>PROGDEF Mode:</label>
         <property>PROGDEF_Mode</property>
         <required>0</required>
@@ -183,7 +252,7 @@ documentation : Help text for the parameter
             <name>Auto</name>
             <value>AUTO</value>
         </option>
-        <value>N/A</value>
+        <value></value>
     </formElement>
     <formElement>
         <type>entry</type>
@@ -193,7 +262,7 @@ documentation : Help text for the parameter
         <documentation>Applies only to Context-based CICS configurations</documentation>
     </formElement>
     <formElement>
-        <type>radio</type>
+        <type>select</type>
         <label>TDQDEF Usage:</label>
         <property>TDQDEF_Usage</property>
         <required>0</required>
@@ -206,10 +275,10 @@ documentation : Help text for the parameter
             <name>Remote</name>
             <value>REMOTE</value>
         </option>
-        <value>LOCAL</value>
+        <value></value>
     </formElement>
     <formElement>
-        <type>radio</type>
+        <type>select</type>
         <label>TDQDEF Mode:</label>
         <property>TDQDEF_Mode</property>
         <required>0</required>
@@ -230,7 +299,7 @@ documentation : Help text for the parameter
             <name>Extra</name>
             <value>EXTRA</value>
         </option>
-        <value>N/A</value>
+        <value></value>
     </formElement>
     <formElement>
         <type>entry</type>
@@ -240,7 +309,7 @@ documentation : Help text for the parameter
         <documentation>Applies only to Context-based CICS configurations</documentation>
     </formElement>
     <formElement>
-        <type>radio</type>
+        <type>select</type>
         <label>TRANDEF Usage:</label>
         <property>TRANDEF_Usage</property>
         <required>0</required>
@@ -253,10 +322,10 @@ documentation : Help text for the parameter
             <name>Remote</name>
             <value>REMOTE</value>
         </option>
-        <value>LOCAL</value>
+        <value></value>
     </formElement>
     <formElement>
-        <type>radio</type>
+        <type>select</type>
         <label>TRANDEF Mode:</label>
         <property>TRANDEF_Mode</property>
         <required>0</required>
@@ -273,6 +342,6 @@ documentation : Help text for the parameter
             <name>Stat</name>
             <value>STAT</value>
         </option>
-        <value>N/A</value>
+        <value></value>
     </formElement>
 </editor>
