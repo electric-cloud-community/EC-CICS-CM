@@ -1,9 +1,11 @@
 # Shared Code Block 1
 # -------------------
 
+#### TODO Standardize code layout in all procedures on indenting by 4 spaces per indent level -- indentation levels in SOAP:Data generation code should be as similar as possible XML indentation
+
 # Fetch input parameters into a hash
 my $xpath;
-if ( $[/javascript (typeof(myParent.jobStepId) == "undefined") ? "1":"0"] ) {
+if ( $[/javascript (typeof(myParent.jobStepId) == "undefined") ? "1" : "0"] ) {
     $xpath = $ec->getActualParameters({jobId => $ENV{COMMANDER_JOBID}});
 }
 else {
@@ -119,14 +121,15 @@ sub makeAddObjectCriteria {
             if($numberOfCriteria > 1) {
                 push (@result,
                     SOAP::Data->name('ListElement' => \SOAP::Data->value(
-                            SOAP::Data->name("$elementWrapper" => \SOAP::Data->value(
+                            SOAP::Data->name("$elementWrapper" => \SOAP::Data->value( #### TODO Standardize code layout in all procedures on indenting by 4 spaces per indent level
+
+
                                     @listElement
                                 ))
                         )));
             }
             else {
                 push (@result, SOAP::Data->name("$elementWrapper" => \SOAP::Data->value(@listElement)));
-
             }
 
         }
@@ -199,7 +202,8 @@ sub makeRestrictionCriteria {
 
 sub createObjectCriteria {
     my ($mandatory, $addCConfig, $wrapper, %params) = @_;
-
+    my $wrapSingleElement = 0; #### TODO THis should almost certainly be a parameter, possibly an optional one defaulting to false.
+    
     my @mandatory = @{$mandatory};
 
     my @soapParams;
@@ -223,7 +227,7 @@ sub createObjectCriteria {
 
         # No ObjectCriteria, so we only have one element, and can omit the <ListCount> and <ListElement>
         @ObjectCriteria = SOAP::Data->name('ObjectCriteria' => \SOAP::Data->value(
-                @configValue,
+                @configValue,  #### TODO Standardize code layout in all procedures on indenting by 4 spaces per indent level
                 @soapParams
             ));
     } else {
@@ -233,7 +237,7 @@ sub createObjectCriteria {
         my @matches = $objectCriteria =~ m/<ListElement>/si;
         my $listCount = 1 + @matches;
         @ObjectCriteria = SOAP::Data->name('ObjectCriteria' => \SOAP::Data->value(
-                @configValue,
+                @configValue,  #### TODO Standardize code layout in all procedures on indenting by 4 spaces per indent level
                 SOAP::Data->name('ListCount' => $listCount),
                 SOAP::Data->name('ListElement' => \SOAP::Data->value(
                         @soapParams

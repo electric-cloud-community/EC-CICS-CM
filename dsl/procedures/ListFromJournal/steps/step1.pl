@@ -16,7 +16,7 @@ my @optionalParams = (
     'Limit'
 );
 
-my @jnlCriteriaParams = (
+my @jnlCriteriaParams = ( #### TODO These are optional parameters but are not listed in @optionalParams -- however, the validation code in ec_perl_code_1 needs them to be (once we add validations for them)
     'JnlCCVRel',
     'JnlCICSRel',
     'JnlCPID',
@@ -52,22 +52,22 @@ if ( $params{'ObjType'} && !$params{'ObjectCriteria'}) {
 
     # No ObjectCriteria, so we only have one element, and can ommit the <ListCount> and <ListElement>
     @ObjectCriteria = SOAP::Data->name('ObjectCriteria' => \SOAP::Data->value(
-            @objCriteriaResult
-        ));
+        @objCriteriaResult
+    ));
 } else {
 
     # Combine ObjName, ObjGroup, ObjType, and ObjectCriteria into @ObjectCriteria
     my $objectCriteria = $params{'ObjectCriteria'};
     @ObjectCriteria = SOAP::Data->name('ObjectCriteria' => \SOAP::Data->value(
-            @objCriteriaResult,
-            SOAP::Data->type('xml' => $objectCriteria)
-        ));
+        @objCriteriaResult,
+        SOAP::Data->type('xml' => $objectCriteria)
+    ));
 }
 
 
 # Handle optional parametrs
 my @paramsForRequest;
-for my $p (@optionalParams) {
+for my $p (@optionalParams) { #### TODO This should not jst use @optionalParams, since that should also contain the contents of @jnlCriteriaParams
     if ($params{$p} ne "") {
         push @paramsForRequest, "<$p>$params{$p}</$p>";
     }
@@ -78,8 +78,7 @@ if(scalar(@paramsForRequest) > 0) {
 }
 my $processParmsXml = "@paramsForRequest";
 
-
-# Handle Journal parametrs
+# Handle Journal parameters
 my @jnlCriteriaParamsForRequest;
 for my $p (@jnlCriteriaParams) {
     if ($params{$p} ne "") {
@@ -100,10 +99,10 @@ my @data =
         )),
         SOAP::Data->type('xml' => $jnlCriteriaXml ),
         SOAP::Data->name('ObjectCriteria' => @ObjectCriteria),
-        $[/javascript ((('' + myParent.RestrictionCriteria).length == 0) || !(new RegExp("[^\.\s]+\.[^\.\s]+\.[^\.\s]+").test(myParent.RestrictionCriteria))) ? "" : // Check for presence of the pattern we parse
-            "    @restrictionCriteria,  # Optional section "
-        ],
+$[/javascript ((('' + myParent.RestrictionCriteria).length == 0) || !(new RegExp("[^\.\s]+\.[^\.\s]+\.[^\.\s]+").test(myParent.RestrictionCriteria))) ? "" : // Check for presence of the pattern we parse
+"        @restrictionCriteria,  # Optional section "
+]
         SOAP::Data->type('xml' => $processParmsXml )
-));
+    ));
 
 $[/myPlugin/project/ec_perl_code_block_2]

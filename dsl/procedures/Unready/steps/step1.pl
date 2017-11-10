@@ -19,11 +19,12 @@ $[/myPlugin/project/ec_perl_code_block_1]
 
 # Build output
 
-my @data = SOAP::Data->name($soapMethodName => \SOAP::Data->value(
-    SOAP::Data->name('SelectionCriteria' => \SOAP::Data->value(
-        SoapData('CPID'),
-        SoapData('Scheme')
-    ))
-));
+my @data =
+    SOAP::Data->name($soapMethodName => \SOAP::Data->value(
+        SOAP::Data->name('SelectionCriteria' => \SOAP::Data->value(
+            SoapData('CPID'),
+            SoapData('Scheme')
+        ))
+    ));
 
 $[/myPlugin/project/ec_perl_code_block_2]

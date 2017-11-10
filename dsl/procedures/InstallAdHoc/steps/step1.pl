@@ -67,8 +67,8 @@ if(length $params{'ConnectionElement'} > 0) {
 }
 foreach my $part (@parts) {
     push(@connectionElement, SOAP::Data->name('ConnectionElement' => \SOAP::Data->value(
-                SOAP::Data->name('ConnectionName' => $part)))
-            );
+        SOAP::Data->name('ConnectionName' => $part)))
+    );
 }
 
 my @TRANDEF = ('TRANDEF_RelatedScope', 'TRANDEF_Usage', 'TRANDEF_Mode');
@@ -101,12 +101,12 @@ my @ProcessParms_res = createSoap("PROGDEF", \@ProcessParms, \@result2);
 
 my @data =
     SOAP::Data->name($soapMethodName => \SOAP::Data->value(
-            SOAP::Data->name('LocationCriteria' => \SOAP::Data->value(
-                    SoapData('LocationName'),
-                    SoapData('LocationType')
-                )),
-            @ObjectCriteria,
-            @ProcessParms_res
-        ));
+        SOAP::Data->name('LocationCriteria' => \SOAP::Data->value(
+            SoapData('LocationName'),
+            SoapData('LocationType')
+        )),
+        @ObjectCriteria,
+        @ProcessParms_res
+    ));
 
 $[/myPlugin/project/ec_perl_code_block_2]
