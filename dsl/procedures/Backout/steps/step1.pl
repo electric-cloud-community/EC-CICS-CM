@@ -19,11 +19,13 @@ $[/myPlugin/project/ec_perl_code_block_1]
 
 my @data =
     SOAP::Data->name($soapMethodName => \SOAP::Data->value(
-            SOAP::Data->name('SelectionCriteria' => \SOAP::Data->value(
-                    SoapData('CPID'),
-                    SoapData('Scheme'),
-                    $[/javascript (('' + myParent.EventID).length == 0) ? "" : "SoapData('EventID')"]
-                ))
-        ));
+        SOAP::Data->name('SelectionCriteria' => \SOAP::Data->value(
+            SoapData('CPID'),
+            SoapData('Scheme'),
+$[/javascript (('' + myParent.EventID).length == 0) ? "" : "
+            SoapData('EventID')
+"]
+        ))
+    ));
 
 $[/myPlugin/project/ec_perl_code_block_2]

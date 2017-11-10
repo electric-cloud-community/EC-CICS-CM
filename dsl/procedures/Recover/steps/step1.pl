@@ -21,17 +21,17 @@ $[/myPlugin/project/ec_perl_code_block_1]
 # Build @ObjectCriteria
 
 my @mParams = ('ObjName', 'ObjGroup', 'ObjType', 'ObjectInstance');
-my @ObjectCriteria = createObjectCriteria(\@mParams, 0, "", %params);
+my @ObjectCriteria = createObjectCriteria(\@mParams, 0, "", \%params);
 
 my @data =
     SOAP::Data->name($soapMethodName => \SOAP::Data->value(
         SOAP::Data->name('LocationCriteria' => \SOAP::Data->value(
-                SoapData('LocationType')
-            )),
+            SoapData('LocationType')
+        )),
         SOAP::Data->name('ObjectCriteria' => @ObjectCriteria),
         SOAP::Data->name('ProcessParms' => \SOAP::Data->value(
-                SoapData('RecoverImage'),
-                SoapData('RollbackOption')
+            SoapData('RecoverImage'),
+            SoapData('RollbackOption')
         ))
     ));
 

@@ -21,7 +21,7 @@ $[/myPlugin/project/ec_perl_code_block_1]
 # Build @ObjectCriteria
 
 my @mParams = ('ObjName', 'ObjType');
-my @ObjectCriteria = createObjectCriteria(\@mParams, 0, "GrpA", %params);
+my @ObjectCriteria = createObjectCriteria(\@mParams, 0, "GrpA", \%params);
 
 my @data =
 SOAP::Data->name($soapMethodName => \SOAP::Data->value(

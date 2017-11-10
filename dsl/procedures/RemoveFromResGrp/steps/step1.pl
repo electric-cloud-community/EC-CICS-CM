@@ -20,7 +20,7 @@ $[/myPlugin/project/ec_perl_code_block_1]
 
 # Build @ObjectCriteria
 my @mParams = ('ObjGroup', 'ObjName', 'ObjType');
-my @ObjectCriteria = createObjectCriteria(\@mParams, 0, "DefA", %params);
+my @ObjectCriteria = createObjectCriteria(\@mParams, 0, "DefA", \%params);
 
 my @data =
 SOAP::Data->name($soapMethodName => \SOAP::Data->value(

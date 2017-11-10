@@ -14,7 +14,6 @@ $[/myPlugin/project/ec_perl_metadata]
 
 $[/myPlugin/project/ec_perl_code_block_1]
 
-
 sub createSoap {
     my($wrapper, $parameters, $intrinsic) = @_;
     my @param;
@@ -51,24 +50,29 @@ sub createSoap {
 
 # Build @ObjectCriteria
 my @mParams = ('ObjName', 'ObjType', 'ObjGroup');
-my @ObjectCriteria = createObjectCriteria(\@mParams, 0, "", %params);
+my @ObjectCriteria = createObjectCriteria(\@mParams, 0, "", \%params, 1);
 
 # Build ConnectionElement
 my $conElementStr = $params{'ConnectionElement'};
 my @connectionElement;
-my @parts = split(/\s+/s, $conElementStr); # Split at whitesapece (including line breaks)
-if(length $params{'ConnectionElement'} > 0) {
-    if(($params{'ConnectionCount'} eq "") and scalar(@parts) > 0) {
-        push(@connectionElement, SOAP::Data->name('ConnectionName' => scalar(@parts)));
-    }
-    else {
-        push(@connectionElement, SoapData('ConnectionCount'));
-    }
+if($params{'ConnectionCount'} eq 'Local') {
+    push(@connectionElement, SoapData('ConnectionCount'));
 }
-foreach my $part (@parts) {
-    push(@connectionElement, SOAP::Data->name('ConnectionElement' => \SOAP::Data->value(
-        SOAP::Data->name('ConnectionName' => $part)))
-    );
+else {
+    my @parts = split(/\s+/s, $conElementStr); # Split at whitesapece (including line breaks)
+    if(length $params{'ConnectionElement'} > 0) {
+        if(($params{'ConnectionCount'} eq "") and scalar(@parts) > 0) {
+            push(@connectionElement, SOAP::Data->name('ConnectionName' => scalar(@parts)));
+        }
+        else {
+            push(@connectionElement, SoapData('ConnectionCount'));
+        }
+    }
+    foreach my $part (@parts) {
+        push(@connectionElement, SOAP::Data->name('ConnectionElement' => \SOAP::Data->value(
+                    SOAP::Data->name('ConnectionName' => $part)))
+        );
+    }
 }
 
 my @TRANDEF = ('TRANDEF_RelatedScope', 'TRANDEF_Usage', 'TRANDEF_Mode');
@@ -97,7 +101,7 @@ my @CSDParms_res = createSoap("CSDParms", \@CSDParms, \@connectionElement);
 
 my @ProcessParms = ('Quiesce', 'QualificationData', 'Discard', 'Force');
 my @result2 = (@CSDParms_res, @CPSMParms_res);
-my @ProcessParms_res = createSoap("PROGDEF", \@ProcessParms, \@result2);
+my @ProcessParms_res = createSoap("ProcessParms", \@ProcessParms, \@result2);
 
 my @data =
     SOAP::Data->name($soapMethodName => \SOAP::Data->value(

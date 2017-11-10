@@ -21,7 +21,7 @@ $[/myPlugin/project/ec_perl_code_block_1]
 # Build @ObjectCriteria
 my @mParams = ('ObjName', 'ObjGroup', 'ObjType');
 
-my @ObjectCriteria = createObjectCriteria(\@mParams, 0, "", %params);
+my @ObjectCriteria = createObjectCriteria(\@mParams, 0, "", \%params);
 
 my @ObjectData = createObjectData($params{'ObjectData'});
 
@@ -29,26 +29,26 @@ my $inputData;
 my $dataObjectType = $params{'DataObjType'};
 if($dataObjectType) {
     $inputData = SOAP::Data->name($dataObjectType => \SOAP::Data->value(
-                    SOAP::Data->name('ObjectData' => \SOAP::Data->value(
-                            @ObjectData
-                    )),
-                ));
+        SOAP::Data->name('ObjectData' => \SOAP::Data->value(
+            @ObjectData
+        )),
+    ));
 }
 else {
     $inputData = SOAP::Data->name('ObjectData' => \SOAP::Data->value(
-            @ObjectData
-        ));
+        @ObjectData
+    ));
 }
 
 my @data =
     SOAP::Data->name($soapMethodName => \SOAP::Data->value(
         SOAP::Data->name('LocationCriteria' => \SOAP::Data->value(
-                SoapData('LocationName'),
-                SoapData('LocationType')
-            )),
+            SoapData('LocationName'),
+            SoapData('LocationType')
+        )),
         SOAP::Data->name('ObjectCriteria' => @ObjectCriteria),
         SOAP::Data->name('InputData' => \SOAP::Data->value(
-                $inputData
+            $inputData
         ))
     ));
 

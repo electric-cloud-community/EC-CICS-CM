@@ -21,7 +21,7 @@ $[/myPlugin/project/ec_perl_code_block_1]
 # Build @ObjectCriteria
 
 my @mParams = ('ObjName', 'ObjGroup', 'ObjType');
-my @ObjectCriteria = createObjectCriteria(\@mParams, 0, "", %params);
+my @ObjectCriteria = createObjectCriteria(\@mParams, 0, "", \%params);
 
 my @ObjectData;
 if (length($params{'ObjectData'}) == 0) {
@@ -35,8 +35,8 @@ if (length($params{'ObjectData'}) == 0) {
         my @pieces = split(/,/, $part, 2); # Split at first ',' into name and value
         if (@pieces == 2) {
             my @targetElement = SOAP::Data->name('TargetElement' => \SOAP::Data->value(
-                    SOAP::Data->name('TargetName' => $pieces[0]),
-                    SOAP::Data->name('TargetGroup' => $pieces[1]),
+                SOAP::Data->name('TargetName' => $pieces[0]),
+                SOAP::Data->name('TargetGroup' => $pieces[1]),
             ));
             push(@ObjectData, @targetElement);
         } else {

@@ -20,24 +20,25 @@ $[/myPlugin/project/ec_perl_code_block_1]
 # Build @ObjectCriteria
 my @mParams = ('ObjName', 'ObjGroup', 'ObjType');
 
-my @ObjectCriteria = createObjectCriteria(\@mParams, 0, "", %params);
+my @ObjectCriteria = createObjectCriteria(\@mParams, 0, "", \%params);
 
 my @data =
     SOAP::Data->name($soapMethodName => \SOAP::Data->value(
-            SOAP::Data->name('LocationCriteria' => \SOAP::Data->value(
-                    SoapData('LocationName'),
-                    SoapData('LocationType')
-                )),
-            SOAP::Data->name('ObjectCriteria' => @ObjectCriteria),
-            SOAP::Data->name('InputData' => \SOAP::Data->value(
-                    SoapData('TargetLocationName'),
-                    SoapData('TargetLocationType'),
-                    $[/javascript (('' + myParent.TargetGroup).length == 0) ? "" : "SoapData('TargetGroup')"]
-            )),
-            SOAP::Data->name('ProcessParms' => \SOAP::Data->value(
-                    SoapData('Replace')
-            ))
-
-        ));
+        SOAP::Data->name('LocationCriteria' => \SOAP::Data->value(
+            SoapData('LocationName'),
+            SoapData('LocationType')
+        )),
+        SOAP::Data->name('ObjectCriteria' => @ObjectCriteria),
+        SOAP::Data->name('InputData' => \SOAP::Data->value(
+            SoapData('TargetLocationName'),
+            SoapData('TargetLocationType'),
+$[/javascript (('' + myParent.TargetGroup).length == 0) ? "" : "
+            SoapData('TargetGroup')
+"]
+        )),
+        SOAP::Data->name('ProcessParms' => \SOAP::Data->value(
+            SoapData('Replace')
+        ))
+    ));
 
 $[/myPlugin/project/ec_perl_code_block_2]

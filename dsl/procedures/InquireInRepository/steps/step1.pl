@@ -31,25 +31,24 @@ if (length $params{'ObjectCriteria'} == 0) {
 
     # No ObjectCriteria, so we only have one element, and can omit the <ListCount> and <ListElement>
     @ObjectCriteria = SOAP::Data->name('ObjectCriteria' => \SOAP::Data->value(
-            @objCriteriaResult
-        ));
+        @objCriteriaResult
+    ));
 } else {
 
     # Combine ObjName, ObjGroup, ObjType, and ObjectCriteria into @ObjectCriteria
     my $objectCriteria = $params{'ObjectCriteria'};
     @ObjectCriteria = SOAP::Data->name('ObjectCriteria' => \SOAP::Data->value(
-            @objCriteriaResult,
-            SOAP::Data->type('xml' => $objectCriteria)
-        ));
+        @objCriteriaResult,
+        SOAP::Data->type('xml' => $objectCriteria)
+    ));
 }
 
 my @data =
     SOAP::Data->name($soapMethodName => \SOAP::Data->value(
-            SOAP::Data->name('LocationCriteria' => \SOAP::Data->value(
-                    SoapData('LocationType')
-                )),
-            SOAP::Data->name('ObjectCriteria' => @ObjectCriteria)
-
-        ));
+        SOAP::Data->name('LocationCriteria' => \SOAP::Data->value(
+            SoapData('LocationType')
+        )),
+        SOAP::Data->name('ObjectCriteria' => @ObjectCriteria)
+    ));
 
 $[/myPlugin/project/ec_perl_code_block_2]

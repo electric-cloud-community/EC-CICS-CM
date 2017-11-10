@@ -86,12 +86,12 @@ $[/javascript (('' + myParent.CICSObjName).length == 0) ? "" :
 "            SoapData('CICSObjName'),  # optional parameter "
 ]
 $[/javascript (('' + myParent.Scheme).length == 0) ? "" :
-"            SoapData('Scheme'),  # optional parameter "
+"            SoapData('Scheme'),  # optional parameter \n"
 ]
         )),
 $[/javascript (('' + myParent.IntegrityToken).length == 0) ? "" :
-"        SOAP::Data->name('ProcessParms' => \SOAP::Data->value(  # Optional section \n" +
-"            SoapData('IntegrityToken'( \n" +
+"        SOAP::Data->name('ProcessParms' => \\SOAP::Data->value(  # Optional section \n" +
+"            SoapData('IntegrityToken') \n" +
 "        )) "
 ]
     ));

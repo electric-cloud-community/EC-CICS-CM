@@ -24,7 +24,7 @@ $[/myPlugin/project/ec_perl_code_block_1]
 
 my @mParams = ('ObjName', 'ObjGroup', 'ObjType', 'ObjDefVer');
 
-my @ObjectCriteria = createObjectCriteria(\@mParams, 0, "", %params);
+my @ObjectCriteria = createObjectCriteria(\@mParams, 0, "", \%params);
 
 # Handle optional parametrs
 my @paramsForRequest;
@@ -40,13 +40,12 @@ if(scalar(@paramsForRequest) > 0) {
 
 my @data =
     SOAP::Data->name($soapMethodName => \SOAP::Data->value(
-            SOAP::Data->name('LocationCriteria' => \SOAP::Data->value(
-                    SoapData('LocationName'),
-                    SoapData('LocationType')
-                )),
-            SOAP::Data->name('ObjectCriteria' => @ObjectCriteria),
-            @processParms
-
+        SOAP::Data->name('LocationCriteria' => \SOAP::Data->value(
+            SoapData('LocationName'),
+            SoapData('LocationType')
+        )),
+        SOAP::Data->name('ObjectCriteria' => @ObjectCriteria),
+        @processParms
     ));
 
 $[/myPlugin/project/ec_perl_code_block_2]

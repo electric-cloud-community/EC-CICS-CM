@@ -36,16 +36,16 @@ if ( $params{'ObjType'} && !$params{'ObjectCriteria'}) {
 
     # No ObjectCriteria, so we only have one element, and can omit the <ListCount> and <ListElement>
     @ObjectCriteria = SOAP::Data->name('ObjectCriteria' => \SOAP::Data->value(
-            @objCriteriaResult
-        ));
+        @objCriteriaResult
+    ));
 } else {
 
     # Combine ObjName, ObjType, and ObjectCriteria into @ObjectCriteria
     my $objectCriteria = $params{'ObjectCriteria'};
     @ObjectCriteria = SOAP::Data->name('ObjectCriteria' => \SOAP::Data->value(
-            @objCriteriaResult,
-            SOAP::Data->type('xml' => $objectCriteria)
-        ));
+        @objCriteriaResult,
+        SOAP::Data->type('xml' => $objectCriteria)
+    ));
 }
 
 my @ObjectData;
@@ -56,15 +56,15 @@ if (length($params{'ObjectData'}) > 0 ) {
 }
 
 my @data =
-SOAP::Data->name($soapMethodName => \SOAP::Data->value(
-    SOAP::Data->name('LocationCriteria' => \SOAP::Data->value(
-        SoapData('LocationType')
-    )),
-    SOAP::Data->name('ObjectCriteria' => @ObjectCriteria),
-    SOAP::Data->name('InputData' => \SOAP::Data->value(
-        SOAP::Data->name('ObjectData' => \SOAP::Data->value(
-            @ObjectData
+    SOAP::Data->name($soapMethodName => \SOAP::Data->value(
+        SOAP::Data->name('LocationCriteria' => \SOAP::Data->value(
+            SoapData('LocationType')
         )),
-    ))
-));
+        SOAP::Data->name('ObjectCriteria' => @ObjectCriteria),
+        SOAP::Data->name('InputData' => \SOAP::Data->value(
+            SOAP::Data->name('ObjectData' => \SOAP::Data->value(
+                @ObjectData
+            )),
+        ))
+    ));
 $[/myPlugin/project/ec_perl_code_block_2]

@@ -29,7 +29,7 @@ $[/myPlugin/project/ec_perl_code_block_1]
 my @restrictionCriteria = makeRestrictionCriteria($params{'RestrictionCriteria'});
 
 my @mParams = ('ObjName', 'ObjGroup', 'ObjType', 'ObjDefVer');
-my @ObjectCriteria = createObjectCriteria(\@mParams, 0, "", %params);
+my @ObjectCriteria = createObjectCriteria(\@mParams, 0, "", \%params);
 
 # Handle optional parametrs
 my @paramsForRequest;
@@ -46,15 +46,15 @@ my $processParmsXml = "@paramsForRequest";
 
 my @data =
     SOAP::Data->name($soapMethodName => \SOAP::Data->value(
-    SOAP::Data->name('LocationCriteria' => \SOAP::Data->value(
-    SoapData('LocationName'),
-    SoapData('LocationType')
-    )),
-SOAP::Data->name('ObjectCriteria' => @ObjectCriteria),
-    $[/javascript ((('' + myParent.RestrictionCriteria).length == 0) || !(new RegExp("[^\.\s]+\.[^\.\s]+\.[^\.\s]+").test(myParent.RestrictionCriteria))) ? "" : // Check for presence of the pattern we parse
-                        "    @restrictionCriteria,  # Optional section "
-    ],
-SOAP::Data->type('xml' => $processParmsXml )
+        SOAP::Data->name('LocationCriteria' => \SOAP::Data->value(
+            SoapData('LocationName'),
+            SoapData('LocationType')
+        )),
+        SOAP::Data->name('ObjectCriteria' => @ObjectCriteria),
+$[/javascript ((('' + myParent.RestrictionCriteria).length == 0) || !(new RegExp("[^\.\s]+\.[^\.\s]+\.[^\.\s]+").test(myParent.RestrictionCriteria))) ? "" : // Check for presence of the pattern we parse
+"           @restrictionCriteria,  # Optional section "
+],
+        SOAP::Data->type('xml' => $processParmsXml )
     ));
 
 $[/myPlugin/project/ec_perl_code_block_2]

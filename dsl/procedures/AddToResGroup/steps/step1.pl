@@ -28,18 +28,18 @@ if(($params{'LocationType'} eq 'Context') and
 
 my @mParams = ('ObjGroup', 'ObjName', 'ObjType', 'ObjDefVer');
 
-my @ObjectCriteria = createObjectCriteria(\@mParams, 0, "DefA", %params);
+my @ObjectCriteria = createObjectCriteria(\@mParams, 0, "DefA", \%params);
 
 my @data =
 SOAP::Data->name($soapMethodName => \SOAP::Data->value(
     SOAP::Data->name('LocationCriteria' => \SOAP::Data->value(
-            SoapData('LocationName'),
-            SoapData('LocationType')
+        SoapData('LocationName'),
+        SoapData('LocationType')
     )) ,
     SOAP::Data->name('ObjectCriteria' => @ObjectCriteria),
     SOAP::Data->name('InputData' => \SOAP::Data->value(
-            SoapData('ContainerName'),
-            SoapData('ContainerType')
+        SoapData('ContainerName'),
+        SoapData('ContainerType')
     ))
 ));
 

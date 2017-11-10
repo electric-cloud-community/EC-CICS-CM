@@ -20,12 +20,12 @@ $[/myPlugin/project/ec_perl_code_block_1]
 
 my @mParams = ('ObjGroup', 'ObjType', 'ObjName', 'ObjDefVer');
 
-my @ObjectCriteria = createObjectCriteria(\@mParams, 1, "KeyA", %params);
+my @ObjectCriteria = createObjectCriteria(\@mParams, 1, "KeyA", \%params);
 
 my @data  =
     SOAP::Data->name($soapMethodName => \SOAP::Data->value(
         SOAP::Data->name('LocationCriteria' => \SOAP::Data->value(
-                SoapData('LocationType')
+            SoapData('LocationType')
         )),
         SOAP::Data->name('ObjectCriteria' => @ObjectCriteria),
         SOAP::Data->name('InputData' => \SOAP::Data->value(

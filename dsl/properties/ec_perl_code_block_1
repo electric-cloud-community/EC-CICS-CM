@@ -1,8 +1,6 @@
 # Shared Code Block 1
 # -------------------
 
-#### TODO Standardize code layout in all procedures on indenting by 4 spaces per indent level -- indentation levels in SOAP:Data generation code should be as similar as possible XML indentation
-
 # Fetch input parameters into a hash
 my $xpath;
 if ( $[/javascript (typeof(myParent.jobStepId) == "undefined") ? "1" : "0"] ) {
@@ -121,12 +119,11 @@ sub makeAddObjectCriteria {
             if($numberOfCriteria > 1) {
                 push (@result,
                     SOAP::Data->name('ListElement' => \SOAP::Data->value(
-                            SOAP::Data->name("$elementWrapper" => \SOAP::Data->value( #### TODO Standardize code layout in all procedures on indenting by 4 spaces per indent level
-
-
-                                    @listElement
-                                ))
-                        )));
+                        SOAP::Data->name("$elementWrapper" => \SOAP::Data->value(
+                            @listElement
+                        ))
+                    ))
+                );
             }
             else {
                 push (@result, SOAP::Data->name("$elementWrapper" => \SOAP::Data->value(@listElement)));
@@ -201,16 +198,15 @@ sub makeRestrictionCriteria {
 }
 
 sub createObjectCriteria {
-    my ($mandatory, $addCConfig, $wrapper, %params) = @_;
-    my $wrapSingleElement = 0; #### TODO THis should almost certainly be a parameter, possibly an optional one defaulting to false.
-    
+    my ($mandatory, $addCConfig, $wrapper, $params, $wrapSingleElement) = @_;
+    my %params = %$params;
     my @mandatory = @{$mandatory};
 
     my @soapParams;
     if($wrapper ne "") {
         @soapParams =  SOAP::Data->name($wrapper => \SOAP::Data->value(
-              getSoapParameters(\@mandatory, %params)
-            ));
+            getSoapParameters(\@mandatory, %params)
+        ));
     }
     else {
         @soapParams =  (
@@ -223,13 +219,23 @@ sub createObjectCriteria {
     }
 
     my @ObjectCriteria;
-    if (length $params{'ObjectCriteria'} == 0 && !$wrapSingleElement) {
-
-        # No ObjectCriteria, so we only have one element, and can omit the <ListCount> and <ListElement>
-        @ObjectCriteria = SOAP::Data->name('ObjectCriteria' => \SOAP::Data->value(
-                @configValue,  #### TODO Standardize code layout in all procedures on indenting by 4 spaces per indent level
+    if (length $params{'ObjectCriteria'} == 0) {
+        if($wrapSingleElement) {
+            @ObjectCriteria = SOAP::Data->name('ObjectCriteria' => \SOAP::Data->value(
+                SOAP::Data->name('ListCount' => '1'),
+                SOAP::Data->name('ListElement' => \SOAP::Data->value(
+                    @configValue,
+                    @soapParams
+                ))
+            ));
+        }
+        else {
+            # No ObjectCriteria, so we only have one element, and can omit the <ListCount> and <ListElement>
+            @ObjectCriteria = SOAP::Data->name('ObjectCriteria' => \SOAP::Data->value(
+                @configValue,
                 @soapParams
             ));
+        }
     } else {
 
         my $objectCriteria = $params{'ObjectCriteria'};
@@ -237,13 +243,13 @@ sub createObjectCriteria {
         my @matches = $objectCriteria =~ m/<ListElement>/si;
         my $listCount = 1 + @matches;
         @ObjectCriteria = SOAP::Data->name('ObjectCriteria' => \SOAP::Data->value(
-                @configValue,  #### TODO Standardize code layout in all procedures on indenting by 4 spaces per indent level
-                SOAP::Data->name('ListCount' => $listCount),
-                SOAP::Data->name('ListElement' => \SOAP::Data->value(
-                        @soapParams
-                    )),
-                SOAP::Data->type('xml' => $objectCriteria)
-            ));
+            @configValue,
+            SOAP::Data->name('ListCount' => $listCount),
+            SOAP::Data->name('ListElement' => \SOAP::Data->value(
+                @soapParams
+            )),
+            SOAP::Data->type('xml' => $objectCriteria)
+        ));
     }
     return @ObjectCriteria;
 }
@@ -260,10 +266,10 @@ sub getSoapParameters {
 }
 
 sub validateXML {
-	my ($str) = @_;
-	my $parser = XML::LibXML->new;
-	$parser->validation(0);
-	$parser->parse_string($str);
+    my ($str) = @_;
+    my $parser = XML::LibXML->new;
+    $parser->validation(0);
+    $parser->parse_string($str);
 }
 
 sub createObjectData {

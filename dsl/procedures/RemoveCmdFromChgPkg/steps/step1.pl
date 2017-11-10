@@ -39,7 +39,7 @@ $[/myPlugin/project/ec_perl_code_block_1]
 # Build @ObjectCriteria
 
 my @mParams = ('Command', 'ObjGroup', 'ObjType', 'ObjName', 'ObjDefVer', 'TContainer');
-my @ObjectCriteria = createObjectCriteria(\@mParams, 1, "CmdAPost", %params);
+my @ObjectCriteria = createObjectCriteria(\@mParams, 1, "CmdAPost", \%params);
 
 my @data =
 SOAP::Data->name($soapMethodName => \SOAP::Data->value(
