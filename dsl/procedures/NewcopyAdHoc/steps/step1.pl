@@ -76,7 +76,7 @@ $[/javascript (('' + myParent.Connections).length == 0) ? "" :
 "        SOAP::Data->name('CSDParams' => \\SOAP::Data->value(@CSDParams)),  # Optional section "
 ]
 $[/javascript (('' + myParent.TargetScope).length == 0) ? "" :
-"        SOAP::Data->name('CPSMParams' => \SOAP::Data->value( \n" +
+"        SOAP::Data->name('CPSMParams' => \\SOAP::Data->value( \n" +
 "            SoapData('TargetScope'),  # Optional parameter \n" +
 "        )), "
 ]

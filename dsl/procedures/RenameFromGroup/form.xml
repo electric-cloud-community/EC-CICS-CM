@@ -96,21 +96,21 @@ documentation : Help text for the parameter
         <label>Source Name:</label>
         <property>SourceName</property>
         <required>1</required>
-        <documentation>        </documentation> <!--TODO Add documentation -->
+        <documentation>Name of a resource definition or a CICS Configuration Manager repository object.</documentation>
     </formElement>
     <formElement>
         <type>entry</type>
         <label>Source Type:</label>
         <property>SourceType</property>
         <required>1</required>
-        <documentation>        </documentation> <!--TODO Add documentation -->
+        <documentation>One of the object types.</documentation>
     </formElement>
     <formElement>
         <type>entry</type>
         <label>Target Group:</label>
         <property>TargetGroup</property>
         <required>1</required>
-        <documentation>        </documentation> <!--TODO Add documentation -->
+        <documentation>Name of a group in a CSD file or a RESGROUP in a CICSPlex SM data repository.</documentation>
     </formElement>
     <formElement>
         <type>checkbox</type>

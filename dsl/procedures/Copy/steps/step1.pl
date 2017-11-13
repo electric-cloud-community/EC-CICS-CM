@@ -32,9 +32,9 @@ my @data =
         SOAP::Data->name('InputData' => \SOAP::Data->value(
             SoapData('TargetLocationName'),
             SoapData('TargetLocationType'),
-$[/javascript (('' + myParent.TargetGroup).length == 0) ? "" : "
-            SoapData('TargetGroup')
-"]
+$[/javascript (('' + myParent.TargetGroup).length == 0) ? "" :
+"            SoapData('TargetGroup') "
+]
         )),
         SOAP::Data->name('ProcessParms' => \SOAP::Data->value(
             SoapData('Replace')

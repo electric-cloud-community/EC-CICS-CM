@@ -100,8 +100,8 @@ $[/javascript (('' + myParent.Connections).length == 0) ? "" :
 "        SOAP::Data->name('CSDParams' => @CSDParams),  # Optional section "
 ]
 $[/javascript (('' + myParent.TargetScope).length == 0) ? "" :
-"        SOAP::Data->name('CPSMParams' => \SOAP::Data->value( " +
-"            SoapData('TargetScope'),  # Optional parameter " +
+"        SOAP::Data->name('CPSMParams' => \\SOAP::Data->value( " +
+"            SoapData('TargetScope'),  # Optional parameter \n" +
 "        )), "
 ]
     )),

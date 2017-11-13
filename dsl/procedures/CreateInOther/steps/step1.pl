@@ -22,20 +22,21 @@ $[/myPlugin/project/ec_perl_code_block_1]
 # Validation
 #-----------------------------
 
-if(length($params{'CSYSDEFModel'}) and uc($params{'ResTableName'}) ne "CSYSDEF") {
-    print "ERROR: 'CSYSDEF Model' applies only to CSYSDEF objects.";
-    exit -1;
-}
-
-if(((length($params{'MonSpecInherit'}) or length($params{'RTASpecInherit'}) or length($params{'WLMSpecInherit'}))) and uc($params{'ResTableName'}) ne "CSGLCGCS") {
-    print "ERROR: 'Mon Spec Inherit', 'RTA Spec Inherit', and 'WLM Spec Inherit' apply only to CSGLCGCS objects.";
-    exit -1;
-}
-
-if(length($params{'LNKSWSCGParm'}) and uc($params{'ResTableName'}) ne "LNKSWSCG") {
-    print "ERROR: 'LNKSWSCG Parameter' applies only to LNKSWSCG objects.";
-    exit -1;
-}
+# Validation for CICSPlex
+#if(length($params{'CSYSDEFModel'}) and uc($params{'ResTableName'}) ne "CSYSDEF") {
+#    print "ERROR: 'CSYSDEF Model' applies only to CSYSDEF objects.";
+#    exit -1;
+#}
+#
+#if(((length($params{'MonSpecInherit'}) or length($params{'RTASpecInherit'}) or length($params{'WLMSpecInherit'}))) and uc($params{'ResTableName'}) ne "CSGLCGCS") {
+#    print "ERROR: 'Mon Spec Inherit', 'RTA Spec Inherit', and 'WLM Spec Inherit' apply only to CSGLCGCS objects.";
+#    exit -1;
+#}
+#
+#if(length($params{'LNKSWSCGParm'}) and uc($params{'ResTableName'}) ne "LNKSWSCG") {
+#    print "ERROR: 'LNKSWSCG Parameter' applies only to LNKSWSCG objects.";
+#    exit -1;
+#}
 
 # Procedure-specific Code
 # -----------------------
@@ -73,17 +74,16 @@ if ( $params{'ObjType'} && !$params{'ObjectCriteria'}) {
 
 # Handle optional parametrs
 my @paramsForRequest;
+my @paramsForRequestResult;
 for my $p (@optionalParams) {
     if ($params{$p} ne "") {
-        push @paramsForRequest, "<$p>$params{$p}</$p>";
+        push @paramsForRequest, SoapData($p);
     }
 }
 
 if(scalar(@paramsForRequest) > 0) {
-   unshift @paramsForRequest, "<ProcessParms>";
-   push @paramsForRequest, "</ProcessParms>";
+    push  @paramsForRequestResult, SOAP::Data->name('ProcessParms' => \SOAP::Data->value(@paramsForRequest));
 }
-my $processParmsXml = "@paramsForRequest";
 
 my @data =
 SOAP::Data->name($soapMethodName => \SOAP::Data->value(
@@ -95,7 +95,7 @@ SOAP::Data->name($soapMethodName => \SOAP::Data->value(
     SOAP::Data->name('InputData' => \SOAP::Data->value(
         SOAP::Data->name('ObjectData' => \SOAP::Data->value(@ObjectData)),
     )),
-    SOAP::Data->type('xml' => $processParmsXml )
+    @paramsForRequestResult
 ));
 
 $[/myPlugin/project/ec_perl_code_block_2]

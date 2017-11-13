@@ -10,12 +10,6 @@ my $soapMethodName = 'List';
 
 # List of the names of optional paramters
 my @optionalParams = (
-    'HashingScope',
-    'ObjectHistory',
-    'CPIDFormula',
-    'Counts',
-    'FilterDate',
-    'Limit'
 );
 
 $[/myPlugin/project/ec_perl_metadata]
@@ -33,16 +27,16 @@ my @ObjectCriteria = createObjectCriteria(\@mParams, 0, "", \%params);
 
 # Handle optional parametrs
 my @paramsForRequest;
-for my $p (@optionalParams) {
+my @paramsForRequestResult;
+my @paramsForRequestParams = ('HashingScope', 'ObjectHistory', 'CPIDFormula', 'Counts', 'FilterDate', 'Limit');
+for my $p (@paramsForRequestParams) {
     if ($params{$p} ne "") {
-        push @paramsForRequest, "<$p>$params{$p}</$p>";
+        push @paramsForRequest, SoapData($p);
     }
 }
 if(scalar(@paramsForRequest) > 0) {
-    unshift @paramsForRequest, "<ProcessParms>";
-    push @paramsForRequest, "</ProcessParms>";
+    push  @paramsForRequestResult, SOAP::Data->name('ProcessParms' => \SOAP::Data->value(@paramsForRequest));
 }
-my $processParmsXml = "@paramsForRequest";
 
 my @data =
     SOAP::Data->name($soapMethodName => \SOAP::Data->value(
@@ -52,9 +46,9 @@ my @data =
         )),
         SOAP::Data->name('ObjectCriteria' => @ObjectCriteria),
 $[/javascript ((('' + myParent.RestrictionCriteria).length == 0) || !(new RegExp("[^\.\s]+\.[^\.\s]+\.[^\.\s]+").test(myParent.RestrictionCriteria))) ? "" : // Check for presence of the pattern we parse
-"           @restrictionCriteria,  # Optional section "
+"       @restrictionCriteria,  # Optional section "
 ],
-        SOAP::Data->type('xml' => $processParmsXml )
+        @paramsForRequestResult
     ));
 
 $[/myPlugin/project/ec_perl_code_block_2]

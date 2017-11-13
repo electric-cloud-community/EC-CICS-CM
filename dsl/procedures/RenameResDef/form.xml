@@ -112,18 +112,14 @@ documentation : Help text for the parameter
         <label>Target Name:</label>
         <property>TargetName</property>
         <required>1</required>
-        <documentation>
-            <!--TODO add documentation-->
-        </documentation>
+        <documentation>Name of a resource definition.</documentation>
     </formElement>
     <formElement>
         <type>entry</type>
         <label>Target Group:</label>
         <property>TargetGroup</property>
         <required>1</required>
-        <documentation>
-            <!--TODO add documentation-->
-        </documentation>
+        <documentation>Name of a group in a CSD file or a RESGROUP in a CICSPlex SM data repository</documentation>
     </formElement>
     <formElement>
         <type>textarea</type>

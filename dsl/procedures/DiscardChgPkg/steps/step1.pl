@@ -36,8 +36,8 @@ $[/javascript (('' + myParent.QualificationData).length == 0) ? "" :
 ]
 
 $[/javascript (('' + myParent.TargetScope).length == 0) ? "" :
-"        SOAP::Data->name('CPSMParams' => \SOAP::Data->value( " +
-"            SoapData('TargetScope'),  # Optional parameter " +
+"        SOAP::Data->name('CPSMParams' => \\SOAP::Data->value( " +
+"            SoapData('TargetScope'),  # Optional parameter \n" +
 "        )), "
 ]
     )),

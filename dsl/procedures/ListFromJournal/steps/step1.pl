@@ -8,25 +8,6 @@ my $soapMethodName = 'List';
 
 # List of the names of optional paramters
 my @optionalParams = (
-    'HashingScope',
-    'ObjectHistory',
-    'CPIDFormula',
-    'Counts',
-    'FilterDate',
-    'Limit'
-);
-
-my @jnlCriteriaParams = ( #### TODO These are optional parameters but are not listed in @optionalParams -- however, the validation code in ec_perl_code_1 needs them to be (once we add validations for them)
-    'JnlCCVRel',
-    'JnlCICSRel',
-    'JnlCPID',
-    'JnlScheme',
-    'JnlUserID',
-    'JnlObjGroup',
-    'JnlObjName',
-    'JnlObjType',
-    'JnlCSD',
-    'JnlContext'
 );
 
 $[/myPlugin/project/ec_perl_metadata]
@@ -64,32 +45,31 @@ if ( $params{'ObjType'} && !$params{'ObjectCriteria'}) {
     ));
 }
 
-
 # Handle optional parametrs
 my @paramsForRequest;
-for my $p (@optionalParams) { #### TODO This should not jst use @optionalParams, since that should also contain the contents of @jnlCriteriaParams
+my @paramsForRequestResult;
+my @processParmsParameters = ('HashingScope', 'ObjectHistory', 'CPIDFormula', 'Counts', 'FilterDate', 'Limit');
+for my $p (@processParmsParameters) {
     if ($params{$p} ne "") {
-        push @paramsForRequest, "<$p>$params{$p}</$p>";
+        push @paramsForRequest, SoapData($p);
     }
 }
 if(scalar(@paramsForRequest) > 0) {
-    unshift @paramsForRequest, "<ProcessParms>";
-    push @paramsForRequest, "</ProcessParms>";
+    push @paramsForRequestResult, SOAP::Data->name('ProcessParms' => \SOAP::Data->value(@paramsForRequest));
 }
-my $processParmsXml = "@paramsForRequest";
 
 # Handle Journal parameters
 my @jnlCriteriaParamsForRequest;
+my @jnlCriteriaParamsForRequestResult;
+my @jnlCriteriaParams = ('JnlCCVRel', 'JnlCICSRel', 'JnlCPID', 'JnlScheme', 'JnlUserID', 'JnlObjGroup', 'JnlObjName', 'JnlObjType', 'JnlCSD', 'JnlContext');
 for my $p (@jnlCriteriaParams) {
     if ($params{$p} ne "") {
-        push @jnlCriteriaParamsForRequest, "<$p>$params{$p}</$p>";
+        push @jnlCriteriaParamsForRequest, SoapData($p);
     }
 }
 if(scalar(@jnlCriteriaParamsForRequest) > 0) {
-    unshift @jnlCriteriaParamsForRequest, "<JnlCriteria>";
-    push @jnlCriteriaParamsForRequest, "</JnlCriteria>";
+    push  @jnlCriteriaParamsForRequestResult, SOAP::Data->name('JnlCriteria' => \SOAP::Data->value(@jnlCriteriaParamsForRequest));
 }
-my $jnlCriteriaXml = "@jnlCriteriaParamsForRequest";
 
 my @data =
     SOAP::Data->name($soapMethodName => \SOAP::Data->value(
@@ -97,12 +77,12 @@ my @data =
             SoapData('LocationName'),
             SoapData('LocationType')
         )),
-        SOAP::Data->type('xml' => $jnlCriteriaXml ),
+        @jnlCriteriaParamsForRequestResult,
         SOAP::Data->name('ObjectCriteria' => @ObjectCriteria),
 $[/javascript ((('' + myParent.RestrictionCriteria).length == 0) || !(new RegExp("[^\.\s]+\.[^\.\s]+\.[^\.\s]+").test(myParent.RestrictionCriteria))) ? "" : // Check for presence of the pattern we parse
-"        @restrictionCriteria,  # Optional section "
+"       @restrictionCriteria,  # Optional section "
 ]
-        SOAP::Data->type('xml' => $processParmsXml )
+        @paramsForRequestResult
     ));
 
 $[/myPlugin/project/ec_perl_code_block_2]
