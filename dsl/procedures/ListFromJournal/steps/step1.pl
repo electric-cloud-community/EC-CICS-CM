@@ -8,6 +8,22 @@ my $soapMethodName = 'List';
 
 # List of the names of optional paramters
 my @optionalParams = (
+    'HashingScope',
+    'ObjectHistory',
+    'CPIDFormula',
+    'Counts',
+    'FilterDate',
+    'Limit'
+    'JnlCCVRel',
+    'JnlCICSRel',
+    'JnlCPID',
+    'JnlScheme',
+    'JnlUserID',
+    'JnlObjGroup',
+    'JnlObjName',
+    'JnlObjType',
+    'JnlCSD',
+    'JnlContext'
 );
 
 $[/myPlugin/project/ec_perl_metadata]
@@ -80,7 +96,7 @@ my @data =
         @jnlCriteriaParamsForRequestResult,
         SOAP::Data->name('ObjectCriteria' => @ObjectCriteria),
 $[/javascript ((('' + myParent.RestrictionCriteria).length == 0) || !(new RegExp("[^\.\s]+\.[^\.\s]+\.[^\.\s]+").test(myParent.RestrictionCriteria))) ? "" : // Check for presence of the pattern we parse
-"       @restrictionCriteria,  # Optional section "
+"        @restrictionCriteria,  # Optional section "
 ]
         @paramsForRequestResult
     ));

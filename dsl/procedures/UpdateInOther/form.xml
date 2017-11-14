@@ -57,9 +57,9 @@ documentation : Help text for the parameter
         <label>Location Type:</label>
         <property>LocationType</property>
         <required>1</required>
-        <documentation>Location to create in (to create in the Repository, use procedure CreateInRepository instead)</documentation>
+        <documentation>Location to update in (to update in the Repository, use procedure UpdateInRepository instead)</documentation>
         <option>
-            <name>CConfig</name>
+            <name>CICS Configuration</name>
             <value>CConfig</value>
         </option>
         <option>

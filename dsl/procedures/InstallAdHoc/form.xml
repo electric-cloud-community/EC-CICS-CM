@@ -57,9 +57,9 @@ documentation : Help text for the parameter
         <label>Location Type:</label>
         <property>LocationType</property>
         <required>1</required>
-        <documentation>Location to install in (for this procedure this must be 'CConfig')</documentation>
+        <documentation>Location to install in (for this procedure this must be 'CICS Configuration')</documentation>
         <option>
-            <name>CConfig</name>
+            <name>CICS Configuration</name>
             <value>CConfig</value>
         </option>
         <value>CConfig</value>

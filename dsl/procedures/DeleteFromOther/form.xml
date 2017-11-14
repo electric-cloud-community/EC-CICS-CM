@@ -59,7 +59,7 @@ documentation : Help text for the parameter
         <required>1</required>
         <documentation>Location to delete from: location type must not be 'Repository' for this procedure (for deleteing from Repository, use the DeleteFromRepository procedure instead)</documentation>
         <option>
-            <name>CConfig</name>
+            <name>CICS Configuration</name>
             <value>CConfig</value>
         </option>
         <option>

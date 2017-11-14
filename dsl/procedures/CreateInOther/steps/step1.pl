@@ -22,21 +22,20 @@ $[/myPlugin/project/ec_perl_code_block_1]
 # Validation
 #-----------------------------
 
-# Validation for CICSPlex
-#if(length($params{'CSYSDEFModel'}) and uc($params{'ResTableName'}) ne "CSYSDEF") {
-#    print "ERROR: 'CSYSDEF Model' applies only to CSYSDEF objects.";
-#    exit -1;
-#}
-#
-#if(((length($params{'MonSpecInherit'}) or length($params{'RTASpecInherit'}) or length($params{'WLMSpecInherit'}))) and uc($params{'ResTableName'}) ne "CSGLCGCS") {
-#    print "ERROR: 'Mon Spec Inherit', 'RTA Spec Inherit', and 'WLM Spec Inherit' apply only to CSGLCGCS objects.";
-#    exit -1;
-#}
-#
-#if(length($params{'LNKSWSCGParm'}) and uc($params{'ResTableName'}) ne "LNKSWSCG") {
-#    print "ERROR: 'LNKSWSCG Parameter' applies only to LNKSWSCG objects.";
-#    exit -1;
-#}
+if(length($params{'CSYSDEFModel'}) and uc($params{'ResTableName'}) ne "CSYSDEF") {
+    print "ERROR: 'CSYSDEF Model' applies only to CSYSDEF objects.";
+    exit -1;
+}
+
+if(((length($params{'MonSpecInherit'}) or length($params{'RTASpecInherit'}) or length($params{'WLMSpecInherit'}))) and uc($params{'ResTableName'}) ne "CSGLCGCS") {
+    print "ERROR: 'Mon Spec Inherit', 'RTA Spec Inherit', and 'WLM Spec Inherit' apply only to CSGLCGCS objects.";
+    exit -1;
+}
+
+if(length($params{'LNKSWSCGParm'}) and uc($params{'ResTableName'}) ne "LNKSWSCG") {
+    print "ERROR: 'LNKSWSCG Parameter' applies only to LNKSWSCG objects.";
+    exit -1;
+}
 
 # Procedure-specific Code
 # -----------------------

@@ -58,7 +58,7 @@ documentation : Help text for the parameter
         <value>Repository</value>
     </formElement>
     <formElement>
-        <type>entry</type>
+        <type>entry</type> <!-- #### TODO Make this into a select (like for DeleteFromRepository, except that there may be extra allowed values such as SysOpts, possibly ReadyLst or SvrInfo ) -->
         <label>Object Type:</label>
         <property>ObjType</property>
         <required>1</required>
@@ -71,41 +71,41 @@ documentation : Help text for the parameter
         <required>0</required>
         <documentation>Object to inquire contents of: object name (applies to object types AProfile, CConfig, Exits, Scheme, TFGroup, and TFRule)</documentation>
     </formElement> 
-    <!--<formElement>-->
-        <!--<type>entry</type>-->
-        <!--<label>Change Package ID:</label>-->
-        <!--<property>CPID</property>-->
-        <!--<required>0</required>-->
-        <!--<documentation>Object to inquire contents of: object change package ID (applies to object types ChgPkg, CmdAssociation, KeyAssociation, PScheme, and ReadyLst)</documentation>-->
-    <!--</formElement>-->
-    <!--<formElement>-->
-        <!--<type>entry</type>-->
-        <!--<label>CConfig:</label>-->
-        <!--<property>CConfig</property>-->
-        <!--<required>0</required>-->
-        <!--<documentation>Object to inquire contents of: object CConfig (applies to object types CmdAssociation and KeyAssociation)</documentation>-->
-    <!--</formElement>-->
-    <!--<formElement>-->
-        <!--<type>entry</type>-->
-        <!--<label>CICS Group:</label>-->
-        <!--<property>CICSGroup</property>-->
-        <!--<required>0</required>-->
-        <!--<documentation>Object to inquire contents of: object CICS group (applies to object types CmdAssociation and KeyAssociation)</documentation>-->
-    <!--</formElement>-->
-    <!--<formElement>-->
-        <!--<type>entry</type>-->
-        <!--<label>CICS Object Type:</label>-->
-        <!--<property>CICSObjType</property>-->
-        <!--<required>0</required>-->
-        <!--<documentation>Object to inquire contents of: object CICS object type (applies to object types CmdAssociation and KeyAssociation)</documentation>-->
-    <!--</formElement>-->
-    <!--<formElement>-->
-        <!--<type>entry</type>-->
-        <!--<label>CICS Object Name:</label>-->
-        <!--<property>CICSObjName</property>-->
-        <!--<required>0</required>-->
-        <!--<documentation>Object to inquire contents of: object CICS object name (applies to object types CmdAssociation and KeyAssociation)</documentation>-->
-    <!--</formElement>       -->
+    <formElement>
+        <type>entry</type>
+        <label>Change Package ID:</label>
+        <property>CPID</property>
+        <required>0</required>
+        <documentation>Object to inquire contents of: object change package ID (applies to object types ChgPkg, CmdAssociation, KeyAssociation, PScheme, and ReadyLst)</documentation>
+    </formElement>
+    <formElement>
+        <type>entry</type>
+        <label>CICS Configuration:</label>
+        <property>CConfig</property>
+        <required>0</required>
+        <documentation>Object to inquire contents of: object CICS Configuration (applies to object types CmdAssociation and KeyAssociation)</documentation>
+    </formElement>
+    <formElement>
+        <type>entry</type>
+        <label>CICS Group:</label>
+        <property>CICSGroup</property>
+        <required>0</required>
+        <documentation>Object to inquire contents of: object CICS group (applies to object types CmdAssociation and KeyAssociation)</documentation>
+    </formElement>
+    <formElement>
+        <type>entry</type>
+        <label>CICS Object Type:</label>
+        <property>CICSObjType</property>
+        <required>0</required>
+        <documentation>Object to inquire contents of: object CICS object type (applies to object types CmdAssociation and KeyAssociation)</documentation>
+    </formElement>
+    <formElement>
+        <type>entry</type>
+        <label>CICS Object Name:</label>
+        <property>CICSObjName</property>
+        <required>0</required>
+        <documentation>Object to inquire contents of: object CICS object name (applies to object types CmdAssociation and KeyAssociation)</documentation>
+    </formElement>
     <formElement>
         <type>entry</type>
         <label>Scheme:</label>

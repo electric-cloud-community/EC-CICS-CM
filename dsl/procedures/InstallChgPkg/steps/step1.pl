@@ -70,54 +70,54 @@ $[/javascript (('' + myParent.ResGroupObjectType).length == 0) ? "" :
 ]
 $[/javascript (('' + myParent.CONNDEF_RefAssign).length == 0) ? "" :
 "            SOAP::Data->name('CONNDEF' => \\SOAP::Data->value( \n" +
-"                SOAP::Data->name('RefAssign' => $params{'CONNDEF_RefAssign'}) ,  # Optional parameter \n" +
+"                SOAP::Data->name('RefAssign' => $params{'CONNDEF_RefAssign'}),  # Optional parameter \n" +
 "            )), "
 ]
 $[/javascript (('' + myParent.FILEDEF_RelatedScope + myParent.FILEDEF_Usage).length == 0) ? "" :
 "            SOAP::Data->name('FILEDEF' => \\SOAP::Data->value( \n" +
-"                SOAP::Data->name('RelatedScope' => $params{'FILEDEF_RelatedScope'}) ,  # Optional parameter "
+"                SOAP::Data->name('RelatedScope' => $params{'FILEDEF_RelatedScope'}),  # Optional parameter "
 ]
 $[/javascript (('' + myParent.FILEDEF_Usage).length == 0) ? "" :
-"                SOAP::Data->name('Usage' => $params{'FILEDEF_Usage'}) ,  # Optional parameter "
+"                SOAP::Data->name('Usage' => $params{'FILEDEF_Usage'}),  # Optional parameter "
 ]
 $[/javascript (('' + myParent.FILEDEF_RelatedScope + myParent.FILEDEF_Usage).length == 0) ? "" :
 "            )), "
 ]
 $[/javascript (('' + myParent.PROGDEF_RelatedScope + myParent.PROGDEF_Usage + myParent.PROGDEF_Mode).length == 0) ? "" :
 "            SOAP::Data->name('PROGDEF' => \\SOAP::Data->value( \n" +
-"                SOAP::Data->name('RelatedScope' => $params{'PROGDEF_RelatedScope'}) ,  # Optional parameter "
+"                SOAP::Data->name('RelatedScope' => $params{'PROGDEF_RelatedScope'}),  # Optional parameter "
 ]
 $[/javascript (('' + myParent.PROGDEF_Usage).length == 0) ? "" :
-"                SOAP::Data->name('Usage' => $params{'PROGDEF_Usage'}) ,  # Optional parameter "
+"                SOAP::Data->name('Usage' => $params{'PROGDEF_Usage'}),  # Optional parameter "
 ]
 $[/javascript (('' + myParent.PROGDEF_Mode).length == 0) ? "" :
-"                SOAP::Data->name('Mode' => $params{'PROGDEF_Mode'}) ,  # Optional parameter "
+"                SOAP::Data->name('Mode' => $params{'PROGDEF_Mode'}),  # Optional parameter "
 ]
 $[/javascript (('' + myParent.PROGDEF_RelatedScope + myParent.PROGDEF_Usage + myParent.PROGDEF_Mode).length == 0) ? "" :
 "            )), "
 ]
 $[/javascript (('' + myParent.TDQDEF_RelatedScope + myParent.TDQDEF_Usage + myParent.TDQDEF_Mode).length == 0) ? "" :
 "            SOAP::Data->name('TDQDEF' => \\SOAP::Data->value( \n" +
-"                SOAP::Data->name('RelatedScope' => $params{'TDQDEF_RelatedScope'}) ,  # Optional parameter "
+"                SOAP::Data->name('RelatedScope' => $params{'TDQDEF_RelatedScope'}),  # Optional parameter "
 ]
 $[/javascript (('' + myParent.TDQDEF_Usage).length == 0) ? "" :
-"                SOAP::Data->name('Usage' => $params{'TDQDEF_Usage'}) ,  # Optional parameter "
+"                SOAP::Data->name('Usage' => $params{'TDQDEF_Usage'}),  # Optional parameter "
 ]
 $[/javascript (('' + myParent.TDQDEF_Mode).length == 0) ? "" :
-"                SOAP::Data->name('Mode' => $params{'TDQDEF_Mode'}) ,  # Optional parameter "
+"                SOAP::Data->name('Mode' => $params{'TDQDEF_Mode'}),  # Optional parameter "
 ]
 $[/javascript (('' + myParent.TDQDEF_RelatedScope + myParent.TDQDEF_Usage + myParent.TDQDEF_Mode).length == 0) ? "" :
 "            )), "
 ]
 $[/javascript (('' + myParent.TRANDEF_RelatedScope + myParent.TRANDEF_Usage + myParent.TRANDEF_Mode).length == 0) ? "" :
 "            SOAP::Data->name('TRANDEF' => \\SOAP::Data->value( \n" +
-"                SOAP::Data->name('RelatedScope' => $params{'TRANDEF_RelatedScope'}) ,  # Optional parameter "
+"                SOAP::Data->name('RelatedScope' => $params{'TRANDEF_RelatedScope'}),  # Optional parameter "
 ]
 $[/javascript (('' + myParent.TRANDEF_Usage).length == 0) ? "" :
-"                SOAP::Data->name('Usage' => $params{'TRANDEF_Usage'}) ,  # Optional parameter "
+"                SOAP::Data->name('Usage' => $params{'TRANDEF_Usage'}),  # Optional parameter "
 ]
 $[/javascript (('' + myParent.TRANDEF_Mode).length == 0) ? "" :
-"                SOAP::Data->name('Mode' => $params{'TRANDEF_Mode'}) ,  # Optional parameter "
+"                SOAP::Data->name('Mode' => $params{'TRANDEF_Mode'}),  # Optional parameter "
 ]
 $[/javascript (('' + myParent.TRANDEF_RelatedScope + myParent.TRANDEF_Usage + myParent.TRANDEF_Mode).length == 0) ? "" :
 "            )), "

@@ -50,18 +50,19 @@ documentation : Help text for the parameter
         <label>Location Name:</label>
         <property>LocationName</property>
         <required>1</required>
-        <documentation>Name of location to create in</documentation>
+        <documentation>Name of location to newcopy in</documentation>
     </formElement>
     <formElement>
         <type>select</type>
         <label>Location Type:</label>
         <property>LocationType</property>
         <required>1</required>
-        <documentation>Location to create in (to create in the Repository, use procedure CreateInRepository instead)</documentation>
+        <documentation>Location to newcopy in (#### TODO for this procedure, this must be CICS Configuration)</documentation>
         <option>
-            <name>CConfig</name>
+            <name>CICS Configuration</name>
             <value>CConfig</value>
         </option>
+        <value>CConfig</value>
     </formElement>
     <formElement>
         <type>select</type>

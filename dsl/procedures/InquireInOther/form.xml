@@ -59,7 +59,7 @@ documentation : Help text for the parameter
         <required>1</required>
         <documentation>Location to inquire in: location type (to inquire in other location types, use the InquireInRepository or InquireInJournal procedure instead)</documentation>
         <option>
-            <name>CConfig</name>
+            <name>CICS Configuration</name>
             <value>CConfig</value>
         </option>
         <option>

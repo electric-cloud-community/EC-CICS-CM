@@ -63,7 +63,7 @@ documentation : Help text for the parameter
         <label>CICS Configuration:</label>
         <property>CConfig</property>
         <required>1</required>
-        <documentation>The CICS configuration associated with the commands that you want to add to the change package</documentation>
+        <documentation>The CICS Configuration associated with the commands that you want to add to the change package</documentation>
     </formElement>
     <formElement>
         <type>select</type>

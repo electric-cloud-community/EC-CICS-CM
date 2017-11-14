@@ -71,11 +71,11 @@ documentation : Help text for the parameter
             <value>CConfig</value>
         </option>
         <option>
-            <name>ChgPkg</name>  <!-- #### TODO Object criteria: required: CPID -->
+            <name>ChgPkg</name>  <!-- Object criteria: required: CPID -->
             <value>ChgPkg</value>
         </option>
         <option>
-            <name>CmdAssociation</name>  <!-- #### TODO Object criteria: CPID, CConfig, CICSGroup, CICSObjType, CICSObjName - #### TODO not sure whether any are optional -->
+            <name>CmdAssociation</name>  <!-- Object criteria: required: CPID, CConfig, CICSGroup, CICSObjType, and CICSObjName -->
             <value>CmdAssociation</value>
         </option>
         <option>
@@ -83,22 +83,17 @@ documentation : Help text for the parameter
             <value>Exits</value>
         </option>
         <option>
-            <name>KeyAssociation</name>  <!-- #### TODO Object criteria: CPID, CConfig, CICSGroup, CICSObjType, CICSObjName - #### TODO not sure whether any are optional -->
+            <name>KeyAssociation</name>  <!-- Object criteria: required: CPID, CConfig, CICSGroup, CICSObjType, and CICSObjName -->
             <value>KeyAssociation</value>
         </option>
         <option>
-            <name>PScheme</name>  <!-- #### TODO Object criteria: CPID, Scheme - #### TODO not sure whether any are optional -->
+            <name>PScheme</name>  <!-- Object criteria: required: CPID and Scheme -->
             <value>PScheme</value>
         </option>
         <option>
             <name>Scheme</name>  <!-- Object criteria: required: ObjName -->
             <value>Scheme</value>
         </option>
-        <!-- #### TODO Confirm that this value isn't allowded
-        <option>
-            <name>SysOpts</name>
-            <value>SysOpts</value>
-        </option> -->
         <option>
             <name>TFGroup</name>  <!-- Object criteria: required: ObjName -->
             <value>TFGroup</value>
@@ -128,48 +123,48 @@ documentation : Help text for the parameter
         <label>Change Package ID:</label>
         <property>CPID</property>
         <required>0</required>
-        <documentation>Object to delete: object change package ID (applies to object types ChgPkg, #### TODO optional? CmdAssociation, KeyAssociation, and #### TODO optional? PScheme)</documentation>
+        <documentation>Object to delete: object change package ID (applies to object types ChgPkg, CmdAssociation, KeyAssociation, and PScheme)</documentation>
     </formElement>
     <formElement>
         <type>entry</type>
-        <label>CConfig:</label>
+        <label>CICS Configuration:</label>
         <property>CConfig</property>
         <required>0</required>
-        <documentation>Object to delete: object CConfig (applies to object types #### TODO optional? CmdAssociation and KeyAssociation)</documentation>
+        <documentation>Object to delete: object CICS Configuration (applies to object types CmdAssociation and KeyAssociation)</documentation>
     </formElement>
     <formElement>
         <type>entry</type>
         <label>CICS Group:</label>
         <property>CICSGroup</property>
         <required>0</required>
-        <documentation>Object to delete: object CICS group (applies to object types #### TODO optional? CmdAssociation and KeyAssociation)</documentation>
+        <documentation>Object to delete: object CICS group (applies to object types CmdAssociation and KeyAssociation)</documentation>
     </formElement>
     <formElement>
         <type>entry</type>
         <label>CICS Object Type:</label>
         <property>CICSObjType</property>
         <required>0</required>
-        <documentation>Object to delete: object CICS object type (applies to object types #### TODO optional? CmdAssociation and KeyAssociation)</documentation>
+        <documentation>Object to delete: object CICS object type (applies to object types CmdAssociation and KeyAssociation)</documentation>
     </formElement>
     <formElement>
         <type>entry</type>
         <label>CICS Object Name:</label>
         <property>CICSObjName</property>
         <required>0</required>
-        <documentation>Object to delete: object CICS object name (applies to object types #### TODO optional? CmdAssociation and KeyAssociation ? #### TODO)</documentation>
+        <documentation>Object to delete: object CICS object name (applies to object types CmdAssociation and KeyAssociation)</documentation>
     </formElement>
     <formElement>
         <type>entry</type>
         <label>Scheme:</label>
         <property>Scheme</property>
         <required>0</required>
-        <documentation>Object to delete: object scheme (applies to object type #### TODO optional? PScheme)</documentation>
+        <documentation>Object to delete: object scheme (applies to object type PScheme)</documentation>
     </formElement>
     <formElement>
         <type>entry</type>
         <label>Integrity Token:</label>
         <property>IntegrityToken</property>
         <required>0</required>
-        <documentation>Integrity token (optional, #### TODO confirm: used to ensure the object being deleted has not been modified)</documentation>
+        <documentation>Integrity token: used to avoid overwriting changes by other users -- supply the integrity token from an earlier Inquire or Update command for the same object; if the object has changed since the earlier command, then the object will not be deleted. (optional, ignored unless the object criteria specifies a single object without masking)</documentation>
     </formElement>
 </editor>

@@ -61,7 +61,7 @@ documentation : Help text for the parameter
             <value>Context</value>
         </option>
         <option>
-            <name>CConfig</name>
+            <name>CICS Configuration</name>
             <value>CConfig</value>
         </option>
         <value>CSD</value>

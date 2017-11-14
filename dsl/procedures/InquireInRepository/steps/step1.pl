@@ -7,7 +7,7 @@ $[/myPlugin/project/ec_perl_header]
 my $soapMethodName = 'Inquire';
 
 # List of the names of optional paramters
-my @optionalParams = (
+my @optionalParams = ( #### TODO Add all the optional parameters
 
 );
 
@@ -18,8 +18,10 @@ $[/myPlugin/project/ec_perl_code_block_1]
 # Procedure-specific Code
 # -----------------------
 
+#### TODO Validate ObjType with other object criteria values -- code for this is currently found in DeleteFromRepositoiry
+
 my @objCriteriaResult;
-my @objCriteriaParams = ('ObjType', 'ObjName', 'Scheme');
+my @objCriteriaParams = ('ObjType', 'ObjName', 'Scheme'); #### TODO Add all the other allowed object criteria types
 for my $p (@objCriteriaParams) {
     if (defined $params{$p} && $params{$p} ne "") {
         push @objCriteriaResult, SoapData($p);

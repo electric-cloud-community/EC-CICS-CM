@@ -59,7 +59,7 @@ documentation : Help text for the parameter
         <required>1</required>
         <documentation>Location to create in (to create in the Repository, use procedure CreateInRepository instead)</documentation>
         <option>
-            <name>CConfig</name>
+            <name>CICS Configuration</name>
             <value>CConfig</value>
         </option>
     </formElement>

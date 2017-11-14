@@ -81,7 +81,7 @@ if ($returnCode ne '00000000') {
     # Return code '00000004' with certain reason codes should be treated as warnings rather than errors (or possibly even ignored).
     if ($returnCode eq '00000004') {
         my $conditionCode = substr($reasonCode, 4);
-        if (($conditionCode eq  '00AC') or ($conditionCode eq  '0024') or ($conditionCode eq  '009D')) {
+        if (($conditionCode eq  '00AC') or ($conditionCode eq  '0024') or ($conditionCode eq  '009D')) { #### TODO Add more warning messages for  0024 and 009D
             if ($soapMethodName eq 'Ready') {
                 print "WARNING: Readied a change package that was already ready!\n";
             }

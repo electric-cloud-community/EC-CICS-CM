@@ -57,8 +57,7 @@ documentation : Help text for the parameter
         <label>Location Type:</label>
         <property>LocationType</property>
         <required>1</required>
-        <documentation>Location to list from: (to list from a Journal use ListFromJournal, to list from a Reposititory use ListFromRepository instead)
-        </documentation>
+        <documentation>Location to rename in</documentation>
         <option>
             <name>CSD</name>
             <value>CSD</value>
@@ -68,7 +67,7 @@ documentation : Help text for the parameter
             <value>Context</value>
         </option>
         <option>
-            <name>CConfig</name>
+            <name>CICS Configuration</name>
             <value>CConfig</value>
         </option>
         <value>CSD</value>

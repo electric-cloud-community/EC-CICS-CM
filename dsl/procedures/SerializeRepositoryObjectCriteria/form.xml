@@ -56,21 +56,21 @@ documentation : Help text for the parameter
         <label>Object Name:</label>
         <property>ObjName</property>
         <required>0</required>
-        <documentation>Repository object criteria to append: object name (applies to object types AProfile, CConfig, Exits, Scheme, TFGroup, and TFRule)</documentation>
+        <documentation>Repository object criteria to append: Object Name (applies to object types AProfile, CConfig, Exits, Scheme, TFGroup, and TFRule)</documentation>
     </formElement> 
     <formElement>
         <type>entry</type>
         <label>Change Package ID:</label>
         <property>CPID</property>
         <required>0</required>
-        <documentation>Repository object criteria to append: object change package ID (applies to object types ChgPkg, CmdAssociation, KeyAssociation, PScheme, and ReadyLst)</documentation>
+        <documentation>Repository object criteria to append: object Change Package ID (applies to object types ChgPkg, CmdAssociation, KeyAssociation, PScheme, and ReadyLst)</documentation>
     </formElement>
     <formElement>
         <type>entry</type>
-        <label>CConfig:</label>
+        <label>CICS Configuration:</label>
         <property>CConfig</property>
         <required>0</required>
-        <documentation>Repository object criteria to append: object CConfig (applies to object types CmdAssociation and KeyAssociation)</documentation>
+        <documentation>Repository object criteria to append: object CICS Configuration (applies to object types CmdAssociation and KeyAssociation)</documentation>
     </formElement>
     <formElement>
         <type>entry</type>

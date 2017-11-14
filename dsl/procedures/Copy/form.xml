@@ -59,7 +59,7 @@ documentation : Help text for the parameter
         <required>1</required>
         <documentation>Source(s) to copy from: location type</documentation>
         <option>
-            <name>CConfig</name>
+            <name>CICS Configuration</name>
             <value>CConfig</value>
         </option>
         <option>
@@ -113,7 +113,7 @@ documentation : Help text for the parameter
         <required>1</required>
         <documentation>Destination to copy to: location type</documentation>
         <option>
-            <name>CConfig</name>
+            <name>CICS Configuration</name>
             <value>CConfig</value>
         </option>
         <option>

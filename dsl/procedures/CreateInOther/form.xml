@@ -59,7 +59,7 @@ documentation : Help text for the parameter
         <required>1</required>
         <documentation>Location to create in (to create in the Repository, use procedure CreateInRepository instead)</documentation>
         <option>
-            <name>CConfig</name>
+            <name>CICS Configuration</name>
             <value>CConfig</value>
         </option>
         <option>
@@ -154,6 +154,10 @@ documentation : Help text for the parameter
         <required>0</required>
         <documentation>Optional, applies only to CSGLCGCS objects</documentation>
         <option>
+            <name></name>
+            <value></value>
+        </option>
+        <option>
             <name>Keep</name>
             <value>KEEP</value>
         </option>
@@ -174,6 +178,10 @@ documentation : Help text for the parameter
         <required>0</required>
         <documentation>Optional, applies only to CSGLCGCS objects</documentation>
         <option>
+            <name></name>
+            <value></value>
+        </option>
+        <option>
             <name>Keep</name>
             <value>KEEP</value>
         </option>
@@ -193,6 +201,10 @@ documentation : Help text for the parameter
         <property>LNKSWSCGParm</property>
         <required>0</required>
         <documentation>Optional, applies only to LNKSWSCG objects</documentation>
+        <option>
+            <name></name>
+            <value></value>
+        </option>
         <option>
             <name>None</name>
             <value>NONE</value>
