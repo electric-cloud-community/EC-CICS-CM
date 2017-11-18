@@ -92,11 +92,4 @@ documentation : Help text for the parameter
         <required>0</required>
         <documentation>Resource definition to inquire contents of: resource group (required unless Location Type is Context, for a Context you can specify either this or Object Definition Version)</documentation>
     </formElement>
-    <formElement>
-        <type>textarea</type>
-        <label>Serialized Resource Object Criteria:</label>
-        <property>ObjectCriteria</property>
-        <required>0</required>
-        <documentation>Additional objects(s) to delete: XML serialized list of resource object criteria created using procedure SerializeOtherObjectCriteria (optional, the object specified below is appended to this)</documentation>
-    </formElement>
 </editor>

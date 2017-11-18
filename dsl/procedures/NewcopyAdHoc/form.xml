@@ -50,14 +50,14 @@ documentation : Help text for the parameter
         <label>Location Name:</label>
         <property>LocationName</property>
         <required>1</required>
-        <documentation>Name of location to newcopy in</documentation>
+        <documentation>Name of location to newcopy in.</documentation>
     </formElement>
     <formElement>
         <type>select</type>
         <label>Location Type:</label>
         <property>LocationType</property>
         <required>1</required>
-        <documentation>Location to newcopy in (#### TODO for this procedure, this must be CICS Configuration)</documentation>
+        <documentation>Location to newcopy in (#### TODO for this procedure, this must be CICS Configuration).</documentation>
         <option>
             <name>CICS Configuration</name>
             <value>CConfig</value>
@@ -85,28 +85,28 @@ documentation : Help text for the parameter
             <value>DOCDEF</value>
         </option>
         <required>1</required>
-        <documentation>Object to newcopy: resource type</documentation>
+        <documentation>The object to newcopy's resource type.</documentation>
     </formElement>
     <formElement>
         <type>entry</type>
         <label>Object Name:</label>
         <property>ObjName</property>
         <required>1</required>
-        <documentation>Object to newcopy: resource name</documentation>
+        <documentation>The object to newcopy's resource name.</documentation>
     </formElement>
     <formElement>
         <type>entry</type>
         <label>Object Group:</label>
         <property>ObjGroup</property>
         <required>1</required>
-        <documentation>Object to newcopy: resource group</documentation>
+        <documentation>The object to newcopy's resource group.</documentation>
     </formElement>
     <formElement>
         <type>textarea</type>
-        <label>Serialized Object Criteria:</label>
+        <label>Serialized Resource Object Criteria:</label>
         <property>ObjectCriteria</property>
         <required>0</required>
-        <documentation>Additional objects(s) to newcopy: XML serialized list of MAPDEF/PROGDEF/PRTNDEF/DOCDEF object criteria created using procedure SerializeOtherObjectCriteria (optional, the object specified above is appended to this)</documentation>-->
+        <documentation>Any additional objects(s) to newcopy: XML serialized list of sets of MAPDEF/PROGDEF/PRTNDEF/DOCDEF object criteria, one per additional object, created using the procedure SerializeOtherObjectCriteria (optional, the object specified above is appended to this).</documentation>
     </formElement>
     <formElement>
         <type>checkbox</type>
@@ -124,7 +124,7 @@ documentation : Help text for the parameter
         <label>Qualification Data:</label>
         <property>QualificationData</property>
         <required>0</required>
-        <documentation>Qualification Data is optional data passed through the Newcopy operations qualification exit point. The needs of your organization determine whether you use an exit program and what processing it performs</documentation>
+        <documentation>The Qualification Data is optional data passed through the Newcopy operations qualification exit point. The needs of your organization determine whether you use an exit program and what processing it performs.</documentation>
     </formElement>
     <formElement>
         <type>select</type>
@@ -144,7 +144,7 @@ documentation : Help text for the parameter
 	</option>
 	<value>All</value>
         <required>0</required>
-        <documentation>The CSD-based CICS regions on which to perform this action. 'All': performs the action via all of the remote system connections defined in the CICS configuration (default), 'Local': performs the action on the CICS region that is running the CICS Configuration Manager server (Location Name mustspecify a CICS configuration that refers to the CSD file used by the CICS Configuration Manager server, 'Named': Performs the action via the remote system connections named in Connection Names.</documentation>
+        <documentation>The CSD-based CICS regions on which to perform the newcopy or phasein. 'All': performs the action via all of the remote system connections defined in the CICS configuration (default), 'Local': performs the action on the CICS region that is running the CICS Configuration Manager server (Location Name mustspecify a CICS configuration that refers to the CSD file used by the CICS Configuration Manager server), 'Named': Performs the action via the remote system connections named in Connection Names.</documentation>
     </formElement>
     <formElement>
         <type>textarea</type>), 

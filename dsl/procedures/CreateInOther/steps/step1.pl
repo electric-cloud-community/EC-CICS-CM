@@ -8,6 +8,8 @@ my $soapMethodName = 'Create';
 
 # List of the names of optional paramters
 my @optionalParams = (
+    'ObjGroup',
+    'ObjectData',
     'CSYSDEFModel',
     'MonSpecInherit',
     'RTASpecInherit',
@@ -19,8 +21,10 @@ $[/myPlugin/project/ec_perl_metadata]
 
 $[/myPlugin/project/ec_perl_code_block_1]
 
+# Procedure-specific Code
+# -----------------------
+
 # Validation
-#-----------------------------
 
 if(length($params{'CSYSDEFModel'}) and uc($params{'ResTableName'}) ne "CSYSDEF") {
     print "ERROR: 'CSYSDEF Model' applies only to CSYSDEF objects.";
@@ -37,51 +41,31 @@ if(length($params{'LNKSWSCGParm'}) and uc($params{'ResTableName'}) ne "LNKSWSCG"
     exit -1;
 }
 
-# Procedure-specific Code
-# -----------------------
+# Handle optional parameters
 
-# Split and parse ObjectData
-
-my @ObjectData = createObjectData($params{'ObjectData'});
-
-# Build @ObjectCriteria
-
-my @objCriteriaResult;
-my @objCriteriaParams = ('ObjGroup', 'ObjType', 'ObjName', 'ObjDefVer');
-for my $p (@objCriteriaParams) {
-    if (defined $params{$p} && $params{$p} ne "") {
-        push @objCriteriaResult, SoapData($p);
-    }
-}
-
-my @ObjectCriteria;
-if ( $params{'ObjType'} && !$params{'ObjectCriteria'}) {
-
-    # No ObjectCriteria, so we only have one element, and can ommit the <ListCount> and <ListElement>
-    @ObjectCriteria = SOAP::Data->name('ObjectCriteria' => \SOAP::Data->value(
-        @objCriteriaResult
-    ));
+# Split, parse and build ObjectData
+my @ObjectData;
+if (length($params{'ObjectData'}) > 0 ) {
+    @ObjectData = createObjectData($params{'ObjectData'});
 } else {
-
-    # Combine ObjName, ObjGroup, ObjType, and ObjectCriteria into @ObjectCriteria
-    my $objectCriteria = $params{'ObjectCriteria'};
-    @ObjectCriteria = SOAP::Data->name('ObjectCriteria' => \SOAP::Data->value(
-        @objCriteriaResult,
-        SOAP::Data->type('xml' => $objectCriteria)
-    ));
+    @ObjectData = SOAP::Data->type('xml' => '<!-- -->');  # Work around various bugs in ISPW SOAP interface
 }
 
-# Handle optional parametrs
-my @paramsForRequest;
+my @paramsForRequest = (
+    'CSYSDEFModel',
+    'MonSpecInherit',
+    'RTASpecInherit',
+    'WLMSpecInherit',
+    'LNKSWSCGParm',
+);
 my @paramsForRequestResult;
-for my $p (@optionalParams) {
-    if ($params{$p} ne "") {
-        push @paramsForRequest, SoapData($p);
+for my $param (@paramsForRequest) {
+    if (length($params{$param}) > 0) {
+        push @paramsForRequestResult, SoapData($param);
     }
 }
-
-if(scalar(@paramsForRequest) > 0) {
-    push  @paramsForRequestResult, SOAP::Data->name('ProcessParms' => \SOAP::Data->value(@paramsForRequest));
+if (scalar(@paramsForRequestResult) > 0) {
+    @paramsForRequestResult = SOAP::Data->name('ProcessParms' => \SOAP::Data->value(@paramsForRequestResult));
 }
 
 my @data =
@@ -90,7 +74,11 @@ SOAP::Data->name($soapMethodName => \SOAP::Data->value(
         SoapData('LocationName'),
         SoapData('LocationType')
     )),
-    SOAP::Data->name('ObjectCriteria' => @ObjectCriteria),
+    SOAP::Data->name('ObjectCriteria' => \SOAP::Data->value(
+        SoapData('ObjType'),
+        SoapData('ObjName'),
+        SoapDataOptional('ObjGroup')
+    )),
     SOAP::Data->name('InputData' => \SOAP::Data->value(
         SOAP::Data->name('ObjectData' => \SOAP::Data->value(@ObjectData)),
     )),

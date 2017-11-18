@@ -101,10 +101,10 @@ documentation : Help text for the parameter
     </formElement>
     <formElement>
         <type>textarea</type>
-        <label>Serialized Repository Object Criteria:</label>
+        <label>Serialized Resource Object Criteria:</label>
         <property>ObjectCriteria</property>
         <required>0</required>
-        <documentation>Additional command(s) to add: XML serialized list of resource object criteria created using procedure SerializeRepositoryObjectCriteria (optional, the command specified below is appended to this)</documentation>
+        <documentation>Additional objects to rename: XML serialized list of sets of resource object criteria, one per additional object, created using the procedure SerializeRepositoryObjectCriteria (optional, the object specified below is appended to this).</documentation>
     </formElement>
     <formElement>
         <type>entry</type>

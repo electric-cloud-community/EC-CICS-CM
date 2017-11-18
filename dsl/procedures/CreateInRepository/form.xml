@@ -50,7 +50,7 @@ documentation : Help text for the parameter
         <label>Location Type:</label>
         <property>LocationType</property>
         <required>1</required>
-        <documentation>Location to create in (for this procedure this must be 'Repository', to create in other locations use procedure CreateInOther instead)</documentation>
+        <documentation>Location to create in (for this procedure this must be 'Repository', to create in other locations use procedure CreateInOther instead).</documentation>
         <option>
             <name>Repository</name>
             <value>Repository</value>
@@ -58,48 +58,85 @@ documentation : Help text for the parameter
         <value>Repository</value>
     </formElement>
     <formElement>
-        <type>entry</type>
+        <type>select</type>
         <label>Object Type:</label>
         <property>ObjType</property>
-        <required>0</required>
-        <documentation>Object to create: object type</documentation>
-    </formElement>
-    <formElement>
-        <type>entry</type>
-        <label>Change Package ID:</label>
-        <property>CPID</property>
-        <required>0</required>
-        <documentation>Object to create: object change package ID (applies to object types ChgPkg, PScheme, and ReadyLst)</documentation>
+        <required>1</required>
+        <option>
+            <name>AProfile</name>  <!-- Object criteria: required: ObjName -->
+            <value>AProfile</value>
+        </option>
+        <option>
+            <name>CConfig</name>  <!-- Object criteria: required: ObjName -->
+            <value>CConfig</value>
+        </option>
+        <option>
+            <name>ChgPkg</name>  <!-- Object criteria: required: CPID -->
+            <value>ChgPkg</value>
+        </option>
+        <option>
+            <name>CmdAssociation</name>  <!-- Object criteria: required: CPID, CConfig, CICSGroup, CICSObjType, and CICSObjName -->
+            <value>CmdAssociation</value>
+        </option>
+        <option>
+            <name>Exits</name>  <!-- Object criteria: required: ObjName -->
+            <value>Exits</value>
+        </option>
+        <option>
+            <name>KeyAssociation</name>  <!-- Object criteria: required: CPID, CConfig, CICSGroup, CICSObjType, and CICSObjName -->
+            <value>KeyAssociation</value>
+        </option>
+        <option>
+            <name>PScheme</name>  <!-- Object criteria: required: CPID and Scheme -->
+            <value>PScheme</value>
+        </option>
+        <option>
+            <name>Scheme</name>  <!-- Object criteria: required: ObjName -->
+            <value>Scheme</value>
+        </option>
+        <option>
+            <name>TFGroup</name>  <!-- Object criteria: required: ObjName -->
+            <value>TFGroup</value>
+        </option>
+        <option>
+            <name>TFRule</name>  <!-- Object criteria: required: ObjName -->
+            <value>TFRule</value>
+        </option>
+        <documentation>The resource type of object to create.</documentation>
     </formElement>
     <formElement>
         <type>entry</type>
         <label>Object Name:</label>
         <property>ObjName</property>
         <required>0</required>
-        <documentation>Object to create: object name (applies to object types AProfile, CConfig, Exits, Scheme, TFGroup, and TFRule)</documentation>
+        <documentation>The object to create's name (applies to object types AProfile, CConfig, Exits, Scheme, TFGroup, and TFRule).</documentation>
     </formElement>
     <formElement>
         <type>entry</type>
-        <label>Resource Group:</label>
-        <property>ObjGroup</property>
+        <label>Change Package ID:</label>
+        <property>CPID</property>
         <required>0</required>
-        <documentation>(Optional) resource object criteria for a resource definition embedded in a BAImage: resource
-            group
-        </documentation>
+        <documentation>The object to delete's change package ID (applies to object types ChgPkg, CmdAssociation, KeyAssociation, and PScheme).</documentation>
     </formElement>
     <formElement>
-        <type>textarea</type>
-        <label>Serialized Resource Object Criteria:</label>
-        <property>ObjectCriteria</property>
+        <type>entry</type>
+        <label>CICS Configuration:</label>
+        <property>CConfig</property>
         <required>0</required>
-        <documentation>Additional objects(s) to create: XML serialized list of resource object criteria created using procedure SerializeOtherObjectCriteria (optional, the object specified below is appended to this)</documentation>
+        <documentation>The object to delete's CICS Configuration (applies to object types CmdAssociation and KeyAssociation).</documentation>
     </formElement>
     <formElement>
+        <type>entry</type>
+        <label>CICS Group:</label>
+        <property>CICSGroup</property>
+        <required>0</required>
+        <documentation>The object to delete's CICS group (applies to object types CmdAssociation and KeyAssociation).</documentation>
+    </formElement>
+    <formElement>        <type>entry</type>        <label>CICS Object Type:</label>        <property>CICSObjType</property>        <required>0</required>        <documentation>The object to delete's CICS object type (applies to object types CmdAssociation and KeyAssociation).</documentation>    </formElement>    <formElement>        <type>entry</type>        <label>CICS Object Name:</label>        <property>CICSObjName</property>        <required>0</required>        <documentation>The object to delete's CICS object name (applies to object types CmdAssociation and KeyAssociation).</documentation>    </formElement>    <formElement>        <type>entry</type>        <label>Scheme:</label>        <property>Scheme</property>        <required>0</required>        <documentation>The object to delete's scheme (applies to object type PScheme).</documentation>    </formElement>    <formElement> 
         <type>textarea</type>
-        <label>Name-Value Pairs:</label>
+        <label>Object Data Name-Value Pairs:</label>
         <property>ObjectData</property>
         <required>0</required>
-        <documentation>Name-value pairs to set in the object being created, one per line in NAME=VALUE format</documentation>
-        <!-- #### TODO Change documentation-->
+        <documentation>Name-value pairs to set in the object being created, one per line in NAME=VALUE format. (For some objects types, some VALUEs will need to be XML datastructures - usually a list of elements preceeded by a count.)</documentation>
     </formElement> 
 </editor>

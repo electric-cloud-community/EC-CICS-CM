@@ -75,7 +75,7 @@ documentation : Help text for the parameter
         <label>Qualification Data:</label>
         <property>QualificationData</property>
         <required>0</required>
-        <documentation>Qualification Data is optional data passed through the Newcopy operations qualification exit point. The needs of your organization determine whether you use an exit program and what processing it performs</documentation>
+        <documentation>The Qualification Data is optional data passed through the Newcopy operations qualification exit point. The needs of your organization determine whether you use an exit program and what processing it performs.</documentation>
     </formElement>
     <formElement>
         <type>entry</type>

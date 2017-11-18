@@ -159,7 +159,7 @@ documentation : Help text for the parameter
         <required>0</required>
         <documentation>Journal record criteria (optional)</documentation>
     </formElement>
-    <!-- #### If Journal Criteria are omitted then how are the object criteria used? Are the descriptions below still accurate then? #### -->
+    <!-- #### TODO If Journal Criteria are omitted then how are the object criteria used? Documentation suggests the field descriptions below for the object criteria are inaccurate in that case #### -->
     <formElement>
         <type>select</type>
         <label>Resource Type:</label>
@@ -214,17 +214,10 @@ documentation : Help text for the parameter
     </formElement>
     <formElement>
         <type>textarea</type>
-        <label>Serialized Repository Object Criteria:</label>
-        <property>ObjectCriteria</property>
-        <required>0</required>
-        <documentation>Additional command(s) to add: XML serialized list of resource object criteria created using procedure SerializeRepositoryObjectCriteria (optional, the command specified below is appended to this)</documentation>
-    </formElement>
-    <formElement>
-        <type>textarea</type>
         <label>Restriction Criteria:</label>
         <property>RestrictionCriteria</property>
         <required>0</required>
-        <documentation>(Optional) restriction criteria, one per line in #### Is using . OK? #### &lt;NAME&gt;.&lt;COMPARATOR&gt;.&lt;VALUE&gt;
+        <documentation>(Optional) restriction criteria, one per line in &lt;NAME&gt;.&lt;COMPARATOR&gt;.&lt;VALUE&gt;
             format. Valid &lt;COMPARATOR&gt; values are EQ, NE, LT, GT, LE, and GE. Restriction criteria on consecutive
             lines are combined using logical AND. Groups of restriction critera separated by at least one blank line are
             combined using logical OR. When listing BAImage journal records, you must prefix the field names of the

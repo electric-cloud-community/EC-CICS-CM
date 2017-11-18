@@ -113,7 +113,7 @@ $[/javascript (('' + myParent.CICSObjName).length == 0) ? "" :
 "            SoapData('CICSObjName'),  # optional parameter "
 ]
 $[/javascript (('' + myParent.Scheme).length == 0) ? "" :
-"            SoapData('Scheme'),  # optional parameter \n"
+"            SoapData('Scheme'),  # optional parameter "
 ]
         )),
 $[/javascript (('' + myParent.IntegrityToken).length == 0) ? "" :

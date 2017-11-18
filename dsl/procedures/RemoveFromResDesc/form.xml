@@ -50,28 +50,26 @@ documentation : Help text for the parameter
         <label>Location Name:</label>
         <property>LocationName</property>
         <required>1</required>
-        <documentation>Configuration name, CSD location, CICSPlex Context, depending on Location Type value.</documentation>
+        <documentation>The name of the location in which to remove resource group9s) from a resource description.</documentation>
     </formElement>
     <formElement>
         <type>select</type>
         <label>Location Type:</label>
         <property>LocationType</property>
         <required>1</required>
-        <documentation>Location to list from: (to list from a Journal use ListFromJournal, to list from a Reposititory use ListFromRepository instead)
-        </documentation>
+        <documentation>The type of the location in which to remove resource group(s) from a resource description.</documentation>
         <option>
-            <name>CSD</name>
-            <value>CSD</value>
+            <name>CICS Configuration</name>
+            <value>CConfig</value>
         </option>
         <option>
             <name>Context</name>
             <value>Context</value>
         </option>
         <option>
-            <name>CConfig</name>
-            <value>CConfig</value>
+            <name>CSD</name>
+            <value>CSD</value>
         </option>
-        <value>CSD</value>
     </formElement>
     <formElement>
         <type>select</type>
@@ -89,44 +87,34 @@ documentation : Help text for the parameter
     </formElement>
     <formElement>
         <type>entry</type>
-        <label>Resource Name:</label>
+        <label>Resource Group Name:</label>
         <property>ObjName</property>
         <required>1</required>
-        <documentation>(Optional) resource object criteria for a resource definition embedded in a BAImage: resource
-            name
-        </documentation>
-    </formElement>
-    <formElement>
-        <type>entry</type>
-        <label>Resource Definition Version:</label>
-        <property>ObjDefVer</property>
-        <required>0</required>
-        <documentation>(Optional) resource object criteria for a resource definition embedded in a BAImage: resource
-            definition version
+        <documentation>The name of the resource group to remove.
         </documentation>
     </formElement>
     <formElement>
         <type>textarea</type>
-        <label>Serialized Repository Object Criteria:</label>
+        <label>Serialized Resource Group Object Criteria:</label>
         <property>ObjectCriteria</property>
         <required>0</required>
-        <documentation>Additional command(s) to add: XML serialized list of resource object criteria created using procedure SerializeRepositoryObjectCriteria (optional, the command specified below is appended to this)</documentation>
+        <documentation>Additional resource groups to remove: an XML serialized list of sets of resource group object criteria, one per additional resource group, created using the procedure SerializeOtherObjectCriteria (optional, the resource group specified above is appended to this).</documentation>
     </formElement>
     <formElement>
         <type>entry</type>
-        <label>Change Package ID:</label>
+        <label>Resource Description Name:</label>
         <property>ContainerName</property>
         <required>1</required>
-        <documentation>The ID of the change package to add the command(s) to</documentation>
+        <documentation>The name of the resource description to remove the resource group(s) from.</documentation>
     </formElement>
     <formElement>
         <type>select</type>
         <label>Container Type:</label>
         <property>ContainerType</property>
         <required>1</required>
-        <documentation>Container type to add the resource definition(s) to: must be 'Change Package' for this procedure (to add to other container types, use other Add... procedures instead)</documentation>
+        <documentation>Container type to remove the resource group(s) from: must be 'Resource Description' for this procedure (to remove from another container type, use the appropriate other Remove... procedure instead).</documentation>
         <option>
-            <name>ResDesc</name>
+            <name>Resource Description</name>
             <value>ResDesc</value>
         </option>
         <value>ResDesc</value>

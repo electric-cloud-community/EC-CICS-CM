@@ -90,14 +90,14 @@ documentation : Help text for the parameter
         <label>Serialized Resource Object Criteria:</label>
         <property>ObjectCriteria</property>
         <required>0</required>
-        <documentation>Additional objects(s) to create: XML serialized list of resource object criteria created using procedure SerializeOtherObjectCriteria (optional, the object specified below is appended to this)</documentation>
+        <documentation>Additional objects(s) to install: XML serialized list of sets of resource object criteria, one per object, created using the procedure SerializeOtherObjectCriteria (optional, the object specified above is appended to this).</documentation>
     </formElement>
     <formElement>
         <type>select</type>
         <label>Quiesce:</label>
         <property>Quiesce</property>
         <required>0</required>
-        <documentation>CSD-based CICS Configurations only: specifies whether to set each resource to a (resource-type-dependent) status that allows its definition to be installed (for example, disabled, closed, or out of service), before attempting to install to it. If you do not specify this "quiesce" option, and a resource is in a status that does not allow the install action, then the install action for that resource definition will fail</documentation>
+        <documentation>CSD-based CICS Configurations only: specifies whether to set each resource to a (resource-type-dependent) status that allows its definition to be installed (for example, disabled, closed, or out of service), before attempting to install to it. If you do not specify this "quiesce" option, and a resource is in a status that does not allow the install action, then the install action for that resource definition will fail.</documentation>
         <option>
             <name>No</name>
             <value>No</value>
@@ -133,27 +133,31 @@ documentation : Help text for the parameter
     </formElement>
     <formElement>
         <type>select</type>
-        <label>Connection Count:</label>
-        <property>ConnectionCount</property>
+        <label>Connections:</label>
+        <property>connections</property>
+	<option>
+	    <name>All</name>
+	    <value>All</value>
+	</option>
+	<option>
+	    <name>Local</name>
+	    <value>Local</value>
+	</option>
+	<option>
+	    <name>Named</name>
+	    <value>Named</value>
+	</option>
+	<value>All</value>
         <required>0</required>
-        <documentation>ConnectionCount specifies the CSD-based CICS regions on which to perform this action: All, element_count, Local. Left empty field for element_count case.</documentation>
-        <option>
-            <name>All</name>
-            <value>All</value>
-        </option>
-        <option>
-            <name>Local</name>
-            <value>Local</value>
-        </option>
-        <value></value>
+        <documentation>The CSD-based CICS regions on which to perform the install. 'All': performs the install via all of the remote system connections defined in the CICS configuration (default), 'Local': performs the install on the CICS region that is running the CICS Configuration Manager server (Location Name mustspecify a CICS configuration that refers to the CSD file used by the CICS Configuration Manager server), 'Named': Performs the install via the remote system connections named in Connection Names.</documentation>
     </formElement>
     <formElement>
-        <type>textarea</type>
-        <label>Serialized Connection Element:</label>
-        <property>ConnectionElement</property>
+        <type>textarea</type>), 
+        <label>Connection Names:</label>
+        <property>connectionNames</property>
         <required>0</required>
-        <documentation>Additional objects(s) to create: XML serialized list of resource connection element. Write connection elements separated by whitespace. </documentation>
-    </formElement>
+        <documentation>Whitespace-separated list of remote system connection names -- this is ignored unless Connections is set to 'Named'.</documentation>
+    </formElement>    
     <formElement>
         <type>select</type>
         <label>Force:</label>

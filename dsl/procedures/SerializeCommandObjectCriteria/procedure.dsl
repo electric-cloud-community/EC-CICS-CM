@@ -1,6 +1,6 @@
 import java.io.File
 
-def procName = 'AddToResGroup'
+def procName = 'SerializeCommandObjectCriteria'
 procedure procName, {
 
 	step 'step1',

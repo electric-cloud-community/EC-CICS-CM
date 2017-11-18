@@ -8,11 +8,70 @@ my $soapMethodName = 'Install';
 
 # List of the names of optional paramters
 my @optionalParams = (
+    'ObjectCriteria',
+    'Quiesce',
+    'QualificationData',
+    'Discard',
+    'connections',
+    'connectionNames',
+    'Force',
+    'TargetScope',
+    'ResGroupObjectType',
+    'CONNDEF_RefAssign',
+    'FILEDEF_RelatedScope',
+    'FILEDEF_Usage',
+    'PROGDEF_RelatedScope',
+    'PROGDEF_Usage',
+    'PROGDEF_Mode',
+    'TDQDEF_RelatedScope',
+    'TDQDEF_Usage',
+    'TDQDEF_Mode',
+    'TRANDEF_RelatedScope',
+    'TRANDEF_Usage',
+    'TRANDEF_Mode'
 );
 
 $[/myPlugin/project/ec_perl_metadata]
 
 $[/myPlugin/project/ec_perl_code_block_1]
+
+# Procedure-specific Code
+# -----------------------
+
+# Build @ObjectCriteria
+my @mParams = ('ObjName', 'ObjType', 'ObjGroup');
+my @ObjectCriteria = createObjectCriteria(\@mParams, 0, "", \%params, 1);
+
+# Build @CSDParms
+
+# Check connections 
+my $connections = $params{'connections'};
+my @CSDParmsResult;
+if ($connections ne 'Named') {
+    @CSDParmsResult = SOAP::Data->name('ConnectionCount' => $connections);
+}
+else {
+    # Split, count, and build XML from connectionNames
+    my $connectionNames = $params{'connectionNames'};
+    my @names = split(/\s+/, $connectionNames);
+    my $connectionCount = 0;
+    foreach my $name (@names) {
+        $connectionCount++ if (length $name > 0);
+    }
+    if ($connectionCount == 0) {
+        print "WARNING: Connections was set to 'Named', but no Connection Names were supplied!";
+        exit(-1);
+    }
+    @CSDParmsResult = SOAP::Data->name('ConnectionCount' => $connectionCount);
+    foreach my $name (@names) {
+        if (length $name > 0) {
+            push(@CSDParmsResult, SOAP::Data->name('ConnectionElement' => \SOAP::Data->value(
+                SOAP::Data->name('ConnectionName' => $name)
+            )));
+        }
+    }
+}
+@CSDParmsResult = SOAP::Data->name('CSDParms' => \SOAP::Data->value(@CSDParmsResult));
 
 sub createSoap {
     my($wrapper, $parameters, $intrinsic) = @_;
@@ -45,63 +104,29 @@ sub createSoap {
     return @result;
 }
 
-# Procedure-specific Code
-# -----------------------
-
-# Build @ObjectCriteria
-my @mParams = ('ObjName', 'ObjType', 'ObjGroup');
-my @ObjectCriteria = createObjectCriteria(\@mParams, 0, "", \%params, 1);
-
-# Build ConnectionElement
-my $conElementStr = $params{'ConnectionElement'};
-my @connectionElement;
-if($params{'ConnectionCount'} eq 'Local') {
-    push(@connectionElement, SoapData('ConnectionCount'));
-}
-else {
-    my @parts = split(/\s+/s, $conElementStr); # Split at whitesapece (including line breaks)
-    if(length $params{'ConnectionElement'} > 0) {
-        if(($params{'ConnectionCount'} eq "") and scalar(@parts) > 0) {
-            push(@connectionElement, SOAP::Data->name('ConnectionName' => scalar(@parts)));
-        }
-        else {
-            push(@connectionElement, SoapData('ConnectionCount'));
-        }
-    }
-    foreach my $part (@parts) {
-        push(@connectionElement, SOAP::Data->name('ConnectionElement' => \SOAP::Data->value(
-                    SOAP::Data->name('ConnectionName' => $part)))
-        );
-    }
-}
-
 my @TRANDEF = ('TRANDEF_RelatedScope', 'TRANDEF_Usage', 'TRANDEF_Mode');
-my @TRANDEF_result = createSoap("TRANDEF", \@TRANDEF);
+my @TRANDEFResult = createSoap("TRANDEF", \@TRANDEF);
 
 my @TDQDEF = ('TDQDEF_RelatedScope', 'TDQDEF_Usage', 'TDQDEF_Mode');
-my @TDQDEF_res = createSoap("TDQDEF", \@TDQDEF);
+my @TDQDEFResult = createSoap("TDQDEF", \@TDQDEF);
 
 my @CONNDEF = ('CONNDEF_RefAssign');
-my @CONNDEF_res = createSoap("CONNDEF", \@CONNDEF);
+my @CONNDEFResult = createSoap("CONNDEF", \@CONNDEF);
 
 my @FILEDEF = ('FILEDEF_RelatedScope', 'FILEDEF_Usage');
-my @FILEDEF_res = createSoap("FILEDEF", \@FILEDEF);
+my @FILEDEFResult = createSoap("FILEDEF", \@FILEDEF);
 
 my @PROGDEF = ('PROGDEF_RelatedScope', 'PROGDEF_Usage', 'PROGDEF_Mode');
-my @PROGDEF_res = createSoap("PROGDEF", \@PROGDEF);
+my @PROGDEFResult = createSoap("PROGDEF", \@PROGDEF);
 
 my @CPSMParms = ('TargetScope', 'ResGroupObjectType');
 
-my @result1 = (@TRANDEF_result, @TDQDEF_res, @CONNDEF_res, @FILEDEF_res, @PROGDEF_res);
-my @CPSMParms_res = createSoap("CPSMParms", \@CPSMParms, \@result1);
-
-
-my @CSDParms = ('');
-my @CSDParms_res = createSoap("CSDParms", \@CSDParms, \@connectionElement);
+my @result1 = (@TRANDEFResult, @TDQDEFResult, @CONNDEFResult, @FILEDEFResult, @PROGDEFResult);
+my @CPSMParmsResult = createSoap("CPSMParms", \@CPSMParms, \@result1);
 
 my @ProcessParms = ('Quiesce', 'QualificationData', 'Discard', 'Force');
-my @result2 = (@CSDParms_res, @CPSMParms_res);
-my @ProcessParms_res = createSoap("ProcessParms", \@ProcessParms, \@result2);
+my @result2 = (@CSDParmsResult, @CPSMParmsResult);
+my @ProcessParmsResult = createSoap("ProcessParms", \@ProcessParms, \@result2);
 
 my @data =
     SOAP::Data->name($soapMethodName => \SOAP::Data->value(
@@ -110,7 +135,7 @@ my @data =
             SoapData('LocationType')
         )),
         @ObjectCriteria,
-        @ProcessParms_res
+        @ProcessParmsResult
     ));
 
 $[/myPlugin/project/ec_perl_code_block_2]

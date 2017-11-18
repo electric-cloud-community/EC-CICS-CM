@@ -50,14 +50,14 @@ documentation : Help text for the parameter
         <label>Location Name:</label>
         <property>LocationName</property>
         <required>1</required>
-        <documentation>Name of location to create in.</documentation>
+        <documentation>The name of the location in which to add to a resource group.</documentation>
     </formElement>
     <formElement>
         <type>select</type>
         <label>Location Type:</label>
         <property>LocationType</property>
         <required>1</required>
-        <documentation>Type of location to create in (to create in the Repository, use procedure CreateInRepository instead).</documentation>
+        <documentation>The type of the location in which to add to a resource group.</documentation>
         <option>
             <name>CICS Configuration</name>
             <value>CConfig</value>
@@ -72,8 +72,8 @@ documentation : Help text for the parameter
         </option>
     </formElement>
     <formElement>
-        <type>select</type> 
-        <label>Object Type:</label>
+        <type>select</type>
+        <label>Resource Type:</label>
         <property>ObjType</property>
         <option>
             <name>ApplDef</name>
@@ -211,10 +211,10 @@ documentation : Help text for the parameter
             <name>RAsgnDef</name>
             <value>RASGNDEF</value>
         </option>
-        <option>
+        <!-- not allowed in a ResGroup <option>
             <name>ResGroup (Group for CSD)</name>
             <value>RESGROUP</value>
-        </option>
+        </option> -->
         <option>
             <name>ResDesc (List for CSD)</name>
             <value>RESDESC</value>
@@ -294,128 +294,56 @@ documentation : Help text for the parameter
         <option>
             <name>WLMSpec</name>
             <value>WLMSPEC</value>
-        </option>
+        </option>        
         <required>1</required>
-        <documentation>The type of object to create.</documentation>
+        <documentation>Resource type of the resource definition to add.</documentation>
     </formElement>
     <formElement>
         <type>entry</type>
-        <label>Object Name:</label>
+        <label>Resource Name:</label>
         <property>ObjName</property>
         <required>1</required>
-        <documentation>The name for the object to create.</documentation>
+        <documentation>Resource name of the resource definition to add.
+        </documentation>
     </formElement>
     <formElement>
         <type>entry</type>
-        <label>Object Group:</label>
+        <label>Resource Group:</label>
         <property>ObjGroup</property>
         <required>0</required>
-        <documentation>The resource group to create the object in (required except for a few object types, such as ResGroup and ResDesc, which cannot be in a resource group),</documentation>
+        <documentation>The resource group of the resource definition to add (required unless the resource definition is located in a Context, for a Context you can specify either this or Object Definition Version).</documentation>
+    </formElement>
+    <formElement>
+        <type>entry</type>
+        <label>Resource Definition Version:</label>
+        <property>ObjDefVer</property>
+        <required>0</required>
+        <documentation>The resource definition version of the resource definition to add (omit unless the resource is located in a Context, for a Context you can specify either this or Object Group).</documentation>
     </formElement>
     <formElement>
         <type>textarea</type>
-        <label>Object Data Name-Value Pairs:</label>
-        <property>ObjectData</property>
+        <label>Serialized Resource Object Criteria:</label>
+        <property>ObjectCriteria</property>
         <required>0</required>
-        <documentation>Name-value pairs to set in the resource definition object being created, one per line in NAME=VALUE format.</documentation>
+        <documentation>Additional resource definition(s) to add: an XML serialized list of sets of resource object criteria, one per additional resource definition, created using the procedure SerializeOtherObjectCriteria (optional, the resource definition specified above is appended to this).</documentation>
     </formElement>
     <formElement>
         <type>entry</type>
-        <label>CSYSDEF Model:</label>
-        <property>CSYSDEFModel</property>
-        <required>0</required>
-        <documentation>Optional, applies only to CSYSDEF objects</documentation>
+        <label>Resource Container Name:</label>
+        <property>ContainerName</property>
+        <required>1</required>
+        <documentation>The name of the resource group to add the resource definition(s) to.</documentation>
     </formElement>
     <formElement>
         <type>select</type>
-        <label>Mon Spec Inherit:</label>
-        <property>MonSpecInherit</property>
-        <required>0</required>
-        <documentation>Optional, applies only to CSGLCGCS objects</documentation>
+        <label>Container Type:</label>
+        <property>ContainerType</property>
+        <required>1</required>
+        <documentation>The container type to add the resource definition(s) to: must be 'Resource Group' for this procedure (to add to another container type, use the appropriate other Add... procedure instead).</documentation>
         <option>
-            <name>Keep</name>
-            <value>KEEP</value>
+            <name>Resource Group</name>
+            <value>ResGroup</value>
         </option>
-        <option>
-            <name>Force</name>
-            <value>FORCE</value>
-        </option>
-        <option>
-            <name>Null</name>
-            <value>NULL</value>
-        </option>
-        <value></value>
-    </formElement>
-    <formElement>
-        <type>select</type>
-        <label>RTA Spec Inherit:</label>
-        <property>RTASpecInherit</property>
-        <required>0</required>
-        <documentation>Optional, applies only to CSGLCGCS objects</documentation>
-        <option>
-            <name></name>
-            <value></value>
-        </option>
-        <option>
-            <name>Keep</name>
-            <value>KEEP</value>
-        </option>
-        <option>
-            <name>Force</name>
-            <value>FORCE</value>
-        </option>
-        <option>
-            <name>Null</name>
-            <value>NULL</value>
-        </option>
-        <value></value>
-    </formElement>
-    <formElement>
-        <type>select</type>
-        <label>WLM Spec Inherit:</label>
-        <property>WLMSpecInherit</property>
-        <required>0</required>
-        <documentation>Optional, applies only to CSGLCGCS objects</documentation>
-        <option>
-            <name></name>
-            <value></value>
-        </option>
-        <option>
-            <name>Keep</name>
-            <value>KEEP</value>
-        </option>
-        <option>
-            <name>Force</name>
-            <value>FORCE</value>
-        </option>
-        <option>
-            <name>Null</name>
-            <value>NULL</value>
-        </option>
-        <value></value>
-    </formElement>
-    <formElement>
-        <type>select</type>
-        <label>LNKSWSCG Parameter:</label>
-        <property>LNKSWSCGParm</property>
-        <required>0</required>
-        <documentation>Optional, applies only to LNKSWSCG objects</documentation>
-        <option>
-            <name></name>
-            <value></value>
-        </option>
-        <option>
-            <name>None</name>
-            <value>NONE</value>
-        </option>
-        <option>
-            <name>Force</name>
-            <value>FORCE</value>
-        </option>
-        <option>
-            <name>Null</name>
-            <value>NULL</value>
-        </option>
-        <value></value>
+        <value>ResGroup</value>
     </formElement>
 </editor>

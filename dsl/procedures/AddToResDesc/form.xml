@@ -50,14 +50,14 @@ documentation : Help text for the parameter
         <label>Location Name:</label>
         <property>LocationName</property>
         <required>1</required>
-        <documentation>Location to add to</documentation>
+        <documentation>The name of the location in which to add resource group(s) to a resource description.</documentation>
     </formElement>
     <formElement>
         <type>select</type>
         <label>Location Type:</label>
         <property>LocationType</property>
         <required>1</required>
-        <documentation>Location to add to</documentation>
+        <documentation>The type of the location in which to add resource group(s) to a resource description.</documentation>
         <option>
             <name>CICS Configuration</name>
             <value>CConfig</value>
@@ -72,49 +72,51 @@ documentation : Help text for the parameter
         </option>
     </formElement>
     <formElement>
-        <type>entry</type>
+        <type>select</type>
         <label>Resource Type:</label>
         <property>ObjType</property>
         <required>1</required>
-        <documentation>Resource object criteria for a resource definition embedded in a BAImage: resource
+        <documentation>(Optional) resource object criteria for a resource definition embedded in a BAImage: resource
             type
         </documentation>
+        <option>
+            <name>ResGroup</name>
+            <value>ResGroup</value>
+        </option>
+        <value>ResGroup</value>
     </formElement>
     <formElement>
         <type>entry</type>
-        <label>Resource Name:</label>
+        <label>Resource Group Name:</label>
         <property>ObjName</property>
         <required>1</required>
-        <documentation>Resource object criteria for a resource definition embedded in a BAImage: resource
-            name
+        <documentation>The name of the resource group to add.
         </documentation>
     </formElement>
     <formElement>
         <type>textarea</type>
-        <label>Serialized Resource Object Criteria:</label>
+        <label>Serialized Resource Group Object Criteria:</label>
         <property>ObjectCriteria</property>
         <required>0</required>
-        <documentation>Name-value pairs to set in the resource definition object being created, one per line in NAME=VALUE format.
-            Write each restriction criteria per one line. For example: ObjType=value ObjName=value.
-            Valid keys are: [ObjType, ObjName].</documentation>
-    </formElement> 
+        <documentation>Additional resource groups to add: an XML serialized list of sets of resource group object criteria, one per additional resource group, created using the procedure SerializeOtherObjectCriteria (optional, the resource group specified above is appended to this).</documentation>
+    </formElement>
     <formElement>
         <type>entry</type>
         <label>Resource Description Name:</label>
         <property>ContainerName</property>
         <required>1</required>
-        <documentation>The name of the resource description to add the resource group(s) to</documentation>
-    </formElement> 
+        <documentation>The name of the resource description to add the resource group(s) to.</documentation>
+    </formElement>
     <formElement>
         <type>select</type>
         <label>Container Type:</label>
         <property>ContainerType</property>
         <required>1</required>
-        <documentation>Container type to add the resource group(s) to: must be 'Resource Description' for this procedure (to add to other container types, use other Add... procedures instead)</documentation>
+        <documentation>Container type to add the resource group(s) to: must be 'Resource Description' for this procedure (to add to another container type, use the appropriate other Add... procedure instead).</documentation>
         <option>
             <name>Resource Description</name>
             <value>ResDesc</value>
         </option>
         <value>ResDesc</value>
-    </formElement>    
+    </formElement>
 </editor>

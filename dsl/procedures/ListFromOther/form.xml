@@ -111,13 +111,6 @@ documentation : Help text for the parameter
     </formElement>
     <formElement>
         <type>textarea</type>
-        <label>Serialized Repository Object Criteria:</label>
-        <property>ObjectCriteria</property>
-        <required>0</required>
-        <documentation>Additional command(s) to add: XML serialized list of resource object criteria created using procedure SerializeRepositoryObjectCriteria (optional, the command specified below is appended to this)</documentation>
-    </formElement>
-    <formElement>
-        <type>textarea</type>
         <label>Restriction Criteria:</label>
         <property>RestrictionCriteria</property>
         <required>0</required>

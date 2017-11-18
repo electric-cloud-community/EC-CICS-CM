@@ -72,13 +72,6 @@ documentation : Help text for the parameter
         <documentation>Object to create: resource type</documentation>
     </formElement>
     <formElement>
-        <type>textarea</type>
-        <label>Serialized Resource Object Criteria:</label>
-        <property>ObjectCriteria</property>
-        <required>0</required>
-        <documentation>Additional objects(s) to create: XML serialized list of resource object criteria created using procedure SerializeOtherObjectCriteria (optional, the object specified below is appended to this)</documentation>
-    </formElement>
-    <formElement>
         <type>entry</type>
         <label>Integrity Token:</label>
         <property>IntegrityToken</property>

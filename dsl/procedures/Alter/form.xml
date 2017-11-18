@@ -72,6 +72,13 @@ documentation : Help text for the parameter
         </option>
     </formElement>
     <formElement>
+        <type>entry</type> <!-- #### TODO Convert to select -->
+        <label>Object Type:</label>
+        <property>ObjType</property>
+        <required>1</required>
+        <documentation>Resource definition to alter: resource type</documentation>
+    </formElement>
+    <formElement>
         <type>entry</type>
         <label>Object Name:</label>
         <property>ObjName</property>
@@ -86,18 +93,11 @@ documentation : Help text for the parameter
         <documentation>Resource definition to alter: resource group</documentation>
     </formElement> 
     <formElement>
-        <type>entry</type>
-        <label>Object Type:</label>
-        <property>ObjType</property>
-        <required>1</required>
-        <documentation>Resource definition to alter: resource type</documentation>
-    </formElement>
-    <formElement>
         <type>textarea</type>
         <label>Serialized Resource Object Criteria:</label>
         <property>ObjectCriteria</property>
         <required>0</required>
-        <documentation>Additional resource definition(s) to alter: XML serialized list of resource object criteria created using procedure SerializeOtherObjectCriteria (optional, the resource definition specified below is appended to this)</documentation>
+        <documentation>Additional resource definition(s) to alter: XML serialized list of sets of resource object criteria, one per additional resource definition, created using the procedure SerializeOtherObjectCriteria (optional, the resource definition specified above is appended to this).</documentation>
     </formElement>
     <formElement>
         <type>textarea</type>

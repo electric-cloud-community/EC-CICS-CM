@@ -88,8 +88,8 @@ documentation : Help text for the parameter
         <property>ObjType</property>
         <required>1</required>
         <documentation>(Optional) resource object criteria for a resource definition embedded in a BAImage: resource
-            type <!-- #### Incorrect, fix this #### -->
-        </documentation> <!-- #### Make this a select -->
+            type <!-- #### TODO Incorrect, fix this #### -->
+        </documentation> <!-- #### TODO Make this a select -->
     </formElement>
     <formElement>
         <type>entry</type>
@@ -97,7 +97,7 @@ documentation : Help text for the parameter
         <property>ObjName</property>
         <required>1</required>
         <documentation>(Optional) resource object criteria for a resource definition embedded in a BAImage: resource
-            name <!-- #### Incorrect, fix this #### -->
+            name <!-- #### TODO Incorrect, fix this #### -->
         </documentation>
     </formElement>
     <formElement>
@@ -106,7 +106,7 @@ documentation : Help text for the parameter
         <property>ObjGroup</property>
         <required>0</required>
         <documentation>(Optional) resource object criteria for a resource definition embedded in a BAImage: resource
-            group <!-- #### Incorrect, fix this #### -->
+            group <!-- #### TODO Incorrect, fix this #### -->
         </documentation>
     </formElement>
     <formElement>
@@ -115,15 +115,15 @@ documentation : Help text for the parameter
         <property>ObjDefVer</property>
         <required>0</required>
         <documentation>(Optional) resource object criteria for a resource definition embedded in a BAImage: resource
-            definition version <!-- #### Incorrect, fix this #### -->
+            definition version <!-- #### TODO Incorrect, fix this #### -->
         </documentation>
     </formElement>
     <formElement>
         <type>textarea</type>
-        <label>Serialized Repository Object Criteria:</label>
+        <label>Serialized #### TODO Object Criteria:</label>
         <property>ObjectCriteria</property>
         <required>0</required>
-        <documentation>Additional command(s) to add: XML serialized list of resource object criteria created using procedure SerializeRepositoryObjectCriteria (optional, the command specified below is appended to this)</documentation>
+        <documentation>Additional  TODO ####(s) to ####: XML serialized list of sets of resource object criteria, one per additional ####, created using the procedure Serialize####ObjectCriteria (optional, the #### specified above is appended to this).</documentation>
     </formElement>
     <formElement>
         <type>textarea</type>

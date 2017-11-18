@@ -56,11 +56,26 @@ my $password = $fullCredential->find("//password");
 
 #### TODO Handle nonstandard code page 1047 XML escaping of unusual characters
 
+#
 # Marshal the input parameters into SOAP::Data
+#
 
-# Subroutine for a common pattern in SOAP::Data
+# Subroutines for common patterns for using SOAP::Data
+
+# Required parameter
 sub SoapData {
-    return SOAP::Data->name($_[0] => $params{$_[0]});
+    my $name = $_[0];
+    if (length($params{$name}) > 0) {
+        return SOAP::Data->name($name => $params{$name});
+    } else {
+        print "ERROR: the value of the required parameter $name was undefined or empty!";
+        exit -1;
+    }
+}
+
+# Optional parameter (return value is a list which may be empty)
+sub SoapDataOptional {
+    return ((length($params{$_[0]}) > 0) ? ( SOAP::Data->name($_[0] => $params{$_[0]}) ) : ( ) );
 }
 
 sub isKeyValid {

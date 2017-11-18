@@ -97,7 +97,7 @@ documentation : Help text for the parameter
         <label>Serialized Resource Object Criteria:</label>
         <property>ObjectCriteria</property>
         <required>0</required>
-        <documentation>Additional objects(s) to create: XML serialized list of resource object criteria created using procedure SerializeOtherObjectCriteria (optional, the object specified below is appended to this)</documentation>
+        <documentation>Additional objects(s) to recover: XML serialized list of sets of resource object criteria, one per additional object, created using the procedure SerializeOtherObjectCriteria (optional, the object specified above is appended to this).</documentation>
     </formElement>
     <formElement>
         <type>select</type>

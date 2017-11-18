@@ -18,7 +18,7 @@ def stepsWithAttachedCredentials = [
   [procedureName: 'AddCmdToChgPkg', stepName: 'step1'],
   [procedureName: 'AddResDefToChgPkg', stepName: 'step1'],
   [procedureName: 'AddToResDesc', stepName: 'step1'],
-  [procedureName: 'AddToResGroup', stepName: 'step1'],
+  [procedureName: 'AddToResGrp', stepName: 'step1'],
   [procedureName: 'Alter', stepName: 'step1'],
   [procedureName: 'Approve', stepName: 'step1'],
   [procedureName: 'Backout', stepName: 'step1'],

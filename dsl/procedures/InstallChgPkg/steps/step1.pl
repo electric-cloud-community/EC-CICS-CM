@@ -43,18 +43,10 @@ my @data = SOAP::Data->name($soapMethodName => \SOAP::Data->value(
         SoapData('Scheme')
     )),
     SOAP::Data->name('ProcessParms' => \SOAP::Data->value(
-$[/javascript (('' + myParent.Quiesce).length == 0) ? "" :
-"        SoapData('Quiesce'),  # Optional parameter "
-]
-$[/javascript (('' + myParent.QualificationData).length == 0) ? "" :
-"        SoapData('QualificationData'),  # Optional parameter "
-]
-$[/javascript (('' + myParent.Discard).length == 0) ? "" :
-"        SoapData('Discard'),  # Optional parameter "
-]
-$[/javascript (('' + myParent.Force).length == 0) ? "" :
-"        SoapData('Force'),  # Optional parameter "
-]
+        SoapDataOptional('Quiesce'),
+        SoapDataOptional('QualificationData'),
+        SoapDataOptional('Discard'),
+        SoapDataOptional('Force'),
 $[/javascript (('' + myParent.TargetScope + myParent.ResGroupObjectType + myParent.CONNDEF_RefAssign
     + myParent.FILEDEF_RelatedScope + myParent.FILEDEF_Usage
     + myParent.PROGDEF_RelatedScope + myParent.PROGDEF_Usage + myParent.PROGDEF_Mode
@@ -62,12 +54,8 @@ $[/javascript (('' + myParent.TargetScope + myParent.ResGroupObjectType + myPare
     + myParent.TRANDEF_RelatedScope + myParent.TRANDEF_Usage + myParent.TRANDEF_Mode).length == 0) ? "" :
 "        SOAP::Data->name('CPSMParms' => \\SOAP::Data->value( "
 ]
-$[/javascript (('' + myParent.TargetScope).length == 0) ? "" :
-"            SoapData('TargetScope'),  # Optional parameter "
-]
-$[/javascript (('' + myParent.ResGroupObjectType).length == 0) ? "" :
-"            SoapData('ResGroupObjectType'),  # Optional parameter "
-]
+            SoapDataOptional('TargetScope'),
+            SoapDataOptional('ResGroupObjectType'),
 $[/javascript (('' + myParent.CONNDEF_RefAssign).length == 0) ? "" :
 "            SOAP::Data->name('CONNDEF' => \\SOAP::Data->value( \n" +
 "                SOAP::Data->name('RefAssign' => $params{'CONNDEF_RefAssign'}),  # Optional parameter \n" +

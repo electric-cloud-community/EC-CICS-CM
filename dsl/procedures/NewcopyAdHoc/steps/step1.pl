@@ -66,13 +66,9 @@ my @data = SOAP::Data->name($soapMethodName => \SOAP::Data->value(
     )),
     SOAP::Data->name('ObjectCriteria' => @ObjectCriteria),
     SOAP::Data->name('ProcessParms' => \SOAP::Data->value(
-$[/javascript (('' + myParent.PhaseIn).length == 0) ? "" :
-"        SoapData('PhaseIn'),  # Optional parameter "
-]
-$[/javascript (('' + myParent.QualificationData).length == 0) ? "" :
-"        SoapData('QualificationData'),  # Optional parameter "
-]
-$[/javascript (('' + myParent.Connections).length == 0) ? "" :
+        SoapDataOptional('PhaseIn'),
+        SoapDataOptional('QualificationData'),
+$[/javascript (('' + myParent.connections).length == 0) ? "" :
 "        SOAP::Data->name('CSDParams' => \\SOAP::Data->value(@CSDParams)),  # Optional section "
 ]
 $[/javascript (('' + myParent.TargetScope).length == 0) ? "" :

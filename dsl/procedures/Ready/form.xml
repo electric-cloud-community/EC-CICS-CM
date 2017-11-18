@@ -57,6 +57,6 @@ documentation : Help text for the parameter
         <label>Migration Scheme:</label>
         <property>Scheme</property>
         <required>1</required>
-        <documentation>The change package will be marked as being ready to be migrated with this migration scheme.</documentation>
+        <documentation>The migration scheme that the change package will be marked as being ready to be migrated with.</documentation>
     </formElement>
 </editor>
