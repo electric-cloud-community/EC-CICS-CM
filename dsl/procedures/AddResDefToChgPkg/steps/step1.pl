@@ -7,7 +7,9 @@ $[/myPlugin/project/ec_perl_header]
 my $soapMethodName = 'Add'; 
 
 # List of the names of optional paramters
-my @optionalParams = ();
+my @optionalParams = (
+    'ObjectCriteria'
+);
 
 $[/myPlugin/project/ec_perl_metadata]
 
@@ -18,9 +20,8 @@ $[/myPlugin/project/ec_perl_code_block_1]
 
 # Build @ObjectCriteria
 
-my @mParams = ('ObjGroup', 'ObjType', 'ObjName', 'ObjDefVer');
-
-my @ObjectCriteria = createObjectCriteria(\@mParams, 1, "KeyA", \%params);
+my @mParams = ('ObjGroup', 'ObjType', 'ObjName', 'ObjDefVer'); 
+my @ObjectCriteria = createObjectCriteria(\@mParams, 1, "KeyA", \%params);  # 1 to add CConfig
 
 my @data  =
     SOAP::Data->name($soapMethodName => \SOAP::Data->value(

@@ -11,8 +11,8 @@ my @optionalParams = (
     'ObjectCriteria',
     'PhaseIn',
     'QualificationData',
-    'Connections',
-    'ConnectionNames',
+    'connections',
+    'connectionNames',
     'TargetScope'
 );
 

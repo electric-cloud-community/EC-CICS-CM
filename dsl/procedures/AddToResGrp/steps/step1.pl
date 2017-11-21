@@ -6,7 +6,11 @@ $[/myPlugin/project/ec_perl_header]
 # Name of SOAP method to call
 my $soapMethodName = 'Add';
 
-my @optionalParams = ();
+my @optionalParams = (
+    'ObjGroup',
+    'ObjDefVer',
+    'ObjectCriteria'
+);
 
 $[/myPlugin/project/ec_perl_metadata]
 
@@ -14,13 +18,24 @@ $[/myPlugin/project/ec_perl_code_block_1]
 
 # Validation
 
-if(($params{'LocationType'} eq 'Context') and
-    (length($params{'ObjDefVer'}) and length($params{'ObjGroup'})) or
-    (!length($params{'ObjDefVer'}) and !length($params{'ObjGroup'}))) {
-    print "ERROR: When referring to a context-based resource definition, specify either <ObjDefVer> or <ObjGroup>.
-    Specifying <ObjDefVer> enables you to refer to a specific version of a context-based resource definition, even
-    when the resource definition is an orphan (does not belong to any ResGroup)";
-    exit -1;
+# Validate ObjGroup and ObjDefVer in context of ObjType asnd LocationType
+if($params{'LocationType'} eq 'Context') {
+    if ((length($params{'ObjGroup'}) > 0) && (length($params{'ObjDefVer'}) > 0)) {
+        print "ERROR: You cannot specify both a Resource Group and a Resource Definition Version!\n";
+        exit -1;
+    } elsif (!(length($params{'ObjGroup'}) > 0) && !(length($params{'ObjDefVer'}) > 0)) {
+        print "ERROR: For objects of Resource Type \'$params{'ObjType'}\' in a Location Type of 'Context', you must specify either a Resource Group value or a Resource Definition Version value!\n";
+        exit -1;
+    }
+} else {
+    if (length($params{'ObjDefVer'}) > 0) {
+        print "ERROR: You cannot specify an Object Definition Version if the Location Type is not 'Context'!\n";
+        exit -1;
+    }
+    if (!(length($params{'ObjGroup'}) > 0)) {
+        print "ERROR: For objects of Resource Type \'$params{'ObjType'}\' in a Location Type of \'$params{'LocationType'}\', you must specify a Resource Group value!\n";
+        exit -1;
+    }
 }
 
 # Procedure-specific Code

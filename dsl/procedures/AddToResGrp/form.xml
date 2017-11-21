@@ -215,10 +215,10 @@ documentation : Help text for the parameter
             <name>ResGroup (Group for CSD)</name>
             <value>RESGROUP</value>
         </option> -->
-        <option>
+        <!-- not allowed in a ResGroup <option>
             <name>ResDesc (List for CSD)</name>
             <value>RESDESC</value>
-        </option>
+        </option> -->
         <option>
             <name>ResInDsc</name>
             <value>RESINDSC</value>

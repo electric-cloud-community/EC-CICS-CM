@@ -57,7 +57,7 @@ documentation : Help text for the parameter
         <label>Location Type:</label>
         <property>LocationType</property>
         <required>1</required>
-        <documentation>Location to newcopy in (#### TODO for this procedure, this must be CICS Configuration).</documentation>
+        <documentation>Location to newcopy in: must be 'CICS Configuration' for this procedure (to newcopy in other locations, use the NewcopyChgPkg procedure instead).</documentation>
         <option>
             <name>CICS Configuration</name>
             <value>CConfig</value>

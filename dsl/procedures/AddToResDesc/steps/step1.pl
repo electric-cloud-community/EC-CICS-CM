@@ -8,7 +8,7 @@ my $soapMethodName = 'Add';
 
 # List of the names of optional paramters
 my @optionalParams = (
-
+    'ObjectCriteria'
 );
 
 $[/myPlugin/project/ec_perl_metadata]
