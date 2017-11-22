@@ -97,6 +97,6 @@ documentation : Help text for the parameter
         <label>Name-Value Pairs:</label>
         <property>ObjectData</property>
         <required>1</required>
-        <documentation>Name-value pairs to set in the object being created, one per line in NAME=VALUE format</documentation>
+        <documentation>Name-value pairs to set in the object being updated, one per line in NAME=VALUE format. (For some objects types, some VALUEs may need to be XML datastructures - usually a list of elements preceeded by a count.)</documentation>
     </formElement>
 </editor>

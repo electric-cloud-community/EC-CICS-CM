@@ -37,7 +37,7 @@ if (length $params{'ObjectCriteria'} == 0) {
     ));
 }
 
-my @ObjectData = createObjectData($params{'ObjectData'});
+my @ObjectData = createObjectData($params{'ObjectData'}, 1); # 1 to allow XML values
 
 my $inputData;
 my $dataObjectType = $params{'DataObjType'};

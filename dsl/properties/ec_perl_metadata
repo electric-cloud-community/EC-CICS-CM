@@ -4,4 +4,4 @@
 # ---------------
 
 # Hash of regular expressions defining allowed values for parameters, keyed by parameter name
-my %valid;
+my %valid; #### TODO Kostya, add regexps here

@@ -20,7 +20,7 @@ $[/myPlugin/project/ec_perl_code_block_1]
 
 # Build @ObjectCriteria
 
-my @mParams = ('ObjGroup', 'ObjType', 'ObjName', 'ObjDefVer'); 
+my @mParams = ('ObjGroup', 'ObjType', 'ObjName'); 
 my @ObjectCriteria = createObjectCriteria(\@mParams, 1, "KeyA", \%params);  # 1 to add CConfig
 
 my @data  =

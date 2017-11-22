@@ -8,6 +8,8 @@ my $soapMethodName = 'List';
 
 # List of the names of optional paramters
 my @optionalParams = (
+    'ObjGroup',
+    'ObjDefVer',
     'HashingScope',
     'ObjectHistory',
     'CPIDFormula',

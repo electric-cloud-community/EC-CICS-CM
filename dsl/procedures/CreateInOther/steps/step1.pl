@@ -64,25 +64,26 @@ for my $param (@paramsForRequest) {
         push @paramsForRequestResult, SoapData($param);
     }
 }
+my @processParms;
 if (scalar(@paramsForRequestResult) > 0) {
-    @paramsForRequestResult = SOAP::Data->name('ProcessParms' => \SOAP::Data->value(@paramsForRequestResult));
+    @processParms = SOAP::Data->name('ProcessParms' => \SOAP::Data->value(@paramsForRequest));
 }
 
 my @data =
-SOAP::Data->name($soapMethodName => \SOAP::Data->value(
-    SOAP::Data->name('LocationCriteria' => \SOAP::Data->value(
-        SoapData('LocationName'),
-        SoapData('LocationType')
-    )),
-    SOAP::Data->name('ObjectCriteria' => \SOAP::Data->value(
-        SoapData('ObjType'),
-        SoapData('ObjName'),
-        SoapDataOptional('ObjGroup')
-    )),
-    SOAP::Data->name('InputData' => \SOAP::Data->value(
-        SOAP::Data->name('ObjectData' => \SOAP::Data->value(@ObjectData)),
-    )),
-    @paramsForRequestResult
+    SOAP::Data->name($soapMethodName => \SOAP::Data->value(
+        SOAP::Data->name('LocationCriteria' => \SOAP::Data->value(
+            SoapData('LocationName'),
+            SoapData('LocationType')
+        )),
+        SOAP::Data->name('ObjectCriteria' => \SOAP::Data->value(
+            SoapData('ObjType'),
+            SoapData('ObjName'),
+            SoapDataOptional('ObjGroup')
+        )),
+        SOAP::Data->name('InputData' => \SOAP::Data->value(
+            SOAP::Data->name('ObjectData' => \SOAP::Data->value(@ObjectData)),
+        )),
+        @processParms
 ));
 
 $[/myPlugin/project/ec_perl_code_block_2]

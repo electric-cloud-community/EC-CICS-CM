@@ -89,7 +89,7 @@ if ($params{'ObjType'} eq 'ChgPkg') {
 # Split, parse and build ObjectData
 my @ObjectData;
 if (length($params{'ObjectData'}) > 0 ) {
-    @ObjectData = createObjectData($params{'ObjectData'});
+    @ObjectData = createObjectData($params{'ObjectData'}, 1); # 1 to allow XML values
 } else {
     @ObjectData = SOAP::Data->type('xml' => '<!-- -->');  # Work around various bugs in ISPW SOAP interface
 }

@@ -23,7 +23,7 @@ my @names = keys %params;
 for my $name (@names) {
     # If parameter is optional, allow undefined or empty value    
     if (grep( /^$name$/, @optionalParams)) {
-       next if ((!defined $params{$name}) || ($params{$name} eq ''));
+       next if (!(length($params{$name}) > 0));
     }
     
     # If there is a regexp defined for $name in %valid, emit an error if the value doesn't match it
@@ -68,7 +68,7 @@ sub SoapData {
     if (length($params{$name}) > 0) {
         return SOAP::Data->name($name => $params{$name});
     } else {
-        print "ERROR: the value of the required parameter $name was undefined or empty!";
+        print "ERROR: the value of the required parameter $name was undefined or empty!\n";
         exit -1;
     }
 }
@@ -78,95 +78,21 @@ sub SoapDataOptional {
     return ((length($params{$_[0]}) > 0) ? ( SOAP::Data->name($_[0] => $params{$_[0]}) ) : ( ) );
 }
 
-sub isKeyValid {
-    my ($key,@array) = @_;
-    $_=uc for @array;
-    my %keys = map { $_ => 1 } @array;
-    return exists($keys{uc($key)});
-}
-
-sub contains {
-    my($key, $str) = @_;
-    return (index(uc($str), uc($key)) != -1);
-}
-
-sub makeAddObjectCriteria {
-    my($objectCriteria, $elementWrapper, @validCriteriaKeys) = @_;
-
-    my @criteria = grep { /\S/ } split(/\n/,$objectCriteria);
-    my $numberOfCriteria = scalar(@criteria);
-    my @result;
-
-    print "elementWrapper: $elementWrapper \n";
-
-    foreach my $crt (@criteria) {
-        if($crt ne "") {
-
-            if(contains('ObjGroup', $crt) and contains('ObjDefVer', $crt)) {
-                print "ERROR: When referring to a context-based resource definition, specify either <ObjDefVer> or <ObjGroup>. Specifying <ObjDefVer> enables you to refer to a specific version of a context-based resource definition, even when the resource definition is an orphan (does not belong to any ResGroup).
-                https://www.ibm.com/support/knowledgecenter/en/SS2L7A_5.3.0/com.ibm.cics.cm.doc/ccv-api-cmd-add.html";
-                exit -1;
-            }
-
-            my @listElement;
-            foreach my $elem (split ' ', $crt) {
-                my @keyValue = split '=', $elem;
-                my $key = @keyValue[0];
-                my $value = @keyValue[1];
-
-                if(!isKeyValid($key, @validCriteriaKeys)) {
-                    print "ERROR: unknown key '$key'. Allowed keys are: [" . join(", ", @validCriteriaKeys) . "]";
-                    exit -1;
-                }
-
-                if($value eq "") {
-                    print "ERROR: value for $key should not be empty";
-                    exit -1;
-                }
-
-                if(contains('TContainer', $crt) and uc($key) eq 'COMMAND' and uc($value) ne 'ADD') {
-                    print "ERROR: 'TContainer' ('target container') is relevant only when packaging an Add command. It identifies the ResGroup to which you want the resource definitions added.";
-                    exit -1;
-                }
-
-                push (@listElement, SOAP::Data->name($key => $value));
-            }
-            if($numberOfCriteria > 1) {
-                push (@result,
-                    SOAP::Data->name('ListElement' => \SOAP::Data->value(
-                        SOAP::Data->name("$elementWrapper" => \SOAP::Data->value(
-                            @listElement
-                        ))
-                    ))
-                );
-            }
-            else {
-                push (@result, SOAP::Data->name("$elementWrapper" => \SOAP::Data->value(@listElement)));
-            }
-
-        }
-    }
-    if($numberOfCriteria > 1) {
-        unshift (@result, SOAP::Data->name('ListCount' => $numberOfCriteria));
-    }
-    return @result;
-
-}
-
+# Convert RestrictionCriteria to XML
+# Shared across various List* procedures
 sub makeRestrictionCriteria {
-    my($rCriteria) = @_;
-
+    my ($restrictionCriteria) = @_;
     my @RestrictionCriteria;
 
-    if (length($rCriteria) > 0) {
+    if (length($restrictionCriteria) > 0) {
 
         # First go through and collect all the counts
         my $restrictionCount = 0;
         my %listCount;
-        my @lines = split(/$/, $rCriteria); # Split into lines
+        my @lines = split(/$/, $restrictionCriteria); # Split into lines
         foreach my $line (@lines) {
             $listCount{$line} = 0;
-            my @parts = split(/\s+/, $line); # Split on whitespace
+            my @parts = split(/\s+/, $line); # Split line on whitespace
             foreach my $part (@parts) {
                 my @pieces = split(/\./, $part, 3); # Split at first two .'s into field, operator, and value
                 if (@pieces == 3) {
@@ -174,7 +100,7 @@ sub makeRestrictionCriteria {
                 }
             else
             {
-                print "ERROR: Unable to parse Restriction Criteria near '$part'!";
+                print "ERROR: Unable to parse Restriction Criteria near '$part'!\n";
                 exit -1;
             }
             }
@@ -191,7 +117,7 @@ sub makeRestrictionCriteria {
                 if ($listCount{$line} > 0) {
                     my @RestrictionElement;
                     push(@RestrictionElement, SOAP::Data->name('ListCount' => $listCount{$line}));
-                    my @parts = split(/\s+/, $line); # Split on whitespace
+                    my @parts = split(/\s+/, $line); # Split line on whitespace
                     foreach my $part (@parts) {
                         my @pieces = split(/\./, $part, 3); # Split at first two .'s into field, operator, and value
                         if (@pieces == 3) {
@@ -207,11 +133,37 @@ sub makeRestrictionCriteria {
             }
         }
     }
+    
     my @result;
     push(@result, SOAP::Data->name('RestrictionCriteria' => \SOAP::Data->value(@RestrictionCriteria)));
     return @result;
 }
 
+# Build XML for parameters specified by a list, if they have values, or if they don't, complain unless they're optional
+sub getSoapParameters {
+    my ($params, %paramsForEvaluate) = @_;
+    my @paramsForRequest;
+    for my $param (@{$params}) {
+        if (length($paramsForEvaluate{$param}) > 0) {
+            push(@paramsForRequest, SoapData($param));
+        } elsif (!(grep( /^$param$/, @optionalParams))) {
+            print "ERROR: the value of the required parameter $param was undefined or empty!\n";
+            exit -1;
+        }
+    }
+    return @paramsForRequest;
+}
+
+# Chack XML is valid (without a specific DSD)
+sub validateXML {
+    my ($str) = @_;
+    my $parser = XML::LibXML->new;
+    $parser->validation(0);
+    $parser->parse_string($str);
+}
+
+# Convert ObjectCriteria to XML
+# Shared across many procedures
 sub createObjectCriteria {
     my ($mandatory, $addCConfig, $wrapper, $params, $wrapSingleElement) = @_;
     my %params = %$params;
@@ -234,7 +186,7 @@ sub createObjectCriteria {
     }
 
     my @ObjectCriteria;
-    if (length $params{'ObjectCriteria'} == 0) {
+    if (!(length($params{'ObjectCriteria'}) > 0)) {
         if($wrapSingleElement) {
             @ObjectCriteria = SOAP::Data->name('ObjectCriteria' => \SOAP::Data->value(
                 SOAP::Data->name('ListCount' => '1'),
@@ -252,11 +204,17 @@ sub createObjectCriteria {
             ));
         }
     } else {
-
         my $objectCriteria = $params{'ObjectCriteria'};
+        
         validateXML($objectCriteria);
         my @matches = $objectCriteria =~ m/<ListElement>/si;
         my $listCount = 1 + @matches;
+        if ($listCount <= 1) {
+            print "ERROR: Serialized Object Criteria did not contain any <ListElement> tags!\n";
+            exit -1;
+        }    
+        #### TODO Do further checks on $objectCriteria XML content against $wrapper, $params, $wrapSingleElement
+        
         @ObjectCriteria = SOAP::Data->name('ObjectCriteria' => \SOAP::Data->value(
             @configValue,
             SOAP::Data->name('ListCount' => $listCount),
@@ -269,39 +227,27 @@ sub createObjectCriteria {
     return @ObjectCriteria;
 }
 
-sub getSoapParameters {
-    my ($params, %paramsForEvaluate) = @_;
-    my @paramsForRequest;
-    for my $p (@{$params}) {
-        if (defined $paramsForEvaluate{$p} && $paramsForEvaluate{$p} ne "") {
-            push @paramsForRequest, SoapData($p);
-        }
-    }
-    return @paramsForRequest;
-}
-
-sub validateXML {
-    my ($str) = @_;
-    my $parser = XML::LibXML->new;
-    $parser->validation(0);
-    $parser->parse_string($str);
-}
-
+# Convert ObjectData to XML
+# Shared across Alter, Create*, Update*
 sub createObjectData {
-    my ($objData) = @_;
+    my ($objectData, $xmlValuesAllowed) = @_;
     my @ObjectData;
-    if (length($objData) == 0) {
-        print "ERROR: Object Data Name-Value Pairs missing!";
+    if (!(length($objectData) > 0)) { #### TODO Handle case where this can be optional here, and deal with SOAP XML hackery
+        print "ERROR: Object Data Name-Value Pairs missing!\n";
         exit -1;
     } else {
         # Build @ObjectData
-        my @parts = split(/\s+/s, $objData); # Split at whitesapece (including line breaks)
-        foreach my $part (@parts) {
-            my @pieces = split(/=/, $part, 2); # Split at first = into name and value
+        my @lines = split(/$/, $objectData); # Split into lines
+        foreach my $line (@lines) {
+            my @pieces = split(/=/, $line, 2); # Split at first = into name and value
             if (@pieces == 2) {
-                push(@ObjectData, SOAP::Data->name($pieces[0] => $pieces[1]));
+                if ($xmlValuesAllowed && ($pieces[1] =~ m|^\s*<[A-Za-z]+>.*</[A-Za-z]+>\s*$|)) {
+                    push(@ObjectData, SOAP::Data->name($pieces[0] => SOAP::Data->type('xml' => $pieces[1])));
+                } else {
+                    push(@ObjectData, SOAP::Data->name($pieces[0] => $pieces[1]));
+                } 
             } else {
-                print "ERROR: Unable to parse Object Data Name-Value Pairs near '$part'!";
+                print "ERROR: Unable to parse Object Data Name-Value Pairs at '$line'!\n";
                 exit -1;
             }
         }

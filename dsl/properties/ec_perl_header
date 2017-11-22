@@ -12,7 +12,5 @@ use XML::LibXML qw( );
 
 $| = 1;
 
-#### my ($self) = @_; TODO Remove?
-
 # Create a single instance of the Perl access to ElectricCommander
 my $ec = new ElectricCommander({'format' => "xml"});

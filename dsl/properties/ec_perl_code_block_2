@@ -20,9 +20,7 @@ $soap->autotype(0); # Don't automatically add parameter type annotations
 $soap->readable(1); # Pretty-print the XML
 $soap->outputxml(1); # Don't automatically deserialize the returned xml (since it's unhelpfully designed for that)
 
-# print"\$soap object before request:\n"; #### TODO Remove debugging output
-# print Dumper($soap);
-print"\n\@data objects before request:\n";
+print"\n\@data objects before request:\n"; #### TODO Remove debugging output
 print Dumper(@data);
                      
 my $xml = $soap->call($ccVersion, @data);
@@ -58,12 +56,9 @@ my $reasonCode = $result->{'OUTPUTDATA'}->{'REASONCODE'};
 
 # Remove uninteresting wrapper parts of the XML (if possible)
 my $upperSoapMethodName = uc($soapMethodName);
-# print"\$xml:\n$xml\n"; #### TODO Remove debugging output
-# print "<SOAP-ENV:Body>\\s*<$ccVersion>\\s*<$upperSoapMethodName>\\s*<OUTPUTDATA>\n";
 if ($xml =~ m!<SOAP-ENV:Body>\s*<$ccVersion>\s*<$upperSoapMethodName>\s*<OUTPUTDATA>\s*(<.*)</OUTPUTDATA>\s*</$upperSoapMethodName>\s*</$ccVersion>\s*</SOAP-ENV:Body>!s) {
     $xml = $1;
     $xml =~ s/\s+$//; # Trim any trailing whitespace (this should be faster than doing it above, since it avoids speculative matching)
-    # print"\$xml:\n$xml\n"; #### TODO Remove debugging output
 }
 
 my $outputPropertyOrPropertySheet = $params{'outputProperty'};
@@ -76,19 +71,42 @@ $ec->setProperty($outputPropertyOrPropertySheet, $xml);
 # We do this _after_ outputting the XML, in case a Commander error 
 # handling step wants to access the return code or reason code
 
+#### TODO Convert reason code to test message
+
 if ($returnCode ne '00000000') {
 
     # Return code '00000004' with certain reason codes should be treated as warnings rather than errors (or possibly even ignored).
-    if ($returnCode eq '00000004') {
+    if ($returnCode eq '00000004') { #### TODO Check for lack of strict mode
         my $conditionCode = substr($reasonCode, 4);
-        if (($conditionCode eq  '00AC') or ($conditionCode eq  '0024') or ($conditionCode eq  '009D')) { #### TODO Add more warning messages for  0024 and 009D
+        if ($conditionCode eq  '00AC') { 
             if ($soapMethodName eq 'Ready') {
                 print "WARNING: Readied a change package that was already ready!\n";
+                exit 0;
             }
+        } elsif ($conditionCode eq  '0024') { #### TODO Confirm there is no way to check whether this is due to a "new Group created" or "Group deleted" information message in the MSGUSR output.
+            print "WARNING: Reason code 0024 -- probably you created a new group, or deleted an existing group.\n";
+            exit 0;
+        } elsif ($conditionCode eq  '009D') { #### TODO Confirm there is no way to check whether this is due to a "new Group created" or "Group deleted" information message in the MSGUSR output.
+            print "WARNING: Reason code 009D -- probably you created a new group, or deleted an existing group.\n";
             exit 0;
         }
         #### TODO return code 00000004 with a reason code ending in 0003 indicates that an object was not found
         #### TODO return code 00000004 with a reason code ending in 0004 indicates that no matching objects were found
+        #### TODO return code 00000004 with a reason code ending in 004D indicates that chnage package was already backed out
+        #### TODO return code 00000004 with a reason code ending in 005C indicates that chnage package was already backed out
+        #### TODO return code 00000004 with a reason code ending in 0060 or 0064 indicates that nothing was installed
+        #### TODO return code 00000004 with a reason code ending in 006A indicates that nothing was newcopied
+        #### TODO return code 00000004 with a reason code ending in 0070 or 0072 or 0073 indicates that nothing was discarded
+        #### TODO return code 00000004 with a reason code ending in 0086 indicates that nothing was deleted
+        #### TODO return code 00000004 with a reason code ending in 0090 indicates that nothing was altered
+        #### TODO return code 00000004 with a reason code ending in 0095 indicates that nothing was added
+        #### TODO return code 00000004 with a reason code ending in 0098 indicates that nothing was removed
+        #### TODO return code 00000004 with a reason code ending in 009C indicates that nothing was renamed
+        #### TODO return code 00000004 with a reason code ending in 00AA indicates that APPROVE? or MIGRATE> query returned 0 objects
+        #### TODO return code 00000004 with a reason code ending in 00B0 indicates that nothing was imported
+        #### TODO return code 00000004 with a reason code ending in 00CD indicates that object was already in the desired state
+        #### TODO return code 00000004 with a reason code ending in 00E3 indicates that nothing was found for KILL request
+        #### TODO return code 00000004 with a reason code ending in 00E6 indicates that recovery was skipped for delete of non-existent definition
     }
 
     print "ERROR: Result with non-zero return code '$returnCode' and reason code '$reasonCode':\n" . Dumper($result);

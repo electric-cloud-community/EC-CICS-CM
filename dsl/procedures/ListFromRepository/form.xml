@@ -107,12 +107,12 @@ documentation : Help text for the parameter
         <label>Restriction Criteria:</label>
         <property>RestrictionCriteria</property>
         <required>0</required>
-        <documentation>(Optional) restriction criteria, one per line in #### Is using . OK? #### &lt;NAME&gt;.&lt;COMPARATOR&gt;.&lt;VALUE&gt;
-            format. Valid &lt;COMPARATOR&gt; values are EQ, NE, LT, GT, LE, and GE. Restriction criteria on consecutive
-            lines are combined using logical AND. Groups of restriction critera separated by at least one blank line are
+        <documentation>(Optional) restriction criteria, whitespace separated in &lt;NAME&gt;.&lt;COMPARATOR&gt;.&lt;VALUE&gt;
+            format. Valid &lt;COMPARATOR&gt; values are EQ, NE, LT, GT, LE, and GE. Restriction criteria all on
+            a single line are combined using logical AND. Groups of restriction critera on different lines are
             combined using logical OR. When listing BAImage journal records, you must prefix the field names of the
-            embedded resource definitions with B_ for before or A_ for after images. For eaxmple, to limit the list to
-            journal records whose before resource definition was chnaged after 26 June 2004, specify
+            embedded resource definitions with B_ for before or A_ for after images. For eaxmple, to limit the list
+            to journal records whose before resource definition was chnaged after 26 June 2004, specify
             B_ChangeTime.GT.2004/06/26
         </documentation>
     </formElement>

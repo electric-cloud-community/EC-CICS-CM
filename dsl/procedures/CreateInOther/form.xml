@@ -310,7 +310,7 @@ documentation : Help text for the parameter
         <label>Object Group:</label>
         <property>ObjGroup</property>
         <required>0</required>
-        <documentation>The resource group to create the object in (required except for a few object types, such as ResGroup and ResDesc, which cannot be in a resource group),</documentation>
+        <documentation>The resource group to create the object in (required except for a couple of object types, such as ResGroup and ResDesc, which cannot be in a resource group).</documentation>
     </formElement>
     <formElement>
         <type>textarea</type>
@@ -332,6 +332,10 @@ documentation : Help text for the parameter
         <property>MonSpecInherit</property>
         <required>0</required>
         <documentation>Optional, applies only to CSGLCGCS objects</documentation>
+        <option>
+            <name></name>
+            <value></value>
+        </option>
         <option>
             <name>Keep</name>
             <value>KEEP</value>
