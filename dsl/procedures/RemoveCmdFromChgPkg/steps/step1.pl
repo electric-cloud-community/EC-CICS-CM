@@ -38,7 +38,7 @@ $[/myPlugin/project/ec_perl_code_block_1]
 
 # Build @ObjectCriteria
 
-my @mParams = ('Command', 'ObjGroup', 'ObjType', 'ObjName', 'ObjDefVer', 'TContainer');
+my @mParams = ('Command', 'ObjGroup', 'ObjType', 'ObjName');
 my @ObjectCriteria = createObjectCriteria(\@mParams, 1, "CmdAPost", \%params);
 
 my @data =
