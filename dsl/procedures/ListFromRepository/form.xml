@@ -46,13 +46,6 @@ documentation : Help text for the parameter
         <documentation>The property that results will be returned into.</documentation>
     </formElement>
     <formElement>
-        <type>entry</type>
-        <label>Location Name:</label>
-        <property>LocationName</property>
-        <required>1</required>
-        <documentation>Configuration name, CSD location, CICSPlex Context, depending on Location Type value.</documentation>
-    </formElement>
-    <formElement>
         <type>select</type>
         <label>Location Type:</label>
         <property>LocationType</property>
@@ -79,18 +72,9 @@ documentation : Help text for the parameter
         <type>entry</type>
         <label>Resource Name:</label>
         <property>ObjName</property>
-        <required>1</required>
-        <documentation>(Optional) resource object criteria for a resource definition embedded in a BAImage: resource
-            name <!-- #### Incorrect: fix this -->
-        </documentation>
-    </formElement>
-    <formElement>
-        <type>entry</type>
-        <label>Resource Group:</label>
-        <property>ObjGroup</property>
         <required>0</required>
         <documentation>(Optional) resource object criteria for a resource definition embedded in a BAImage: resource
-            group <!-- #### Incorrect: fix this -->
+            name <!-- #### Incorrect: fix this -->
         </documentation>
     </formElement>
     <formElement>
@@ -104,10 +88,10 @@ documentation : Help text for the parameter
     </formElement>
     <formElement>
         <type>textarea</type>
-        <label>Restriction Criteria:</label>
-        <property>RestrictionCriteria</property>
+        <label>Object Criteria:</label>
+        <property>ObjectCriteria</property>
         <required>0</required>
-        <documentation>(Optional) restriction criteria, whitespace separated in &lt;NAME&gt;.&lt;COMPARATOR&gt;.&lt;VALUE&gt;
+        <documentation>(Optional) Object criteria, whitespace separated in &lt;NAME&gt;.&lt;COMPARATOR&gt;.&lt;VALUE&gt;
             format. Valid &lt;COMPARATOR&gt; values are EQ, NE, LT, GT, LE, and GE. Restriction criteria all on
             a single line are combined using logical AND. Groups of restriction critera on different lines are
             combined using logical OR. When listing BAImage journal records, you must prefix the field names of the

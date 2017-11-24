@@ -20,7 +20,7 @@ $[/myPlugin/project/ec_perl_code_block_1]
 # Split and parse optional RestrictionCriteria
 my @restrictionCriteria = makeRestrictionCriteria($params{'RestrictionCriteria'});
 
-my @mParams = ('ObjName', 'ObjGroup', 'ObjDefVer', 'ObjType');
+my @mParams = ('ObjType');
 my @ObjectCriteria = createObjectCriteria(\@mParams, 0, "", \%params);
 
 # Handle optional parameters
@@ -39,7 +39,6 @@ if(scalar(@paramsForRequest) > 0) {
 my @data =
     SOAP::Data->name($soapMethodName => \SOAP::Data->value(
         SOAP::Data->name('LocationCriteria' => \SOAP::Data->value(
-            SoapData('LocationName'),
             SoapData('LocationType')
         )),
         SOAP::Data->name('ObjectCriteria' => @ObjectCriteria),
