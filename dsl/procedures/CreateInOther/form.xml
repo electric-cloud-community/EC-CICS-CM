@@ -310,7 +310,7 @@ documentation : Help text for the parameter
         <label>Object Group:</label>
         <property>ObjGroup</property>
         <required>0</required>
-        <documentation>The resource group to create the object in (required except for a couple of object types, such as ResGroup and ResDesc, which cannot be in a resource group).</documentation>
+        <documentation>The resource group to create the object in (required except for a couple of object types, such as 'ResGroup (Group for CSD)' and 'ResDesc (List for CSD)', which cannot be in a resource group).</documentation>
     </formElement>
     <formElement>
         <type>textarea</type>
@@ -324,14 +324,14 @@ documentation : Help text for the parameter
         <label>CSYSDEF Model:</label>
         <property>CSYSDEFModel</property>
         <required>0</required>
-        <documentation>Optional, applies only to CSYSDEF objects</documentation>
+        <documentation>Optional, applies only to CSYSDEF objects.</documentation>
     </formElement>
     <formElement>
         <type>select</type>
-        <label>Mon Spec Inherit:</label>
-        <property>MonSpecInherit</property>
+        <label>MON Specification Inheritance:</label>
+        <property>MONSpecInherit</property>
         <required>0</required>
-        <documentation>Optional, applies only to CSGLCGCS objects</documentation>
+        <documentation>Optional, applies only to CSGLCGCS objects.</documentation>
         <option>
             <name></name>
             <value></value>
@@ -352,10 +352,10 @@ documentation : Help text for the parameter
     </formElement>
     <formElement>
         <type>select</type>
-        <label>RTA Spec Inherit:</label>
+        <label>RTA Specification Inheritance:</label>
         <property>RTASpecInherit</property>
         <required>0</required>
-        <documentation>Optional, applies only to CSGLCGCS objects</documentation>
+        <documentation>Optional, applies only to CSGLCGCS objects.</documentation>
         <option>
             <name></name>
             <value></value>
@@ -376,10 +376,10 @@ documentation : Help text for the parameter
     </formElement>
     <formElement>
         <type>select</type>
-        <label>WLM Spec Inherit:</label>
+        <label>WLM Specification Inheritance:</label>
         <property>WLMSpecInherit</property>
         <required>0</required>
-        <documentation>Optional, applies only to CSGLCGCS objects</documentation>
+        <documentation>Optional, applies only to CSGLCGCS objects.</documentation>
         <option>
             <name></name>
             <value></value>
@@ -403,7 +403,7 @@ documentation : Help text for the parameter
         <label>LNKSWSCG Parameter:</label>
         <property>LNKSWSCGParm</property>
         <required>0</required>
-        <documentation>Optional, applies only to LNKSWSCG objects</documentation>
+        <documentation>Optional, applies only to LNKSWSCG objects.</documentation>
         <option>
             <name></name>
             <value></value>

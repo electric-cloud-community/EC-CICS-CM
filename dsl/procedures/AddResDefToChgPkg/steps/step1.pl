@@ -18,6 +18,14 @@ $[/myPlugin/project/ec_perl_code_block_1]
 # Procedure-specific Code
 # -----------------------
 
+# Validate Object Group against Object Type
+if(($params{'ObjType'} eq 'RESGROUP') || ($params{'ObjType'} eq 'RESDESC')) {
+    if (length($params{'ObjGroup'}) > 0) {
+        print "ERROR: You cannot specify an Object Group when the Object Type is 'ResGroup (Group for CSD)' or 'ResDesc (List for CSD)'!\n";
+        exit -1;
+    }
+}
+
 # Build @ObjectCriteria
 
 my @mParams = ('ObjGroup', 'ObjType', 'ObjName'); 

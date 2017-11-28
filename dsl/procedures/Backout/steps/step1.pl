@@ -22,9 +22,7 @@ my @data =
         SOAP::Data->name('SelectionCriteria' => \SOAP::Data->value(
             SoapData('CPID'),
             SoapData('Scheme'),
-$[/javascript (('' + myParent.EventID).length == 0) ? "" :
-"            SoapData('EventID') "
-]
+            SoapDataOptional('EventID')
         ))
     ));
 

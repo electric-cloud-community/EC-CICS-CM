@@ -11,7 +11,7 @@ my @optionalParams = (
     'ObjGroup',
     'ObjectData',
     'IntegrityToken',
-    'MonSpecInherit',
+    'MONSpecInherit',
     'RTASpecInherit',
     'WLMSpecInherit',
     'LNKSWSCGParm',
@@ -24,25 +24,45 @@ $[/myPlugin/project/ec_perl_code_block_1]
 # Procedure-specific Code
 # -----------------------
 
-# Validation #### TODO Check this
+# Validation
 
-if(length($params{'CSYSDEFModel'}) and uc($params{'ResTableName'}) ne "CSYSDEF") {
-    print "ERROR: 'CSYSDEF Model' applies only to CSYSDEF objects.";
+# Validate ObjectCriteria isn't present if wildcards are in use
+if (($params{'ObjType'} eq '*') || ($params{'ObjType'} eq 'ALL') ||
+    ($params{'ObjName'} =~ /\*$/) || ($params{'ObjGroup'} =~ /\*$/)) {
+    if (length($params{'ObjectCriteria'}) > 0) {
+        print "ERROR: You cannot supply a value for Serialized Resource Object Criteria while using Ubject Type '*' or 'All' or using a masked value for Object Name or Object Group!\n";
+        exit -1;
+    }
+}
+
+# Validate wildcards are at end
+if (($params{'ObjName'} =~ /\*.+$/) || ($params{'ObjGroup'} =~ /\*.+$/)) {\
+    print "ERROR: The wildcard character '*' must only occur at the end of the Object Name or Object Group!\n";
     exit -1;
 }
 
-if(((length($params{'MonSpecInherit'}) or length($params{'RTASpecInherit'}) or length($params{'WLMSpecInherit'}))) and uc($params{'ResTableName'}) ne "CSGLCGCS") {
-    print "ERROR: 'Mon Spec Inherit', 'RTA Spec Inherit', and 'WLM Spec Inherit' apply only to CSGLCGCS objects.";
+# Validate Object Group against Object Type
+if(($params{'ObjType'} eq 'RESGROUP') || ($params{'ObjType'} eq 'RESDESC')) {
+    if (length($params{'ObjGroup'}) > 0) {
+        print "ERROR: You cannot specify an Object Group when the Object Type is 'ResGroup (Group for CSD)' or 'ResDesc (List for CSD)'!\n";
+        exit -1;
+    }
+}
+
+if (((length($params{'MONSpecInherit'}) or length($params{'RTASpecInherit'}) or length($params{'WLMSpecInherit'}))) and uc($params{'ResTableName'}) ne "CSGLCGCS") {
+    print "ERROR: 'MON Specification Inheritance', 'RTA Specification Inheritance', and 'WLM Specification Inheritance' apply only to CSGLCGCS objects.";
     exit -1;
 }
-if(length($params{'LNKSWSCGParm'}) and uc($params{'ResTableName'}) ne "LNKSWSCG") {
+
+if (length($params{'LNKSWSCGParm'}) and uc($params{'ResTableName'}) ne "LNKSWSCG") {
     print "ERROR: 'LNKSWSCG Parameter' applies only to LNKSWSCG objects.";
     exit -1;
 }
-# Handle optional parametrs
+
+# Handle optional parameters
 my @paramsForRequest = (
-    'CSYSDEFModel', #### TODO Confirm these
-    'MonSpecInherit',
+    'IntegrityToken',
+    'MONSpecInherit',
     'RTASpecInherit',
     'WLMSpecInherit',
     'LNKSWSCGParm',
@@ -69,7 +89,7 @@ my @data =
             SoapData('ObjName'),
             SoapDataOptional('ObjGroup'),
             SoapDataOptional('ObjDefVer')
-        )), #### TODO Handle IntegrityToken
+        )),
         @processParms
     ));
 

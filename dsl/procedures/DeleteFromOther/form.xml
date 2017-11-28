@@ -50,14 +50,14 @@ documentation : Help text for the parameter
         <label>Location Name:</label>
         <property>LocationName</property>
         <required>1</required>
-        <documentation>Name of location to delete from.</documentation>
+        <documentation>The name of location to delete from.</documentation>
     </formElement>
     <formElement>
         <type>select</type>
         <label>Location Type:</label>
         <property>LocationType</property>
         <required>1</required>
-        <documentation>Type of location to delete from (to delete from the Repository, use procedure DeleteFromRepository instead).</documentation>
+        <documentation>The type of location to delete from (to delete from the Repository, use the procedure DeleteFromRepository instead).</documentation>
         <option>
             <name>CICS Configuration</name>
             <value>CConfig</value>
@@ -75,6 +75,14 @@ documentation : Help text for the parameter
         <type>select</type> 
         <label>Object Type:</label>
         <property>ObjType</property>
+        <option>
+            <name>*</name>
+            <value>*</value>
+        </option>
+        <option>
+            <name>All</name>
+            <value>ALL</value>
+        </option>
         <option>
             <name>ApplDef</name>
             <value>APPLDEF</value>
@@ -303,35 +311,42 @@ documentation : Help text for the parameter
         <label>Object Name:</label>
         <property>ObjName</property>
         <required>1</required>
-        <documentation>The name of the object to delete.</documentation>
+        <documentation>The name of the object to delete (a 'masked' value ending in the wildcard * can be used).</documentation> <!-- #### TODO Copy comments about masked values from Alter -->
     </formElement> 
     <formElement>
         <type>entry</type>
         <label>Object Group:</label>
         <property>ObjGroup</property>
         <required>0</required>
-        <documentation>The resource group to delete the object from (required except for a couple of object types, such as ResGroup and ResDesc, which cannot be in a resource group).</documentation>
+        <documentation>The resource group to delete the object from (a 'masked' value ending in the wildcard * can be used; required except for object types such as 'ResGroup (Group for CSD)' and 'ResDesc (List for CSD)', which cannot be in a resource group).</documentation>
     </formElement>
     <formElement>
         <type>entry</type>
         <label>Object Definition Version:</label>
         <property>ObjDefVer</property>
         <required>0</required>
-        <documentation>The object definition version of the object to delete (optional, can be used instead of Object Group if Location Type is Context).</documentation>
+        <documentation>The object definition version of the object to delete (optional, can be specified instead of Object Group if Location Type is Context).</documentation>
     </formElement>
     <formElement>
         <type>textarea</type>
         <label>Serialized Resource Object Criteria:</label>
         <property>ObjectCriteria</property>
         <required>0</required>
-        <documentation>Additional objects(s) to delete: XML serialized list of sets of resource object criteria, one per additional object to delete, created using the procedure SerializeOtherObjectCriteria (optional, the object specified above is appended to this).</documentation>
+        <documentation>Additional objects(s) to delete: an XML serialized list of sets of resource object criteria, one per additional object to delete, created using the procedure SerializeOtherObjectCriteria (optional, the object specified above is appended to this; however, if the Object Type above is '*' or 'All', or if a masked value was used for Object Name or Object Group then the Serialized Resource Object Criteria must be empty).</documentation>
     </formElement>
     <formElement>
-        <type>select</type>
-        <label>Mon Spec Inherit:</label>
-        <property>MonSpecInherit</property>
+        <type>entry</type>
+        <label>Integrity Token:</label>
+        <property>IntegrityToken</property>
         <required>0</required>
-        <documentation>Optional, applies only to CSGLCGCS objects</documentation>
+        <documentation>The object integrity token of the object to delete (optional, ignored if more than one object is specified or wildcard masking is used for objects).</documentation>
+    </formElement>    
+    <formElement>
+        <type>select</type>
+        <label>MON Specification Inheritance:</label>
+        <property>MONSpecInherit</property>
+        <required>0</required>
+        <documentation>Optional, applies only to CSGLCGCS objects.</documentation>
         <option>
             <name></name>
             <value></value>
@@ -348,10 +363,10 @@ documentation : Help text for the parameter
     </formElement>
     <formElement>
         <type>select</type>
-        <label>RTA Spec Inherit:</label>
+        <label>RTA Specification Inheritance:</label>
         <property>RTASpecInherit</property>
         <required>0</required>
-        <documentation>Optional, applies only to CSGLCGCS objects</documentation>
+        <documentation>Optional, applies only to CSGLCGCS objects.</documentation>
         <option>
             <name></name>
             <value></value>
@@ -368,10 +383,14 @@ documentation : Help text for the parameter
     </formElement>
     <formElement>
         <type>select</type>
-        <label>WLM Spec Inherit:</label>
+        <label>WLM Specification Inheritance:</label>
         <property>WLMSpecInherit</property>
         <required>0</required>
-        <documentation>Optional, applies only to CSGLCGCS objects</documentation>
+        <documentation>Optional, applies only to CSGLCGCS objects.</documentation>
+        <option>
+            <name></name>
+            <value></value>
+        </option>
         <option>
             <name>None</name>
             <value>NONE</value>
@@ -387,7 +406,11 @@ documentation : Help text for the parameter
         <label>LNKSWSCG Parameter:</label>
         <property>LNKSWSCGParm</property>
         <required>0</required>
-        <documentation>Optional, applies only to LNKSWSCG objects</documentation>
+        <documentation>Optional, applies only to LNKSWSCG objects.</documentation>
+        <option>
+            <name></name>
+            <value></value>
+        </option>
         <option>
             <name>Keep</name>
             <value>KEEP</value>
@@ -398,11 +421,4 @@ documentation : Help text for the parameter
         </option>
         <value></value>
     </formElement>
-    <formElement>
-        <type>entry</type>
-        <label>Integrity Token:</label>
-        <property>IntegrityToken</property>
-        <required>0</required>
-        <documentation>Object to delete: object integrity token (optional, ignored if more than one object is specified or wildcard masking is used for objects)</documentation>
-    </formElement>    
 </editor>

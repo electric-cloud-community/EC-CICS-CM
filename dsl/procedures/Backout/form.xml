@@ -50,20 +50,20 @@ documentation : Help text for the parameter
         <label>Change Package ID:</label>
         <property>CPID</property>
         <required>1</required>
-        <documentation>Selection criteria for what to back out: change package ID</documentation>
+        <documentation>The change package ID of the change to back out.</documentation>
     </formElement>
     <formElement>
         <type>entry</type>
         <label>Scheme:</label>
         <property>Scheme</property>
         <required>1</required>
-        <documentation>Selection criteria for what to back out: migration scheme</documentation>
+        <documentation>The migration scheme of the change to back out.</documentation>
     </formElement> 
     <formElement>
         <type>entry</type>
         <label>Event ID:</label>
         <property>EventID</property>
         <required>0</required>
-        <documentation>Selection criteria for what to back out: identify a unique execution of the Migrate command for the specified change package and migration scheme (if omitted, it defaults to the most resent Migrate command for that change package and migration scheme).</documentation>
+        <documentation>The eventID of the execution of the Migrate command for the specified change package and migration scheme to back out (if omitted, it defaults to the most recent Migrate command for that change package and migration scheme).</documentation>
     </formElement> 
 </editor>
