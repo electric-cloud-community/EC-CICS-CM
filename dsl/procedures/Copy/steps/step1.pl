@@ -25,7 +25,7 @@ if (($params{'LocationName'} eq $params{'TargetLocationName'}) && ($params{'Loca
     if (!(length($params{'TargetGroup'}) > 0)) {
         print "ERROR: Target Group must be specified if Target Location Name matches Location Name and Target Location Type matches LocationType!\n";
         exit -1;
-    } elsif ((!(length($params{'TargetGroup'}) > 0)) && ($params{'ObjGroup') eq $params{'TargetGroup'))) {
+    } elsif ((!(length($params{'TargetGroup'}) > 0)) && ($params{'ObjGroup'} eq $params{'TargetGroup'})) {
         print "ERROR: Target Group must not match Object Group if Target Location Name matches Location Name and Target Location Type matches LocationType!\n";
         exit -1;
     }
