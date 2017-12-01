@@ -30,7 +30,7 @@ value   : Parameter default value
 documentation : Help text for the parameter
 -->
 <editor>
-    <formElement> <!-- #### TODO Confirm if this is correct and finished -->
+    <formElement>
         <type>entry</type>
         <label>Configuration name:</label>
         <property>configurationName</property>
@@ -46,84 +46,293 @@ documentation : Help text for the parameter
         <documentation>The property that results will be returned into.</documentation>
     </formElement>
     <formElement>
-        <type>entry</type>
-        <label>Location Name:</label>
-        <property>LocationName</property>
-        <required>1</required>
-        <documentation>Configuration name, CSD location, CICSPlex Context, depending on Location Type value.</documentation>
-    </formElement>
-    <formElement>
         <type>select</type>
         <label>Location Type:</label>
         <property>LocationType</property>
         <required>1</required>
-        <documentation>Location to list from: #### TODO location type must be 'Journal' for this procedure (to list from other
-            location types, use the ListFromRepository or ListFromOther procedure instead)
-        </documentation>
         <option>
-            <name>Journal</name>
-            <value>Journal</value>
-        </option>
-        <option>
-            <name>CSD</name>
-            <value>CSD</value>
+            <name>CICS Configuration</name>
+            <value>CConfig</value>
         </option>
         <option>
             <name>Context</name>
             <value>Context</value>
         </option>
         <option>
-            <name>Repository</name>
-            <value>Repository</value>
+            <name>CSD</name>
+            <value>CSD</value>
         </option>
-        <option>
-            <name>CICS Configuration</name>
-            <value>CConfig</value>
-        </option>
-        <value>CSD</value>
+        <documentation>The type of location to list from (to list from a Journal use the procedure ListFromJournal, to list from a Reposititory use the procedure ListFromRepository instead).</documentation>
     </formElement>
     <formElement>
         <type>entry</type>
+        <label>Location Name:</label>
+        <property>LocationName</property>
+        <required>1</required>
+        <documentation>The name of the location to list from.</documentation>
+    </formElement>
+    <formElement>
+        <type>select</type> 
         <label>Resource Type:</label>
         <property>ObjType</property>
+        <option>
+            <name>*</name> <!-- #### TODO Are wildcards allowed in this case? -->
+            <value>*</value>
+        </option>
+        <option>
+            <name>All</name>
+            <value>ALL</value>
+        </option>
+        <option>
+            <name>ApplDef</name>
+            <value>APPLDEF</value>
+        </option>
+        <option>
+            <name>AtomDef (AtomService for CSD)</name>
+            <value>ATOMDEF</value>
+        </option>
+        <option>
+            <name>BundDef (Bundle for CSD)</name>
+            <value>BUNDDEF</value>
+        </option>
+        <option>
+            <name>ConnDef (Connection for CSD)</name>
+            <value>CONNDEF</value>
+        </option>
+        <option>
+            <name>CSGLCGCG</name>
+            <value>CSGLCGCG</value>
+        </option>
+        <option>
+            <name>CSGLCGCS</name>
+            <value>CSGLCGCS</value>
+        </option>
+        <option>
+            <name>DB2CDef (DB2Conn for CSD)</name>
+            <value>DB2CDEF</value>
+        </option>
+        <option>
+            <name>DB2EDef (DB2Entry for CSD)</name>
+            <value>DB2EDEF</value>
+        </option>
+        <option>
+            <name>DB2TDef (DB2Tran for CSD)</name>
+            <value>DB2TDEF</value>
+        </option>
+        <option>
+            <name>DTrInGrp</name>
+            <value>DTRINGRP</value>
+        </option>
+        <option>
+            <name>EJCODef (CORBAServer for CSD)</name>
+            <value>EJCODEF</value>
+        </option>
+        <option>
+            <name>EJDJDef (DJAR for CSD)</name>
+            <value>EJDJDEF</value>
+        </option>
+        <option>
+            <name>DocDef (DocTemplate for CSD)</name>
+            <value>DOCDEF</value>
+        </option>
+        <option>
+            <name>EnQMDef (EnQModel for CSD)</name>
+            <value>ENQMDEF</value>
+        </option>
+        <option>
+            <name>FileDef (File for CSD)</name>
+            <value>FILEDEF</value>
+        </option>
+        <option>
+            <name>IPConDef (IPConn for CSD)</name>
+            <value>IPCONDEF</value>
+        </option>
+        <option>
+            <name>JrnMDef (JournalModel for CSD)</name>
+            <value>JRNMDEF</value>
+        </option>
+        <option>
+            <name>JVMSvDef (JVMServer for CSD)</name>
+            <value>JVMSVDEF</value>
+        </option>
+        <option>
+            <name>LibDef (Library for CSD)</name>
+            <value>LIBDEF</value>
+        </option>
+        <option>
+            <name>LnkSWSCG</name>
+            <value>LNKSWSCG</value>
+        </option>
+        <option>
+            <name>LnkSWSCS</name>
+            <value>LNKSWSCS</value>
+        </option>
+        <option>
+            <name>LSRDef (LSPPool for CSD)</name>
+            <value>LSRDEF</value>
+        </option>
+        <option>
+            <name>MapDef (MapSet for CSD)</name>
+            <value>MAPDEF</value>
+        </option>
+        <option>
+            <name>MQConDef (MQConn for CSD)</name>
+            <value>MQCONDEF</value>
+        </option>
+        <option>
+            <name>PrtnDef (PartitionSet for CSD)</name>
+            <value>PRTNDEF</value>
+        </option>
+        <option>
+            <name>PartDef (Partner for CSD)</name>
+            <value>PARTDEF</value>
+        </option>
+        <option>
+            <name>PerioDef</name>
+            <value>PERIODEF</value>
+        </option>
+        <option>
+            <name>PipeDef (Pipeline for CSD)</name>
+            <value>PIPEDEF</value>
+        </option>
+        <option>
+            <name>PlatDef</name>
+            <value>PLATDEF</value>
+        </option>
+        <option>
+            <name>ProcDef (ProcessType for CSD)</name>
+            <value>PROCDEF</value>
+        </option>
+        <option>
+            <name>ProfDef (Profile for CSD)</name>
+            <value>PROFDEF</value>
+        </option>
+        <option>
+            <name>ProgDef (Program for CSD)</name>
+            <value>PROGDEF</value>
+        </option>
+        <option>
+            <name>RAsInDsc</name>
+            <value>RASINDSC</value>
+        </option>
+        <option>
+            <name>RAsgnDef</name>
+            <value>RASGNDEF</value>
+        </option>
+        <option>
+            <name>ResGroup (Group for CSD)</name>
+            <value>RESGROUP</value>
+        </option>
+        <option>
+            <name>ResDesc (List for CSD)</name>
+            <value>RESDESC</value>
+        </option>
+        <option>
+            <name>ResInDsc</name>
+            <value>RESINDSC</value>
+        </option>
+        <option>
+            <name>RqMDef (RequestModel for CSD)</name>
+            <value>RQMDEF</value>
+        </option>
+        <option>
+            <name>SessDef (Session for CSD)</name>
+            <value>SESSDEF</value>
+        </option>
+        <option>
+            <name>SysLink</name>
+            <value>SYSLINK</value>
+        </option>
+        <option>
+            <name>TCPDef (TCPIPService for CSD)</name>
+            <value>TCPDEF</value>
+        </option>
+        <option>
+            <name>TDQDef (TDQueue for CSD)</name>
+            <value>TDQDEF</value>
+        </option>
+        <option>
+            <name>TermDef (Terminal for CSD)</name>
+            <value>TERMDEF</value>
+        </option>
+        <option>
+            <name>TranDef (Transaction for CSD)</name>
+            <value>TRANDEF</value>
+        </option>
+        <option>
+            <name>TranGrp</name>
+            <value>TRANGRP</value>
+        </option>
+        <option>
+            <name>TrnClDef (TranClass for CSD)</name>
+            <value>TRNCLDEF</value>
+        </option>
+        <option>
+            <name>TSMDef (TSModel for CSD)</name>
+            <value>TSMDEF</value>
+        </option>
+        <option>
+            <name>TypTmDef (TypeTerm for CSD)</name>
+            <value>TYPTMDEF</value>
+        </option>
+        <option>
+            <name>URIMpDef (UIRMap for CSD)</name>
+            <value>URIMPDEF</value>
+        </option>
+        <option>
+            <name>WenSvDef (WebService for CSD)</name>
+            <value>WEBSVDEF</value>
+        </option>
+        <option>
+            <name>WLMDef</name>
+            <value>WLMDEF</value>
+        </option>
+        <option>
+            <name>WLMGroup</name>
+            <value>WLMGROUP</value>
+        </option>
+        <option>
+            <name>WLMInGrp</name>
+            <value>WLMINGRP</value>
+        </option>
+        <option>
+            <name>WLMInSpc</name>
+            <value>WLMINSPC</value>
+        </option>
+        <option>
+            <name>WLMSpec</name>
+            <value>WLMSPEC</value>
+        </option>
         <required>1</required>
-        <documentation>(Optional) resource object criteria for a resource definition embedded in a BAImage: resource
-            type <!-- #### TODO Incorrect, fix this #### -->
-        </documentation> <!-- #### TODO Make this a select -->
+        <documentation>The type of resource to list.</documentation>
     </formElement>
     <formElement>
         <type>entry</type>
         <label>Resource Name:</label>
         <property>ObjName</property>
-        <required>1</required>
-        <documentation>(Optional) resource object criteria for a resource definition embedded in a BAImage: resource
-            name <!-- #### TODO Incorrect, fix this #### -->
-        </documentation>
-    </formElement>
+        <required>1</required> <!-- #### TODO Are wildcards allowed in this case? -->
+        <documentation>The name of the resource to list within (a 'masked' value ending in the wildcard * can be used).</documentation>
+    </formElement> 
     <formElement>
         <type>entry</type>
         <label>Resource Group:</label>
         <property>ObjGroup</property>
-        <required>0</required>
-        <documentation>(Optional) resource object criteria for a resource definition embedded in a BAImage: resource
-            group <!-- #### TODO Incorrect, fix this #### -->
-        </documentation>
+        <required>0</required> <!-- #### TODO Are wildcards allowed in this case? -->
+        <documentation>The resource group to list within the resource from (a 'masked' value ending in the wildcard * can be used; required except for the resource types 'ResGroup (Group for CSD)' and 'ResDesc (List for CSD)', which cannot be in a resource group, or omit if a Resource Definition Version is supplied).</documentation>
     </formElement>
-    <formElement>
+    <formElement> <!-- #### TODO Is this allowed? -->
         <type>entry</type>
         <label>Resource Definition Version:</label>
         <property>ObjDefVer</property>
-        <required>0</required>
-        <documentation>(Optional) resource object criteria for a resource definition embedded in a BAImage: resource
-            definition version <!-- #### TODO Incorrect, fix this #### -->
-        </documentation>
+        <required>0</required> <!-- #### TODO Are wildcards allowed in this case? -->
+        <documentation>The resource definition version number of the resource to list within (optional, can be specified instead of Resource Group if the Location Type is Context).</documentation>
     </formElement>
     <formElement>
         <type>textarea</type>
-        <label>Serialized #### TODO Object Criteria:</label>
+        <label>Serialized Resource Object Criteria:</label>
         <property>ObjectCriteria</property>
         <required>0</required>
-        <documentation>Additional  TODO ####(s) to ####: XML serialized list of sets of resource object criteria, one per additional ####, created using the procedure Serialize####ObjectCriteria (optional, the #### specified above is appended to this).</documentation>
+        <documentation>Additional resource(s) to list within: an XML serialized list of sets of resource object criteria, one per additional resource to list within, created using the procedure SerializeOtherObjectCriteria (optional, the resource specified above is appended to this).</documentation>
     </formElement>
     <formElement>
         <type>textarea</type>
@@ -133,117 +342,9 @@ documentation : Help text for the parameter
         <documentation>(Optional) restriction criteria, whitespace separated in &lt;NAME&gt;.&lt;COMPARATOR&gt;.&lt;VALUE&gt;
             format. Valid &lt;COMPARATOR&gt; values are EQ, NE, LT, GT, LE, and GE. Restriction criteria all on
             a single line are combined using logical AND. Groups of restriction critera on different lines are
-            combined using logical OR. When listing BAImage journal records, you must prefix the field names of the
-            embedded resource definitions with B_ for before or A_ for after images. For eaxmple, to limit the list
-            to journal records whose before resource definition was chnaged after 26 June 2004, specify
-            B_ChangeTime.GT.2004/06/26
-        </documentation>
-    </formElement>
-    <formElement>
-        <type>select</type>
-        <label>Hashing Scope:</label>
-        <property>HashingScope</property>
-        <required>0</required>
-        <documentation> Determines whether or not the List command response contains a 'HashingValue' element with a checksum for each selected object, and which fields it uses to calculate the checksum
-        </documentation>
-        <option>
-            <name>None</name>
-            <value>None</value>
-        </option>
-        <option>
-            <name>Full</name>
-            <value>Full</value>
-        </option>
-        <option>
-            <name>Partial</name>
-            <value>Partial</value>
-        </option>
-        <option>
-            <name>Group</name>
-            <value>Group</value>
-        </option>
-        <option>
-            <name>Name</name>
-            <value>Name</value>
-        </option>
-        <option>
-            <name>List</name>
-            <value>List</value>
-        </option>
-        <option>
-            <name>Critical</name>
-            <value>Critical</value>
-        </option>
-        <value></value>
-    </formElement>
-    <formElement>
-        <type>select</type>
-        <label>Object History:</label>
-        <property>ObjectHistory</property>
-        <required>0</required>
-        <documentation>
-            Specifies whether to return all versions of an object from the repository, or only the current version.
-        </documentation>
-        <option>
-            <name>No</name>
-            <value>No</value>
-        </option>
-        <option>
-            <name>Yes</name>
-            <value>Yes</value>
-        </option>
-        <value></value>
-    </formElement>
-    <formElement>
-        <type>select</type>
-        <label>CPID Formula:</label>
-        <property>CPIDFormula</property>
-        <required>0</required>
-        <documentation>
-            CPIDFormula is relevant only when listing change packages.
-        </documentation>
-        <option>
-            <name>APPROVE</name>
-            <value>APPROVE?</value>
-        </option>
-        <option>
-            <name>MIGRATE</name>
-            <value>MIGRATE?</value>
-        </option>
-        <value></value>
-    </formElement>
-    <formElement>
-        <type>select</type>
-        <label>Counts:</label>
-        <property>Counts</property>
-        <required>0</required>
-        <documentation>
-            All Counts requests the server to include various count values in the response
-        </documentation>
-        <option>
-            <name>None</name>
-            <value>None</value>
-        </option>
-        <option>
-            <name>All</name>
-            <value>All</value>
-        </option>
-        <value></value>
-    </formElement>
-    <formElement>
-        <type>entry</type>
-        <label>Filter Date:</label>
-        <property>FilterDate</property>
-        <required>0</required>
-        <documentation>(Optional) limits the objects returned by List to those changed on or before the specified date and time. You can use this instead of, or in addition to, restriction criteria for change time. Format: yyyy/mm/dd.hh:mm
-        </documentation>
-    </formElement>
-    <formElement>
-        <type>entry</type>
-        <label>Limit:</label>
-        <property>Limit</property>
-        <required>0</required>
-        <documentation>(Optional) sets an upper limit to the number of resource definitions returned by List. If the number of resource definitions that match the specifications of the List command exceeds this limit, then the List command returns an error, with no resource definitions. This avoids the problems associated with returning a subset of objects that match the specifications: for example, depending on how a client sorts the results of the List command, omissions might not be apparent to the end user.
+            combined using logical OR. For example, to limit the list to resource definitions that were changed
+            after 26 June 2004, specify ChangeTime.GT.2004/06/26 (fields mentioned in restriction criteria will
+            be returned in the listing even if they otherwise would not be).
         </documentation>
     </formElement>
 </editor>

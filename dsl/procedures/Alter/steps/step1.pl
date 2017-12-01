@@ -8,7 +8,7 @@ my $soapMethodName = 'Alter';
 
 # List of the names of optional paramters
 my @optionalParams = (
-    'ObjGroup,
+    'ObjGroup',
     'ObjectCriteria'
 );
 
@@ -43,6 +43,7 @@ if(($params{'ObjType'} eq 'RESGROUP') || ($params{'ObjType'} eq 'RESDESC')) {
 }
 
 # Build @ObjectCriteria
+my @mParams = ('ObjType', 'ObjName', 'ObjGroup'); 
 my @ObjectCriteria = createObjectCriteria(\@mParams, 0, "", \%params);
 
 # Build @ObjectData

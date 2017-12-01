@@ -27,7 +27,6 @@ if(($params{'ObjType'} eq 'RESGROUP') || ($params{'ObjType'} eq 'RESDESC')) {
 }
 
 # Build @ObjectCriteria
-
 my @mParams = ('ObjGroup', 'ObjType', 'ObjName'); 
 my @ObjectCriteria = createObjectCriteria(\@mParams, 1, "KeyA", \%params);  # 1 to add CConfig
 

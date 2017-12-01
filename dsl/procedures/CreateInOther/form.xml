@@ -50,14 +50,14 @@ documentation : Help text for the parameter
         <label>Location Name:</label>
         <property>LocationName</property>
         <required>1</required>
-        <documentation>Name of location to create in.</documentation>
+        <documentation>The name of the location to create in.</documentation>
     </formElement>
     <formElement>
         <type>select</type>
         <label>Location Type:</label>
         <property>LocationType</property>
         <required>1</required>
-        <documentation>Type of location to create in (to create in the Repository, use procedure CreateInRepository instead).</documentation>
+        <documentation>The type of location to create in (to create in the Repository, use procedure CreateInRepository instead).</documentation>
         <option>
             <name>CICS Configuration</name>
             <value>CConfig</value>
@@ -73,7 +73,7 @@ documentation : Help text for the parameter
     </formElement>
     <formElement>
         <type>select</type> 
-        <label>Object Type:</label>
+        <label>Resource Type:</label>
         <property>ObjType</property>
         <option>
             <name>ApplDef</name>
@@ -296,28 +296,28 @@ documentation : Help text for the parameter
             <value>WLMSPEC</value>
         </option>
         <required>1</required>
-        <documentation>The type of object to create.</documentation>
+        <documentation>The type of resource to create.</documentation>
     </formElement>
     <formElement>
         <type>entry</type>
-        <label>Object Name:</label>
+        <label>Resource Name:</label>
         <property>ObjName</property>
         <required>1</required>
-        <documentation>The name for the object to create.</documentation>
+        <documentation>The name for the resource to create.</documentation>
     </formElement>
     <formElement>
         <type>entry</type>
-        <label>Object Group:</label>
+        <label>Resource Group:</label>
         <property>ObjGroup</property>
         <required>0</required>
-        <documentation>The resource group to create the object in (required except for a couple of object types, such as 'ResGroup (Group for CSD)' and 'ResDesc (List for CSD)', which cannot be in a resource group).</documentation>
+        <documentation>The resource group to create the resource in (required except for the resource types 'ResGroup (Group for CSD)' and 'ResDesc (List for CSD)', which cannot be in a resource group).</documentation>
     </formElement>
     <formElement>
         <type>textarea</type>
         <label>Object Data Name-Value Pairs:</label>
         <property>ObjectData</property>
         <required>0</required>
-        <documentation>Name-value pairs to set in the resource definition object being created, one per line in NAME=VALUE format.</documentation>
+        <documentation>Name-value pairs to set in the resource definition being created, one per line in NAME=VALUE format.</documentation>
     </formElement>
     <formElement>
         <type>entry</type>

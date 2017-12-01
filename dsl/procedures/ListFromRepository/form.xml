@@ -49,64 +49,150 @@ documentation : Help text for the parameter
         <type>select</type>
         <label>Location Type:</label>
         <property>LocationType</property>
-        <required>1</required>
-        <documentation>Location to list from: location type must be 'Repository' for this procedure (to list from other
-            location types, use the ListFromJournal or ListFromOther procedure instead)
-        </documentation>
         <option>
             <name>Repository</name>
             <value>Repository</value>
         </option>
         <value>Repository</value>
-    </formElement>
-    <formElement>
-        <type>entry</type>
-        <label>Resource Type:</label>
-        <property>ObjType</property>
         <required>1</required>
-        <documentation>(Optional) resource object criteria for a resource definition embedded in a BAImage: resource
-            type <!-- #### Incorrect: fix this -->
-        </documentation> <!-- #### Make this a select -->
+        <documentation>Location to list from: location type must be 'Repository' for this procedure (to list from other location types, use the ListFromJournal or ListFromOther procedure instead).</documentation>
+    </formElement>
+    <formElement>
+        <type>select</type>
+        <label>Object Type:</label>
+        <property>ObjType</property>
+        <option>
+            <name>*</name>  <!-- Object criteria: required: any -->
+            <value>*</value>
+        </option>
+        <option>
+            <name>All</name>  <!-- Object criteria: required: any -->
+            <value>All</value>
+        </option>
+        <option>
+            <name>AProfile</name>  <!-- Object criteria: required: ObjName -->
+            <value>AProfile</value>
+        </option>
+        <option>
+            <name>CConfig</name>  <!-- Object criteria: required: ObjName -->
+            <value>CConfig</value>
+        </option>
+        <option>
+            <name>ChgPkg</name>  <!-- Object criteria: required: CPID -->
+            <value>ChgPkg</value>
+        </option>
+        <option>
+            <name>CmdAssociation</name>  <!-- Object criteria: required: CPID, CConfig, CICSGroup, CICSObjType, and CICSObjName -->
+            <value>CmdAssociation</value>
+        </option>
+        <option>
+            <name>Exits</name>  <!-- Object criteria: required: ObjName -->
+            <value>Exits</value>
+        </option>
+        <option>
+            <name>KeyAssociation</name>  <!-- Object criteria: required: CPID, CConfig, CICSGroup, CICSObjType, and CICSObjName -->
+            <value>KeyAssociation</value>
+        </option>
+        <option>
+            <name>PScheme</name>  <!-- Object criteria: required: CPID and Scheme -->
+            <value>PScheme</value>
+        </option>
+        <option>
+            <name>ReadyLst</name>  <!-- Object criteria: required: CPID and Scheme -->
+            <value>ReadyLst</value>
+        </option>
+        <option>
+            <name>Scheme</name>  <!-- Object criteria: required: ObjName -->
+            <value>Scheme</value>
+        </option>
+        <option>
+            <name>SvrInfo</name>  <!-- Object criteria: required: - -->
+            <value>SvrInfo</value>
+        </option>
+        <option>
+            <name>SysOpts</name>  <!-- Object criteria: required: - -->
+            <value>SysOpts</value>
+        </option>
+        <option>
+            <name>TFGroup</name>  <!-- Object criteria: required: ObjName -->
+            <value>TFGroup</value>
+        </option>
+        <option>
+            <name>TFRule</name>  <!-- Object criteria: required: ObjName -->
+            <value>TFRule</value>
+        </option>
+        <required>1</required>
+        <documentation>The type of object(s) to list.</documentation>
     </formElement>
     <formElement>
         <type>entry</type>
-        <label>Resource Name:</label>
+        <label>Object Name:</label>
         <property>ObjName</property>
         <required>0</required>
-        <documentation>(Optional) resource object criteria for a resource definition embedded in a BAImage: resource
-            name <!-- #### Incorrect: fix this -->
-        </documentation>
+        <documentation>The name of the object(s) to list (applies to object types AProfile, CConfig, Exits, Scheme, TFGroup, and TFRule; a 'masked' value ending in the wildcard * can be used).</documentation>
+    </formElement> 
+    <formElement>
+        <type>entry</type>
+        <label>Change Package ID:</label>
+        <property>CPID</property>
+        <required>0</required>
+        <documentation>The change package ID of the object(s) to list (applies to object types ChgPkg, CmdAssociation, KeyAssociation, PScheme, and ReadyLst; a 'masked' value ending in the wildcard * can be used).</documentation>
     </formElement>
     <formElement>
         <type>entry</type>
-        <label>Resource Definition Version:</label>
-        <property>ObjDefVer</property>
+        <label>CICS Configuration:</label>
+        <property>CConfig</property>
         <required>0</required>
-        <documentation>(Optional) resource object criteria for a resource definition embedded in a BAImage: resource
-            definition version <!-- #### Incorrect: fix this -->
-        </documentation>
+        <documentation>The CICS Configuration of the object(s) to list (applies to object types CmdAssociation and KeyAssociation; a 'masked' value ending in the wildcard * can be used).</documentation>
+    </formElement>
+    <formElement>
+        <type>entry</type>
+        <label>CICS Group:</label>
+        <property>CICSGroup</property>
+        <required>0</required>
+        <documentation>The CICS group for the object(s) to list (applies to object types CmdAssociation and KeyAssociation; a 'masked' value ending in the wildcard * can be used).</documentation>
+    </formElement>
+    <formElement>
+        <type>entry</type>
+        <label>CICS Object Type:</label>
+        <property>CICSObjType</property>
+        <required>0</required>
+        <documentation>The CICS object type for the object(s) to list (applies to object types CmdAssociation and KeyAssociation; a 'masked' value ending in the wildcard * can be used).</documentation>
+    </formElement>
+    <formElement>
+        <type>entry</type>
+        <label>CICS Object Name:</label>
+        <property>CICSObjName</property>
+        <required>0</required>
+        <documentation>The CICS object name for the object(s) to list (applies to object types CmdAssociation and KeyAssociation; a 'masked' value ending in the wildcard * can be used).</documentation>
+    </formElement>
+    <formElement>
+        <type>entry</type>
+        <label>Scheme:</label>
+        <property>Scheme</property>
+        <required>0</required>
+        <documentation>The scheme of the object(s) to list (applies to object types PScheme, Scheme and ReadyLst; a 'masked' value ending in the wildcard * can be used).</documentation>
     </formElement>
     <formElement>
         <type>textarea</type>
-        <label>Object Criteria:</label>
-        <property>ObjectCriteria</property>
+        <label>Restriction Criteria:</label>
+        <property>RestrictionCriteria</property>
         <required>0</required>
-        <documentation>(Optional) Object criteria, whitespace separated in &lt;NAME&gt;.&lt;COMPARATOR&gt;.&lt;VALUE&gt;
+        <documentation>(Optional) restriction criteria, whitespace separated in &lt;NAME&gt;.&lt;COMPARATOR&gt;.&lt;VALUE&gt;
             format. Valid &lt;COMPARATOR&gt; values are EQ, NE, LT, GT, LE, and GE. Restriction criteria all on
             a single line are combined using logical AND. Groups of restriction critera on different lines are
-            combined using logical OR. When listing BAImage journal records, you must prefix the field names of the
-            embedded resource definitions with B_ for before or A_ for after images. For eaxmple, to limit the list
-            to journal records whose before resource definition was chnaged after 26 June 2004, specify
-            B_ChangeTime.GT.2004/06/26
-        </documentation>
+            combined using logical OR. For example, to limit the list to resource definitions that were changed
+            after 26 June 2004, specify ChangeTime.GT.2004/06/26 (fields mentioned in restriction criteria will
+            be returned in the listing even if they otherwise would not be).</documentation>
     </formElement>
     <formElement>
         <type>select</type>
         <label>Hashing Scope:</label>
         <property>HashingScope</property>
-        <required>0</required>
-        <documentation> Determines whether or not the List command response contains a 'HashingValue' element with a checksum for each selected object, and which fields it uses to calculate the checksum
-        </documentation>
+        <option>
+            <name></name>
+            <value></value>
+        </option>
         <option>
             <name>None</name>
             <value>None</value>
@@ -136,75 +222,63 @@ documentation : Help text for the parameter
             <value>Critical</value>
         </option>
         <value></value>
+        <required>0</required>
+        <documentation>Specifies whether or not the List command response contains a 'HashingValue' element with a checksum for each selected object, and which fields it uses to calculate the checksum (optional, defaults to 'None').</documentation>
     </formElement>
     <formElement>
         <type>select</type>
         <label>Object History:</label>
         <property>ObjectHistory</property>
-        <required>0</required>
-        <documentation>
-            Specifies whether to return all versions of an object from the repository, or only the current version.
-        </documentation>
-        <option>
-            <name>No</name>
-            <value>No</value>
-        </option>
-        <option>
-            <name>Yes</name>
-            <value>Yes</value>
-        </option>
+        <checkedValue>Yes</checkedValue>
+        <uncheckedValue></uncheckedValue>
+        <initiallyChecked>0</initiallyChecked>
         <value></value>
+        <required>0</required>
+        <documentation>Specifies whether to return all versions of an object from the repository, or only the current version (optional, defaults to 'No').</documentation>
     </formElement>
-    <formElement>
+    <formElement> 
         <type>select</type>
         <label>CPID Formula:</label>
         <property>CPIDFormula</property>
-        <required>0</required>
-        <documentation>
-            CPIDFormula is relevant only when listing change packages.
-        </documentation>
         <option>
-            <name>APPROVE</name>
+            <name></name>
+            <value></value>
+        </option>
+        <option>
+            <name>APPROVE?</name>
             <value>APPROVE?</value>
         </option>
         <option>
-            <name>MIGRATE</name>
+            <name>MIGRATE?</name>
             <value>MIGRATE?</value>
         </option>
         <value></value>
+        <required>0</required>
+        <documentation>CPIDFormula is relevant only when listing change packages ('APPROVE?': Limits the list to change packages that are ready, and that require approval for a particular migration scheme. 'MIGRATE?': Limits the list to change packages that require migration. These are change packages that are ready and approved (if necessary), and either have not yet been migrated or have been backed out from a previous migration.)</documentation>
     </formElement>
     <formElement>
-        <type>select</type>
+        <type>checkbox</type>
         <label>Counts:</label>
         <property>Counts</property>
         <required>0</required>
-        <documentation>
-            All Counts requests the server to include various count values in the response
-        </documentation>
-        <option>
-            <name>None</name>
-            <value>None</value>
-        </option>
-        <option>
-            <name>All</name>
-            <value>All</value>
-        </option>
+        <checkedValue>All</checkedValue>
+        <uncheckedValue></uncheckedValue>
+        <initiallyChecked>0</initiallyChecked>
         <value></value>
+        <documentation>Specifies whether include various count values in the response (optional, defaults to not including them).</documentation>
     </formElement>
     <formElement>
         <type>entry</type>
         <label>Filter Date:</label>
         <property>FilterDate</property>
         <required>0</required>
-        <documentation>(Optional) limits the objects returned by List to those changed on or before the specified date and time. You can use this instead of, or in addition to, restriction criteria for change time. Format: yyyy/mm/dd.hh:mm
-        </documentation>
+        <documentation>If set, limits the objects returned by List to those changed on or before the specified date and time. You can use this instead of, or in addition to, restriction criteria for change time. Format: yyyy/mm/dd.hh:mm (optional)</documentation>
     </formElement>
     <formElement>
         <type>entry</type>
         <label>Limit:</label>
         <property>Limit</property>
         <required>0</required>
-        <documentation>(Optional) sets an upper limit to the number of resource definitions returned by List. If the number of resource definitions that match the specifications of the List command exceeds this limit, then the List command returns an error, with no resource definitions. This avoids the problems associated with returning a subset of objects that match the specifications: for example, depending on how a client sorts the results of the List command, omissions might not be apparent to the end user.
-        </documentation>
+        <documentation>If set, sets an upper limit on the number of resource definitions that can be returned by ListFromJournal. If the number of resource definitions that match the specifications of the List command exceeds this limit, then the List command returns an error, with no resource definitions. This avoids the problems associated with returning a subset of objects that match the specifications: for example, depending on how a client sorts the results of the List command, omissions might not be apparent to the end user. (optional)</documentation>
     </formElement>
 </editor>

@@ -94,33 +94,17 @@ my @data =
         )),
         SOAP::Data->name('ObjectCriteria' => \SOAP::Data->value(
             SoapData('ObjType'),
-$[/javascript (('' + myParent.ObjectInstance).length == 0) ? "" :
-"            SoapData('ObjectInstance'),  # optional parameter "
-]
-$[/javascript (('' + myParent.ObjName).length == 0) ? "" :
-"            SoapData('ObjName'),  # optional parameter "
-]
-$[/javascript (('' + myParent.CPID).length == 0) ? "" :
-"            SoapData('CPID'),  # optional parameter "
-]
-$[/javascript (('' + myParent.CICSGroup).length == 0) ? "" :
-"            SoapData('CICSGroup'),  # optional parameter "
-]
-$[/javascript (('' + myParent.CICSObjType).length == 0) ? "" :
-"            SoapData('CICSObjType'),  # optional parameter "
-]
-$[/javascript (('' + myParent.CICSObjName).length == 0) ? "" :
-"            SoapData('CICSObjName'),  # optional parameter "
-]
-$[/javascript (('' + myParent.Scheme).length == 0) ? "" :
-"            SoapData('Scheme'),  # optional parameter "
-]
+            SoapDataOptional('ObjectInstance'),
+            SoapDataOptional('ObjName'),
+            SoapDataOptional('CPID'),
+            SoapDataOptional('CICSGroup'),
+            SoapDataOptional('CICSObjType'),
+            SoapDataOptional('CICSObjName'),
+            SoapDataOptional('Scheme'),
         )),
-$[/javascript (('' + myParent.IntegrityToken).length == 0) ? "" :
-"        SOAP::Data->name('ProcessParms' => \\SOAP::Data->value(  # Optional section \n" +
-"            SoapData('IntegrityToken') \n" +
-"        )) "
-]
+        SOAP::Data->name('ProcessParms' => \\SOAP::Data->value(
+            SoapDataOptional('IntegrityToken')
+        ))
     ));
 
 $[/myPlugin/project/ec_perl_code_block_2]

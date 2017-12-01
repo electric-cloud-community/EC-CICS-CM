@@ -50,7 +50,7 @@ documentation : Help text for the parameter
         <label>Location Type:</label>
         <property>LocationType</property>
         <required>1</required>
-        <documentation>The location to delete from: location type must be 'Repository' for this procedure (for deleteing from other location types, use the DeleteFromOther procedure instead).</documentation>
+        <documentation>The location tyoe to delete from: Location Type must be 'Repository' for this procedure (for deleteing from other location types, use the DeleteFromOther procedure instead).</documentation>
         <option>
             <name>Repository</name>
             <value>Repository</value>
@@ -116,55 +116,55 @@ documentation : Help text for the parameter
         <label>Object Name:</label>
         <property>ObjName</property>
         <required>0</required>
-        <documentation>The object to delete's name (applies to object types AProfile, CConfig, Exits, Scheme, TFGroup, and TFRule).</documentation>
+        <documentation>The name of the object to delete (applies to object types AProfile, CConfig, Exits, Scheme, TFGroup, and TFRule).</documentation>
     </formElement>
     <formElement>
         <type>entry</type>
         <label>Change Package ID:</label>
         <property>CPID</property>
         <required>0</required>
-        <documentation>The object to delete's change package ID (applies to object types ChgPkg, CmdAssociation, KeyAssociation, and PScheme).</documentation>
+        <documentation>The change package ID of the object to delete (applies to object types ChgPkg, CmdAssociation, KeyAssociation, and PScheme).</documentation>
     </formElement>
     <formElement>
         <type>entry</type>
         <label>CICS Configuration:</label>
         <property>CConfig</property>
         <required>0</required>
-        <documentation>The object to delete's CICS Configuration (applies to object types CmdAssociation and KeyAssociation).</documentation>
+        <documentation>The CICS Configuration of the object to delete (applies to object types CmdAssociation and KeyAssociation).</documentation>
     </formElement>
     <formElement>
         <type>entry</type>
         <label>CICS Group:</label>
         <property>CICSGroup</property>
         <required>0</required>
-        <documentation>The object to delete's CICS group (applies to object types CmdAssociation and KeyAssociation).</documentation>
+        <documentation>The CICS group of the object to delete (applies to object types CmdAssociation and KeyAssociation).</documentation>
     </formElement>
     <formElement>
         <type>entry</type>
         <label>CICS Object Type:</label>
         <property>CICSObjType</property>
         <required>0</required>
-        <documentation>The object to delete's CICS object type (applies to object types CmdAssociation and KeyAssociation).</documentation>
+        <documentation>The CICS object type of the object to delete (applies to object types CmdAssociation and KeyAssociation).</documentation>
     </formElement>
     <formElement>
         <type>entry</type>
         <label>CICS Object Name:</label>
         <property>CICSObjName</property>
         <required>0</required>
-        <documentation>The object to delete's CICS object name (applies to object types CmdAssociation and KeyAssociation).</documentation>
+        <documentation>The CICS object name of the object to delete (applies to object types CmdAssociation and KeyAssociation).</documentation>
     </formElement>
     <formElement>
         <type>entry</type>
         <label>Scheme:</label>
         <property>Scheme</property>
         <required>0</required>
-        <documentation>The object to delete's scheme (applies to object type PScheme).</documentation>
+        <documentation>The scheme of the object to delete (applies to object type PScheme).</documentation>
     </formElement>
     <formElement>
         <type>entry</type>
         <label>Integrity Token:</label>
         <property>IntegrityToken</property>
         <required>0</required>
-        <documentation>Integrity token: used to avoid overwriting changes by other users -- supply the integrity token from an earlier Inquire or Update command for the same object; if the object has changed since the earlier command, then the object will not be deleted (optional, ignored unless the object criteria specifies a single object without masking).</documentation>
+        <documentation>The integrity token for the object to delete: used to avoid overwriting changes by other users -- supply the integrity token from an earlier Inquire or Update command for the same object; if the object has changed since the earlier command, then the object will not be deleted (optional, ignored unless the object criteria specifies a single object without masking).</documentation>
     </formElement>
 </editor>

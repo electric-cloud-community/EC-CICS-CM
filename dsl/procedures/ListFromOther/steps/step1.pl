@@ -10,12 +10,13 @@ my $soapMethodName = 'List';
 my @optionalParams = (
     'ObjGroup',
     'ObjDefVer',
+    'RestrictionCriteria',
+    'AllAttributes',
     'HashingScope',
-    'ObjectHistory',
-    'CPIDFormula',
     'Counts',
     'FilterDate',
-    'Limit'
+    'Limit',
+    'ReportSet'
 );
 
 $[/myPlugin/project/ec_perl_metadata]
@@ -25,50 +26,62 @@ $[/myPlugin/project/ec_perl_code_block_1]
 # Procedure-specific Code
 # -----------------------
 
-# Check for invalid combinations of optional parameters
-if (length($params{'ObjDefVer'}) > 0 ) {
-   if ($params{'LocationType'} ne 'Context') {
-       print "ERROR: You cannot specify a Resource Definition Version value unless the Location Type is 'Context'!";
-       exit -1;
-   }
-   if (length($params{'ObjGroup'}) > 0) {
-       print "ERROR: You cannot specify both a Resource Definition Version value and a Resource Group value!";
-       exit -1;
-   }
+# Validate wildcards are at end
+if (($params{'ObjName'} =~ /\*.+$/) || ($params{'ObjGroup'} =~ /\*.+$/)) {\
+    print "ERROR: The wildcard character '*' must only occur at the end of the Object Name or Object Group!\n";
+    exit -1;
 }
-   
-# Split and parse optional RestrictionCriteria
-my @restrictionCriteria = makeRestrictionCriteria($params{'RestrictionCriteria'});
 
-my @mParams = ('ObjName', 'ObjGroup', 'ObjDefVer', 'ObjType');
-my @ObjectCriteria = createObjectCriteria(\@mParams, 0, "", \%params);
-
-# Handle optional parametrs
-my @paramsForRequest;
-my @paramsForRequestResult;
-my @paramsForRequestParams = ('HashingScope', 'ObjectHistory', 'CPIDFormula', 'Counts', 'FilterDate', 'Limit');
-for my $p (@paramsForRequestParams) {
-    if ($params{$p} ne "") {
-        push @paramsForRequest, SoapData($p);
+# Validate Object Group against Object Type
+if(($params{'ObjType'} eq 'RESGROUP') || ($params{'ObjType'} eq 'RESDESC')) {
+    if (length($params{'ObjGroup'}) > 0) {
+        print "ERROR: You cannot specify an Object Group when the Object Type is 'ResGroup (Group for CSD)' or 'ResDesc (List for CSD)'!\n";
+        exit -1;
     }
 }
 
-if(scalar(@paramsForRequest) > 0) {
-    push  @paramsForRequestResult, SOAP::Data->name('ProcessParms' => \SOAP::Data->value(@paramsForRequest));
+# Validate ObjDefVer
+if (($params{'LocationType'} ne 'Context') && (length($params{'ObjDefVer'}) > 0)) {
+    print "ERROR: You cannot specify an Object Definition Version unless the Location Type is 'Context'!\n";
+    exit -1;
+} elsif ((length($params{'ObjGroup'}) > 0) && (length($params{'ObjDefVer'}) > 0)) {
+    print "ERROR: You cannot specify both and Object Group and an Object Definition Version!\n";
+    exit -1;
 }
 
-# Deal with optional parameters and build output
+# Split and parse optional RestrictionCriteria
+my @RestrictionCriteria = makeRestrictionCriteria($params{'RestrictionCriteria'});
+
+# Handle optional Process Parameters
+my @processParmsResult;
+my @processParmsParameters = ('AllAttributes', 'HashingScope', 'Counts', 'FilterDate', 'Limit', 'ReportSet');
+for my $param (@processParmsParameters) {
+    if (length($params{$param}) > 0) {
+        push @processParmsResult, SoapData($param);
+    }
+}
+my @ProcessParms;
+if(scalar(@processParmsResult) > 0) {
+    @ProcessParms =
+        SOAP::Data->name('ProcessParms' => \SOAP::Data->value(
+            @processParmsResult
+        ));
+}
+
 my @data =
     SOAP::Data->name($soapMethodName => \SOAP::Data->value(
         SOAP::Data->name('LocationCriteria' => \SOAP::Data->value(
             SoapData('LocationName'),
             SoapData('LocationType')
         )),
-        SOAP::Data->name('ObjectCriteria' => @ObjectCriteria),
-$[/javascript ((('' + myParent.RestrictionCriteria).length == 0) || !(new RegExp("[^\.\s]+\.[^\.\s]+\.[^\.\s]+").test(myParent.RestrictionCriteria))) ? "" : // Check for presence of the pattern we parse
-"        @restrictionCriteria,  # Optional section "
-],
-        @paramsForRequestResult
+        SOAP::Data->name('ObjectCriteria' => \SOAP::Data->value(
+            SoapData('ObjType'),
+            SoapData('ObjName'),
+            SoapDataOptional('ObjGroup'),
+            SoapDataOptional('ObjDefVer')
+        )),
+        @RestrictionCriteria,
+        @ProcessParms
     ));
 
 $[/myPlugin/project/ec_perl_code_block_2]

@@ -8,7 +8,8 @@ my $soapMethodName = 'Inquire';
 
 # List of the names of optional paramters
 my @optionalParams = (
-
+    'ObjGroup',
+    'ObjDefVer'
 );
 
 $[/myPlugin/project/ec_perl_metadata]
@@ -18,29 +19,23 @@ $[/myPlugin/project/ec_perl_code_block_1]
 # Procedure-specific Code
 # -----------------------
 
-my @objCriteriaResult;
-my @objCriteriaParams = ('ObjGroup', 'ObjType', 'ObjName');
-for my $p (@objCriteriaParams) {
-    if (defined $params{$p} && $params{$p} ne "") {
-        push @objCriteriaResult, SoapData($p);
+# Validation
+
+# Validate Object Group against Object Type
+if (($params{'ObjType'} eq 'RESGROUP') || ($params{'ObjType'} eq 'RESDESC')) {
+    if (length($params{'ObjGroup'}) > 0) {
+        print "ERROR: You cannot specify an Object Group when the Object Type is 'ResGroup (Group for CSD)' or 'ResDesc (List for CSD)'!\n";
+        exit -1;
     }
 }
 
-my @ObjectCriteria;
-if (length $params{'ObjectCriteria'} == 0) {
-
-    # No ObjectCriteria, so we only have one element, and can ommit the <ListCount> and <ListElement>
-    @ObjectCriteria = SOAP::Data->name('ObjectCriteria' => \SOAP::Data->value(
-            @objCriteriaResult
-        ));
-} else {
-
-    # Combine ObjName, ObjGroup, ObjType, and ObjectCriteria into @ObjectCriteria
-    my $objectCriteria = $params{'ObjectCriteria'};
-    @ObjectCriteria = SOAP::Data->name('ObjectCriteria' => \SOAP::Data->value(
-        @objCriteriaResult,
-        SOAP::Data->type('xml' => $objectCriteria)
-    ));
+# Validate ObjDefVer
+if (($params{'LocationType'} ne 'Context') && (length($params{'ObjDefVer'}) > 0)) {
+    print "ERROR: You cannot specify an Object Definition Version unless the Location Type is 'Context'!\n";
+    exit -1;
+} elsif ((length($params{'ObjGroup'}) > 0) && (length($params{'ObjDefVer'}) > 0)) {
+    print "ERROR: You cannot specify both and Object Group and an Object Definition Version!\n";
+    exit -1;
 }
 
 my @data =
@@ -49,7 +44,12 @@ my @data =
             SoapData('LocationName'),
             SoapData('LocationType')
         )),
-        SOAP::Data->name('ObjectCriteria' => @ObjectCriteria)
+        SOAP::Data->name('ObjectCriteria' => \SOAP::Data->value(
+            SoapData('ObjType'),
+            SoapData('ObjName'),
+            SoapDataOptional('ObjGroup'),
+            SoapDataOptional('ObjDefVer'),
+        ))
     ));
 
 $[/myPlugin/project/ec_perl_code_block_2]

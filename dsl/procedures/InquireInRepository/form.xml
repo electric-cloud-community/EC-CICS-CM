@@ -50,7 +50,7 @@ documentation : Help text for the parameter
         <label>Location Type:</label>
         <property>LocationType</property>
         <required>1</required>
-        <documentation>Location to inquire in: location type must be 'Repository' for this procedure (to inquire in other location types, use the InquireInJournal or InquireInOther procedure instead)</documentation>
+        <documentation>The type of location to inquire in: the Location Type must be 'Repository' for this procedure (to inquire in other location types, use the InquireInJournal or InquireInOther procedure instead)</documentation>
         <option>
             <name>Repository</name>
             <value>Repository</value>
@@ -58,66 +58,118 @@ documentation : Help text for the parameter
         <value>Repository</value>
     </formElement>
     <formElement>
-        <type>entry</type> <!-- #### TODO Make this into a select (like for DeleteFromRepository, except that there may be extra allowed values such as SysOpts, possibly ReadyLst or SvrInfo ) -->
+        <type>select</type>
         <label>Object Type:</label>
         <property>ObjType</property>
+        <option>
+            <name>AProfile</name>  <!-- Object criteria: required: ObjName -->
+            <value>AProfile</value>
+        </option>
+        <option>
+            <name>CConfig</name>  <!-- Object criteria: required: ObjName -->
+            <value>CConfig</value>
+        </option>
+        <option>
+            <name>ChgPkg</name>  <!-- Object criteria: required: CPID -->
+            <value>ChgPkg</value>
+        </option>
+        <option>
+            <name>CmdAssociation</name>  <!-- Object criteria: required: CPID, CConfig, CICSGroup, CICSObjType, and CICSObjName -->
+            <value>CmdAssociation</value>
+        </option>
+        <option>
+            <name>Exits</name>  <!-- Object criteria: required: ObjName -->
+            <value>Exits</value>
+        </option>
+        <option>
+            <name>KeyAssociation</name>  <!-- Object criteria: required: CPID, CConfig, CICSGroup, CICSObjType, and CICSObjName -->
+            <value>KeyAssociation</value>
+        </option>
+        <option>
+            <name>PScheme</name>  <!-- Object criteria: required: CPID and Scheme -->
+            <value>PScheme</value>
+        </option>
+        <option>
+            <name>ReadyLst</name>  <!-- Object criteria: required: CPID and Scheme -->
+            <value>ReadyLst</value>
+        </option>
+        <option>
+            <name>Scheme</name>  <!-- Object criteria: required: ObjName -->
+            <value>Scheme</value>
+        </option>
+        <option>
+            <name>SvrInfo</name>  <!-- Object criteria: required: - -->
+            <value>SvrInfo</value>
+        </option>
+        <option>
+            <name>SysOpts</name>  <!-- Object criteria: required: - -->
+            <value>SysOpts</value>
+        </option>
+        <option>
+            <name>TFGroup</name>  <!-- Object criteria: required: ObjName -->
+            <value>TFGroup</value>
+        </option>
+        <option>
+            <name>TFRule</name>  <!-- Object criteria: required: ObjName -->
+            <value>TFRule</value>
+        </option>
         <required>1</required>
-        <documentation>Object to inquire contents of: resource type</documentation>
+        <documentation>The type of the object to inquire the contents of.</documentation>
     </formElement> 
     <formElement>
         <type>entry</type>
         <label>Object Name:</label>
         <property>ObjName</property>
         <required>0</required>
-        <documentation>Object to inquire contents of: object name (applies to object types AProfile, CConfig, Exits, Scheme, TFGroup, and TFRule)</documentation>
+        <documentation>The name of the object to inquire the contents of (applies to object types AProfile, CConfig, Exits, Scheme, TFGroup, and TFRule).</documentation>
     </formElement> 
     <formElement>
         <type>entry</type>
         <label>Change Package ID:</label>
         <property>CPID</property>
         <required>0</required>
-        <documentation>Object to inquire contents of: object change package ID (applies to object types ChgPkg, CmdAssociation, KeyAssociation, PScheme, and ReadyLst)</documentation>
+        <documentation>The change package ID of the object to inquire the contents of (applies to object types ChgPkg, CmdAssociation, KeyAssociation, PScheme, and ReadyLst).</documentation>
     </formElement>
     <formElement>
         <type>entry</type>
         <label>CICS Configuration:</label>
         <property>CConfig</property>
         <required>0</required>
-        <documentation>Object to inquire contents of: object CICS Configuration (applies to object types CmdAssociation and KeyAssociation)</documentation>
+        <documentation>The CICS Configuration of the object to inquire the contents of (applies to object types CmdAssociation and KeyAssociation).</documentation>
     </formElement>
     <formElement>
         <type>entry</type>
         <label>CICS Group:</label>
         <property>CICSGroup</property>
         <required>0</required>
-        <documentation>Object to inquire contents of: object CICS group (applies to object types CmdAssociation and KeyAssociation)</documentation>
+        <documentation>The CICS group for the object to inquire the contents of (applies to object types CmdAssociation and KeyAssociation).</documentation>
     </formElement>
     <formElement>
         <type>entry</type>
         <label>CICS Object Type:</label>
         <property>CICSObjType</property>
         <required>0</required>
-        <documentation>Object to inquire contents of: object CICS object type (applies to object types CmdAssociation and KeyAssociation)</documentation>
+        <documentation>The CICS object type for the object to inquire the contents of (applies to object types CmdAssociation and KeyAssociation).</documentation>
     </formElement>
     <formElement>
         <type>entry</type>
         <label>CICS Object Name:</label>
         <property>CICSObjName</property>
         <required>0</required>
-        <documentation>Object to inquire contents of: object CICS object name (applies to object types CmdAssociation and KeyAssociation)</documentation>
+        <documentation>The CICS object name for the object to inquire the contents of (applies to object types CmdAssociation and KeyAssociation).</documentation>
     </formElement>
     <formElement>
         <type>entry</type>
         <label>Scheme:</label>
         <property>Scheme</property>
         <required>0</required>
-        <documentation>Object to inquire contents of: object scheme (applies to object types PScheme and ReadyLst)</documentation>
+        <documentation>The scheme of the object to inquire the contents of (applies to object types PScheme, Scheme and ReadyLst).</documentation>
     </formElement>
     <formElement>
         <type>entry</type>
         <label>Object Instance:</label>
         <property>ObjectInstance</property>
         <required>0</required>
-        <documentation>Object to inquire contents of: optional, if it is omitted the contents of the latest instance will be returned</documentation>
+        <documentation>The instance  of the object to inquire the contents of (optional, if it is omitted the contents of the latest instance will be returned).</documentation>
     </formElement>
 </editor>

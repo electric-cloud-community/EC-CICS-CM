@@ -46,18 +46,11 @@ documentation : Help text for the parameter
         <documentation>The property that results will be returned into.</documentation>
     </formElement>
     <formElement>
-        <type>entry</type>
-        <label>Location Name:</label>
-        <property>LocationName</property>
-        <required>1</required>
-        <documentation>Name of location to create in</documentation>
-    </formElement>
-    <formElement>
         <type>select</type>
         <label>Location Type:</label>
         <property>LocationType</property>
         <required>1</required>
-        <documentation>Location to inquire in: location type must be 'Journal' for this procedure (to inquire in other location types, use the InquireInRepository or InquireInOther procedure instead)</documentation>
+        <documentation>The type of location to inquire in: the Location Type must be 'Journal' for this procedure (to inquire in other location types, use the InquireInRepository or InquireInOther procedure instead).</documentation>
         <option>
             <name>Journal</name>
             <value>Journal</value>
@@ -65,17 +58,34 @@ documentation : Help text for the parameter
         <value>Journal</value>
     </formElement>
     <formElement>
-        <type>entry</type>
+        <type>select</type>
         <label>Object Type:</label>
         <property>ObjType</property>
+        <option>
+            <name>EventStart</name>
+            <value>EVENTSTART</value>
+        </option>
+        <option>
+            <name>BAImage</name>
+            <value>BAIMAGE</value>
+        </option>
+        <option>
+            <name>EventData</name>
+            <value>EVENTDATA</value>
+        </option>
+        <option>
+            <name>EventEnd</name>
+            <value>EVENTEND</value>
+        </option>
         <required>1</required>
-        <documentation>Object to inquire contents of: object type</documentation>
+        <documentation>The type of the object to inquire the contents of.</documentation>
     </formElement>
+    <!-- #### TODO Can Journal objects have object criteria? If so, add (single set of) appropriate object criteria  -->
     <formElement>
         <type>entry</type>
         <label>Object Instance:</label>
         <property>ObjectInstance</property>
         <required>1</required>
-        <documentation>Object to inquire contents of</documentation>
+        <documentation>The instance of the object to inquire the contents of (to determine the appropriate Object Instance value, first use the ListFromReposiory procedure to list all the instances of the object).</documentation>
     </formElement>
 </editor>

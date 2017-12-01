@@ -9,6 +9,7 @@ my $soapMethodName = 'Delete';
 # List of the names of optional paramters
 my @optionalParams = (
     'ObjGroup',
+    'ObjDefVer',
     'ObjectData',
     'IntegrityToken',
     'MONSpecInherit',
@@ -49,15 +50,28 @@ if(($params{'ObjType'} eq 'RESGROUP') || ($params{'ObjType'} eq 'RESDESC')) {
     }
 }
 
+# Validate ObjDefVer
+if (($params{'LocationType'} ne 'Context') && (length($params{'ObjDefVer'}) > 0)) {
+    print "ERROR: You cannot specify an Object Definition Version unless the Location Type is 'Context'!\n";
+    exit -1;
+} elsif ((length($params{'ObjGroup'}) > 0) && (length($params{'ObjDefVer'}) > 0)) {
+    print "ERROR: You cannot specify both and Object Group and an Object Definition Version!\n";
+    exit -1;
+}
+
 if (((length($params{'MONSpecInherit'}) or length($params{'RTASpecInherit'}) or length($params{'WLMSpecInherit'}))) and uc($params{'ResTableName'}) ne "CSGLCGCS") {
     print "ERROR: 'MON Specification Inheritance', 'RTA Specification Inheritance', and 'WLM Specification Inheritance' apply only to CSGLCGCS objects.";
     exit -1;
 }
 
-if (length($params{'LNKSWSCGParm'}) and uc($params{'ResTableName'}) ne "LNKSWSCG") {
+if ((length($params{'LNKSWSCGParm'}) > 0) and uc($params{'ResTableName'}) ne "LNKSWSCG") {
     print "ERROR: 'LNKSWSCG Parameter' applies only to LNKSWSCG objects.";
     exit -1;
 }
+
+# Build @ObjectCriteria
+my @mParams = ('ObjType', 'ObjName', 'ObjGroup', 'ObjDefVer');
+my @ObjectCriteria = createObjectCriteria(\@mParams, 0, "", \%params); 
 
 # Handle optional parameters
 my @paramsForRequest = (
@@ -73,9 +87,9 @@ for my $param (@paramsForRequest) {
         push @paramsForRequestResult, SoapData($param);
     }
 }
-my @processParms;
+my @ProcessParms;
 if (scalar(@paramsForRequestResult) > 0) {
-    @processParms = SOAP::Data->name('ProcessParms' => \SOAP::Data->value(@paramsForRequest));
+    @ProcessParms = SOAP::Data->name('ProcessParms' => \SOAP::Data->value(@paramsForRequest));
 }
 
 my @data =
@@ -84,13 +98,8 @@ my @data =
             SoapData('LocationName'),
             SoapData('LocationType')
         )),
-        SOAP::Data->name('ObjectCriteria' => \SOAP::Data->value(
-            SoapData('ObjType'),
-            SoapData('ObjName'),
-            SoapDataOptional('ObjGroup'),
-            SoapDataOptional('ObjDefVer')
-        )),
-        @processParms
+        @ObjectCriteria,
+        @ProcessParms
     ));
 
 $[/myPlugin/project/ec_perl_code_block_2]

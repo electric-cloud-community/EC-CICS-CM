@@ -73,7 +73,7 @@ documentation : Help text for the parameter
     </formElement>
     <formElement>
         <type>select</type> 
-        <label>Object Type:</label>
+        <label>Resource Type:</label>
         <property>ObjType</property>
         <option>
             <name>*</name>
@@ -304,42 +304,42 @@ documentation : Help text for the parameter
             <value>WLMSPEC</value>
         </option>
         <required>1</required>
-        <documentation>The type of object to delete.</documentation>
+        <documentation>The type of resource to delete.</documentation>
     </formElement> 
     <formElement>
         <type>entry</type>
-        <label>Object Name:</label>
+        <label>Resource Name:</label>
         <property>ObjName</property>
         <required>1</required>
-        <documentation>The name of the object to delete (a 'masked' value ending in the wildcard * can be used).</documentation> <!-- #### TODO Copy comments about masked values from Alter -->
+        <documentation>The name of the resource to delete (a 'masked' value ending in the wildcard * can be used).</documentation>
     </formElement> 
     <formElement>
         <type>entry</type>
-        <label>Object Group:</label>
+        <label>Resource Group:</label>
         <property>ObjGroup</property>
         <required>0</required>
-        <documentation>The resource group to delete the object from (a 'masked' value ending in the wildcard * can be used; required except for object types such as 'ResGroup (Group for CSD)' and 'ResDesc (List for CSD)', which cannot be in a resource group).</documentation>
+        <documentation>The resource group to delete the resource from (a 'masked' value ending in the wildcard * can be used; required except for the resource types 'ResGroup (Group for CSD)' and 'ResDesc (List for CSD)', which cannot be in a resource group, or omit if a Resource Definition Version is supplied).</documentation>
     </formElement>
     <formElement>
         <type>entry</type>
-        <label>Object Definition Version:</label>
+        <label>Resource Definition Version:</label>
         <property>ObjDefVer</property>
         <required>0</required>
-        <documentation>The object definition version of the object to delete (optional, can be specified instead of Object Group if Location Type is Context).</documentation>
+        <documentation>The resource definition version number of the resource to delete (optional, can be specified instead of Resource Group if the Location Type is Context).</documentation>
     </formElement>
     <formElement>
         <type>textarea</type>
         <label>Serialized Resource Object Criteria:</label>
         <property>ObjectCriteria</property>
         <required>0</required>
-        <documentation>Additional objects(s) to delete: an XML serialized list of sets of resource object criteria, one per additional object to delete, created using the procedure SerializeOtherObjectCriteria (optional, the object specified above is appended to this; however, if the Object Type above is '*' or 'All', or if a masked value was used for Object Name or Object Group then the Serialized Resource Object Criteria must be empty).</documentation>
+        <documentation>Additional resource(s) to delete: an XML serialized list of sets of resource object criteria, one per additional resource to delete, created using the procedure SerializeOtherObjectCriteria (optional, the resource specified above is appended to this; however, if the Resource Type above is '*' or 'All', or if a masked value was used for Resource Name or Resource Group then the Serialized Resource Object Criteria must be empty).</documentation>
     </formElement>
     <formElement>
         <type>entry</type>
         <label>Integrity Token:</label>
         <property>IntegrityToken</property>
         <required>0</required>
-        <documentation>The object integrity token of the object to delete (optional, ignored if more than one object is specified or wildcard masking is used for objects).</documentation>
+        <documentation>The object integrity token of the resource to delete (optional, ignored if more than one resource is specified or wildcard masking is used for objects).</documentation>
     </formElement>    
     <formElement>
         <type>select</type>

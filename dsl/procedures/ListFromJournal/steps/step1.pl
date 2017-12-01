@@ -8,12 +8,7 @@ my $soapMethodName = 'List';
 
 # List of the names of optional paramters
 my @optionalParams = (
-    'HashingScope',
-    'ObjectHistory',
-    'CPIDFormula',
-    'Counts',
-    'FilterDate',
-    'Limit'
+    'JnlRecType',
     'JnlCCVRel',
     'JnlCICSRel',
     'JnlCPID',
@@ -23,7 +18,17 @@ my @optionalParams = (
     'JnlObjName',
     'JnlObjType',
     'JnlCSD',
-    'JnlContext'
+    'JnlContext',
+    'ObjType',
+    'ObjName',
+    'ObjGroup',
+    'ObjDefVer',
+    'RestrictionCriteria',
+    'AllAttributes',
+    'HashingScope',
+    'Counts',
+    'FilterDate',
+    'Limit'
 );
 
 $[/myPlugin/project/ec_perl_metadata]
@@ -33,58 +38,105 @@ $[/myPlugin/project/ec_perl_code_block_1]
 # Procedure-specific Code
 # -----------------------
 
-# Split and parse optional RestrictionCriteria
-my @restrictionCriteria = makeRestrictionCriteria($params{'RestrictionCriteria'});
-
-my @objCriteriaResult;
-my @objCriteriaParams = ('ObjName', 'ObjGroup', 'ObjDefVer');
-for my $p (@objCriteriaParams) {
-    if (defined $params{$p} && $params{$p} ne "") {
-        push @objCriteriaResult, SoapData($p);
+# Handle Journal criteria
+my @jnlCriteriaResult;
+my @jnlCriteriaParams = ('JnlRecType', 'JnlCCVRel', 'JnlCICSRel', 'JnlCPID', 'JnlScheme', 'JnlUserID', 'JnlObjGroup', 'JnlObjName', 'JnlObjType', 'JnlCSD', 'JnlContext');
+for my $param (@jnlCriteriaParams) {
+    if (length($params{$param}) > 0) {
+        push @jnlCriteriaResult, SoapData($param);
     }
 }
+my @JnlCriteria;
+if(scalar(@jnlCriteriaResult) > 0) {
+    @JnlCriteria =
+        SOAP::Data->name('JnlCriteria' => \SOAP::Data->value(
+            @jnlCriteriaResult
+        ));
+}
 
-my @ObjectCriteria;
-if ( $params{'ObjType'} && !$params{'ObjectCriteria'}) {
+# Validate ObjectCriteria
 
-    # No ObjectCriteria, so we only have one element, and can ommit the <ListCount> and <ListElement>
-    @ObjectCriteria = SOAP::Data->name('ObjectCriteria' => \SOAP::Data->value(
-        @objCriteriaResult
-    ));
+if (scalar(@JnlCriteria) > 0) {
+    # Validate ObjectCriteria for where JnlCriteria exist
+    
+    # Check Object type is not a Journal Type
+    if (($params{'ObjDefVer'} eq 'EventStart') || ($params{'ObjDefVer'} eq 'BSImage') || ($params{'ObjDefVer'} eq 'EventData') || ($params{'ObjDefVer'} eq 'EventEnd')) {
+        print "ERROR: Since you have supplied journal criteria, the Object Type specifies the type of a resource image in a BAImage, so it cannot be 'EventStart', 'BAImage', 'EventData', or 'EventEnd'!\n";
+        exit -1;    
+    }
+    
+    # Validate Object Name exists #### TODO Is this necessary?
+    if (!(length($params{'ObjName'}) > 0)) {
+        print "ERROR: Since you have supplied journal criteria, the Object Type specifies the type of a resource image in a BAImage, and you must specify an Object Name (though it can be masked, so if you have no perefernce you could specify *)!\n";
+        exit -1;
+    }
+    
+    # Validate wildcards are at end
+    if (($params{'ObjName'} =~ /\*.+$/) || ($params{'ObjGroup'} =~ /\*.+$/)) {\
+        print "ERROR: The wildcard character '*' must only occur at the end of the Object Name or Object Group!\n";
+        exit -1;
+    }
+
+    # Validate Object Group against Object Type
+    if(($params{'ObjType'} eq 'RESGROUP') || ($params{'ObjType'} eq 'RESDESC')) {
+        if (length($params{'ObjGroup'}) > 0) {
+            print "ERROR: You cannot specify an Object Group when the Object Type is 'ResGroup (Group for CSD)' or 'ResDesc (List for CSD)'!\n";
+            exit -1;
+        }
+    }
+    
+    # Check ObjGroup and ObjDefVer are compatible
+    if ((length($params{'ObjDefVer'}) > 0 )  && (length($params{'ObjGroup'}) > 0)) {
+        print "ERROR: You cannot specify both an Object Definition Version value and an Object Group value!";
+        exit -1;
+    }
+
 } else {
-
-    # Combine ObjName, ObjGroup, ObjType, and ObjectCriteria into @ObjectCriteria
-    my $objectCriteria = $params{'ObjectCriteria'};
-    @ObjectCriteria = SOAP::Data->name('ObjectCriteria' => \SOAP::Data->value(
-        @objCriteriaResult,
-        SOAP::Data->type('xml' => $objectCriteria)
-    ));
-}
-
-# Handle optional parametrs
-my @paramsForRequest;
-my @paramsForRequestResult;
-my @processParmsParameters = ('HashingScope', 'ObjectHistory', 'CPIDFormula', 'Counts', 'FilterDate', 'Limit');
-for my $p (@processParmsParameters) {
-    if ($params{$p} ne "") {
-        push @paramsForRequest, SoapData($p);
+    # Validate ObjectCriteria for where JnlCriteria don't exist
+    
+    # Check Object type is a Journal Type
+    if (($params{'ObjDefVer'} ne 'EventStart') && ($params{'ObjDefVer'} ne 'BSImage') && ($params{'ObjDefVer'} ne 'EventData') && ($params{'ObjDefVer'} ne 'EventEnd')) {
+        print "ERROR: Since you have not supplied any journal criteria, the Object Type must be 'EventStart', 'BAImage', 'EventData', or 'EventEnd'!\n";
+        exit -1;    
+    } elsif (length($param{'ObjName'}.$param{'ObjGroup'}.$param{'ObjDefVer'}) > 0) {
+        print "ERROR: Since you have not supplied any journal criteria and the Object Type is a journal object type, the Object Name, Object Group, or Object Definition Version must be left empty!\n";
+        exit -1;    
     }
 }
-if(scalar(@paramsForRequest) > 0) {
-    push @paramsForRequestResult, SOAP::Data->name('ProcessParms' => \SOAP::Data->value(@paramsForRequest));
-}
 
-# Handle Journal parameters
-my @jnlCriteriaParamsForRequest;
-my @jnlCriteriaParamsForRequestResult;
-my @jnlCriteriaParams = ('JnlCCVRel', 'JnlCICSRel', 'JnlCPID', 'JnlScheme', 'JnlUserID', 'JnlObjGroup', 'JnlObjName', 'JnlObjType', 'JnlCSD', 'JnlContext');
-for my $p (@jnlCriteriaParams) {
-    if ($params{$p} ne "") {
-        push @jnlCriteriaParamsForRequest, SoapData($p);
+# Handle Object Criteria
+my @objCriteriaResult;
+my @objCriteriaParams = ('ObjType', 'ObjName', 'ObjGroup', 'ObjDefVer');
+for my $param (@objCriteriaParams) {
+    if (length($params{$param}) > 0) {
+        push @objCriteriaResult, SoapData($param);
     }
 }
-if(scalar(@jnlCriteriaParamsForRequest) > 0) {
-    push  @jnlCriteriaParamsForRequestResult, SOAP::Data->name('JnlCriteria' => \SOAP::Data->value(@jnlCriteriaParamsForRequest));
+my @ObjectCriteria;
+if (scalar(@objCriteriaResult) > 0) {
+    @ObjectCriteria =
+        SOAP::Data->name('ObjectCriteria' => \SOAP::Data->value(
+            @objCriteriaResult
+        ));
+}
+
+# Split and parse optional RestrictionCriteria
+my @RestrictionCriteria = makeRestrictionCriteria($params{'RestrictionCriteria'});
+
+# Handle optional Process Parameters
+my @processParmsResult;
+my @processParmsParameters = ('AllAttributes', 'HashingScope', 'Counts', 'FilterDate', 'Limit');
+for my $param (@processParmsParameters) {
+    if (length($params{$param}) > 0) {
+        push @processParmsResult, SoapData($param);
+    }
+}
+my @ProcessParms;
+if(scalar(@processParmsResult) > 0) {
+    @ProcessParms =
+        SOAP::Data->name('ProcessParms' => \SOAP::Data->value(
+            @processParmsResult
+        ));
 }
 
 my @data =
@@ -93,12 +145,10 @@ my @data =
             SoapData('LocationName'),
             SoapData('LocationType')
         )),
-        @jnlCriteriaParamsForRequestResult,
-        SOAP::Data->name('ObjectCriteria' => @ObjectCriteria),
-$[/javascript ((('' + myParent.RestrictionCriteria).length == 0) || !(new RegExp("[^\.\s]+\.[^\.\s]+\.[^\.\s]+").test(myParent.RestrictionCriteria))) ? "" : // Check for presence of the pattern we parse
-"        @restrictionCriteria,  # Optional section "
-]
-        @paramsForRequestResult
+        @JnlCriteria,
+        @ObjectCriteria,
+        @RestrictionCriteria,
+        @ProcessParms
     ));
 
 $[/myPlugin/project/ec_perl_code_block_2]
