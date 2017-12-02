@@ -54,7 +54,7 @@ my $fullCredential = $ec->getFullCredential("/projects/$projectName/credentials/
 my $username = $fullCredential->find("//user");
 my $password = $fullCredential->find("//password");
 
-#### TODO Handle nonstandard code page 1047 XML escaping of unusual characters
+#### TODO MUST-HAVE Handle nonstandard code page 1047 XML escaping of unusual characters
 
 #
 # Marshal the input parameters into SOAP::Data
@@ -213,7 +213,7 @@ sub createObjectCriteria {
             print "ERROR: Serialized Object Criteria did not contain any <ListElement> tags!\n";
             exit -1;
         }    
-        #### TODO Do further checks on $objectCriteria XML content against $wrapper, $params, $wrapSingleElement
+        #### TODO NICE-TO-HAVE Do further checks on $objectCriteria XML content against $wrapper, $params, $wrapSingleElement
         
         @ObjectCriteria = SOAP::Data->name('ObjectCriteria' => \SOAP::Data->value(
             @configValue,
@@ -232,7 +232,7 @@ sub createObjectCriteria {
 sub createObjectData {
     my ($objectData, $xmlValuesAllowed) = @_;
     my @ObjectData;
-    if (!(length($objectData) > 0)) { #### TODO Handle case where this can be optional here, and deal with SOAP XML hackery
+    if (!(length($objectData) > 0)) { #### TODO CODE-SMELL Handle case where this can be optional here, and deal with SOAP XML hackery?
         print "ERROR: Object Data Name-Value Pairs missing!\n";
         exit -1;
     } else {

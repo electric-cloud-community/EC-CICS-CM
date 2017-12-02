@@ -8,6 +8,7 @@ my $soapMethodName = 'Remove';
 
 # List of the names of optional paramters
 my @optionalParams = (
+    'ObjectCriteria'
 );
 
 $[/myPlugin/project/ec_perl_metadata]
@@ -19,7 +20,6 @@ $[/myPlugin/project/ec_perl_code_block_1]
 # -----------------------
 
 # Build @ObjectCriteria
-
 my @mParams = ('ObjName', 'ObjType');
 my @ObjectCriteria = createObjectCriteria(\@mParams, 0, "GrpA", \%params);
 

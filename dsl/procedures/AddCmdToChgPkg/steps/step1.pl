@@ -53,7 +53,7 @@ my @data =
         SOAP::Data->name('LocationCriteria' => \SOAP::Data->value(
             SoapData('LocationType')
         )),
-        SOAP::Data->name('ObjectCriteria' => @ObjectCriteria),
+        @ObjectCriteria,
         SOAP::Data->name('InputData' => \SOAP::Data->value(
             SoapData('ContainerName'),
             SoapData('ContainerType')

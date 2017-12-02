@@ -215,10 +215,10 @@ documentation : Help text for the parameter
             <name>ResGroup (Group for CSD)</name>
             <value>RESGROUP</value>
         </option> -->
-        <option>
+        <!-- not allowed in a ResGroup <option>
             <name>ResDesc (List for CSD)</name>
             <value>RESDESC</value>
-        </option>
+        </option> -->
         <option>
             <name>ResInDsc</name>
             <value>RESINDSC</value>
@@ -310,15 +310,8 @@ documentation : Help text for the parameter
         <type>entry</type>
         <label>Resource Group:</label>
         <property>ObjGroup</property>
-        <required>0</required>
+        <required>1</required>
         <documentation>The resource group of the resource definition to remove (required unless the resource definition is located in a Context, for a Context you can specify either this or Object Definition Version).</documentation>
-    </formElement>
-    <formElement>
-        <type>entry</type>
-        <label>Resource Definition Version:</label>
-        <property>ObjDefVer</property>
-        <required>0</required>
-        <documentation>The resource definition version of the resource definition to add (omit unless the resource is located in a Context, for a Context you can specify either this or Object Group).</documentation>
     </formElement>
     <formElement>
         <type>textarea</type>

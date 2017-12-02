@@ -50,7 +50,7 @@ documentation : Help text for the parameter
         <label>Location Name:</label>
         <property>LocationName</property>
         <required>1</required>
-        <documentation>The name of the location in which to remove resource group9s) from a resource description.</documentation>
+        <documentation>The name of the location in which to remove resource group(s) from a resource description.</documentation>
     </formElement>
     <formElement>
         <type>select</type>
@@ -76,12 +76,10 @@ documentation : Help text for the parameter
         <label>Resource Type:</label>
         <property>ObjType</property>
         <required>1</required>
-        <documentation>(Optional) resource object criteria for a resource definition embedded in a BAImage: resource
-            type
-        </documentation>
+        <documentation>Resource type to add: must be 'ResGroup (Group for CSD)' for this procedure (to add another type of resource to another container type, use the approriate other Add... procedure instead).</documentation>
         <option>
-            <name>ResGroup</name>
-            <value>ResGroup</value>
+            <name>ResGroup (Group for CSD)</name>
+            <value>RESGROUP</value>
         </option>
         <value>ResGroup</value>
     </formElement>
@@ -114,8 +112,8 @@ documentation : Help text for the parameter
         <required>1</required>
         <documentation>Container type to remove the resource group(s) from: must be 'Resource Description' for this procedure (to remove from another container type, use the appropriate other Remove... procedure instead).</documentation>
         <option>
-            <name>Resource Description</name>
-            <value>ResDesc</value>
+            <name>ResDesc (List for CSD)</name>
+            <value>RESDESC</value>
         </option>
         <value>ResDesc</value>
     </formElement>

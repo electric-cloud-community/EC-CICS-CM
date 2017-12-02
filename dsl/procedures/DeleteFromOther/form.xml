@@ -339,7 +339,7 @@ documentation : Help text for the parameter
         <label>Integrity Token:</label>
         <property>IntegrityToken</property>
         <required>0</required>
-        <documentation>The object integrity token of the resource to delete (optional, ignored if more than one resource is specified or wildcard masking is used for objects).</documentation>
+        <documentation>The object integrity token of the resource to delete: used to avoid overwriting changes by other users -- supply the integrity token from an earlier Inquire or Update command for the same object; if the resource has changed since the earlier command, then the object will not be deleted (optional, ignored if more than one resource is specified or wildcard masking is used for objects).</documentation>
     </formElement>    
     <formElement>
         <type>select</type>

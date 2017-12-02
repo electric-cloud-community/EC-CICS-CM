@@ -321,10 +321,10 @@ documentation : Help text for the parameter
     </formElement>
     <formElement>
         <type>entry</type>
-        <label>CSYSDEF Model:</label>
+        <label>CSysDef Model:</label>
         <property>CSYSDEFModel</property>
         <required>0</required>
-        <documentation>Optional, applies only to CSYSDEF objects.</documentation>
+        <documentation>Optional, applies only to CSysDef objects.</documentation>
     </formElement>
     <formElement>
         <type>select</type>

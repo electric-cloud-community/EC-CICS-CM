@@ -8,6 +8,10 @@ my $soapMethodName = 'Update';
 
 # List of the names of optional paramters
 my @optionalParams = (
+    'ObjGroup',
+    'ObjDefVer',
+    'IntegrityToken',
+    'CSYSDEFModel'
 );
 
 $[/myPlugin/project/ec_perl_metadata]
@@ -18,51 +22,45 @@ $[/myPlugin/project/ec_perl_code_block_1]
 # Procedure-specific Code
 # -----------------------
 
-# Build @ObjectCriteria
+# Validation
 
-my @ObjectCriteria;
-if (length $params{'ObjectCriteria'} == 0) {
+# Validate Object Group against Object Type
+if (($params{'ObjType'} eq 'RESGROUP') || ($params{'ObjType'} eq 'RESDESC')) {
+    if (length($params{'ObjGroup'}) > 0) {
+        print "ERROR: You cannot specify an Object Group when the Object Type is 'ResGroup (Group for CSD)' or 'ResDesc (List for CSD)'!\n";
+        exit -1;
+    }
+}
 
-    # No ObjectCriteria, so we only have one element, and can ommit the <ListCount> and <ListElement>
-    @ObjectCriteria = SOAP::Data->name('ObjectCriteria' => \SOAP::Data->value(
-        SoapData('ObjType')
-    ));
-} else {
+# Validate ObjDefVer
+if (($params{'LocationType'} ne 'Context') && (length($params{'ObjDefVer'}) > 0)) {
+    print "ERROR: You cannot specify an Object Definition Version unless the Location Type is 'Context'!\n";
+    exit -1;
+} elsif ((length($params{'ObjGroup'}) > 0) && (length($params{'ObjDefVer'}) > 0)) {
+    print "ERROR: You cannot specify both and Object Group and an Object Definition Version!\n";
+    exit -1;
+}
 
-    # Combine ObjName, ObjGroup, ObjType, and ObjectCriteria into @ObjectCriteria
-    my $objectCriteria = $params{'ObjectCriteria'};
-    @ObjectCriteria = SOAP::Data->name('ObjectCriteria' => \SOAP::Data->value(
-        SoapData('ObjType'),
-        SOAP::Data->type('xml' => $objectCriteria)
-    ));
+if (length($params{'CSYSDEFModel'}) and uc($params{'ObjType'}) ne "CSYSDEF") {
+    print "ERROR: 'CSysDef Model' applies only to CSysDef objects.";
+    exit -1;
 }
 
 my @ObjectData = createObjectData($params{'ObjectData'});
 
-my $inputData;
-my $dataObjectType = $params{'DataObjType'};
-if($dataObjectType) {
-    $inputData = SOAP::Data->name($dataObjectType => \SOAP::Data->value(
-        SOAP::Data->name('ObjectData' => \SOAP::Data->value(
-            @ObjectData
-        )),
-    ));
+# Handle optional Process Parameters
+my @processParmsResult;
+my @processParmsParameters = ('IntegrityToken', 'CSYSDEFModel');
+for my $param (@processParmsParameters) {
+    if (length($params{'IntegrityToken'}) > 0) {
+        push @processParmsResult, SoapData($param);
+    }
 }
-else {
-    $inputData = SOAP::Data->name('ObjectData' => \SOAP::Data->value(
-        @ObjectData
-    ));
-}
-
-my @processParms;
-if($params{'CSYSDEFModel'} or $params{'IntegrityToken'}) {
-    @processParms = SOAP::Data->name('ProcessParms' => \SOAP::Data->value(
-        $[/javascript (('' + myParent.IntegrityToken).length == 0) ? "" :
-                "        SoapData('IntegrityToken'),  # Optional parameter "
-            ]
-            $[/javascript (('' + myParent.CSYSDEFModel).length == 0) ? "" :
-                "        SoapData('CSYSDEFModel'),  # Optional parameter "
-            ]
+my @ProcessParms;
+if(scalar(@processParmsResult) > 0) {
+    @ProcessParms =
+        SOAP::Data->name('ProcessParms' => \SOAP::Data->value(
+            @processParmsResult
         ));
 }
 
@@ -72,10 +70,17 @@ my @data =
             SoapData('LocationName'),
             SoapData('LocationType')
         )),
-        SOAP::Data->name('ObjectCriteria' => @ObjectCriteria),
-        @processParms,
+        SOAP::Data->name('ObjectCriteria' => \SOAP::Data->value(
+	        SoapData('ObjType'),
+	        SoapData('ObjName'),
+	        SoapDataOptional('ObjGroup'),
+	        SoapDataOptional('ObjDefVer')
+        )),
+        @ProcessParms,
         SOAP::Data->name('InputData' => \SOAP::Data->value(
-            $inputData
+            SOAP::Data->name('ObjectData' => \SOAP::Data->value(
+	        @ObjectData
+	    ))
         ))
     ));
 

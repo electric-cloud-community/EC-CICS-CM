@@ -50,7 +50,7 @@ documentation : Help text for the parameter
         <label>Location Type:</label>
         <property>LocationType</property>
         <required>1</required>
-        <documentation>Location to remove from: must be 'Repository' for this procedure (to remove from other locations, use the approriate other Remove... procedure instead).</documentation>
+        <documentation>The type of location to remove from: must be 'Repository' for this procedure (to remove from other locations, use the approriate other Remove... procedure instead).</documentation>
         <option>
             <name>Repository</name>
             <value>Repository</value>
@@ -87,7 +87,7 @@ documentation : Help text for the parameter
         <type>select</type>
         <label>Object Type:</label>
         <property>ObjType</property>
-         <option>
+        <option>
             <name>ApplDef</name>
             <value>APPLDEF</value>
         </option>
@@ -306,7 +306,7 @@ documentation : Help text for the parameter
         <option>
             <name>WLMSpec</name>
             <value>WLMSPEC</value>
-        </option>               
+        </option>
         <required>1</required>
         <documentation>The resource type of the resource acted on by the command to remove.</documentation>
     </formElement>
@@ -336,7 +336,7 @@ documentation : Help text for the parameter
         <label>Target Resource Group For Add:</label>
         <property>TContainer</property>
         <required>0</required>
-        <documentation>Relevant only when removing an Add command: it identifies the ResGroup to which you no longer want the resource definitions added</documentation>
+        <documentation>Relevant only when removing an Add command: it identifies the ResGroup to which you no longer want the resource definitions added.</documentation>
     </formElement>
     <formElement>
         <type>textarea</type>

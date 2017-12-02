@@ -50,7 +50,7 @@ documentation : Help text for the parameter
         <label>Location Type:</label>
         <property>LocationType</property>
         <required>1</required>
-        <documentation>Location to add to: must be 'Repository' for this procedure (to add to another location type, use the appropriate other Add... procedure instead)</documentation>
+        <documentation>Location type to add to: must be 'Repository' for this procedure (to add to another location type, use the appropriate other Add... procedure instead)</documentation>
         <option>
             <name>Repository</name>
             <value>Repository</value>
@@ -290,7 +290,7 @@ documentation : Help text for the parameter
         </option>        
         <required>1</required>
         <documentation>The resource type of the resource definition to add.</documentation>
-    </formElement> 
+    </formElement>
     <formElement>
         <type>entry</type>
         <label>Object Name:</label>

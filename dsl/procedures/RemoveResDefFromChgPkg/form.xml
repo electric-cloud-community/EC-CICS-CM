@@ -50,7 +50,7 @@ documentation : Help text for the parameter
         <label>Location Type:</label>
         <property>LocationType</property>
         <required>1</required>
-        <documentation>Location to remove from: must be 'Repository' for this procedure (to remove from another location type, use the appropriate other Remove... procedure instead)</documentation>
+        <documentation>Location type to remove from: must be 'Repository' for this procedure (to remove from another location type, use the appropriate other Remove... procedure instead)</documentation>
         <option>
             <name>Repository</name>
             <value>Repository</value>
@@ -295,7 +295,7 @@ documentation : Help text for the parameter
         <type>entry</type>
         <label>Object Name:</label>
         <property>ObjName</property>
-        <required>0</required>
+        <required>1</required>
         <documentation>The resource name of the resource definition to remove.</documentation>
     </formElement>
     <formElement>
@@ -324,7 +324,7 @@ documentation : Help text for the parameter
         <label>Container Type:</label>
         <property>ContainerType</property>
         <required>1</required>
-        <documentation>Container type to remove the resource definition(s) from: must be 'Change Package' for this procedure (to remove from another container type, use the appropriate other Remove... procedures instead)</documentation>
+        <documentation>Container type to remove the resource definition(s) from: must be 'Change Package' for this procedure (to remove from another container type, use the appropriate other Remove... procedure instead)</documentation>
         <option>
             <name>Change Package</name>
             <value>ChgPkg</value>

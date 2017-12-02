@@ -43,8 +43,8 @@ if (($params{'LocationType'} ne 'Context') && (length($params{'ObjDefVer'}) > 0)
     exit -1;
 }
 
-if (length($params{'CSYSDEFModel'}) and uc($params{'ResTableName'}) ne "CSYSDEF") {
-    print "ERROR: 'CSYSDEF Model' applies only to CSYSDEF objects.";
+if (length($params{'CSYSDEFModel'}) and uc($params{'ObjType'}) ne "CSYSDEF") {
+    print "ERROR: 'CSysDef Model' applies only to CSysDef objects.";
     exit -1;
 }
 

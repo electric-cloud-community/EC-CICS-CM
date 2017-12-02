@@ -50,7 +50,7 @@ documentation : Help text for the parameter
         <label>Location Type:</label>
         <property>LocationType</property>
         <required>1</required>
-        <documentation>Location to add to: must be 'Repository' for this procedure (to add to other locations, use the approriate other Add... procedure instead).</documentation>
+        <documentation>The type of location to add to: must be 'Repository' for this procedure (to add to other locations, use the approriate other Add... procedure instead).</documentation>
         <option>
             <name>Repository</name>
             <value>Repository</value>
@@ -306,7 +306,7 @@ documentation : Help text for the parameter
         <option>
             <name>WLMSpec</name>
             <value>WLMSPEC</value>
-        </option>        
+        </option>
         <required>1</required>
         <documentation>The resource type of the resource acted on by the command to add.</documentation>
     </formElement>
@@ -323,14 +323,14 @@ documentation : Help text for the parameter
         <property>ObjGroup</property>
         <required>0</required>
         <documentation>The resource group of the resource acted on by the command to add (required unless the resource is located in a Context, for a Context you can specify either this or Object Definition Version).</documentation>
-    </formElement> 
+    </formElement>
     <formElement>
         <type>entry</type>
         <label>Object Definition Version:</label>
         <property>ObjDefVer</property>
         <required>0</required>
         <documentation>The resource definition version of the resource acted on by the command to add (omit unless the resource is located in a Context, for a Context you can specify either this or Object Group).</documentation>
-    </formElement> 
+    </formElement>
     <formElement>
         <type>entry</type>
         <label>Target Resource Group For Add:</label>
@@ -351,7 +351,7 @@ documentation : Help text for the parameter
         <property>ContainerName</property>
         <required>1</required>
         <documentation>The ID of the change package to add the command(s) to.</documentation>
-    </formElement> 
+    </formElement>
     <formElement>
         <type>select</type>
         <label>Container Type:</label>
@@ -363,5 +363,5 @@ documentation : Help text for the parameter
             <value>ChgPkg</value>
         </option>
         <value>ChgPkg</value>
-    </formElement>    
+    </formElement>
 </editor>

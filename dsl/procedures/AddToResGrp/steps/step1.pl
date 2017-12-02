@@ -6,6 +6,7 @@ $[/myPlugin/project/ec_perl_header]
 # Name of SOAP method to call
 my $soapMethodName = 'Add';
 
+# List of the names of optional paramters
 my @optionalParams = (
     'ObjGroup',
     'ObjDefVer',
@@ -41,8 +42,8 @@ if($params{'LocationType'} eq 'Context') {
 # Procedure-specific Code
 # -----------------------
 
+# Build @ObjectCriteria
 my @mParams = ('ObjGroup', 'ObjName', 'ObjType', 'ObjDefVer');
-
 my @ObjectCriteria = createObjectCriteria(\@mParams, 0, "DefA", \%params);
 
 my @data =
@@ -50,8 +51,8 @@ SOAP::Data->name($soapMethodName => \SOAP::Data->value(
     SOAP::Data->name('LocationCriteria' => \SOAP::Data->value(
         SoapData('LocationName'),
         SoapData('LocationType')
-    )) ,
-    SOAP::Data->name('ObjectCriteria' => @ObjectCriteria),
+    )),
+    @ObjectCriteria,
     SOAP::Data->name('InputData' => \SOAP::Data->value(
         SoapData('ContainerName'),
         SoapData('ContainerType')
