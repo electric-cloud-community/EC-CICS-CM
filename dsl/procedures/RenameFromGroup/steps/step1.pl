@@ -8,6 +8,7 @@ my $soapMethodName = 'Remove';
 
 # List of the names of optional paramters
 my @optionalParams = (
+    'Replace'
 );
 
 $[/myPlugin/project/ec_perl_metadata]
@@ -18,7 +19,24 @@ $[/myPlugin/project/ec_perl_code_block_1]
 # Procedure-specific Code
 # -----------------------
 
-# Build @ObjectCriteria
+# Validate wildcards are at end
+if ($params{'SourceName'} =~ /\*.+$/) {
+    print "ERROR: The wildcard character '*' must only occur at the end of the Source Name!\n";
+    exit -1;
+}
+
+# Handle optional Process Parameter
+my @processParmsResult;
+if (length($params{'Replace'}) > 0) {
+    push @processParmsResult, SoapData($param);
+}
+my @ProcessParms;
+if(scalar(@processParmsResult) > 0) {
+    @ProcessParms =
+        SOAP::Data->name('ProcessParms' => \SOAP::Data->value(
+            @processParmsResult
+        ));
+}
 
 my @data =
 SOAP::Data->name($soapMethodName => \SOAP::Data->value(
@@ -35,9 +53,7 @@ SOAP::Data->name($soapMethodName => \SOAP::Data->value(
         SoapData('SourceType'),
         SoapData('TargetGroup')
     )),
-    SOAP::Data->name('ProcessParms' => \SOAP::Data->value(
-        SoapData('Replace')
-    ))
+    @ProcessParms
 ));
 
 $[/myPlugin/project/ec_perl_code_block_2]

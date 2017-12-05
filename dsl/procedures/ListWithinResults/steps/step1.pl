@@ -22,7 +22,7 @@ $[/myPlugin/project/ec_perl_code_block_1]
 # -----------------------
 
 # Validate wildcards are at end #### TODO Are wildcards allowed here?
-if (($params{'ObjName'} =~ /\*.+$/) || ($params{'ObjGroup'} =~ /\*.+$/)) {\
+if (($params{'ObjName'} =~ /\*.+$/) || ($params{'ObjGroup'} =~ /\*.+$/)) {
     print "ERROR: The wildcard character '*' must only occur at the end of the Object Name or Object Group!\n";
     exit -1;
 }

@@ -75,7 +75,7 @@ if ($params{'ObjType'} eq 'ChgPkg') {
         print "ERROR: Only Change Package ID and Scheme can be specified for the inquiring contents of Object Type \'$params{'ObjType'}\'!\n";
         exit -1;
     }
-} elsif (($params{'ObjType'} eq 'SvrInfo') || ($params{'SysOpts'} eq 'ReadyLst')) {
+} elsif (($params{'ObjType'} eq 'SvrInfo') || ($params{'ObjType'} eq 'SysOpts')) {
     if (length($params{'ObjName'}.$params{'CPID'}.$params{'CConfig'}.$params{'CICSGroup'}.$params{'CICSObjType'}.$params{'CICSObjName'}.$params{'Scheme'}) > 0) {
         print "ERROR: No object criteria vslues can be specified for inquiring the contents of Object Type \'$params{'ObjType'}\'!\n";
         exit -1;

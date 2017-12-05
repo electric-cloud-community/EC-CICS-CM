@@ -29,7 +29,7 @@ if (($params{'ObjType'} eq '*') || ($params{'ObjType'} eq 'ALL') ||
 }
 
 # Validate wildcards are at end
-if (($params{'ObjName'} =~ /\*.+$/) || ($params{'ObjGroup'} =~ /\*.+$/)) {\
+if (($params{'ObjName'} =~ /\*.+$/) || ($params{'ObjGroup'} =~ /\*.+$/)) {
     print "ERROR: The wildcard character '*' must only occur at the end of the Object Name or Object Group!\n";
     exit -1;
 }

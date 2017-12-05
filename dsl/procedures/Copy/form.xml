@@ -347,8 +347,8 @@ documentation : Help text for the parameter
     </formElement> 
     <formElement>
         <type>entry</type>
-        <label>Target Group:</label>
-        <property>TargetGroup</property>
+        <label>Target Location Group:</label>
+        <property>TargetLocationGroup</property>
         <required>0</required>
         <documentation>The resource group of the destination to copy to (optional unless source and target location names and types are the same, if omitted this defaults to matching the source Object Group).</documentation>
     </formElement> 

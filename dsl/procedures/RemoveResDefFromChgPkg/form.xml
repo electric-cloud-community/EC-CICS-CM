@@ -65,7 +65,7 @@ documentation : Help text for the parameter
         <documentation>The CICS configuration that contains the resource definitions that you want to add to the change package</documentation>
     </formElement>
     <formElement>
-        <type>entry</type>
+        <type>select</type>
         <label>Object Type:</label>
         <property>ObjType</property>
         <option>

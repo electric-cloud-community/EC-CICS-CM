@@ -9,7 +9,7 @@ my $soapMethodName = 'Copy';
 # List of the names of optional paramters
 my @optionalParams = (
     'ObjectCriteria',
-    'TargetGroup'.
+    'TargetLocationGroup'.
     'Replace'
 );
 
@@ -45,7 +45,7 @@ my @data =
         SOAP::Data->name('InputData' => \SOAP::Data->value(
             SoapData('TargetLocationName'),
             SoapData('TargetLocationType'),
-            SoapDataOptional('TargetGroup')
+            SoapDataOptional('TargetLocationGroup')
         )),
         SOAP::Data->name('ProcessParms' => \SOAP::Data->value(
             SoapDataOptional('Replace')

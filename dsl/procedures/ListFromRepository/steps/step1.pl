@@ -80,17 +80,22 @@ if ($params{'ObjType'} eq 'ChgPkg') {
         print "ERROR: Neither Object Name nor Scheme can be specified for listing Object Type \'$params{'ObjType'}\'!\n";
         exit -1;
     }
-} elsif ($params{'ObjType'} eq 'PScheme') {
+} elsif (($params{'ObjType'} eq 'PScheme') || ($params{'ObjType'} eq 'ReadyLst')) {
     if (length($params{'CPID'}) == 0) {
-        print "ERROR: Change Package ID must be specified for listing Object Type 'PScheme'!\n";
+        print "ERROR: Change Package ID must be specified for listing Object Type \'$params{'ObjType'}\'!\n";
         exit -1;
     }
     if (length($params{'Scheme'}) == 0) {
-        print "ERROR: Scheme must be specified for listing Object Type 'PScheme'!\n";
+        print "ERROR: Scheme must be specified for listing Object Type \'$params{'ObjType'}\!\n";
         exit -1;
     }
     if (length($params{'ObjName'}.$params{'CConfig'}.$params{'CICSGroup'}.$params{'CICSObjType'}.$params{'CICSObjName'}) > 0) {
-        print "ERROR: Only Change Package ID and Scheme can be specified for listing Object Type 'PScheme'!\n";
+        print "ERROR: Only Change Package ID and Scheme can be specified for listing Object Type \'$params{'ObjType'}\!\n";
+        exit -1;
+    }
+} elsif (($params{'ObjType'} eq 'SvrInfo') || ($params{'ObjType'} eq 'SysOpts')) {
+    if (length($params{'ObjName'}.$params{'CPID'}.$params{'CConfig'}.$params{'CICSGroup'}.$params{'CICSObjType'}.$params{'CICSObjName'}.$params{'Scheme'}) > 0) {
+        print "ERROR: No object criteria vslues can be specified for inquiring the contents of Object Type \'$params{'ObjType'}\'!\n";
         exit -1;
     }
 } elsif (($params{'ObjType'} eq '*') || ($params{'ObjType'} eq 'All')) {

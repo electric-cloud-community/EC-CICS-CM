@@ -26,9 +26,10 @@ if(($params{'ObjType'} eq 'RESGROUP') || ($params{'ObjType'} eq 'RESDESC')) {
         exit -1;
     }
 }
+
 # Build @ObjectCriteria
 my @mParams = ('ObjGroup', 'ObjType', 'ObjName'); 
-my @ObjectCriteria = createObjectCriteria(\@mParams, 1, "", \%params);
+my @ObjectCriteria = createObjectCriteria(\@mParams, 1, "KeyA", \%params);
 
 my @data =
     SOAP::Data->name($soapMethodName => \SOAP::Data->value(
