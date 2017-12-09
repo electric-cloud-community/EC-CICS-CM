@@ -20,18 +20,13 @@ $soap->autotype(0); # Don't automatically add parameter type annotations
 $soap->readable(1); # Pretty-print the XML
 $soap->outputxml(1); # Don't automatically deserialize the returned xml (since it's unhelpfully designed for that)
 
-print"\n\@data objects before request:\n"; #### TODO Remove debugging output
-print Dumper(@data);
+# print"\n\@data objects before request:\n"; #### TODO Remove debugging output
+# print Dumper(@data);
                      
 my $xml = $soap->call($ccVersion, @data);
 
-# print"\$xml:\n$xml\n"; #### TODO Remove debugging output
-
 my $deserializer = SOAP::Deserializer->new;
 my $som = $deserializer ->deserialize($xml);
-
-# print"\n\$som object after deserialization:\n"; #### TODO Remove debugging output
-# print Dumper($som);
 
 # Check for and handle SOAP error response
 if ($som->fault) {
@@ -41,9 +36,6 @@ if ($som->fault) {
 
 # Check for and handle missing CICS CM return code value
 my $result = $som->result;
-
-# print"\$result:\n"; #### TODO Remove debugging output
-# print Dumper($result);
 
 if (!defined($result) || !defined($result->{'OUTPUTDATA'}) || !defined($result->{'OUTPUTDATA'}->{'RETURNCODE'})) {
     print("ERROR: Invalid response: cannot locate return code value!\n$xml");
@@ -60,6 +52,9 @@ if ($xml =~ m!<SOAP-ENV:Body>\s*<$ccVersion>\s*<$upperSoapMethodName>\s*<OUTPUTD
     $xml = $1;
     $xml =~ s/\s+$//; # Trim any trailing whitespace (this should be faster than doing it above, since it avoids speculative matching)
 }
+
+# Apply EBCDIC -> ASCII XML decoding.
+$xml =~ s/\%([0-9A-F][0-9A-F])/$asciiXml{$1}/egs
 
 my $outputPropertyOrPropertySheet = $params{'outputProperty'};
 $ec->setProperty($outputPropertyOrPropertySheet, $xml);
