@@ -20,9 +20,6 @@ $soap->autotype(0); # Don't automatically add parameter type annotations
 $soap->readable(1); # Pretty-print the XML
 $soap->outputxml(1); # Don't automatically deserialize the returned xml (since it's unhelpfully designed for that)
 
-# print"\n\@data objects before request:\n"; #### TODO Remove debugging output
-# print Dumper(@data);
-                     
 my $xml = $soap->call($ccVersion, @data);
 
 my $deserializer = SOAP::Deserializer->new;
@@ -54,12 +51,79 @@ if ($xml =~ m!<SOAP-ENV:Body>\s*<$ccVersion>\s*<$upperSoapMethodName>\s*<OUTPUTD
 }
 
 # Apply EBCDIC -> ASCII XML decoding.
-$xml =~ s/\%([0-9A-F][0-9A-F])/$asciiXml{$1}/egs
+$xml =~ s/\%([0-9A-F][0-9A-F])/$asciiXml{$1}/egs;
 
 my $outputPropertyOrPropertySheet = $params{'outputProperty'};
-$ec->setProperty($outputPropertyOrPropertySheet, $xml);
 
-#### TODO Implement optionally parsing the results into a property sheet structure, if $outputPropertyOrPropertySheet exists and is a property sheet -- this will require us to first modify LISTELEMENT (and any other potentially dublicated) tags to add a counter to them
+# Recursively turn a tree of hashes of arrays as produced by XML::Simple into a nested sest of property
+# sheets and properties, adding index values to the name of array enties (which the parser generates
+# from repeated child tags -- or potentially repeated ones like LISTELEMENT).
+sub walkXMLSimpleTree {
+    my ($tree, $path) = @_;
+    
+    # print '$path = \'' . $path . "'\n"; #### TODO Remove debug output
+    # print '$tree = ' . Dumper($tree); #### TODO Remove debug output
+    # print 'ref $tree = \'' . (ref $tree) . "'\n"; #### TODO Remove debug output
+    
+    if (ref $tree eq ref []) {
+        # print 'Iterating over array of length ' . scalar(@$tree) . "...\n"; #### TODO Remove debug output
+        
+        # Iterate over array entries
+        for (my $i = 0; $i < length(@{$tree}); $i++) {
+            my $newPath = $path . '_' . $i;
+            walkXMLSimpleTree(\($tree->[$i]), $newPath);
+        }
+    } elsif (ref $tree eq ref {}) {
+        # Attempt to treate property sheet at $path
+        eval {$ec->createProperty($path, {propertyType => 'sheet'})};
+        
+        # print 'Iterating over hash of size ' . scalar(keys(%$tree)) . "...\n"; #### TODO Remove debug output
+        
+        # Iterate over hash keys
+        foreach my $key (keys(%$tree)) {
+	    walkXMLSimpleTree(\($tree->{$key}), $path . '/' . $key);
+	}
+    } elsif (ref $tree eq 'REF') {
+        walkXMLSimpleTree($$tree, $path);
+    } else {
+        # print 'Creating property with value \'' . $$tree . "'\n"; #### TODO Remove debug output
+
+        # Create or set property at $path with value $$tree
+        $ec->setProperty($path, {value => $$tree});
+    }
+}
+
+# Check if $outputPropertyOrPropertySheet exists and is a property sheet.
+eval {($ec->getProperty($outputPropertyOrPropertySheet.'/propertySheetId')->findvalue("//value")->value())};
+if ($@) {
+   
+    # Check if $outputPropertyOrPropertySheet exists
+    eval {($ec->getProperty($outputPropertyOrPropertySheet)->findvalue("//value")->value())};
+    if ($@) {
+        # print $outputPropertyOrPropertySheet . " doesn't exist, creating it...\n"; #### TODO Remove debug output
+
+        $ec->createProperty($outputPropertyOrPropertySheet, $xml);
+    } else {    
+        # print $outputPropertyOrPropertySheet . " exists as a property, updating its value to XML result...\n"; #### TODO Remove debug output
+
+        $ec->setProperty($outputPropertyOrPropertySheet, $xml);
+    }
+} else {
+    # print $outputPropertyOrPropertySheet . " exists as a property sheet, parsing XML to create nested property sheet result...\n"; #### TODO Remove debug output
+    
+    $xml = '<OUTPUTDATA>' . $xml . '</OUTPUTDATA>';
+
+    # print '$xml= \'' . $xml. "'\n"; #### TODO Remove debug output
+
+    # If $outputPropertyOrPropertySheet exists and is a property sheet then parse the results into
+    # a nested property sheet structure, adding index values to repeats child element names
+    my $simple = XML::Simple->new();
+    my $tree = $simple->XMLin($xml, forcearray => [ qw(LISTELEMENT) ]);
+    
+    # print Dumper($tree); #### TODO Remove debug output
+    
+    walkXMLSimpleTree($tree, $outputPropertyOrPropertySheet);
+}
 
 # Check for and handle nonzero CICS CM return code value
 # 

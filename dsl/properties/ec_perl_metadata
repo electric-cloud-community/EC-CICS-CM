@@ -4,4 +4,7 @@
 # ---------------
 
 # Hash of regular expressions defining allowed values for parameters, keyed by parameter name
-my %valid; #### TODO Kostya, add regexps here
+my %valid = (
+    'LocationType' => '(CConfig|Context|CSD|Registry|Journal)',
+    'ObjectName' => '[A-Za-z0-9\$\@\#\.\/\-\_\%\&\¢\?\!\:\|\"\=\¬\,\;\<\>]{0,7}[A-Za-z0-9\$\@\#\.\/\-\_\%\&\¢\?\!\:\|\"\=\¬\,\;\<\>\*]{1}', # wildcards allowed
+); #### TODO Kostya, add regexps here, in alphabetical order

@@ -9,6 +9,7 @@ use SOAP::Lite on_debug => sub{print@_}; #### TODO Remove debugging output
 $SOAP::Constants::DO_NOT_CHECK_CONTENT_TYPE = 1;
 use XML::XPath;
 use XML::LibXML qw( );
+use XML::Simple;
 use utf8;
 ElectricCommander::initEncodings();
 

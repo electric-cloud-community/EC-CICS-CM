@@ -11,9 +11,9 @@
             <h1>@PLUGIN_KEY@</h1>
             <p>Plugin Version @PLUGIN_VERSION@</p>
             <hr style="margin-left: -10px; margin-top: 10px; height: 1px; width: 100%; color: #5981BD;" noshade="noshade" />
-            <p>Revised on <!-- REVISION DATE BEGIN -->August 22, 2017<!-- REVISION DATE END --></p>
+            <p>Revised on <!-- REVISION DATE BEGIN -->December 13, 2017<!-- REVISION DATE END --></p>
             <p>
-                <!-- DESCRIPTION BEGIN -->This plugin allows to work with CICS CM
+                <!-- DESCRIPTION BEGIN -->This plugin integrates Commander with the CICS Configuration Manager (CM) tool for administering resource definitions in the CICS application server. It provides access to all CICS CM operations via the CICS CM SOAP API.
                 <!-- DESCRIPTION END -->
             </p>
             <h2>Links</h2>
@@ -23,10 +23,54 @@
             <h1>Contents</h1>
             <ul>
                 <!-- TOC BEGIN -->
-                <li><a href="#Backout">Backout</a></li>
-                <li><a href="#InstallChgPackage">Install change package</a></li>
-                <li><a href="#Migrate">Migrate change package</a></li>
-                <li><a href="#Ready">Ready change package</a></li>
+                
+                <h2>The EC-CICS-CM Procedures and What They Are Used For</h2>
+                <p>For a CICS CM perspective, see <a href="https://www.ibm.com/support/knowledgecenter/en/SS2L7A_5.3.0/com.ibm.cics.cm.doc/ccv-api-summary.html">https://www.ibm.com/support/knowledgecenter/en/SS2L7A_5.3.0/com.ibm.cics.cm.doc/ccv-api-summary.html</a></p>
+                <p>Here are the EC-CICS-CM procedures, grouped according to their purpose:</p>
+                <ul>
+		    <li>
+		        <p>Manipulating objects and their data:</p>
+		        <p><strong>Create*</strong> Create a resource definition (<a href="#CreateInOther">CreateInOther</a>) or a CICS Configuration Manager repository object (<a href="#CreateInRepository">CreateInRepository</a>).</p>
+		        <p><strong>Update*</strong> Modify a resource definition (<a href="#UpdateInOther">UpdateInOther</a>) or a CICS Configuration Manager repository object (<a href="#UpdateInRepository">UpdateInRepository</a>).</p>
+		        <p><strong><a href="#Copy">Copy</a></strong> Copy resource definitions between groups or CICS configurations.</p>
+			<p><strong>Delete*</strong> Delete resource definitions (<a href="#DeleteFromOther">DeleteFromOther</a>) or CICS Configuration Manager repository objects (<a href="#DeleteFromRepository">DeleteFromRepository</a>).</p>
+			<p><strong><a href="#Copy">Alter</a></strong> Alter selected attribute values across one or more resource definitions, without affecting other attribute values.</p>
+			<p><strong>Rename*</strong> Rename resource definitions, and optionally move them to another group (<a href="#RenameResDef">RenameResDef</a>, or <a href="#RenameFromGroup">RenameFromGroup</a> to rename/move the contents of a resource group).<br /> </p>
+	            </li>
+		    <li>
+		        <p>Associating objects with other objects:</p>
+		        <p><strong>Add*</strong> Add objects to a container object, such as a change package (<a href="#AddResDefToChgPkg">AddResDefToChgPkg</a>, or <a href="#AddCmdToChgPkg">AddCmdToChgPkg</a> to add a command), to a resource group (<a href="#AddToResGrp">AddToResGrp</a>), or to a list (<a href="#AddToResDesc">AddToResDesc</a>).</p>
+		        <p><strong>Remove*</strong> Remove objects from a container object, such as a change package (<a href="#RemoveResDefFromChgPkg">RemoveResDefFromChgPkg</a>, or <a href="#RemoveCmdToChgPkg">RemoveCmdToChgPkg</a> to remove a command), from a resource group (<a href="#RemoveFromResGrp">RemoveFromResGrp</a>), or list (<a href="#RemoveFromResDesc">RemoveFromResDesc</a>).<br /> </p>
+		    </li>
+		    <li>
+		        <p>Retrieving object information:</p>
+		        <p><strong>Inquire*</strong> Return all the fields for a single resource definition (<a href="#InquireInOther">InquireInOther</a>), CICS Configuration Manager repository object (<a href="#InquireInRepository">InquireInRepository</a>), or CICS Configuration Manager journal object (<a href="#InquireInJournal">InquireInJournal</a>).</p>
+		        <p><strong>List*</strong> Return selected fields from one or more resource definitions (<a href="#ListFromOther">ListFromOther</a>, or <a href="#ListWithinResults">ListWithinResults</a> to filter the results), CICS Configuration Manager repository objects (<a href="#ListFromRepository">ListFromRepository</a>), or CICS Configuration Manager journal objects (<a href="#ListFromJournal">ListFromJournal</a>).<br /> </p>
+		    </li>
+		    <li>
+		        <p>Packaging changes to resource definitions:</p>
+		        <p><strong><a href="#Ready">Ready</a></strong> Indicate that the resource definitions in a change package are ready for migration.</p>
+		        <p><strong><a href="#Unready">Unready</a></strong> Indicate that the resource definitions in a change package are no longer ready for migration.</p>
+		        <p><strong><a href="#Approve">Approve</a></strong> Add to a change package the approval of a particular approver role.</p>
+		        <p><strong><a href="#Disapprove">Disapprove</a></strong> Remove from a change package the approval of a particular approver role.</p>
+		        <p><strong><a href="#Migrate">Migrate</a></strong> Copy the resource definitions in a change package from source to target CICS configurations, and invoke commands in the change package on target CICS configurations, according to the specified migration scheme.</p>
+		        <p><strong><a href="#Backout">Backout</a></strong> Back out a previous change package migration.<br /> </p>
+		    </li>
+		    <li>
+		        <p>Altering in-memory images of resource definitions in active CICS regions:</p>
+		        <p><strong>Discard*</strong> Discard the in-memory image of resource definitions from active CICS regions (<a href="#DiscardChgPkg">DiscardChgPkg</a>, or <a href="#DiscardAdHoc">DiscardAdHoc</a> for arbitrary resource definitions not from a change package).</p>
+		        <p><strong>Install*</strong> Dynamically make resource definitions available to an active CICS region (<a href="#InstallChgPkg">InstallChgPkg</a>, or <a href="#InstallAdHoc">InstallAdHoc</a> for arbitrary resource definitions not from a change package).</p>
+		        <p><strong>Newcopy*</strong> Reload in-memory copies of resource definitions associated with a CICS program definition or document template definition (<a href="#NewcopyChgPkg">NewcopyChgPkg</a>, or <a href="#NewcopyAdHoc">NewcopyAdHoc</a> for arbitrary resource definitions not from a change package).<br /> </p>
+		    </li>
+		    <li>
+		        <p>Importing resource definitions from an export file:</p>
+		        <p><strong><a href="#Import">Import</a></strong> Import resource definitions from an export file received from another CICS Configuration Manager system. Optionally, if the export file contains change package details, also registers change packages in the importing CICS Configuration Manager repository.<br /> </p>
+		    </li>
+		    <li>
+		        <p>Recovering historical versions of resource definitions from the journal:</p>
+		        <p><strong><a href="#Recover">Recover</a></strong> Recovers before or after images of historical resource definitions from the journal.</p>
+		    </li>
+		</ul>
                 <!-- TOC END -->
             </ul>
             <h2>Configuration</h2>
@@ -73,13 +117,14 @@
                             </tr>
 
                             <tr>
-                                <td class="required">CICS CM Hostname</td>
-                                <td>The host name or IP address of the CICS CM server to connect to.</td>
+                                <td class="required">CICS CM SOAP URL</td>
+                                <td>	
+The URL of the SOAP interface of the CICS CM server to connect to (this should normally be of the format http://[server]:[port]/CICS/CWBA/CCVWSDSH/CCVADISP ).</td>
                             </tr>
 
                             <tr>
-                                <td class="required">CICS CM Port</td>
-                                <td>The CICS CM port number to connect to.</td>
+                                <td class="required">CICS CM Version</td>
+                                <td>The CICS CM version number (normally the same as the CICS version number).</td>
                             </tr>
 
                             <tr>
@@ -110,11 +155,17 @@
             </div>
             <h1>Procedures</h1>
             <!-- PROCEDURES BEGIN -->
+            
+            <!-- #### TODO KOSTYA Add all the other procedures. This is basically just copy-paste from
+            the procedure's form and from the descriptions in the TOC above (for a procedure whose TOC
+            description lists several procedures, cut it down to just the part relevant to this
+            procedure). -->
+            
             <div id="Backout">
                 <a name="Backout" id="Backout" />
                 <!-- Backout METADATA BEGIN -->
-                <h3>Backout change package</h3>
-                <p>Backout a change package to reverse a migration event</p>
+                <h3>Backout</h3>
+                <p>Back out a previous change package migration.</p>
                 <!-- Backout METADATA END -->
                 <!-- Backout BEGIN -->
                 <table class="grid">
@@ -127,223 +178,29 @@
                     <tbody>
                         <tr>
                             <td class="required">Configuration Name</td>
-                            <td>Configuration to use.</td>
+                            <td>The EC-CICS-CM configuration to use.</td>
                         </tr>
                         <tr>
-                            <td class="required">Output Property Sheet</td>
-                            <td>Property sheet that results will be returned into</td>
+                            <td class="required">Output Property:</td>
+                            <td>The property that results will be returned into.</td>
                         </tr>
                         <tr>
                             <td class="required">Change Package ID</td>
-                            <td>Selection criteria for what to back out: change package ID.</td>
+                            <td>The change package ID of the change to back out.</td>
                         </tr>
                         <tr>
                             <td class="required">Scheme</td>
-                            <td>Selection criteria for what to back out: migration scheme.</td>
+                            <td>The migration scheme of the change to back out.</td>
                         </tr>
                         <tr>
                             <td>Event ID</td>
-                            <td>Selection criteria for what to back out: identify a unique execution of the Migrate command for the specified change package and migration scheme (if omitted, it defaults to the most resent Migrate command for that change package and migration scheme).</td>
+                            <td>The eventID of the execution of the Migrate command for the specified change package and migration scheme to back out (if omitted, it defaults to the most recent Migrate command for that change package and migration scheme).</td>
                         </tr>
                     </tbody>
                 </table>
                 <!-- Backout END -->
             </div>
 
-            <div id="InstallChgPackage">
-                <a name="InstallChgPackage" id="InstallChgPackage" />
-                <!-- Installchangepackage METADATA BEGIN -->
-                <h3>Install change package</h3>
-                <p>Install the resource definitions in a change package from a CSD configuration</p>
-                <!-- Installchangepackage METADATA END -->
-                <!-- Installchangepackage BEGIN -->
-                <table class="grid">
-                    <thead>
-                        <tr>
-                            <th>Parameter</th>
-                            <th>Description</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td class="required">Configuration Name</td>
-                            <td>Configuration to use.</td>
-                        </tr>
-                        <tr>
-                            <td class="required">Output Property Sheet</td>
-                            <td>Property sheet that results will be returned into</td>
-                        </tr>
-
-                        <tr>
-                            <td class="required">Change Package ID</td>
-                            <td>Change package to migrate</td>
-                        </tr>
-
-                        <tr>
-                            <td class="required">Scheme</td>
-                            <td>Migration scheme to use</td>
-                        </tr>
-
-                        <tr>
-                            <td>Quiesce</td>
-                            <td>CSD-based CICS Configurations only: specifies whether to set each resource to a (resource-type-dependent) status that allows its definition to be installed (for example, disabled, closed, or out of service), before attempting to install to it. If you do not specify this "quiesce" option, and a resource is in a status that does not allow the install action, then the install action for that resource definition will fail</td>
-                        </tr>
-
-                        <tr>
-                            <td class="required">Qualification Data</td>
-                            <td>Qualification Data is optional data passed through the Install operations qualification exit point. The needs of your organization determine whether you use an exit program and what processing it performs</td>
-                        </tr>
-
-                        <tr>
-                            <td>Discard</td>
-                            <td>Whether to discard the resource definition before attempting to install it</td>
-                        </tr>
-
-                        <tr>
-                            <td>Force</td>
-                            <td>Applies only to Context-based CICS configurations</td>
-                        </tr>
-
-                        <tr>
-                            <td>Target Scope</td>
-                            <td>Required for Context-based CICS configurations, ommit for CDS-based CICS configurations</td>
-                        </tr>
-
-                        <tr>
-                            <td>Resource Group Object Type</td>
-                            <td>Filter to select resource definitions of a particular type, excluding any other types of resource definition in the ResGroup, applies only to Context-based CICS configurations</td>
-                        </tr>
-
-                        <tr>
-                            <td>CONNDEF Resource Assignment</td>
-                            <td>Applies only to Context-based CICS configurations</td>
-                        </tr>
-
-                        <tr>
-                            <td>FILEDEF Related Scope</td>
-                            <td>Applies only to Context-based CICS configurations</td>
-                        </tr>
-
-                        <tr>
-                            <td>FILEDEF Usage</td>
-                            <td>Applies only to Context-based CICS configurations</td>
-                        </tr>
-
-                        <tr>
-                            <td>PROGDEF Related Scope</td>
-                            <td>Applies only to Context-based CICS configurations</td>
-                        </tr>
-
-                        <tr>
-                            <td>PROGDEF Usage</td>
-                            <td>Applies only to Context-based CICS configurations</td>
-                        </tr>
-
-                        <tr>
-                            <td>PROGDEF Mode</td>
-                            <td>Applies only to Context-based CICS configurations</td>
-                        </tr>
-
-                        <tr>
-                            <td>TDQDEF Related Scope</td>
-                            <td>Applies only to Context-based CICS configurations</td>
-                        </tr>
-
-                        <tr>
-                            <td>TDQDEF Usage</td>
-                            <td>Applies only to Context-based CICS configurations</td>
-                        </tr>
-
-                        <tr>
-                            <td>TDQDEF Mode</td>
-                            <td>Applies only to Context-based CICS configurations</td>
-                        </tr>
-
-                        <tr>
-                            <td>TRANDEF Related Scope</td>
-                            <td>Applies only to Context-based CICS configurations</td>
-                        </tr>
-
-                        <tr>
-                            <td>TRANDEF Usage</td>
-                            <td>Applies only to Context-based CICS configurations</td>
-                        </tr>
-
-                        <tr>
-                            <td>TRANDEF Mode</td>
-                            <td>Applies only to Context-based CICS configurations</td>
-                        </tr>
-
-                    </tbody>
-                </table>
-                <!-- Installchangepackage END -->
-            </div>
-            <div id="Migrate">
-                <a name="Migrate" id="Migrate" />
-                <h3>Migrate</h3>
-                <p>Migrate</p>
-                <table class="grid">
-                    <thead>
-                        <tr>
-                            <th>Parameter</th>
-                            <th>Description</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td class="required">Configuration Name</td>
-                            <td>Configuration to use.</td>
-                        </tr>
-                        <tr>
-                            <td class="required">Output Property Sheet</td>
-                            <td>Property sheet that results will be returned into</td>
-                        </tr>
-                        
-                        <tr>
-                            <td class="required">Change Package ID</td>
-                            <td>Change package to migrate</td>
-                        </tr>
-
-                        <tr>
-                            <td class="required">Scheme</td>
-                            <td>Migration scheme to use</td>
-                        </tr>
-                    </tbody>
-                </table>
-                <!-- Migratechangepackage END -->
-            </div>
-            <div id="Ready">
-                <a name="Ready" id="Ready" />
-                <h3>Ready change package</h3>
-                <p>Ready a change package for migration</p>
-                <table class="grid">
-                    <thead>
-                        <tr>
-                            <th>Parameter</th>
-                            <th>Description</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td class="required">Configuration Name</td>
-                            <td>Configuration to use.</td>
-                        </tr>
-                        <tr>
-                            <td class="required">Output Property Sheet</td>
-                            <td>Property sheet that results will be returned into</td>
-                        </tr>
-                        <tr>
-                            <td class="required">Change Package ID</td>
-                            <td>Change package to make ready</td>
-                        </tr>
-                        <tr>
-                            <td class="required">Scheme</td>
-                            <td>Migration scheme to use.</td>
-                        </tr>
-                    </tbody>
-                </table>
-                <!-- Readychangepackage END -->
-            </div>
             <!-- PROCEDURES END -->
         </div>
         <!-- RELEASE NOTES BEGIN -->
