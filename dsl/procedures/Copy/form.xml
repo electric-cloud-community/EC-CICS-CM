@@ -58,14 +58,6 @@ documentation : Help text for the parameter
         <property>LocationType</property>
         <required>1</required>
         <option>
-            <name>CICS Configuration</name>
-            <value>CConfig</value>
-        </option>
-        <option>
-            <name>Context</name>
-            <value>Context</value>
-        </option>
-        <option>
             <name>CSD</name>
             <value>CSD</value>
         </option>
