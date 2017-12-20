@@ -1,76 +1,215 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
     <head>
-        <meta content="text/html; charset=us-ascii" http-equiv="content-type" />
+        <meta content="text/html; charset=us-ascii" http-equiv="content-type"/>
         <title><!-- TITLE BEGIN -->Electric Flow integration with CICS CM<!-- TITLE END --></title>
-        <link rel="stylesheet" href="../../plugins/@PLUGIN_KEY@/pluginhelp.css" type="text/css" media="screen" />
+        <link rel="stylesheet" href="../../plugins/@PLUGIN_KEY@/pluginhelp.css" type="text/css" media="screen"/>
     </head>
     <!-- REST PLUGIN WIZARD HELP -->
     <body>
         <div class="help">
             <h1>@PLUGIN_KEY@</h1>
             <p>Plugin Version @PLUGIN_VERSION@</p>
-            <hr style="margin-left: -10px; margin-top: 10px; height: 1px; width: 100%; color: #5981BD;" noshade="noshade" />
+            <hr style="margin-left: -10px; margin-top: 10px; height: 1px; width: 100%; color: #5981BD;"
+                noshade="noshade"/>
             <p>Revised on <!-- REVISION DATE BEGIN -->December 13, 2017<!-- REVISION DATE END --></p>
             <p>
-                <!-- DESCRIPTION BEGIN -->This plugin integrates Commander with the CICS Configuration Manager (CM) tool for administering resource definitions in the CICS application server. It provides access to all CICS CM operations via the CICS CM SOAP API.
+                <!-- DESCRIPTION BEGIN -->This plugin integrates Commander with the CICS Configuration Manager (CM) tool
+                for administering resource definitions in the CICS application server. It provides access to all CICS CM
+                operations via the CICS CM SOAP API.
                 <!-- DESCRIPTION END -->
             </p>
             <h2>Links</h2>
             <!-- LINKS BEGIN -->
-            <a href="https://www.ibm.com/bs-en/marketplace/cics-configuration-management-tool" target="_blank">https://www.ibm.com/bs-en/marketplace/cics-configuration-management-tool</a>
+            <a href="https://www.ibm.com/bs-en/marketplace/cics-configuration-management-tool" target="_blank">
+                https://www.ibm.com/bs-en/marketplace/cics-configuration-management-tool
+            </a>
             <!-- LINKS END -->
             <h1>Contents</h1>
             <ul>
                 <!-- TOC BEGIN -->
-                
+
                 <h2>The EC-CICS-CM Procedures and What They Are Used For</h2>
-                <p>For a CICS CM perspective, see <a href="https://www.ibm.com/support/knowledgecenter/en/SS2L7A_5.3.0/com.ibm.cics.cm.doc/ccv-api-summary.html">https://www.ibm.com/support/knowledgecenter/en/SS2L7A_5.3.0/com.ibm.cics.cm.doc/ccv-api-summary.html</a></p>
+                <p>For a CICS CM perspective, see
+                    <a href="https://www.ibm.com/support/knowledgecenter/en/SS2L7A_5.3.0/com.ibm.cics.cm.doc/ccv-api-summary.html">
+                        https://www.ibm.com/support/knowledgecenter/en/SS2L7A_5.3.0/com.ibm.cics.cm.doc/ccv-api-summary.html
+                    </a>
+                </p>
                 <p>Here are the EC-CICS-CM procedures, grouped according to their purpose:</p>
                 <ul>
-		    <li>
-		        <p>Manipulating objects and their data:</p>
-		        <p><strong>Create*</strong> Create a resource definition (<a href="#CreateInOther">CreateInOther</a>) or a CICS Configuration Manager repository object (<a href="#CreateInRepository">CreateInRepository</a>).</p>
-		        <p><strong>Update*</strong> Modify a resource definition (<a href="#UpdateInOther">UpdateInOther</a>) or a CICS Configuration Manager repository object (<a href="#UpdateInRepository">UpdateInRepository</a>).</p>
-		        <p><strong><a href="#Copy">Copy</a></strong> Copy resource definitions between groups or CICS configurations.</p>
-			<p><strong>Delete*</strong> Delete resource definitions (<a href="#DeleteFromOther">DeleteFromOther</a>) or CICS Configuration Manager repository objects (<a href="#DeleteFromRepository">DeleteFromRepository</a>).</p>
-			<p><strong><a href="#Copy">Alter</a></strong> Alter selected attribute values across one or more resource definitions, without affecting other attribute values.</p>
-			<p><strong>Rename*</strong> Rename resource definitions, and optionally move them to another group (<a href="#RenameResDef">RenameResDef</a>, or <a href="#RenameFromGroup">RenameFromGroup</a> to rename/move the contents of a resource group).<br /> </p>
-	            </li>
-		    <li>
-		        <p>Associating objects with other objects:</p>
-		        <p><strong>Add*</strong> Add objects to a container object, such as a change package (<a href="#AddResDefToChgPkg">AddResDefToChgPkg</a>, or <a href="#AddCmdToChgPkg">AddCmdToChgPkg</a> to add a command), to a resource group (<a href="#AddToResGrp">AddToResGrp</a>), or to a list (<a href="#AddToResDesc">AddToResDesc</a>).</p>
-		        <p><strong>Remove*</strong> Remove objects from a container object, such as a change package (<a href="#RemoveResDefFromChgPkg">RemoveResDefFromChgPkg</a>, or <a href="#RemoveCmdToChgPkg">RemoveCmdToChgPkg</a> to remove a command), from a resource group (<a href="#RemoveFromResGrp">RemoveFromResGrp</a>), or list (<a href="#RemoveFromResDesc">RemoveFromResDesc</a>).<br /> </p>
-		    </li>
-		    <li>
-		        <p>Retrieving object information:</p>
-		        <p><strong>Inquire*</strong> Return all the fields for a single resource definition (<a href="#InquireInOther">InquireInOther</a>), CICS Configuration Manager repository object (<a href="#InquireInRepository">InquireInRepository</a>), or CICS Configuration Manager journal object (<a href="#InquireInJournal">InquireInJournal</a>).</p>
-		        <p><strong>List*</strong> Return selected fields from one or more resource definitions (<a href="#ListFromOther">ListFromOther</a>, or <a href="#ListWithinResults">ListWithinResults</a> to filter the results), CICS Configuration Manager repository objects (<a href="#ListFromRepository">ListFromRepository</a>), or CICS Configuration Manager journal objects (<a href="#ListFromJournal">ListFromJournal</a>).<br /> </p>
-		    </li>
-		    <li>
-		        <p>Packaging changes to resource definitions:</p>
-		        <p><strong><a href="#Ready">Ready</a></strong> Indicate that the resource definitions in a change package are ready for migration.</p>
-		        <p><strong><a href="#Unready">Unready</a></strong> Indicate that the resource definitions in a change package are no longer ready for migration.</p>
-		        <p><strong><a href="#Approve">Approve</a></strong> Add to a change package the approval of a particular approver role.</p>
-		        <p><strong><a href="#Disapprove">Disapprove</a></strong> Remove from a change package the approval of a particular approver role.</p>
-		        <p><strong><a href="#Migrate">Migrate</a></strong> Copy the resource definitions in a change package from source to target CICS configurations, and invoke commands in the change package on target CICS configurations, according to the specified migration scheme.</p>
-		        <p><strong><a href="#Backout">Backout</a></strong> Back out a previous change package migration.<br /> </p>
-		    </li>
-		    <li>
-		        <p>Altering in-memory images of resource definitions in active CICS regions:</p>
-		        <p><strong>Discard*</strong> Discard the in-memory image of resource definitions from active CICS regions (<a href="#DiscardChgPkg">DiscardChgPkg</a>, or <a href="#DiscardAdHoc">DiscardAdHoc</a> for arbitrary resource definitions not from a change package).</p>
-		        <p><strong>Install*</strong> Dynamically make resource definitions available to an active CICS region (<a href="#InstallChgPkg">InstallChgPkg</a>, or <a href="#InstallAdHoc">InstallAdHoc</a> for arbitrary resource definitions not from a change package).</p>
-		        <p><strong>Newcopy*</strong> Reload in-memory copies of resource definitions associated with a CICS program definition or document template definition (<a href="#NewcopyChgPkg">NewcopyChgPkg</a>, or <a href="#NewcopyAdHoc">NewcopyAdHoc</a> for arbitrary resource definitions not from a change package).<br /> </p>
-		    </li>
-		    <li>
-		        <p>Importing resource definitions from an export file:</p>
-		        <p><strong><a href="#Import">Import</a></strong> Import resource definitions from an export file received from another CICS Configuration Manager system. Optionally, if the export file contains change package details, also registers change packages in the importing CICS Configuration Manager repository.<br /> </p>
-		    </li>
-		    <li>
-		        <p>Recovering historical versions of resource definitions from the journal:</p>
-		        <p><strong><a href="#Recover">Recover</a></strong> Recovers before or after images of historical resource definitions from the journal.</p>
-		    </li>
-		</ul>
+                    <li>
+                        <p>Manipulating objects and their data:</p>
+                        <p>
+                            <strong>Create*</strong>
+                            Create a resource definition (<a href="#CreateInOther">CreateInOther</a>) or a CICS
+                            Configuration Manager repository object (<a href="#CreateInRepository">
+                            CreateInRepository</a>).
+                        </p>
+                        <p>
+                            <strong>Update*</strong>
+                            Modify a resource definition (<a href="#UpdateInOther">UpdateInOther</a>) or a CICS
+                            Configuration Manager repository object (<a href="#UpdateInRepository">
+                            UpdateInRepository</a>).
+                        </p>
+                        <p>
+                            <strong>
+                                <a href="#Copy">Copy</a>
+                            </strong>
+                            Copy resource definitions between groups or CICS configurations.
+                        </p>
+                        <p>
+                            <strong>Delete*</strong>
+                            Delete resource definitions (<a href="#DeleteFromOther">DeleteFromOther</a>) or CICS
+                            Configuration Manager repository objects (<a href="#DeleteFromRepository">
+                            DeleteFromRepository</a>).
+                        </p>
+                        <p>
+                            <strong>
+                                <a href="#Copy">Alter</a>
+                            </strong>
+                            Alter selected attribute values across one or more resource definitions, without affecting
+                            other attribute values.
+                        </p>
+                        <p>
+                            <strong>Rename*</strong>
+                            Rename resource definitions, and optionally move them to another group (<a
+                                href="#RenameResDef">RenameResDef</a>, or
+                            <a href="#RenameFromGroup">RenameFromGroup</a>
+                            to rename/move the contents of a resource group).
+                            <br/>
+                        </p>
+                    </li>
+                    <li>
+                        <p>Associating objects with other objects:</p>
+                        <p>
+                            <strong>Add*</strong>
+                            Add objects to a container object, such as a change package (<a href="#AddResDefToChgPkg">
+                            AddResDefToChgPkg</a>, or
+                            <a href="#AddCmdToChgPkg">AddCmdToChgPkg</a>
+                            to add a command), to a resource group (<a href="#AddToResGrp">AddToResGrp</a>), or to a
+                            list (<a href="#AddToResDesc">AddToResDesc</a>).
+                        </p>
+                        <p>
+                            <strong>Remove*</strong>
+                            Remove objects from a container object, such as a change package (<a
+                                href="#RemoveResDefFromChgPkg">RemoveResDefFromChgPkg</a>, or
+                            <a href="#RemoveCmdToChgPkg">RemoveCmdToChgPkg</a>
+                            to remove a command), from a resource group (<a href="#RemoveFromResGrp">
+                            RemoveFromResGrp</a>), or list (<a href="#RemoveFromResDesc">RemoveFromResDesc</a>).
+                            <br/>
+                        </p>
+                    </li>
+                    <li>
+                        <p>Retrieving object information:</p>
+                        <p>
+                            <strong>Inquire*</strong>
+                            Return all the fields for a single resource definition (<a href="#InquireInOther">
+                            InquireInOther</a>), CICS Configuration Manager repository object (<a
+                                href="#InquireInRepository">InquireInRepository</a>), or CICS Configuration Manager
+                            journal object (<a href="#InquireInJournal">InquireInJournal</a>).
+                        </p>
+                        <p>
+                            <strong>List*</strong>
+                            Return selected fields from one or more resource definitions (<a href="#ListFromOther">
+                            ListFromOther</a>, or
+                            <a href="#ListWithinResults">ListWithinResults</a>
+                            to filter the results), CICS Configuration Manager repository objects (<a
+                                href="#ListFromRepository">ListFromRepository</a>), or CICS Configuration Manager
+                            journal objects (<a href="#ListFromJournal">ListFromJournal</a>).
+                            <br/>
+                        </p>
+                    </li>
+                    <li>
+                        <p>Packaging changes to resource definitions:</p>
+                        <p>
+                            <strong>
+                                <a href="#Ready">Ready</a>
+                            </strong>
+                            Indicate that the resource definitions in a change package are ready for migration.
+                        </p>
+                        <p>
+                            <strong>
+                                <a href="#Unready">Unready</a>
+                            </strong>
+                            Indicate that the resource definitions in a change package are no longer ready for
+                            migration.
+                        </p>
+                        <p>
+                            <strong>
+                                <a href="#Approve">Approve</a>
+                            </strong>
+                            Add to a change package the approval of a particular approver role.
+                        </p>
+                        <p>
+                            <strong>
+                                <a href="#Disapprove">Disapprove</a>
+                            </strong>
+                            Remove from a change package the approval of a particular approver role.
+                        </p>
+                        <p>
+                            <strong>
+                                <a href="#Migrate">Migrate</a>
+                            </strong>
+                            Copy the resource definitions in a change package from source to target CICS configurations,
+                            and invoke commands in the change package on target CICS configurations, according to the
+                            specified migration scheme.
+                        </p>
+                        <p>
+                            <strong>
+                                <a href="#Backout">Backout</a>
+                            </strong>
+                            Back out a previous change package migration.
+                            <br/>
+                        </p>
+                    </li>
+                    <li>
+                        <p>Altering in-memory images of resource definitions in active CICS regions:</p>
+                        <p>
+                            <strong>Discard*</strong>
+                            Discard the in-memory image of resource definitions from active CICS regions (<a
+                                href="#DiscardChgPkg">DiscardChgPkg</a>, or
+                            <a href="#DiscardAdHoc">DiscardAdHoc</a>
+                            for arbitrary resource definitions not from a change package).
+                        </p>
+                        <p>
+                            <strong>Install*</strong>
+                            Dynamically make resource definitions available to an active CICS region (<a
+                                href="#InstallChgPkg">InstallChgPkg</a>, or
+                            <a href="#InstallAdHoc">InstallAdHoc</a>
+                            for arbitrary resource definitions not from a change package).
+                        </p>
+                        <p>
+                            <strong>Newcopy*</strong>
+                            Reload in-memory copies of resource definitions associated with a CICS program definition or
+                            document template definition (<a href="#NewcopyChgPkg">NewcopyChgPkg</a>, or
+                            <a href="#NewcopyAdHoc">NewcopyAdHoc</a>
+                            for arbitrary resource definitions not from a change package).
+                            <br/>
+                        </p>
+                    </li>
+                    <li>
+                        <p>Importing resource definitions from an export file:</p>
+                        <p>
+                            <strong>
+                                <a href="#Import">Import</a>
+                            </strong>
+                            Import resource definitions from an export file received from another CICS Configuration
+                            Manager system. Optionally, if the export file contains change package details, also
+                            registers change packages in the importing CICS Configuration Manager repository.
+                            <br/>
+                        </p>
+                    </li>
+                    <li>
+                        <p>Recovering historical versions of resource definitions from the journal:</p>
+                        <p>
+                            <strong>
+                                <a href="#Recover">Recover</a>
+                            </strong>
+                            Recovers before or after images of historical resource definitions from the journal.
+                        </p>
+                    </li>
+                </ul>
                 <!-- TOC END -->
             </ul>
             <h2>Configuration</h2>
@@ -84,19 +223,33 @@
                     predefined parameter sets for end users, and
                     securely store credentials where needed. Each configuration
                     is given a unique name that is entered in designated
-                    parameters on procedures that use them.<br /><br />
+                    parameters on procedures that use them.
+                    <br/>
+                    <br/>
                 </p>
                 <h3>Creating Plugin Configurations</h3>
                 <p>To create plugin configurations in ElectricFlow,
-                do these steps:</p>
+                    do these steps:
+                </p>
                 <ol>
-                    <li>Go to <b>Administration</b> &gt; <b>Plugins</b> to open the Plugin Manager.</li>
+                    <li>Go to
+                        <b>Administration</b>
+                        &gt;
+                        <b>Plugins</b>
+                        to open the Plugin Manager.
+                    </li>
                     <li>Find the @PLUGIN_KEY@ row.</li>
-                    <li>Click <b>Configure</b> to open the
-                    @PLUGIN_KEY@ Configurations page.</li>
-                    <li>Click <b>Create Configuration</b>.</li>
+                    <li>Click
+                        <b>Configure</b>
+                        to open the
+                        @PLUGIN_KEY@ Configurations page.
+                    </li>
+                    <li>Click<b>Create Configuration</b>.
+                    </li>
                     <li>To enable ElectricFlow server to communicate with the API,
-                    enter the following information:<br /></li>
+                        enter the following information:
+                        <br/>
+                    </li>
                     <!-- CONFIG PARAMS BEGIN -->
                     <table class="grid">
                         <thead>
@@ -118,8 +271,10 @@
 
                             <tr>
                                 <td class="required">CICS CM SOAP URL</td>
-                                <td>	
-The URL of the SOAP interface of the CICS CM server to connect to (this should normally be of the format http://[server]:[port]/CICS/CWBA/CCVWSDSH/CCVADISP ).</td>
+                                <td>
+                                    The URL of the SOAP interface of the CICS CM server to connect to (this should
+                                    normally be of the format http://[server]:[port]/CICS/CWBA/CCVWSDSH/CCVADISP ).
+                                </td>
                             </tr>
 
                             <tr>
@@ -142,32 +297,37 @@ The URL of the SOAP interface of the CICS CM server to connect to (this should n
                 <p>The @PLUGIN_KEY@ Configurations page now shows the new configuration.</p>
                 <h3>Editing Plugin Configurations</h3>
                 <p>To edit plugin configurations in ElectricFlow,
-                do these steps:</p>
+                    do these steps:
+                </p>
                 <ol>
-                    <li>Go to <b>Administration</b> &gt; <b>Plugins</b> to open the Plugin Manager.</li>
+                    <li>Go to
+                        <b>Administration</b>
+                        &gt;
+                        <b>Plugins</b>
+                        to open the Plugin Manager.
+                    </li>
                     <li>Find the @PLUGIN_KEY@ row.</li>
-                    <li>Click <b>Configure</b> to open the Configurations page.</li>
+                    <li>Click
+                        <b>Configure</b>
+                        to open the Configurations page.
+                    </li>
                     <li>Find the configuration that you want to edit.</li>
-                    <li>Click <b>Edit</b>.</li>
+                    <li>Click<b>Edit</b>.
+                    </li>
                     <li>Edit the parameters in the configuration.</li>
-                    <li>Click <b>OK</b> to save the modified configuration.</li>
+                    <li>Click
+                        <b>OK</b>
+                        to save the modified configuration.
+                    </li>
                 </ol>
             </div>
             <h1>Procedures</h1>
             <!-- PROCEDURES BEGIN -->
-            
-            <!-- #### TODO KOSTYA Add all the other procedures. This is basically just copy-paste from
-            the procedure's form and from the descriptions in the TOC above (for a procedure whose TOC
-            description lists several procedures, cut it down to just the part relevant to this
-            procedure). -->
-            
-            <div id="Backout">
-                <a name="Backout" id="Backout" />
-                <!-- Backout METADATA BEGIN -->
-                <h3>Backout</h3>
-                <p>Back out a previous change package migration.</p>
-                <!-- Backout METADATA END -->
-                <!-- Backout BEGIN -->
+
+            <div id="Ready">
+                <a name="Ready" id="Ready"/>
+                <h3>Ready</h3>
+                <p>Indicate that the resource definitions in a change package are ready for migration.</p>
                 <table class="grid">
                     <thead>
                         <tr>
@@ -177,30 +337,2989 @@ The URL of the SOAP interface of the CICS CM server to connect to (this should n
                     </thead>
                     <tbody>
                         <tr>
-                            <td class="required">Configuration Name</td>
+                            <td>Configuration name:</td>
                             <td>The EC-CICS-CM configuration to use.</td>
                         </tr>
                         <tr>
-                            <td class="required">Output Property:</td>
+                            <td>Output Property:</td>
                             <td>The property that results will be returned into.</td>
                         </tr>
                         <tr>
-                            <td class="required">Change Package ID</td>
-                            <td>The change package ID of the change to back out.</td>
+                            <td>Change Package ID:</td>
+                            <td>The change package to mark as being ready to be migrated.</td>
                         </tr>
                         <tr>
-                            <td class="required">Scheme</td>
-                            <td>The migration scheme of the change to back out.</td>
-                        </tr>
-                        <tr>
-                            <td>Event ID</td>
-                            <td>The eventID of the execution of the Migrate command for the specified change package and migration scheme to back out (if omitted, it defaults to the most recent Migrate command for that change package and migration scheme).</td>
+                            <td>Migration Scheme:</td>
+                            <td>The migration scheme that the change package will be marked as being ready to be
+                                migrated with.
+                            </td>
                         </tr>
                     </tbody>
                 </table>
-                <!-- Backout END -->
             </div>
 
+            <div id="DeleteFromRepository">
+                <a name="DeleteFromRepository" id="DeleteFromRepository"/>
+                <h3>DeleteFromRepository</h3>
+                <p>Delete CICS Configuration Manager repository objects</p>
+                <table class="grid">
+                    <thead>
+                        <tr>
+                            <th>Parameter</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Configuration name:</td>
+                            <td>The EC-CICS-CM configuration to use.</td>
+                        </tr>
+                        <tr>
+                            <td>Output Property:</td>
+                            <td>The property that results will be returned into.</td>
+                        </tr>
+                        <tr>
+                            <td>Location Type:</td>
+                            <td>The location tyoe to delete from: Location Type must be &apos;Repository&apos; for this
+                                procedure (for deleteing from other location types, use the DeleteFromOther procedure
+                                instead).
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Object Type:</td>
+                            <td>The resource type of the object to delete.</td>
+                        </tr>
+                        <tr>
+                            <td>Object Instance:</td>
+                            <td>Optional, if it is supplied then the specified object instance and all older instances
+                                are deleted, otherwise all versions of the object are deleted.
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Object Name:</td>
+                            <td>The name of the object to delete (applies to object types AProfile, CConfig, Exits,
+                                Scheme, TFGroup, and TFRule).
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Change Package ID:</td>
+                            <td>The change package ID of the object to delete (applies to object types ChgPkg,
+                                CmdAssociation, KeyAssociation, and PScheme).
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>CICS Configuration:</td>
+                            <td>The CICS Configuration of the object to delete (applies to object types CmdAssociation
+                                and KeyAssociation).
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>CICS Group:</td>
+                            <td>The CICS group of the object to delete (applies to object types CmdAssociation and
+                                KeyAssociation).
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>CICS Object Type:</td>
+                            <td>The CICS object type of the object to delete (applies to object types CmdAssociation and
+                                KeyAssociation).
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>CICS Object Name:</td>
+                            <td>The CICS object name of the object to delete (applies to object types CmdAssociation and
+                                KeyAssociation).
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Scheme:</td>
+                            <td>The scheme of the object to delete (applies to object type PScheme).</td>
+                        </tr>
+                        <tr>
+                            <td>Integrity Token:</td>
+                            <td>The integrity token for the object to delete: used to avoid overwriting changes by other
+                                users -- supply the integrity token from an earlier Inquire or Update command for the
+                                same object; if the object has changed since the earlier command, then the object will
+                                not be deleted (optional, ignored unless the object criteria specifies a single object
+                                without masking).
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+
+            <div id="InquireInJournal">
+                <a name="InquireInJournal" id="InquireInJournal"/>
+                <h3>InquireInJournal</h3>
+                <p>Return all the fields for a single CICS Configuration Manager journal object.</p>
+                <table class="grid">
+                    <thead>
+                        <tr>
+                            <th>Parameter</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Configuration name:</td>
+                            <td>The EC-CICS-CM configuration to use.</td>
+                        </tr>
+                        <tr>
+                            <td>Output Property:</td>
+                            <td>The property that results will be returned into.</td>
+                        </tr>
+                        <tr>
+                            <td>Location Type:</td>
+                            <td>The type of location to inquire in: the Location Type must be &apos;Journal&apos; for
+                                this procedure (to inquire in other location types, use the InquireInRepository or
+                                InquireInOther procedure instead).
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Object Type:</td>
+                            <td>The type of the object to inquire the contents of.</td>
+                        </tr>
+                        <tr>
+                            <td>Object Instance:</td>
+                            <td>The instance of the object to inquire the contents of (to determine the appropriate
+                                Object Instance value, first use the ListFromReposiory procedure to list all the
+                                instances of the object).
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div id="Unready">
+                <a name="Unready" id="Unready"/>
+                <h3>Unready</h3>
+                <p>Indicate that the resource definitions in a change package are no longer ready for migration.</p>
+                <table class="grid">
+                    <thead>
+                        <tr>
+                            <th>Parameter</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Configuration name:</td>
+                            <td>The EC-CICS-CM configuration to use.</td>
+                        </tr>
+                        <tr>
+                            <td>Output Property:</td>
+                            <td>The property that results will be returned into.</td>
+                        </tr>
+                        <tr>
+                            <td>Change Package ID:</td>
+                            <td>The change package to unmark as being ready to be migrated.</td>
+                        </tr>
+                        <tr>
+                            <td>Migration Scheme:</td>
+                            <td>The scheme that the change package will be unmarked as being ready to be migrated
+                                with.
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div id="NewcopyAdHoc">
+                <a name="NewcopyAdHoc" id="NewcopyAdHoc"/>
+                <h3>NewcopyAdHoc</h3>
+                <p>Reload in-memory copies of resource definitions associated with a CICS program definition or document
+                    template definition for arbitrary resource definitions not from a change package).
+                </p>
+                <table class="grid">
+                    <thead>
+                        <tr>
+                            <th>Parameter</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Configuration name:</td>
+                            <td>The EC-CICS-CM configuration to use.</td>
+                        </tr>
+                        <tr>
+                            <td>Output Property:</td>
+                            <td>The property that results will be returned into.</td>
+                        </tr>
+                        <tr>
+                            <td>Location Name:</td>
+                            <td>Name of location to newcopy in.</td>
+                        </tr>
+                        <tr>
+                            <td>Location Type:</td>
+                            <td>Location to newcopy in: must be &apos;CICS Configuration&apos; for this procedure (to
+                                newcopy in other locations, use the NewcopyChgPkg procedure instead).
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Object Type:</td>
+                            <td>The object to newcopy&apos;s resource type.</td>
+                        </tr>
+                        <tr>
+                            <td>Object Name:</td>
+                            <td>The object to newcopy&apos;s resource name.</td>
+                        </tr>
+                        <tr>
+                            <td>Object Group:</td>
+                            <td>The object to newcopy&apos;s resource group.</td>
+                        </tr>
+                        <tr>
+                            <td>Serialized Resource Object Criteria:</td>
+                            <td>Any additional objects(s) to newcopy: XML serialized list of sets of
+                                MAPDEF/PROGDEF/PRTNDEF/DOCDEF object criteria, one per additional object, created using
+                                the procedure SerializeOtherObjectCriteria (optional, the object specified above is
+                                appended to this).
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Phase-in:</td>
+                            <td>Whether to do a phase-in action instead of a newcopy, to cater for in-use programs. For
+                                details, see the CICS documentation.
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Qualification Data:</td>
+                            <td>The Qualification Data is optional data passed through the Newcopy operations
+                                qualification exit point. The needs of your organization determine whether you use an
+                                exit program and what processing it performs.
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Connections:</td>
+                            <td>The CSD-based CICS regions on which to perform the newcopy or phasein. &apos;All&apos;:
+                                performs the action via all of the remote system connections defined in the CICS
+                                configuration (default), &apos;Local&apos;: performs the action on the CICS region that
+                                is running the CICS Configuration Manager server (Location Name mustspecify a CICS
+                                configuration that refers to the CSD file used by the CICS Configuration Manager
+                                server), &apos;Named&apos;: Performs the action via the remote system connections named
+                                in Connection Names.
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Connection Names:</td>
+                            <td>Whitespace-separated list of remote system connection names -- this is ignored unless
+                                Connections is set to &apos;Named&apos;.
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Target Scope:</td>
+                            <td>If the change package contains candidates for migration to context-based CICS
+                                configurations, Target Scope is required.
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div id="AddCmdToChgPkg">
+                <a name="AddCmdToChgPkg" id="AddCmdToChgPkg"/>
+                <h3>AddCmdToChgPkg</h3>
+                <p>Add command to a Change Package.</p>
+                <table class="grid">
+                    <thead>
+                        <tr>
+                            <th>Parameter</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Configuration name:</td>
+                            <td>The EC-CICS-CM configuration to use.</td>
+                        </tr>
+                        <tr>
+                            <td>Output Property:</td>
+                            <td>The property that results will be returned into.</td>
+                        </tr>
+                        <tr>
+                            <td>Location Type:</td>
+                            <td>The type of location to add to: must be &apos;Repository&apos; for this procedure (to
+                                add to other locations, use the approriate other Add... procedure instead).
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>CICS Configuration:</td>
+                            <td>The CICS configuration associated with the commands that you want to add to the change
+                                package.
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Command:</td>
+                            <td>The command name of the command to add.</td>
+                        </tr>
+                        <tr>
+                            <td>Object Type:</td>
+                            <td>The resource type of the resource acted on by the command to add.</td>
+                        </tr>
+                        <tr>
+                            <td>Object Name:</td>
+                            <td>The resource name of the resource acted on by the command to add.</td>
+                        </tr>
+                        <tr>
+                            <td>Object Group:</td>
+                            <td>The resource group of the resource acted on by the command to add (required unless the
+                                resource is located in a Context, for a Context you can specify either this or Object
+                                Definition Version).
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Object Definition Version:</td>
+                            <td>The resource definition version of the resource acted on by the command to add (omit
+                                unless the resource is located in a Context, for a Context you can specify either this
+                                or Object Group).
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Target Resource Group For Add:</td>
+                            <td>Relevant only when packaging an Add command: it identifies the ResGroup to which you
+                                want the resource definitions added.
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Serialized Command Object Criteria:</td>
+                            <td>Additional command(s) to add: an XML serialized list of sets of command object criteria,
+                                one per additional command, created using the procedure SerializeCommandObjectCriteria
+                                (optional, the command specified above is appended to this).
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Change Package ID:</td>
+                            <td>The ID of the change package to add the command(s) to.</td>
+                        </tr>
+                        <tr>
+                            <td>Container Type:</td>
+                            <td>The container type to add the command(s) to: must be &apos;Change Package&apos; for this
+                                procedure (to add to other container types, use the appropriate other Add... procedure
+                                instead).
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div id="InstallChgPkg">
+                <a name="InstallChgPkg" id="InstallChgPkg"/>
+                <h3>InstallChgPkg</h3>
+                <p>Dynamically make resource definitions available to an active CICS region.</p>
+                <table class="grid">
+                    <thead>
+                        <tr>
+                            <th>Parameter</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Configuration name:</td>
+                            <td>The EC-CICS-CM configuration to use.</td>
+                        </tr>
+                        <tr>
+                            <td>Output Property:</td>
+                            <td>The property that results will be returned into.</td>
+                        </tr>
+                        <tr>
+                            <td>Change Package ID:</td>
+                            <td>The change package to install.</td>
+                        </tr>
+                        <tr>
+                            <td>Migration Scheme:</td>
+                            <td>The migration scheme to use.</td>
+                        </tr>
+                        <tr>
+                            <td>Quiesce:</td>
+                            <td>CSD-based CICS Configurations only: specifies whether to set each resource to a
+                                (resource-type-dependent) status that allows its definition to be installed (for
+                                example, disabled, closed, or out of service), before attempting to install to it. If
+                                you do not specify this &quot;quiesce&quot; option, and a resource is in a status that
+                                does not allow the install action, then the install action for that resource definition
+                                will fail
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Qualification Data:</td>
+                            <td>Qualification Data is optional data passed through the Install operation&apos;s
+                                qualification exit point. The needs of your organization determine whether you use an
+                                exit program and what processing it performs
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Discard:</td>
+                            <td>Whether to discard the resource definition before attempting to install it</td>
+                        </tr>
+                        <tr>
+                            <td>Force:</td>
+                            <td>Applies only to Context-based CICS configurations.</td>
+                        </tr>
+                        <tr>
+                            <td>Target Scope:</td>
+                            <td>Required for Context-based CICS configurations, ommit for CDS-based CICS
+                                configurations.
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Resource Group Object Type:</td>
+                            <td>Filter to select resource definitions of a particular type, excluding any other types of
+                                resource definition in the ResGroup, applies only to Context-based CICS configurations
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>CONNDEF Resource Assignment:</td>
+                            <td>Applies only to Context-based CICS configurations.</td>
+                        </tr>
+                        <tr>
+                            <td>FILEDEF Related Scope:</td>
+                            <td>Applies only to Context-based CICS configurations.</td>
+                        </tr>
+                        <tr>
+                            <td>FILEDEF Usage:</td>
+                            <td>Applies only to Context-based CICS configurations.</td>
+                        </tr>
+                        <tr>
+                            <td>PROGDEF Related Scope:</td>
+                            <td>Applies only to Context-based CICS configurations.</td>
+                        </tr>
+                        <tr>
+                            <td>PROGDEF Usage:</td>
+                            <td>Applies only to Context-based CICS configurations.</td>
+                        </tr>
+                        <tr>
+                            <td>PROGDEF Mode:</td>
+                            <td>Applies only to Context-based CICS configurations.</td>
+                        </tr>
+                        <tr>
+                            <td>TDQDEF Related Scope:</td>
+                            <td>Applies only to Context-based CICS configurations.</td>
+                        </tr>
+                        <tr>
+                            <td>TDQDEF Usage:</td>
+                            <td>Applies only to Context-based CICS configurations.</td>
+                        </tr>
+                        <tr>
+                            <td>TDQDEF Mode:</td>
+                            <td>Applies only to Context-based CICS configurations.</td>
+                        </tr>
+                        <tr>
+                            <td>TRANDEF Related Scope:</td>
+                            <td>Applies only to Context-based CICS configurations.</td>
+                        </tr>
+                        <tr>
+                            <td>TRANDEF Usage:</td>
+                            <td>Applies only to Context-based CICS configurations</td>
+                        </tr>
+                        <tr>
+                            <td>TRANDEF Mode:</td>
+                            <td>Applies only to Context-based CICS configurations.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+
+            <div id="NewcopyChgPkg">
+                <a name="NewcopyChgPkg" id="NewcopyChgPkg"/>
+                <h3>NewcopyChgPkg</h3>
+                <p>Reload in-memory copies of resource definitions associated with a CICS program definition or document
+                    template definition
+                </p>
+                <table class="grid">
+                    <thead>
+                        <tr>
+                            <th>Parameter</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Configuration name:</td>
+                            <td>The EC-CICS-CM configuration to use.</td>
+                        </tr>
+                        <tr>
+                            <td>Output Property:</td>
+                            <td>The property that results will be returned into.</td>
+                        </tr>
+                        <tr>
+                            <td>Change Package ID:</td>
+                            <td>The change package to newcopy.</td>
+                        </tr>
+                        <tr>
+                            <td>Migration Scheme:</td>
+                            <td>The migration scheme to use.</td>
+                        </tr>
+                        <tr>
+                            <td>Phase-in:</td>
+                            <td>Whether to do a phase-in action instead of a newcopy, to cater for in-use programs. For
+                                details, see the CICS documentation.
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Qualification Data:</td>
+                            <td>The Qualification Data is optional data passed through the Newcopy operations
+                                qualification exit point. The needs of your organization determine whether you use an
+                                exit program and what processing it performs.
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Target Scope:</td>
+                            <td>If the change package contains candidates for migration to context-based CICS
+                                configurations, Target Scope is required.
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div id="UpdateInRepository">
+                <a name="UpdateInRepository" id="UpdateInRepository"/>
+                <h3>UpdateInRepository</h3>
+                <p>Modify a CICS Configuration Manager repository object.</p>
+                <table class="grid">
+                    <thead>
+                        <tr>
+                            <th>Parameter</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Configuration name:</td>
+                            <td>The EC-CICS-CM configuration to use.</td>
+                        </tr>
+                        <tr>
+                            <td>Output Property:</td>
+                            <td>The property that results will be returned into.</td>
+                        </tr>
+                        <tr>
+                            <td>Location Type:</td>
+                            <td>The type of location to update in: for this procedure, this must be &apos;Repository&apos;
+                                (to update in another location type, use theprocedure UpdateInOther instead).
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Object Type:</td>
+                            <td>The type of object to update.</td>
+                        </tr>
+                        <tr>
+                            <td>Object Name:</td>
+                            <td>The object to update&apos;s name (applies to object types AProfile, CConfig, Exits,
+                                Scheme, TFGroup, and TFRule).
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Change Package ID:</td>
+                            <td>The object to update&apos;s change package ID (applies to object types ChgPkg,
+                                CmdAssociation, KeyAssociation, and PScheme).
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>CICS Configuration:</td>
+                            <td>The object to update&apos;s CICS Configuration (applies to object types CmdAssociation
+                                and KeyAssociation).
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>CICS Group:</td>
+                            <td>The object to update&apos;s CICS group (applies to object types CmdAssociation and
+                                KeyAssociation).
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>CICS Object Type:</td>
+                            <td>The object to update&apos;s CICS object type (applies to object types CmdAssociation and
+                                KeyAssociation).
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>CICS Object Name:</td>
+                            <td>The object to update&apos;s CICS object name (applies to object types CmdAssociation and
+                                KeyAssociation).
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Scheme:</td>
+                            <td>The object to update&apos;s scheme (applies to object type PScheme).</td>
+                        </tr>
+                        <tr>
+                            <td>Integrity Token:</td>
+                            <td>Th object integrity token of the object to update: used to avoid overwriting changes by
+                                other users -- supply the integrity token from an earlier Inquire or Update command for
+                                the same object; if the resource has changed since the earlier command, then the object
+                                will not be updated (optional).
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Name-Value Pairs:</td>
+                            <td>Name-value pairs to set in the object being updated, one per line in NAME=VALUE format.
+                                (For some objects types, some VALUEs may need to be XML datastructures - usually a list
+                                of elements preceeded by a count.)
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div id="ListFromOther">
+                <a name="ListFromOther" id="ListFromOther"/>
+                <h3>ListFromOther</h3>
+                <p>Return selected fields from one or more resource definitions.</p>
+                <table class="grid">
+                    <thead>
+                        <tr>
+                            <th>Parameter</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Configuration name:</td>
+                            <td>The EC-CICS-CM configuration to use.</td>
+                        </tr>
+                        <tr>
+                            <td>Output Property:</td>
+                            <td>The property that results will be returned into.</td>
+                        </tr>
+                        <tr>
+                            <td>Location Type:</td>
+                            <td>The type of location to list from (to list from a Journal use the procedure
+                                ListFromJournal, to list from a Reposititory use the procedure ListFromRepository
+                                instead).
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Location Name:</td>
+                            <td>The name of the location to list from.</td>
+                        </tr>
+                        <tr>
+                            <td>Resource Type:</td>
+                            <td>The type of resource to list.</td>
+                        </tr>
+                        <tr>
+                            <td>Resource Name:</td>
+                            <td>The name of the resource to list (a &apos;masked&apos; value ending in the wildcard *
+                                can be used).
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Resource Group:</td>
+                            <td>The resource group to list the resource from (a &apos;masked&apos; value ending in the
+                                wildcard * can be used; required except for the resource types &apos;ResGroup (Group for
+                                CSD)&apos; and &apos;ResDesc (List for CSD)&apos;, which cannot be in a resource group,
+                                or omit if a Resource Definition Version is supplied).
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Resource Definition Version:</td>
+                            <td>The resource definition version number of the resource to list (optional, can be
+                                specified instead of Resource Group if the Location Type is Context).
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Restriction Criteria:</td>
+                            <td>(Optional) restriction criteria, whitespace separated in &lt;NAME&gt;.&lt;COMPARATOR&gt;.&lt;VALUE&gt;
+                                format. Valid &lt;COMPARATOR&gt; values are EQ, NE, LT, GT, LE, and GE. Restriction
+                                criteria all on
+                                a single line are combined using logical AND. Groups of restriction critera on different
+                                lines are
+                                combined using logical OR. For example, to limit the list to resource definitions that
+                                were changed
+                                after 26 June 2004, specify ChangeTime.GT.2004/06/26 (fields mentioned in restriction
+                                criteria will
+                                be returned in the listing even if they otherwise would not be).
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>All Attributes:</td>
+                            <td>Specifies whether all attributes of the requested resource definitions are returned or
+                                only a default subset (optional, defaults to &apos;NO&apos;).
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Hashing Scope:</td>
+                            <td>Specifies whether or not the List command response contains a &apos;HashingValue&apos;
+                                element with a checksum for each selected object, and which fields it uses to calculate
+                                the checksum (optional, defaults to &apos;None&apos;).
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Counts:</td>
+                            <td>Specifies whether include various count values in the response (optional, defaults to
+                                not including them).
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Filter Date:</td>
+                            <td>If set, limits the objects returned by List to those changed on or before the specified
+                                date and time. You can use this instead of, or in addition to, restriction criteria for
+                                change time. Format: yyyy/mm/dd.hh:mm (optional)
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Limit:</td>
+                            <td>If set, sets an upper limit on the number of resource definitions that can be returned
+                                by ListFromJournal. If the number of resource definitions that match the specifications
+                                of the List command exceeds this limit, then the List command returns an error, with no
+                                resource definitions. This avoids the problems associated with returning a subset of
+                                objects that match the specifications: for example, depending on how a client sorts the
+                                results of the List command, omissions might not be apparent to the end user. (optional)
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Report Set:</td>
+                            <td>If set, limits the resource definitions returned by ListFromOther according to one of
+                                the selected option (optional, defaults to &apos;All&apos;).
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+
+            <div id="ListFromRepository">
+                <a name="ListFromRepository" id="ListFromRepository"/>
+                <h3>ListFromRepository</h3>
+                <p>Return selected fields for CICS Configuration Manager repository object.</p>
+                <table class="grid">
+                    <thead>
+                        <tr>
+                            <th>Parameter</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Configuration name:</td>
+                            <td>The EC-CICS-CM configuration to use.</td>
+                        </tr>
+                        <tr>
+                            <td>Output Property:</td>
+                            <td>The property that results will be returned into.</td>
+                        </tr>
+                        <tr>
+                            <td>Location Type:</td>
+                            <td>Location to list from: location type must be &apos;Repository&apos; for this procedure
+                                (to list from other location types, use the ListFromJournal or ListFromOther procedure
+                                instead).
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Object Type:</td>
+                            <td>The type of object(s) to list.</td>
+                        </tr>
+                        <tr>
+                            <td>Object Name:</td>
+                            <td>The name of the object(s) to list (applies to object types AProfile, CConfig, Exits,
+                                Scheme, TFGroup, and TFRule; a &apos;masked&apos; value ending in the wildcard * can be
+                                used).
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Change Package ID:</td>
+                            <td>The change package ID of the object(s) to list (applies to object types ChgPkg,
+                                CmdAssociation, KeyAssociation, PScheme, and ReadyLst; a &apos;masked&apos; value ending
+                                in the wildcard * can be used).
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>CICS Configuration:</td>
+                            <td>The CICS Configuration of the object(s) to list (applies to object types CmdAssociation
+                                and KeyAssociation; a &apos;masked&apos; value ending in the wildcard * can be used).
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>CICS Group:</td>
+                            <td>The CICS group for the object(s) to list (applies to object types CmdAssociation and
+                                KeyAssociation; a &apos;masked&apos; value ending in the wildcard * can be used).
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>CICS Object Type:</td>
+                            <td>The CICS object type for the object(s) to list (applies to object types CmdAssociation
+                                and KeyAssociation; a &apos;masked&apos; value ending in the wildcard * can be used).
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>CICS Object Name:</td>
+                            <td>The CICS object name for the object(s) to list (applies to object types CmdAssociation
+                                and KeyAssociation; a &apos;masked&apos; value ending in the wildcard * can be used).
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Scheme:</td>
+                            <td>The scheme of the object(s) to list (applies to object types PScheme, Scheme and
+                                ReadyLst; a &apos;masked&apos; value ending in the wildcard * can be used).
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Restriction Criteria:</td>
+                            <td>(Optional) restriction criteria, whitespace separated in &lt;NAME&gt;.&lt;COMPARATOR&gt;.&lt;VALUE&gt;
+                                format. Valid &lt;COMPARATOR&gt; values are EQ, NE, LT, GT, LE, and GE. Restriction
+                                criteria all on
+                                a single line are combined using logical AND. Groups of restriction critera on different
+                                lines are
+                                combined using logical OR. For example, to limit the list to resource definitions that
+                                were changed
+                                after 26 June 2004, specify ChangeTime.GT.2004/06/26 (fields mentioned in restriction
+                                criteria will
+                                be returned in the listing even if they otherwise would not be).
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Hashing Scope:</td>
+                            <td>Specifies whether or not the List command response contains a &apos;HashingValue&apos;
+                                element with a checksum for each selected object, and which fields it uses to calculate
+                                the checksum (optional, defaults to &apos;None&apos;).
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Object History:</td>
+                            <td>Specifies whether to return all versions of an object from the repository, or only the
+                                current version (optional, defaults to &apos;No&apos;).
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>CPID Formula:</td>
+                            <td>CPIDFormula is relevant only when listing change packages (&apos;APPROVE?&apos;: Limits
+                                the list to change packages that are ready, and that require approval for a particular
+                                migration scheme. &apos;MIGRATE?&apos;: Limits the list to change packages that require
+                                migration. These are change packages that are ready and approved (if necessary), and
+                                either have not yet been migrated or have been backed out from a previous migration.)
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Counts:</td>
+                            <td>Specifies whether include various count values in the response (optional, defaults to
+                                not including them).
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Filter Date:</td>
+                            <td>If set, limits the objects returned by List to those changed on or before the specified
+                                date and time. You can use this instead of, or in addition to, restriction criteria for
+                                change time. Format: yyyy/mm/dd.hh:mm (optional)
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Limit:</td>
+                            <td>If set, sets an upper limit on the number of resource definitions that can be returned
+                                by ListFromJournal. If the number of resource definitions that match the specifications
+                                of the List command exceeds this limit, then the List command returns an error, with no
+                                resource definitions. This avoids the problems associated with returning a subset of
+                                objects that match the specifications: for example, depending on how a client sorts the
+                                results of the List command, omissions might not be apparent to the end user. (optional)
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+
+            <div id="UpdateInOther">
+                <a name="UpdateInOther" id="UpdateInOther"/>
+                <h3>UpdateInOther</h3>
+                <p>Modify a resource definition.</p>
+                <table class="grid">
+                    <thead>
+                        <tr>
+                            <th>Parameter</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Configuration name:</td>
+                            <td>The EC-CICS-CM configuration to use.</td>
+                        </tr>
+                        <tr>
+                            <td>Output Property:</td>
+                            <td>The property that results will be returned into.</td>
+                        </tr>
+                        <tr>
+                            <td>Location Name:</td>
+                            <td>The name of the location to update in.</td>
+                        </tr>
+                        <tr>
+                            <td>Location Type:</td>
+                            <td>The type of location to update in (to update in the Repository, use procedure
+                                UpdateInRepository instead).
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Resource Type:</td>
+                            <td>The type of resource to update.</td>
+                        </tr>
+                        <tr>
+                            <td>Resource Name:</td>
+                            <td>The name of the resource to update.</td>
+                        </tr>
+                        <tr>
+                            <td>Resource Group:</td>
+                            <td>The resource group to update the resource in (required except for the resource types
+                                &apos;ResGroup (Group for CSD)&apos; and &apos;ResDesc (List for CSD)&apos;, which
+                                cannot be in a resource group, or omit if a Resource Definition Version is supplied).
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Resource Definition Version:</td>
+                            <td>The resource definition version number of the resource to update (optional, can be
+                                specified instead of Resource Group if the Location Type is Context).
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Integrity Token:</td>
+                            <td>The object integrity token of the resource being updated: used to avoid overwriting
+                                changes by other users -- supply the integrity token from an earlier Inquire or Update
+                                command for the same object; if the resource has changed since the earlier command, then
+                                the object will not be updated (optional).
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>CSysDef Model:</td>
+                            <td>Applies only to CSysDef objects and is optional.</td>
+                        </tr>
+                        <tr>
+                            <td>Object Data Name-Value Pairs:</td>
+                            <td>Name-value pairs to set in the resource definition being updated, one per line in
+                                NAME=VALUE format.
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div id="InquireInRepository">
+                <a name="InquireInRepository" id="InquireInRepository"/>
+                <h3>InquireInRepository</h3>
+                <p>Return all the fields for a single CICS Configuration Manager repository object.</p>
+                <table class="grid">
+                    <thead>
+                        <tr>
+                            <th>Parameter</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Configuration name:</td>
+                            <td>The EC-CICS-CM configuration to use.</td>
+                        </tr>
+                        <tr>
+                            <td>Output Property:</td>
+                            <td>The property that results will be returned into.</td>
+                        </tr>
+                        <tr>
+                            <td>Location Type:</td>
+                            <td>The type of location to inquire in: the Location Type must be &apos;Repository&apos; for
+                                this procedure (to inquire in other location types, use the InquireInJournal or
+                                InquireInOther procedure instead)
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Object Type:</td>
+                            <td>The type of the object to inquire the contents of.</td>
+                        </tr>
+                        <tr>
+                            <td>Object Name:</td>
+                            <td>The name of the object to inquire the contents of (applies to object types AProfile,
+                                CConfig, Exits, Scheme, TFGroup, and TFRule).
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Change Package ID:</td>
+                            <td>The change package ID of the object to inquire the contents of (applies to object types
+                                ChgPkg, CmdAssociation, KeyAssociation, PScheme, and ReadyLst).
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>CICS Configuration:</td>
+                            <td>The CICS Configuration of the object to inquire the contents of (applies to object types
+                                CmdAssociation and KeyAssociation).
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>CICS Group:</td>
+                            <td>The CICS group for the object to inquire the contents of (applies to object types
+                                CmdAssociation and KeyAssociation).
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>CICS Object Type:</td>
+                            <td>The CICS object type for the object to inquire the contents of (applies to object types
+                                CmdAssociation and KeyAssociation).
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>CICS Object Name:</td>
+                            <td>The CICS object name for the object to inquire the contents of (applies to object types
+                                CmdAssociation and KeyAssociation).
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Scheme:</td>
+                            <td>The scheme of the object to inquire the contents of (applies to object types PScheme,
+                                Scheme and ReadyLst).
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Object Instance:</td>
+                            <td>The instance of the object to inquire the contents of (optional, if it is omitted the
+                                contents of the latest instance will be returned).
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div id="RemoveResDefFromChgPkg">
+                <a name="RemoveResDefFromChgPkg" id="RemoveResDefFromChgPkg"/>
+                <h3>RemoveResDefFromChgPkg</h3>
+                <p>Remove objects from a Change Package.</p>
+                <table class="grid">
+                    <thead>
+                        <tr>
+                            <th>Parameter</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Configuration name:</td>
+                            <td>The EC-CICS-CM configuration to use.</td>
+                        </tr>
+                        <tr>
+                            <td>Output Property:</td>
+                            <td>The property that results will be returned into.</td>
+                        </tr>
+                        <tr>
+                            <td>Location Type:</td>
+                            <td>Location type to remove from: must be &apos;Repository&apos; for this procedure (to
+                                remove from another location type, use the appropriate other Remove... procedure
+                                instead)
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>CICS Configuration:</td>
+                            <td>The CICS configuration that contains the resource definitions that you want to add to
+                                the change package
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Object Type:</td>
+                            <td>The resource type of the resource definition to remove.</td>
+                        </tr>
+                        <tr>
+                            <td>Object Name:</td>
+                            <td>The resource name of the resource definition to remove.</td>
+                        </tr>
+                        <tr>
+                            <td>Object Group:</td>
+                            <td>The resource group of the resource definition to remove.</td>
+                        </tr>
+                        <tr>
+                            <td>Serialized Resource Object Criteria:</td>
+                            <td>Additional resource definition(s) to remove: an XML serialized list of sets of resource
+                                object criteria, one per additional resource definition, created using the procedure
+                                SerializeOtherObjectCriteria (optional, the resource definition specified above is
+                                appended to this).
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Change Package ID:</td>
+                            <td>The ID of the change package to remove the resource definition(s) from.</td>
+                        </tr>
+                        <tr>
+                            <td>Container Type:</td>
+                            <td>Container type to remove the resource definition(s) from: must be &apos;Change Package&apos;
+                                for this procedure (to remove from another container type, use the appropriate other
+                                Remove... procedure instead)
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div id="CreateInRepository">
+                <a name="CreateInRepository" id="CreateInRepository"/>
+                <h3>CreateInRepository</h3>
+                <p>Create a CICS Configuration Manager repository object.</p>
+                <table class="grid">
+                    <thead>
+                        <tr>
+                            <th>Parameter</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Configuration name:</td>
+                            <td>The EC-CICS-CM configuration to use.</td>
+                        </tr>
+                        <tr>
+                            <td>Output Property:</td>
+                            <td>The property that results will be returned into.</td>
+                        </tr>
+                        <tr>
+                            <td>Location Type:</td>
+                            <td>Location to create in (for this procedure this must be &apos;Repository&apos;, to create
+                                in other locations use procedure CreateInOther instead).
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Object Type:</td>
+                            <td>The resource type of object to create.</td>
+                        </tr>
+                        <tr>
+                            <td>Object Name:</td>
+                            <td>The object to create&apos;s name (applies to object types AProfile, CConfig, Exits,
+                                Scheme, TFGroup, and TFRule).
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Change Package ID:</td>
+                            <td>The object to delete&apos;s change package ID (applies to object types ChgPkg,
+                                CmdAssociation, KeyAssociation, and PScheme).
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>CICS Configuration:</td>
+                            <td>The object to delete&apos;s CICS Configuration (applies to object types CmdAssociation
+                                and KeyAssociation).
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>CICS Group:</td>
+                            <td>The object to delete&apos;s CICS group (applies to object types CmdAssociation and
+                                KeyAssociation).
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>CICS Object Type:</td>
+                            <td>The object to delete&apos;s CICS object type (applies to object types CmdAssociation and
+                                KeyAssociation).
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>CICS Object Name:</td>
+                            <td>The object to delete&apos;s CICS object name (applies to object types CmdAssociation and
+                                KeyAssociation).
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Scheme:</td>
+                            <td>The object to delete&apos;s scheme (applies to object type PScheme).</td>
+                        </tr>
+                        <tr>
+                            <td>Object Data Name-Value Pairs:</td>
+                            <td>Name-value pairs to set in the object being created, one per line in NAME=VALUE format.
+                                (For some objects types, some VALUEs may need to be XML datastructures - usually a list
+                                of elements preceeded by a count.)
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div id="DiscardAdHoc">
+                <a name="DiscardAdHoc" id="DiscardAdHoc"/>
+                <h3>DiscardAdHoc</h3>
+                <p>Discard the in-memory image of resource definitions from active CICS regions for arbitrary resource
+                    definitions not from a change package.
+                </p>
+                <table class="grid">
+                    <thead>
+                        <tr>
+                            <th>Parameter</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Configuration name:</td>
+                            <td>The EC-CICS-CM configuration to use.</td>
+                        </tr>
+                        <tr>
+                            <td>Output Property:</td>
+                            <td>The property that results will be returned into.</td>
+                        </tr>
+                        <tr>
+                            <td>Location Name:</td>
+                            <td>Name of location to create in</td>
+                        </tr>
+                        <tr>
+                            <td>Location Type:</td>
+                            <td>Location to create in (to create in the Repository, use procedure CreateInRepository
+                                instead)
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Object Type:</td>
+                            <td>Object to discard: resource type</td>
+                        </tr>
+                        <tr>
+                            <td>Object Name:</td>
+                            <td>Object to discard: resource name</td>
+                        </tr>
+                        <tr>
+                            <td>Object Group:</td>
+                            <td>Object to discard: resource group</td>
+                        </tr>
+                        <tr>
+                            <td>Serialized Resource Object Criteria:</td>
+                            <td>Additional objects(s) to discard: XML serialized list of sets of
+                                MAPDEF/PROGDEF/PRTNDEF/DOCDEF object criteria, one per additional object, created using
+                                the procedure SerializeOtherObjectCriteria (optional, the object specified above is
+                                appended to this).
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Quiesce:</td>
+                            <td>This specifies whether or not to set the resource to a status that allows its definition
+                                to be discarded (for example, disabled, closed, or out of service), prior to attempting
+                                the action. The status depends on the resource type. If you do not specify this &quot;quiesce&quot;
+                                option, and a resource is in a status that does not allow the discard action, then the
+                                discard action for that resource definition will fail.
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Qualification Data:</td>
+                            <td>Qualification Data is optional data passed through the Discard operation&apos;s
+                                qualification exit point. The needs of your organization determine whether you use an
+                                exit program and what processing it performs
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Connections:</td>
+                            <td>The CSD-based CICS regions on which to perform the discard. &apos;All&apos;: performs
+                                the discard via all of the remote system connections defined in the CICS configuration
+                                (default), &apos;Local&apos;: performs the discard on the CICS region that is running
+                                the CICS Configuration Manager server (Location Name mustspecify a CICS configuration
+                                that refers to the CSD file used by the CICS Configuration Manager server, &apos;Named&apos;:
+                                Performs the discard via the remote system connections named in Connection Names.
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Connection Names:</td>
+                            <td>Whitespace-separated list of remote system connection names -- this is ignored unless
+                                Connections is set to &apos;Named&apos;.
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Target Scope:</td>
+                            <td>If the change package contains candidates for migration to context-based CICS
+                                configurations, Target Scope is required.
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div id="CreateInOther">
+                <a name="CreateInOther" id="CreateInOther"/>
+                <h3>CreateInOther</h3>
+                <p>Create a resource definition.</p>
+                <table class="grid">
+                    <thead>
+                        <tr>
+                            <th>Parameter</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Configuration name:</td>
+                            <td>The EC-CICS-CM configuration to use.</td>
+                        </tr>
+                        <tr>
+                            <td>Output Property:</td>
+                            <td>The property that results will be returned into.</td>
+                        </tr>
+                        <tr>
+                            <td>Location Name:</td>
+                            <td>The name of the location to create in.</td>
+                        </tr>
+                        <tr>
+                            <td>Location Type:</td>
+                            <td>The type of location to create in (to create in the Repository, use procedure
+                                CreateInRepository instead).
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Resource Type:</td>
+                            <td>The type of resource to create.</td>
+                        </tr>
+                        <tr>
+                            <td>Resource Name:</td>
+                            <td>The name for the resource to create.</td>
+                        </tr>
+                        <tr>
+                            <td>Resource Group:</td>
+                            <td>The resource group to create the resource in (required except for the resource types
+                                &apos;ResGroup (Group for CSD)&apos; and &apos;ResDesc (List for CSD)&apos;, which
+                                cannot be in a resource group).
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Object Data Name-Value Pairs:</td>
+                            <td>Name-value pairs to set in the resource definition being created, one per line in
+                                NAME=VALUE format.
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>CSysDef Model:</td>
+                            <td>Optional, applies only to CSysDef objects.</td>
+                        </tr>
+                        <tr>
+                            <td>MON Specification Inheritance:</td>
+                            <td>Optional, applies only to CSGLCGCS objects.</td>
+                        </tr>
+                        <tr>
+                            <td>RTA Specification Inheritance:</td>
+                            <td>Optional, applies only to CSGLCGCS objects.</td>
+                        </tr>
+                        <tr>
+                            <td>WLM Specification Inheritance:</td>
+                            <td>Optional, applies only to CSGLCGCS objects.</td>
+                        </tr>
+                        <tr>
+                            <td>LNKSWSCG Parameter:</td>
+                            <td>Optional, applies only to LNKSWSCG objects.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div id="RemoveFromResGrp">
+                <a name="RemoveFromResGrp" id="RemoveFromResGrp"/>
+                <h3>RemoveFromResGrp</h3>
+                <p>Remove objects from a resource group.</p>
+                <table class="grid">
+                    <thead>
+                        <tr>
+                            <th>Parameter</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Configuration name:</td>
+                            <td>The EC-CICS-CM configuration to use.</td>
+                        </tr>
+                        <tr>
+                            <td>Output Property:</td>
+                            <td>The property that results will be returned into.</td>
+                        </tr>
+                        <tr>
+                            <td>Location Name:</td>
+                            <td>The name of the location in which to remove from a resource group.</td>
+                        </tr>
+                        <tr>
+                            <td>Location Type:</td>
+                            <td>The type of the location in which to remove from a resource group.</td>
+                        </tr>
+                        <tr>
+                            <td>Resource Type:</td>
+                            <td>Resource type of the resource definition to remove.</td>
+                        </tr>
+                        <tr>
+                            <td>Resource Name:</td>
+                            <td>Resource name of the resource definition to remove.
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Resource Group:</td>
+                            <td>The resource group of the resource definition to remove (required unless the resource
+                                definition is located in a Context, for a Context you can specify either this or Object
+                                Definition Version).
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Serialized Resource Object Criteria:</td>
+                            <td>Additional resource definition(s) to remove: an XML serialized list of sets of resource
+                                object criteria, one per additional resource definition, created using the procedure
+                                SerializeOtherObjectCriteria (optional, the resource definition specified above is
+                                appended to this).
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Resource Container Name:</td>
+                            <td>The name of the resource group to remove the resource definition(s) from.</td>
+                        </tr>
+                        <tr>
+                            <td>Container Type:</td>
+                            <td>The container type to remove the resource definition(s) from: must be &apos;Resource
+                                Group&apos; for this procedure (to remove from another container type, use the
+                                appropriate other Remove... procedure instead).
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div id="AddResDefToChgPkg">
+                <a name="AddResDefToChgPkg" id="AddResDefToChgPkg"/>
+                <h3>AddResDefToChgPkg</h3>
+                <p>Add Resource Definition to a Change Package.</p>
+                <table class="grid">
+                    <thead>
+                        <tr>
+                            <th>Parameter</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Configuration name:</td>
+                            <td>The EC-CICS-CM configuration to use.</td>
+                        </tr>
+                        <tr>
+                            <td>Output Property:</td>
+                            <td>The property that results will be returned into.</td>
+                        </tr>
+                        <tr>
+                            <td>Location Type:</td>
+                            <td>Location type to add to: must be &apos;Repository&apos; for this procedure (to add to
+                                another location type, use the appropriate other Add... procedure instead)
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>CICS Configuration:</td>
+                            <td>The CICS configuration that contains the resource definitions that you want to add to
+                                the change package
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Object Type:</td>
+                            <td>The resource type of the resource definition to add.</td>
+                        </tr>
+                        <tr>
+                            <td>Object Name:</td>
+                            <td>The resource name of the resource definition to add.</td>
+                        </tr>
+                        <tr>
+                            <td>Object Group:</td>
+                            <td>The resource group of the resource definition to add.</td>
+                        </tr>
+                        <tr>
+                            <td>Serialized Resource Object Criteria:</td>
+                            <td>Additional resource definition(s) to add: an XML serialized list of sets of resource
+                                object criteria, one per additional resource definition, created using the procedure
+                                SerializeOtherObjectCriteria (optional, the resource definition specified above is
+                                appended to this).
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Change Package ID:</td>
+                            <td>The ID of the change package to add the resource definition(s) to.</td>
+                        </tr>
+                        <tr>
+                            <td>Container Type:</td>
+                            <td>Container type to add the resource definition(s) to: must be &apos;Change Package&apos;
+                                for this procedure (to add to another container type, use the appropriate other Add...
+                                procedure instead)
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div id="Disapprove">
+                <a name="Disapprove" id="Disapprove"/>
+                <h3>Disapprove</h3>
+                <p>Remove from a change package the approval of a particular approver role.</p>
+                <table class="grid">
+                    <thead>
+                        <tr>
+                            <th>Parameter</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Configuration name:</td>
+                            <td>The EC-CICS-CM configuration to use.</td>
+                        </tr>
+                        <tr>
+                            <td>Output Property:</td>
+                            <td>The property that results will be returned into.</td>
+                        </tr>
+                        <tr>
+                            <td>Change Package ID:</td>
+                            <td>Withdraw the approval of the migration of this change package.</td>
+                        </tr>
+                        <tr>
+                            <td>Migration Scheme:</td>
+                            <td>Withdraw the approval for the migration of the above change package using this migration
+                                scheme.
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Role:</td>
+                            <td>The approver role to remove the approve from.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div id="Approve">
+                <a name="Approve" id="Approve"/>
+                <h3>Approve</h3>
+                <p>Remove from a change package the approval of a particular approver role.</p>
+                <table class="grid">
+                    <thead>
+                        <tr>
+                            <th>Parameter</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Configuration name:</td>
+                            <td>The EC-CICS-CM configuration to use.</td>
+                        </tr>
+                        <tr>
+                            <td>Output Property:</td>
+                            <td>The property that results will be returned into.</td>
+                        </tr>
+                        <tr>
+                            <td>Change Package ID:</td>
+                            <td>Approve the migration of this change package.</td>
+                        </tr>
+                        <tr>
+                            <td>Migration Scheme:</td>
+                            <td>Approve the migration of the above change package using this migration scheme.</td>
+                        </tr>
+                        <tr>
+                            <td>Role:</td>
+                            <td>The approver role to approve as.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div id="ListWithinResults">
+                <a name="ListWithinResults" id="ListWithinResults"/>
+                <h3>ListWithinResults</h3>
+                <p>Return selected fields from one or more resource definitions with filtering the results.</p>
+                <table class="grid">
+                    <thead>
+                        <tr>
+                            <th>Parameter</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Configuration name:</td>
+                            <td>The EC-CICS-CM configuration to use.</td>
+                        </tr>
+                        <tr>
+                            <td>Output Property:</td>
+                            <td>The property that results will be returned into.</td>
+                        </tr>
+                        <tr>
+                            <td>Location Type:</td>
+                            <td>The type of location to list from (to list from a Journal use the procedure
+                                ListFromJournal, to list from a Reposititory use the procedure ListFromRepository
+                                instead).
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Location Name:</td>
+                            <td>The name of the location to list from.</td>
+                        </tr>
+                        <tr>
+                            <td>Resource Type:</td>
+                            <td>The type of resource to list.</td>
+                        </tr>
+                        <tr>
+                            <td>Resource Name:</td>
+                            <td>The name of the resource to list within (a &apos;masked&apos; value ending in the
+                                wildcard * can be used).
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Resource Group:</td>
+                            <td>The resource group to list within the resource from (a &apos;masked&apos; value ending
+                                in the wildcard * can be used; required except for the resource types &apos;ResGroup
+                                (Group for CSD)&apos; and &apos;ResDesc (List for CSD)&apos;, which cannot be in a
+                                resource group, or omit if a Resource Definition Version is supplied).
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Resource Definition Version:</td>
+                            <td>The resource definition version number of the resource to list within (optional, can be
+                                specified instead of Resource Group if the Location Type is Context).
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Serialized Resource Object Criteria:</td>
+                            <td>Additional resource(s) to list within: an XML serialized list of sets of resource object
+                                criteria, one per additional resource to list within, created using the procedure
+                                SerializeOtherObjectCriteria (optional, the resource specified above is appended to
+                                this).
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Restriction Criteria:</td>
+                            <td>(Optional) restriction criteria, whitespace separated in &lt;NAME&gt;.&lt;COMPARATOR&gt;.&lt;VALUE&gt;
+                                format. Valid &lt;COMPARATOR&gt; values are EQ, NE, LT, GT, LE, and GE. Restriction
+                                criteria all on
+                                a single line are combined using logical AND. Groups of restriction critera on different
+                                lines are
+                                combined using logical OR. For example, to limit the list to resource definitions that
+                                were changed
+                                after 26 June 2004, specify ChangeTime.GT.2004/06/26 (fields mentioned in restriction
+                                criteria will
+                                be returned in the listing even if they otherwise would not be).
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div id="Alter">
+                <a name="Alter" id="Alter"/>
+                <h3>Alter</h3>
+                <p>Alter selected attribute values across one or more resource definitions, without affecting other
+                    attribute values.
+                </p>
+                <table class="grid">
+                    <thead>
+                        <tr>
+                            <th>Parameter</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Configuration name:</td>
+                            <td>The EC-CICS-CM configuration to use.</td>
+                        </tr>
+                        <tr>
+                            <td>Output Property:</td>
+                            <td>The property that results will be returned into.</td>
+                        </tr>
+                        <tr>
+                            <td>Location Name:</td>
+                            <td>The name of the location to alter in.</td>
+                        </tr>
+                        <tr>
+                            <td>Location Type:</td>
+                            <td>The type of location to alter in.</td>
+                        </tr>
+                        <tr>
+                            <td>Object Type:</td>
+                            <td>The type of resource definition(s) to alter.</td>
+                        </tr>
+                        <tr>
+                            <td>Object Name:</td>
+                            <td>The name of the resource definition(s) to alter (a &apos;masked&apos; value ending in
+                                the wildcard * can be used).
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Object Group:</td>
+                            <td>The resource group of the resource definition(s) to alter (a &apos;masked&apos; value
+                                ending in the wildcard * can be used).
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Serialized Resource Object Criteria:</td>
+                            <td>Additional resource definition(s) to alter: XML serialized list of sets of resource
+                                object criteria, one per additional resource definition, created using the procedure
+                                SerializeOtherObjectCriteria (optional, the resource definition specified above is
+                                appended to this; however, if the Object Type above is &apos;*&apos; or &apos;All&apos;,
+                                or if a masked value was used for Object Name or Object Group then the Serialized
+                                Resource Object Criteria must be empty).
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Name-Value Pairs:</td>
+                            <td>Name-value pairs to set in the resource definition(s), one per line in NAME=VALUE
+                                format.
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div id="Migrate">
+                <a name="Migrate" id="Migrate"/>
+                <h3>Migrate</h3>
+                <p>Copy the resource definitions in a change package from source to target CICS configurations, and
+                    invoke commands in the change package on target CICS configurations, according to the specified
+                    migration scheme.
+                </p>
+                <table class="grid">
+                    <thead>
+                        <tr>
+                            <th>Parameter</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Configuration name:</td>
+                            <td>The EC-CICS-CM configuration to use.</td>
+                        </tr>
+                        <tr>
+                            <td>Output Property:</td>
+                            <td>The property that results will be returned into.</td>
+                        </tr>
+                        <tr>
+                            <td>Change Package ID:</td>
+                            <td>The change package to migrate.</td>
+                        </tr>
+                        <tr>
+                            <td>Migration Scheme:</td>
+                            <td>The migration scheme decribing where and how to migrate the change package.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div id="RenameFromGroup">
+                <a name="RenameFromGroup" id="RenameFromGroup"/>
+                <h3>RenameFromGroup</h3>
+                <p>Rename/move the contents of a resource group.</p>
+                <table class="grid">
+                    <thead>
+                        <tr>
+                            <th>Parameter</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Configuration name:</td>
+                            <td>The EC-CICS-CM configuration to use.</td>
+                        </tr>
+                        <tr>
+                            <td>Output Property:</td>
+                            <td>The property that results will be returned into.</td>
+                        </tr>
+                        <tr>
+                            <td>Location Name:</td>
+                            <td>The location name to rename in.</td>
+                        </tr>
+                        <tr>
+                            <td>Location Type:</td>
+                            <td>The location type to rename in</td>
+                        </tr>
+                        <tr>
+                            <td>Resource Type:</td>
+                            <td>The type of the resource to rename/move: must be &apos;ResGroup (Group for CSD)&apos;
+                                for this procedure (to rename other resource types use the RenameResDef procdure).
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Resource Name:</td>
+                            <td>The name of the resource group to move resources from.</td>
+                        </tr>
+                        <tr>
+                            <td>Source Name:</td>
+                            <td>The name of the resource(s) to move (a &apos;masked&apos; value ending in the wildcard *
+                                can be used).
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Source Type:</td>
+                            <td>The type of the resource(s) to move (&apos;*&apos; or &apos;All&apos; are allowed).</td>
+                        </tr>
+                        <tr>
+                            <td>Target Group:</td>
+                            <td>The name of the resource group to move resources to.</td>
+                        </tr>
+                        <tr>
+                            <td>Replace:</td>
+                            <td>Whether to overwrite existing resource definitions at the target location.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div id="RemoveFromResDesc">
+                <a name="RemoveFromResDesc" id="RemoveFromResDesc"/>
+                <h3>RemoveFromResDesc</h3>
+                <p>Remove objects from a list.</p>
+                <table class="grid">
+                    <thead>
+                        <tr>
+                            <th>Parameter</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Configuration name:</td>
+                            <td>The EC-CICS-CM configuration to use.</td>
+                        </tr>
+                        <tr>
+                            <td>Output Property:</td>
+                            <td>The property that results will be returned into.</td>
+                        </tr>
+                        <tr>
+                            <td>Location Name:</td>
+                            <td>The name of the location in which to remove resource group(s) from a resource
+                                description.
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Location Type:</td>
+                            <td>The type of the location in which to remove resource group(s) from a resource
+                                description.
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Resource Type:</td>
+                            <td>Resource type to add: must be &apos;ResGroup (Group for CSD)&apos; for this procedure
+                                (to add another type of resource to another container type, use the approriate other
+                                Add... procedure instead).
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Resource Group Name:</td>
+                            <td>The name of the resource group to remove.
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Serialized Resource Group Object Criteria:</td>
+                            <td>Additional resource groups to remove: an XML serialized list of sets of resource group
+                                object criteria, one per additional resource group, created using the procedure
+                                SerializeOtherObjectCriteria (optional, the resource group specified above is appended
+                                to this).
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Resource Description Name:</td>
+                            <td>The name of the resource description to remove the resource group(s) from.</td>
+                        </tr>
+                        <tr>
+                            <td>Container Type:</td>
+                            <td>Container type to remove the resource group(s) from: must be &apos;Resource Description&apos;
+                                for this procedure (to remove from another container type, use the appropriate other
+                                Remove... procedure instead).
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div id="RenameResDef">
+                <a name="RenameResDef" id="RenameResDef"/>
+                <h3>RenameResDef</h3>
+                <p>Rename resource definitions, and optionally move them to another group.</p>
+                <table class="grid">
+                    <thead>
+                        <tr>
+                            <th>Parameter</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Configuration name:</td>
+                            <td>The EC-CICS-CM configuration to use.</td>
+                        </tr>
+                        <tr>
+                            <td>Output Property:</td>
+                            <td>The property that results will be returned into.</td>
+                        </tr>
+                        <tr>
+                            <td>Location Name:</td>
+                            <td>The name of the location to rename in.</td>
+                        </tr>
+                        <tr>
+                            <td>Location Type:</td>
+                            <td>The type of location to rename in.</td>
+                        </tr>
+                        <tr>
+                            <td>Resource Type:</td>
+                            <td>The type of the resource to rename/move.</td>
+                        </tr>
+                        <tr>
+                            <td>Resource Name:</td>
+                            <td>The current name of the resource to rename/move (a &apos;masked&apos; value ending in
+                                the wildcard * can be used).
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Resource Group:</td>
+                            <td>The current resource group of the resource to rename/move (a &apos;masked&apos; value
+                                ending in the wildcard * can be used).
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Serialized Resource Object Criteria:</td>
+                            <td>Additional resources to rename: an XML serialized list of sets of resource object
+                                criteria, one per additional object, created using the procedure
+                                SerializeOtherObjectCriteria (optional, the object specified above is appended to this).
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Target Name:</td>
+                            <td>The name to rename the resource to.</td>
+                        </tr>
+                        <tr>
+                            <td>Target Group:</td>
+                            <td>The resource group to move the resource to.</td>
+                        </tr>
+                        <tr>
+                            <td>Resource Name-Group Pairs:</td>
+                            <td>Additional Name/group pairs to rename/move additional resources to, one per line in
+                                NAME/GROUP format, with order matching the Serialized Resource Object Criteria.
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Replace:</td>
+                            <td>Whether to overwrite existing resource definitions at the target location.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div id="AddToResGrp">
+                <a name="AddToResGrp" id="AddToResGrp"/>
+                <h3>AddToResGrp</h3>
+                <p>Add objects to a resource group.</p>
+                <table class="grid">
+                    <thead>
+                        <tr>
+                            <th>Parameter</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Configuration name:</td>
+                            <td>The EC-CICS-CM configuration to use.</td>
+                        </tr>
+                        <tr>
+                            <td>Output Property:</td>
+                            <td>The property that results will be returned into.</td>
+                        </tr>
+                        <tr>
+                            <td>Location Name:</td>
+                            <td>The name of the location in which to add to a resource group.</td>
+                        </tr>
+                        <tr>
+                            <td>Location Type:</td>
+                            <td>The type of the location in which to add to a resource group.</td>
+                        </tr>
+                        <tr>
+                            <td>Resource Type:</td>
+                            <td>Resource type of the resource definition to add.</td>
+                        </tr>
+                        <tr>
+                            <td>Resource Name:</td>
+                            <td>Resource name of the resource definition to add.
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Resource Group:</td>
+                            <td>The resource group of the resource definition to add (required unless the resource
+                                definition is located in a Context, for a Context you can specify either this or Object
+                                Definition Version).
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Resource Definition Version:</td>
+                            <td>The resource definition version of the resource definition to add (omit unless the
+                                resource is located in a Context, for a Context you can specify either this or Object
+                                Group).
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Serialized Resource Object Criteria:</td>
+                            <td>Additional resource definition(s) to add: an XML serialized list of sets of resource
+                                object criteria, one per additional resource definition, created using the procedure
+                                SerializeOtherObjectCriteria (optional, the resource definition specified above is
+                                appended to this).
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Resource Container Name:</td>
+                            <td>The name of the resource group to add the resource definition(s) to.</td>
+                        </tr>
+                        <tr>
+                            <td>Container Type:</td>
+                            <td>The container type to add the resource definition(s) to: must be &apos;Resource Group&apos;
+                                for this procedure (to add to another container type, use the appropriate other Add...
+                                procedure instead).
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div id="InstallAdHoc">
+                <a name="InstallAdHoc" id="InstallAdHoc"/>
+                <h3>InstallAdHoc</h3>
+                <p>Dynamically make resource definitions available to an active CICS region for arbitrary resource
+                    definitions not from a change package.
+                </p>
+                <table class="grid">
+                    <thead>
+                        <tr>
+                            <th>Parameter</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Configuration name:</td>
+                            <td>The EC-CICS-CM configuration to use.</td>
+                        </tr>
+                        <tr>
+                            <td>Output Property:</td>
+                            <td>The property that results will be returned into.</td>
+                        </tr>
+                        <tr>
+                            <td>Location Name:</td>
+                            <td>The configuration name, CSD location, or CICSPlex Context, depending on Location Type
+                                value.
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Location Type:</td>
+                            <td>Location to install in (for this procedure this must be &apos;CICS
+                                Configuration&apos;)
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Object Name:</td>
+                            <td>The name of the object to install (a &apos;masked&apos; value ending in the wildcard *
+                                can be used).
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Resource Type:</td>
+                            <td>The type of the object to install (a &apos;masked&apos; value ending in the wildcard *
+                                can be used).
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Object Group:</td>
+                            <td>The resource group of the object to install (a &apos;masked&apos; value ending in the
+                                wildcard * can be used).
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Serialized Resource Object Criteria:</td>
+                            <td>Additional objects(s) to install: XML serialized list of sets of resource object
+                                criteria, one per object, created using the procedure SerializeOtherObjectCriteria
+                                (optional, the object specified above is appended to this).
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Quiesce:</td>
+                            <td>CSD-based CICS Configurations only: specifies whether to set each resource to a
+                                (resource-type-dependent) status that allows its definition to be installed (for
+                                example, disabled, closed, or out of service), before attempting to install to it. If
+                                you do not specify this &quot;quiesce&quot; option, and a resource is in a status that
+                                does not allow the install action, then the install action for that resource definition
+                                will fail.
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Qualification Data:</td>
+                            <td>Qualification Data is optional data passed through the Install operations qualification
+                                exit point. The needs of your organization determine whether you use an exit program and
+                                what processing it performs
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Discard:</td>
+                            <td>Whether to discard the resource definition before attempting to install it</td>
+                        </tr>
+                        <tr>
+                            <td>Connections:</td>
+                            <td>The CSD-based CICS regions on which to perform the install. &apos;All&apos;: performs
+                                the install via all of the remote system connections defined in the CICS configuration
+                                (default), &apos;Local&apos;: performs the install on the CICS region that is running
+                                the CICS Configuration Manager server (Location Name mustspecify a CICS configuration
+                                that refers to the CSD file used by the CICS Configuration Manager server), &apos;Named&apos;:
+                                Performs the install via the remote system connections named in Connection Names.
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Connection Names:</td>
+                            <td>Whitespace-separated list of remote system connection names -- this is ignored unless
+                                Connections is set to &apos;Named&apos;.
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Force:</td>
+                            <td>Applies only to Context-based CICS configurations</td>
+                        </tr>
+                        <tr>
+                            <td>Target Scope:</td>
+                            <td>Required for Context-based CICS configurations, ommit for CDS-based CICS
+                                configurations
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Resource Group Object Type:</td>
+                            <td>Filter to select resource definitions of a particular type, excluding any other types of
+                                resource definition in the ResGroup, applies only to Context-based CICS configurations
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>CONNDEF Resource Assignment:</td>
+                            <td>Applies only to Context-based CICS configurations</td>
+                        </tr>
+                        <tr>
+                            <td>FILEDEF Related Scope:</td>
+                            <td>Applies only to Context-based CICS configurations</td>
+                        </tr>
+                        <tr>
+                            <td>FILEDEF Usage:</td>
+                            <td>Applies only to Context-based CICS configurations</td>
+                        </tr>
+                        <tr>
+                            <td>PROGDEF Related Scope:</td>
+                            <td>Applies only to Context-based CICS configurations</td>
+                        </tr>
+                        <tr>
+                            <td>PROGDEF Usage:</td>
+                            <td>Applies only to Context-based CICS configurations</td>
+                        </tr>
+                        <tr>
+                            <td>PROGDEF Mode:</td>
+                            <td>Applies only to Context-based CICS configurations</td>
+                        </tr>
+                        <tr>
+                            <td>TDQDEF Related Scope:</td>
+                            <td>Applies only to Context-based CICS configurations</td>
+                        </tr>
+                        <tr>
+                            <td>TDQDEF Usage:</td>
+                            <td>Applies only to Context-based CICS configurations</td>
+                        </tr>
+                        <tr>
+                            <td>TDQDEF Mode:</td>
+                            <td>Applies only to Context-based CICS configurations</td>
+                        </tr>
+                        <tr>
+                            <td>TRANDEF Related Scope:</td>
+                            <td>Applies only to Context-based CICS configurations</td>
+                        </tr>
+                        <tr>
+                            <td>TRANDEF Usage:</td>
+                            <td>Applies only to Context-based CICS configurations</td>
+                        </tr>
+                        <tr>
+                            <td>TRANDEF Mode:</td>
+                            <td>Applies only to Context-based CICS configurations</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div id="DeleteFromOther">
+                <a name="DeleteFromOther" id="DeleteFromOther"/>
+                <h3>DeleteFromOther</h3>
+                <p>Delete resource definitions.</p>
+                <table class="grid">
+                    <thead>
+                        <tr>
+                            <th>Parameter</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Configuration name:</td>
+                            <td>The EC-CICS-CM configuration to use.</td>
+                        </tr>
+                        <tr>
+                            <td>Output Property:</td>
+                            <td>The property that results will be returned into.</td>
+                        </tr>
+                        <tr>
+                            <td>Location Name:</td>
+                            <td>The name of location to delete from.</td>
+                        </tr>
+                        <tr>
+                            <td>Location Type:</td>
+                            <td>The type of location to delete from (to delete from the Repository, use the procedure
+                                DeleteFromRepository instead).
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Resource Type:</td>
+                            <td>The type of resource to delete.</td>
+                        </tr>
+                        <tr>
+                            <td>Resource Name:</td>
+                            <td>The name of the resource to delete (a &apos;masked&apos; value ending in the wildcard *
+                                can be used).
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Resource Group:</td>
+                            <td>The resource group to delete the resource from (a &apos;masked&apos; value ending in the
+                                wildcard * can be used; required except for the resource types &apos;ResGroup (Group for
+                                CSD)&apos; and &apos;ResDesc (List for CSD)&apos;, which cannot be in a resource group,
+                                or omit if a Resource Definition Version is supplied).
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Resource Definition Version:</td>
+                            <td>The resource definition version number of the resource to delete (optional, can be
+                                specified instead of Resource Group if the Location Type is Context).
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Serialized Resource Object Criteria:</td>
+                            <td>Additional resource(s) to delete: an XML serialized list of sets of resource object
+                                criteria, one per additional resource to delete, created using the procedure
+                                SerializeOtherObjectCriteria (optional, the resource specified above is appended to
+                                this; however, if the Resource Type above is &apos;*&apos; or &apos;All&apos;, or if a
+                                masked value was used for Resource Name or Resource Group then the Serialized Resource
+                                Object Criteria must be empty).
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Integrity Token:</td>
+                            <td>The object integrity token of the resource to delete: used to avoid overwriting changes
+                                by other users -- supply the integrity token from an earlier Inquire or Update command
+                                for the same object; if the resource has changed since the earlier command, then the
+                                object will not be deleted (optional, ignored if more than one resource is specified or
+                                wildcard masking is used for objects).
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>MON Specification Inheritance:</td>
+                            <td>Optional, applies only to CSGLCGCS objects.</td>
+                        </tr>
+                        <tr>
+                            <td>RTA Specification Inheritance:</td>
+                            <td>Optional, applies only to CSGLCGCS objects.</td>
+                        </tr>
+                        <tr>
+                            <td>WLM Specification Inheritance:</td>
+                            <td>Optional, applies only to CSGLCGCS objects.</td>
+                        </tr>
+                        <tr>
+                            <td>LNKSWSCG Parameter:</td>
+                            <td>Optional, applies only to LNKSWSCG objects.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div id="InquireInOther">
+                <a name="InquireInOther" id="InquireInOther"/>
+                <h3>InquireInOther</h3>
+                <p>Return all the fields for a single resource definition.</p>
+                <table class="grid">
+                    <thead>
+                        <tr>
+                            <th>Parameter</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Configuration name:</td>
+                            <td>The EC-CICS-CM configuration to use.</td>
+                        </tr>
+                        <tr>
+                            <td>Output Property:</td>
+                            <td>The property that results will be returned into.</td>
+                        </tr>
+                        <tr>
+                            <td>Location Name:</td>
+                            <td>The name of the location to inquire in.</td>
+                        </tr>
+                        <tr>
+                            <td>Location Type:</td>
+                            <td>The type of location to inquire in (to inquire in other location types, use the
+                                InquireInRepository or InquireInJournal procedure instead)
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Resource Type:</td>
+                            <td>The type of the resource to inquire the contents of.</td>
+                        </tr>
+                        <tr>
+                            <td>Resource Name:</td>
+                            <td>The name of the resource to inquire the contents of.</td>
+                        </tr>
+                        <tr>
+                            <td>Resource Group:</td>
+                            <td>The resource group of the resource to inquire the contents of (required except for the
+                                resource types &apos;ResGroup (Group for CSD)&apos; and &apos;ResDesc (List for CSD)&apos;,
+                                which cannot be in a resource group, or omit if a Resource Definition Version is
+                                supplied).
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Resource Definition Version:</td>
+                            <td>The resource definition version number of the resource to inquire the contents of
+                                (optional, can be specified instead of Resource Group if the Location Type is Context).
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div id="AddToResDesc">
+                <a name="AddToResDesc" id="AddToResDesc"/>
+                <h3>AddToResDesc</h3>
+                <p>Add objects to a list.</p>
+                <table class="grid">
+                    <thead>
+                        <tr>
+                            <th>Parameter</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Configuration name:</td>
+                            <td>The EC-CICS-CM configuration to use.</td>
+                        </tr>
+                        <tr>
+                            <td>Output Property:</td>
+                            <td>The property that results will be returned into.</td>
+                        </tr>
+                        <tr>
+                            <td>Location Name:</td>
+                            <td>The name of the location in which to add resource group(s) to a resource description.
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Location Type:</td>
+                            <td>The type of the location in which to add resource group(s) to a resource description.
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Resource Type:</td>
+                            <td>Resource type to add: must be &apos;ResGroup (Group for CSD)&apos; for this procedure
+                                (to add another type of resource to another container type, use the approriate other
+                                Add... procedure instead).
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Resource Group Name:</td>
+                            <td>The name of the resource group to add.
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Serialized Resource Group Object Criteria:</td>
+                            <td>Additional resource groups to add: an XML serialized list of sets of resource group
+                                object criteria, one per additional resource group, created using the procedure
+                                SerializeOtherObjectCriteria (optional, the resource group specified above is appended
+                                to this).
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Resource Description Name:</td>
+                            <td>The name of the resource description to add the resource group(s) to.</td>
+                        </tr>
+                        <tr>
+                            <td>Container Type:</td>
+                            <td>Container type to add the resource group(s) to: must be &apos;ResDesc (List for CSD)&apos;
+                                for this procedure (to add to another container type, use the appropriate other Add...
+                                procedure instead).
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div id="Backout">
+                <a name="Backout" id="Backout"/>
+                <h3>Backout</h3>
+                <p>Back out a previous change package migration.</p>
+                <table class="grid">
+                    <thead>
+                        <tr>
+                            <th>Parameter</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Configuration name:</td>
+                            <td>The EC-CICS-CM configuration to use.</td>
+                        </tr>
+                        <tr>
+                            <td>Output Property:</td>
+                            <td>The property that results will be returned into.</td>
+                        </tr>
+                        <tr>
+                            <td>Change Package ID:</td>
+                            <td>The change package ID of the change to back out.</td>
+                        </tr>
+                        <tr>
+                            <td>Scheme:</td>
+                            <td>The migration scheme of the change to back out.</td>
+                        </tr>
+                        <tr>
+                            <td>Event ID:</td>
+                            <td>The eventID of the execution of the Migrate command for the specified change package and
+                                migration scheme to back out (if omitted, it defaults to the most recent Migrate command
+                                for that change package and migration scheme).
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div id="Copy">
+                <a name="Copy" id="Copy"/>
+                <h3>Copy</h3>
+                <p>Copy resource definitions between groups or CICS configurations.</p>
+                <table class="grid">
+                    <thead>
+                        <tr>
+                            <th>Parameter</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Configuration name:</td>
+                            <td>The EC-CICS-CM configuration to use.</td>
+                        </tr>
+                        <tr>
+                            <td>Output Property:</td>
+                            <td>The property that results will be returned into.</td>
+                        </tr>
+                        <tr>
+                            <td>Location Name:</td>
+                            <td>The location name of source(s) to copy from.</td>
+                        </tr>
+                        <tr>
+                            <td>Location Type:</td>
+                            <td>The location type of source(s) to copy from.</td>
+                        </tr>
+                        <tr>
+                            <td>Object Type:</td>
+                            <td>The resource type of the source object to copy.</td>
+                        </tr>
+                        <tr>
+                            <td>Object Name:</td>
+                            <td>The resource name of the source object to copy.</td>
+                        </tr>
+                        <tr>
+                            <td>Object Group:</td>
+                            <td>The resource group of the source object to copy.</td>
+                        </tr>
+                        <tr>
+                            <td>Serialized Resource Object Criteria:</td>
+                            <td>Additional source object(s) to copy: XML serialized list of sets of resource object
+                                criteria, one per source object, created using the procedure
+                                SerializeOtherObjectCriteria (optional, the source object specified above is appended to
+                                this).
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Target Location Name:</td>
+                            <td>The location name of the destination to copy to.</td>
+                        </tr>
+                        <tr>
+                            <td>Target Location Type:</td>
+                            <td>The location type of the destination to copy to.</td>
+                        </tr>
+                        <tr>
+                            <td>Target Location Group:</td>
+                            <td>The resource group of the destination to copy to (optional unless source and target
+                                location names and types are the same, if omitted this defaults to matching the source
+                                Object Group).
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Replace:</td>
+                            <td>Whether to overwrite existing resource definitions at the target location.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div id="ListFromJournal">
+                <a name="ListFromJournal" id="ListFromJournal"/>
+                <h3>ListFromJournal</h3>
+                <p>Return selected fields from one or more CICS Configuration Manager journal objects.</p>
+                <table class="grid">
+                    <thead>
+                        <tr>
+                            <th>Parameter</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Configuration name:</td>
+                            <td>The EC-CICS-CM configuration to use.</td>
+                        </tr>
+                        <tr>
+                            <td>Output Property:</td>
+                            <td>The property that results will be returned into.</td>
+                        </tr>
+                        <tr>
+                            <td>Location Type:</td>
+                            <td>The type of location to list from: location type must be &apos;Journal&apos; for this
+                                procedure (to list from other location types, use the ListFromRepository or
+                                ListFromOther procedure instead).
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Journal Record Type:</td>
+                            <td>The journal record type (optional).</td>
+                        </tr>
+                        <tr>
+                            <td>Journal CCV Release:</td>
+                            <td>The journal record CCV release (optional, 3 digits identifying the CICS Configuration
+                                Manager product version, release, and modification number).
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Journal CICS Release:</td>
+                            <td>The journal record CICS release (optional, 3 digits identifying the CICS product
+                                version, release, and modification number).
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Journal Change Package ID:</td>
+                            <td>The journal record change package ID (optional).</td>
+                        </tr>
+                        <tr>
+                            <td>Journal Scheme:</td>
+                            <td>The journal record migration scheme (optional).</td>
+                        </tr>
+                        <tr>
+                            <td>Journal User ID:</td>
+                            <td>The journal record user ID (optional).</td>
+                        </tr>
+                        <tr>
+                            <td>Journal Resource Group:</td>
+                            <td>The journal record resource group (optional).</td>
+                        </tr>
+                        <tr>
+                            <td>Journal Resource Name:</td>
+                            <td>The journal record resource name (optional).</td>
+                        </tr>
+                        <tr>
+                            <td>Journal Resource Type:</td>
+                            <td>The journal record resource type (optional).</td>
+                        </tr>
+                        <tr>
+                            <td>Journal CSD Dataset Name:</td>
+                            <td>The journal record CSD dataset name (optional, fully qualified data set name of a CICS
+                                system definition file with no enclosing quotes).
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Journal Context Name:</td>
+                            <td>The journal record context name (optional).</td>
+                        </tr>
+                        <tr>
+                            <td>Resource Type:</td>
+                            <td>If you have specified some journal criteria above, this is an optional resource type for
+                                a resource definition embedded in a BAImage, otherwise it is required and specifies the
+                                type journal object(s) to list, and must be &apos;EventStart&apos;, &apos;BAImage&apos;,
+                                &apos;EventData&apos; or &apos;EventEnd&apos;.
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Resource Name:</td>
+                            <td>If you have specified some journal criteria above, this is an optional resource name for
+                                a resource definition embedded in a BAImage (masked values may be used), otherwise it
+                                must be omitted.
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Resource Group:</td>
+                            <td>If you have specified some journal criteria above, this is an optional resource group
+                                for a resource definition embedded in a BAImage (masked values may be used), otherwise
+                                it must be omitted.
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Resource Definition Version:</td>
+                            <td>If you have specified some journal criteria above, this is an optional resource
+                                definition version for a resource definition embedded in a BAImage (masked values may be
+                                used), otherwise it must be omitted.
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Restriction Criteria:</td>
+                            <td>(Optional) restriction criteria, whitespace separated in &lt;NAME&gt;.&lt;COMPARATOR&gt;.&lt;VALUE&gt;
+                                format. Valid &lt;COMPARATOR&gt; values are EQ, NE, LT, GT, LE, and GE. Restriction
+                                criteria all on
+                                a single line are combined using logical AND. Groups of restriction critera on different
+                                lines are
+                                combined using logical OR. When listing BAImage journal records, you must prefix the
+                                field names of the
+                                embedded resource definitions with B_ for before or A_ for after images. For eaxmple, to
+                                limit the list
+                                to journal records whose before resource definition was changed after 26 June 2004,
+                                specify
+                                B_ChangeTime.GT.2004/06/26 (fields mentioned in restriction criteria will be returned in
+                                the listing
+                                even if they otherwise would not be).
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>All Attributes:</td>
+                            <td>Specifies whether all attributes of the requested resource definitions are returned or
+                                only a default subset (optional, defaults to &apos;NO&apos;).
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Hashing Scope:</td>
+                            <td>Specifies whether or not the List command response contains a &apos;HashingValue&apos;
+                                element with a checksum for each selected object, and which fields it uses to calculate
+                                the checksum (optional, defaults to &apos;None&apos;).
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Counts:</td>
+                            <td>Specifies whether include various count values in the response (optional, defaults to
+                                not including them).
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Filter Date:</td>
+                            <td>If set, limits the objects returned by List to those changed on or before the specified
+                                date and time. You can use this instead of, or in addition to, restriction criteria for
+                                change time. Format: yyyy/mm/dd.hh:mm (optional)
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Limit:</td>
+                            <td>If set, sets an upper limit on the number of resource definitions that can be returned
+                                by ListFromJournal. If the number of resource definitions that match the specifications
+                                of the List command exceeds this limit, then the List command returns an error, with no
+                                resource definitions. This avoids the problems associated with returning a subset of
+                                objects that match the specifications: for example, depending on how a client sorts the
+                                results of the List command, omissions might not be apparent to the end user. (optional)
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div id="DiscardChgPkg">
+                <a name="DiscardChgPkg" id="DiscardChgPkg"/>
+                <h3>DiscardChgPkg</h3>
+                <p>Discard the in-memory image of resource definitions from active CICS regions.</p>
+                <table class="grid">
+                    <thead>
+                        <tr>
+                            <th>Parameter</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Configuration name:</td>
+                            <td>The EC-CICS-CM configuration to use.</td>
+                        </tr>
+                        <tr>
+                            <td>Output Property:</td>
+                            <td>The property that results will be returned into.</td>
+                        </tr>
+                        <tr>
+                            <td>Change Package ID:</td>
+                            <td>The change package to discard.</td>
+                        </tr>
+                        <tr>
+                            <td>Migration Scheme:</td>
+                            <td>The migration scheme to use.</td>
+                        </tr>
+                        <tr>
+                            <td>Quiesce:</td>
+                            <td>This specifies whether or not to set the resource to a status that allows its definition
+                                to be discarded (for example, disabled, closed, or out of service), prior to attempting
+                                the action. The status depends on the resource type. If you do not specify this &quot;quiesce&quot;
+                                option, and a resource is in a status that does not allow the discard action, then the
+                                discard action for that resource definition will fail.
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Qualification Data:</td>
+                            <td>Qualification Data is optional data passed through the Discard operation&apos;s
+                                qualification exit point. The needs of your organization determine whether you use an
+                                exit program and what processing it performs.
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Target Scope:</td>
+                            <td>If the change package contains candidates for migration to context-based CICS
+                                configurations, Target Scope is required.
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+
+            <div id="Import">
+                <a name="Import" id="Import"/>
+                <h3>Import</h3>
+                <p>Import resource definitions from an export file received from another CICS Configuration Manager
+                    system. Optionally, if the export file contains change package details, also registers change
+                    packages in the importing CICS Configuration Manager repository.
+                </p>
+                <table class="grid">
+                    <thead>
+                        <tr>
+                            <th>Parameter</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Configuration name:</td>
+                            <td>The EC-CICS-CM configuration to use.</td>
+                        </tr>
+                        <tr>
+                            <td>Output Property:</td>
+                            <td>The property that results will be returned into.</td>
+                        </tr>
+                        <tr>
+                            <td>Export File Name:</td>
+                            <td>The CICS Configuration Manager export file to import from</td>
+                        </tr>
+                        <tr>
+                            <td>Select resource definitions:</td>
+                            <td>Specify either: &apos;Selection Criteria&apos; to select resource definitions to import
+                                based on which change packages they belong to,
+                                or &apos;Object Criteria&apos; to select resource definitions to import based on filter
+                                criteria for resource name, group, and type. To import all resource definitions in the
+                                export file, specify an asterisk (*) for name, group, and type.
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Location Type:</td>
+                            <td>Location to import from: must be &apos;CICS Configuration&apos;</td>
+                        </tr>
+                        <tr>
+                            <td>CPID:</td>
+                            <td>Change package to import (optional, specify either this or Resource Name, Resource Type,
+                                and Resource Group)
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Event ID:</td>
+                            <td>Change package to import (optional, may be specified along with a CPID to select a
+                                particular migration for the specified chnage pacakage if it was migrated to the export
+                                file more than once)
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Resource Name:</td>
+                            <td>Resource definition to import: resource name (optional, specify either this plus
+                                Resource Type and Resource Group, or CPID)
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Resource Type:</td>
+                            <td>Resource definition to import: resource type (optional, specify either this plus
+                                Resource Name and Resource Group, or CPID)
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Resource Group:</td>
+                            <td>Resource definition to import: resource group (optional, specify either this plus
+                                Resource Name and Resource Type, or CPID)
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Target Location Type:</td>
+                            <td>Location type to import into</td>
+                        </tr>
+                        <tr>
+                            <td>Target Location Name:</td>
+                            <td>Location name to import into</td>
+                        </tr>
+                        <tr>
+                            <td>Register CPID:</td>
+                            <td>If importing a change package, should it be registered in the repository?</td>
+                        </tr>
+                        <tr>
+                            <td>Purge Imported Records:</td>
+                            <td>Purge imported records?</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div id="RemoveCmdFromChgPkg">
+                <a name="RemoveCmdFromChgPkg" id="RemoveCmdFromChgPkg"/>
+                <h3>RemoveCmdFromChgPkg</h3>
+                <p>Remove objects from a Change Package.</p>
+                <table class="grid">
+                    <thead>
+                        <tr>
+                            <th>Parameter</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Configuration name:</td>
+                            <td>The EC-CICS-CM configuration to use.</td>
+                        </tr>
+                        <tr>
+                            <td>Output Property:</td>
+                            <td>The property that results will be returned into.</td>
+                        </tr>
+                        <tr>
+                            <td>Location Type:</td>
+                            <td>The type of location to remove from: must be &apos;Repository&apos; for this procedure
+                                (to remove from other locations, use the approriate other Remove... procedure instead).
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>CICS Configuration:</td>
+                            <td>The CICS Configuration associated with the commands that you want to remove from the
+                                change package
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Command:</td>
+                            <td>The command name of the command to remove.</td>
+                        </tr>
+                        <tr>
+                            <td>Object Type:</td>
+                            <td>The resource type of the resource acted on by the command to remove.</td>
+                        </tr>
+                        <tr>
+                            <td>Object Name:</td>
+                            <td>The resource name of the resource acted on by the command to remove.</td>
+                        </tr>
+                        <tr>
+                            <td>Object Group:</td>
+                            <td>The resource group of the resource acted on by the command to remove (required unless
+                                the resource is located in a Context, for a Context you can specify either this or
+                                Object Definition Version).
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Object Definition Version:</td>
+                            <td>The resource definition version of the resource acted on by the command to remove (omit
+                                unless the resource is located in a Context, for a Context you can specify either this
+                                or Object Group).
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Target Resource Group For Add:</td>
+                            <td>Relevant only when removing an Add command: it identifies the ResGroup to which you no
+                                longer want the resource definitions added.
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Serialized Command Object Criteria:</td>
+                            <td>Additional command(s) to remove: an XML serialized list of sets of command object
+                                criteria, one per additional command, created using the procedure
+                                SerializeCommandObjectCriteria (optional, the command specified above is appended to
+                                this).
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Change Package ID:</td>
+                            <td>The ID of the change package to remove the command(s) from.</td>
+                        </tr>
+                        <tr>
+                            <td>Container Type:</td>
+                            <td>The container type to remove the command(s) from: must be &apos;Change Package&apos; for
+                                this procedure (to remove from other container types, use the appropriate other
+                                Remove... procedure instead).
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div id="Recover">
+                <a name="Recover" id="Recover"/>
+                <h3>Recover</h3>
+                <p>Recovers before or after images of historical resource definitions from the journal.</p>
+                <table class="grid">
+                    <thead>
+                        <tr>
+                            <th>Parameter</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Configuration name:</td>
+                            <td>The EC-CICS-CM configuration to use.</td>
+                        </tr>
+                        <tr>
+                            <td>Output Property:</td>
+                            <td>The property that results will be returned into.</td>
+                        </tr>
+                        <tr>
+                            <td>Location Type:</td>
+                            <td>Location to list from: (to list from a Journal use ListFromJournal, to list from a
+                                Reposititory use ListFromRepository instead)
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Resource Name:</td>
+                            <td>(Optional) resource object criteria for a resource definition embedded in a BAImage:
+                                resource
+                                name
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Resource Group:</td>
+                            <td>(Optional) resource object criteria for a resource definition embedded in a BAImage:
+                                resource
+                                group
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Resource Type:</td>
+                            <td>(Optional) resource object criteria for a resource definition embedded in a BAImage:
+                                resource
+                                type
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Resource Instance:</td>
+                            <td>Resource object criteria to append: resource instance (optional, valid only for use with
+                                the Recover procedure)
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Serialized Resource Object Criteria:</td>
+                            <td>Additional objects(s) to recover: XML serialized list of sets of resource object
+                                criteria, one per additional object, created using the procedure
+                                SerializeOtherObjectCriteria (optional, the object specified above is appended to this).
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Recover Image:</td>
+                            <td>
+                                Specify whether to recover the before image (undo the change) or the after image (redo
+                                the change).
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Rollback Option:</td>
+                            <td>The rollback option applies only when recovering before images.
+                                The rollback option protects you from unintentionally overwriting changes that are
+                                outside of the set you have selected. Specifically, the rollback option ensures that the
+                                selected changes for a resource definition form an unbroken chain that begins at the
+                                current resource definition and ends at the before image of the oldest selected change.
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
             <!-- PROCEDURES END -->
         </div>
         <!-- RELEASE NOTES BEGIN -->
