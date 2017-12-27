@@ -48,7 +48,7 @@ my %valid = (
     'TContainer'=>'[A-Za-z0-9\$\@\#\.\/\-\_\%\&\�\?\!\:\|\"\=\�\,\;\<\>]{0,7}[A-Za-z0-9\$\@\#\.\/\-\_\%\&\�\?\!\:\|\"\=\�\,\;\<\>\*]{1}',
     'TargetName' => '[A-Za-z0-9\$\@\#\.\/\-\_\%\&\�\?\!\:\|\"\=\�\,\;\<\>]*',
     'TargetLocationName' => '[A-Za-z0-9\$\@\#\.\/\-\_\%\&\�\?\!\:\|\"\=\�\,\;\<\>]*',
-    'TargetLocationTYpe' => '(CConfig|Context|CSD|Registry|Journal)',
+    'TargetLocationTYpe' => '(CConfig|Context|CSD|Repository|Journal)',
     'TargetLocationGroup' => '[A-Za-z0-9\$\@\#\.\/\-\_\%\&\�\?\!\:\|\"\=\�\,\;\<\>]{0,7}[A-Za-z0-9\$\@\#\.\/\-\_\%\&\�\?\!\:\|\"\=\�\,\;\<\>\*]{1}',
     'TargetScope' => '[A-Za-z0-9\$\@\#\.\/\-\_\%\&\�\?\!\:\|\"\=\�\,\;\<\>\ ]*',
     'TDQDEF_RelatedScope' => '[A-Za-z0-9\$\@\#\.\/\-\_\%\&\�\?\!\:\|\"\=\�\,\;\<\>\ ]*',
