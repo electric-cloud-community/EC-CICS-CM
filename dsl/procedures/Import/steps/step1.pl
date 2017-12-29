@@ -8,7 +8,13 @@ my $soapMethodName = 'Import';
 
 # List of the names of optional paramters
 my @optionalParams = (
-
+   'CPID',
+   'EventID',
+   'ObjName',
+   'ObjType',
+   'ObjGroup',
+   'RegisterCPID',
+   'PurgeImportedRecords',
 );
 
 $[/myPlugin/project/ec_perl_metadata]
@@ -23,7 +29,7 @@ if(($params{'resDefinition'} eq 'SelectionCriteria')) {
         exit -1;
     }
 }
-elsif(!lenght($params{'ObjName'}) || !length($params{'ObjType'}) || !length($params{'ObjGroup'})) {
+elsif(!length($params{'ObjName'}) || !length($params{'ObjType'}) || !length($params{'ObjGroup'})) {
     print "ERROR: 'Resource Name', 'Resource Type' and 'Resource Group' should be specified when 'Select resource definitions' is set to 'Object Criteria'.";
     exit -1;
 }
@@ -32,7 +38,7 @@ my @criteria;
 if($params{'resDefinition'} eq 'SelectionCriteria') {
     @criteria = SOAP::Data->name('SelectionCriteria' => \SOAP::Data->value(
         SoapData('CPID'),
-        SoapData('EventID')
+        SoapDataOptional('EventID')
     ));
 }
 else {

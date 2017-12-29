@@ -332,10 +332,11 @@ for my $key (keys(%params)) {
     my $value = $params{$key};
     
     # In the only context where XML is allowed, pass < and > through
-    if (($key eq 'ObjectData' ) &&
-        (($soapMethodName eq 'Create') || ($soapMethodName eq 'Update')) &&
-        ($params{'LocationType'} eq 'Repository') &&
-        ($params{$key} =~ m|=\s*<[A-Za-z]+>.*</[A-Za-z]+>\s*$|)) {
+    if (($key eq 'ObjectCriteria' ) ||        
+        (($key eq 'ObjectData' ) &&
+         (($soapMethodName eq 'Create') || ($soapMethodName eq 'Update')) &&
+         ($params{'LocationType'} eq 'Repository') &&
+         ($params{$key} =~ m|=\s*<[A-Za-z]+>.*</[A-Za-z]+>\s*$|))) {
         $value =~ s/([^\sA-Za-z0-9\~\!\@\#\$\*\(\)\_\-\+\=\{\}\[\]\\\:\;\,\.\/\?\<\>])/exists($ebcdic{$1}) ? '%'.$ebcdic{$1} : {print "ERROR: Character '$1' cannot be encoded in EBCDIC code page 037!\n" and exit -1}/egs
     } else {
         $value =~ s/([^\sA-Za-z0-9\~\!\@\#\$\*\(\)\_\-\+\=\{\}\[\]\\\:\;\,\.\/\?])/exists($ebcdic{$1}) ? '%'.$ebcdic{$1} : {print "ERROR: Character '$1' cannot be encoded in EBCDIC code page 037!\n" and exit -1}/egs
@@ -534,7 +535,7 @@ sub createObjectData {
                     push(@ObjectData, SOAP::Data->name($pieces[0] => $pieces[1]));
                 } 
             } else {
-                print "ERROR: Unable to parse Object Data Name-Value Pairs at '$line'!\n";
+                print "ERROR: Unable to parse Object Data Name-Value pairs at '$line'!\n";
                 exit -1;
             }
         }

@@ -8,6 +8,7 @@ my $soapMethodName = 'Backout';
 
 # List of the names of optional paramters
 my @optionalParams = (
+    'EventID'
 );
 
 $[/myPlugin/project/ec_perl_metadata]

@@ -4,7 +4,7 @@ $[/myPlugin/project/ec_perl_header]
 # ---------------------------
 
 # Name of SOAP method to call
-my $soapMethodName = 'Remove';
+my $soapMethodName = 'Rename';
 
 # List of the names of optional paramters
 my @optionalParams = (
@@ -28,7 +28,7 @@ if ($params{'SourceName'} =~ /\*.+$/) {
 # Handle optional Process Parameter
 my @processParmsResult;
 if (length($params{'Replace'}) > 0) {
-    push @processParmsResult, SoapData($param);
+    push @processParmsResult, SoapData('Replace');
 }
 my @ProcessParms;
 if(scalar(@processParmsResult) > 0) {

@@ -43,7 +43,14 @@ documentation : Help text for the parameter
         <label>Output Property:</label>
         <property>outputProperty</property>
         <required>1</required>
-        <documentation>The property that results will be returned into.</documentation>
+        <documentation>The property sheet or property that results will be returned into.</documentation>
+    </formElement>
+    <formElement>
+        <type>textarea</type>
+        <label>Report Columns:</label>
+        <property>report</property>
+        <required>0</required>
+        <documentation>To make the procedure call output an HTML report summarizing the results, supply a list of columns, one per line, in &lt;NAME&gt;=&lt;Header&gt; format, where 'NAME' is the upper-case column name used by the CICS server and 'Header' is the text you want to appear as the column header in the results table.</documentation>
     </formElement>
     <formElement>
         <type>select</type>

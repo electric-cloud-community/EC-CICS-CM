@@ -81,8 +81,8 @@ sub walkXMLSimpleTree {
         
         # Iterate over hash keys
         foreach my $key (keys(%$tree)) {
-	    walkXMLSimpleTree(\($tree->{$key}), $path . '/' . $key);
-	}
+            walkXMLSimpleTree(\($tree->{$key}), $path . '/' . $key);
+        }
     } elsif (ref $tree eq 'REF') {
         walkXMLSimpleTree($$tree, $path);
     } else {
@@ -93,6 +93,365 @@ sub walkXMLSimpleTree {
     }
 }
 
+my %returnCodeMeaning = (
+    '00000000' => 'success',
+    '00000004' => 'operation completed, but a warning condition occurred during processing',
+    '00000008' => 'operation may be incomplete: an error occurred, but CICS Configuration Manager continued processing',
+    '00000012' => 'operation is incomplete: a failure condition caused premature termination',
+    '00000016' => 'operation is incomplete: a severe error condition occurred',
+);
+
+my %reasonCodeMeaning = (
+    '0000' => 'successful: no errors',
+    '0001' => 'invalid object type specified',
+    '0002' => 'required field missing',
+    '0003' => 'object not found in CICS configuration, repository, or journal',
+    '0004' => 'no matching objects found',
+    '0005' => 'CICS call error',
+    '0006' => 'record too long',
+    '0007' => 'Integrity check failed. The supplied integrity token did not match the current integrity token value of the object.',
+    '0008' => 'key field too long for repository record',
+    '0009' => 'record too long for repository',
+    '000A' => 'task abended',
+    '000B' => 'data corruption detected',
+    '000C' => 'WA obtain failed',
+    '000D' => 'INIT function has not been called',
+    '000E' => 'invalid key length in journal record',
+    '000F' => 'invalid journal record length',
+    '0010' => 'internal processing error',
+    '0011' => 'CICS Configuration Manager was not invoked as a BTS activity',
+    '0012' => 'analyzer has abended',
+    '0013' => 'first child element of SOAP message envelope <Body> element was not <CCV530>',
+    '0014' => 'value is invalid in context',
+    '0015' => 'User has insufficient authority to complete the command. If the user should have this authority, then check the SAF resource key for the command, and update the external security manager accordingly.',
+    '0016' => 'GETNEXT/ENDPOSITION called before POSITION',
+    '0017' => 'invalid combination of parameters',
+    '0018' => 'cyclic redundancy checksum (CRC) mismatch: object data has changed',
+    '0019' => 'truncation occurred',
+    '001A' => 'message not found',
+    '001B' => 'bad definition in message table',
+    '001C' => 'literal not found in literal table',
+    '001D' => 'invalid mask specified for element',
+    '001E' => 'invalid data specified for element',
+    '001F' => 'invalid data type for mask',
+    '0020' => 'invalid exponent for mask',
+    '0021' => 'either: data passed for setvalue tag, or: bad data type for SET',
+    '0022' => 'message could not be formatted',
+    '0023' => 'illogical "state" request: item already has that state',
+    '0024' => 'A CICS call (DFHEDAP, EXEC CICS CSD, or CICS SPI) completed with a non-zero return code (see the RC= value). CICS might log in the MSGUSR output information/warning (RC=4) or exception messages (RC > 4) for this condition. Note: RC=04 RSN=0024 is a common occurrence that might be associated with a "new Group created" or "Group deleted" information message in the MSGUSR output.',
+    '0025' => 'a object specified by this command is currently being updated by another process',
+    '0026' => 'non-default value encountered for an obsolete attribute',
+    '0027' => 'non-default value encountered for an unsupported attribute',
+    '0028' => 'a field contains masking characters in an unsupported context',
+    '0029' => 'object already exists',
+    '002A' => 'CICSPlex® SM exception occurred',
+    '002B' => 'invalid attribute data',
+    '002C' => 'invalid resource type',
+    '002D' => 'invalid resource version',
+    '002E' => 'CICSPlex SM maintenance point unavailable',
+    '002F' => 'CICSPlex SM context not found',
+    '0030' => 'resource group not found',
+    '0031' => 'unsupported version of CICS',
+    '0032' => 'unable to acquire storage',
+    '0033' => 'unable to release storage',
+    '0034' => 'the requested function is not supported for the current API command',
+    '0035' => 'A service routine request could not be processed. For details, see the CCVLOG data set on the CICS Configuration Manager server.',
+    '0036' => 'Language Environment® timer request failed',
+    '0037' => 'CICS Configuration Manager not enabled',
+    '0038' => 'orphan not allowed for xxxxDEF object',
+    '0039' => 'CICS system definition (CSD) data set name not found in catalog',
+    '003A' => 'CSD file is already open for update by another process',
+    '003B' => 'CEDA transaction is running in CICS Configuration Manager',
+    '003C' => 'attribute not found in table',
+    '003D' => 'cannot delete this record',
+    '003E' => 'change package contains no candidates',
+    '003F' => 'no candidate resource definitions found for Migrate or Ready',
+    '0040' => 'link error',
+    '0041' => 'XML parsing error. Check the XML syntax of the command.',
+    '0042' => 'change package not ready',
+    '0043' => 'change package not approved',
+    '0044' => 'a Migrate command is already active for this combination of change package and migration scheme',
+    '0045' => 'missing CICS configuration for the Migrate command',
+    '0046' => 'module not found',
+    '0047' => 'object is in use',
+    '0048' => 'no fields are in this scope',
+    '0049' => 'referential integrity check failed',
+    '004A' => 'a journal record returned by the Inquire command does not match the supplied object criteria',
+    '004B' => 'no space on file or volume',
+    '004C' => 'subsequent Migrate found checksum mismatch for one or more candidate',
+    '004D' => 'This event ID has already been backed out. The Backout command found a successful previous backout for this event ID.',
+    '004E' => 'Ready list found key association record with zero checksum',
+    '004F' => 'Ready list has objects in error',
+    '0050' => 'SAF class not defined to external security manager',
+    '0051' => 'variable name in transform mask invalid (too long, or not terminated by a blank or a period)',
+    '0052' => 'the security exit has modified the parameters used for the security check',
+    '0053' => 'transform rule failure',
+    '0054' => 'Copy command has replaced the object',
+    '0055' => 'migration scheme was changed after the change package was marked as ready',
+    '0056' => 'no migration candidates remain after transform completed',
+    '0057' => 'CICSPlex SM API is not available',
+    '0058' => 'a Ready list candidate was not found',
+    '0059' => 'no PScheme (package-scheme) record exists',
+    '005A' => 'a migration is already active',
+    '005B' => 'the LocationType in the XML is invalid',
+    '005C' => 'all Backout objects are already in the desired state',
+    '005D' => 'remote system connection name not valid for the CICS configuration',
+    '005E' => 'none of the selected objects installed successfully',
+    '005F' => 'some objects installed successfully',
+    '0060' => 'nothing installed, no failures',
+    '0061' => 'a CICS configuration had no remote system connections defined',
+    '0062' => 'none of the target CICS configurations for install has remote system connections',
+    '0063' => 'Rename of DFHCSD data set failed. DD DFHCSD may be in JCL',
+    '0064' => 'none of the objects in the change package installed',
+    '0065' => 'some objects in the change package installed',
+    '0066' => 'remote transaction ID is spaces',
+    '0067' => 'remote link is not defined',
+    '0068' => 'remote link is out of service',
+    '0069' => 'remote link has no free sessions available',
+    '006A' => 'none of the objects newcopied',
+    '006B' => 'some objects newcopied',
+    '006C' => 'nothing newcopied, no failures',
+    '006D' => 'none of the objects in the change package newcopied',
+    '006E' => 'some objects in the change package newcopied',
+    '006F' => 'CICS configuration CSD name does not match that on the remote system',
+    '0070' => 'none of the objects were discarded',
+    '0071' => 'some objects discarded',
+    '0072' => 'nothing discarded, no failures',
+    '0073' => 'none of the objects in the change package discarded',
+    '0074' => 'some objects in the change package discarded',
+    '0075' => 'none of the target CICS configurations for newcopy has remote system connections',
+    '0076' => 'none of the target CICS configurations for discard has remote system connections',
+    '0077' => 'Newcopy of a program defined as "remote" is invalid',
+    '0078' => 'Discard failed as the object state does not permit discard',
+    '0079' => 'the server and client API software levels do not match',
+    '007A' => 'Discard is not a valid function for a change package',
+    '007B' => 'Discard is not supported for contexts',
+    '007C' => 'the CICS Configuration Manager remote transaction ID CCVR is not defined',
+    '007D' => 'the CICS Configuration Manager remote program CCVSREMP is not defined',
+    '007E' => 'the open failed for the CICS configuration\'s CSD file',
+    '007F' => 'the operation with an IBM® reserved resource failed',
+    '0080' => 'a valid API release element name was not found in the XML',
+    '0081' => 'a SAF call failed owing to environmental factors',
+    '0082' => 'approver role not found in the approver profile',
+    '0083' => 'disapprover role not previously applied to the change package.',
+    '0084' => 'a DELETE request failed for an object within a list',
+    '0085' => 'some objects within the DELETE request were deleted',
+    '0086' => 'nothing deleted for any objects in the DELETE request',
+    '0087' => 'export dataset in use',
+    '0088' => 'export dataset invalid',
+    '0089' => 'export data set open failed',
+    '008A' => 'number of objects has exceeded internal table limits',
+    '008B' => 'import data set in use',
+    '008C' => 'import data set invalid',
+    '008D' => 'import data set open failed',
+    '008E' => 'an ALTER request failed for an object within a list',
+    '008F' => 'some objects within the ALTER request were altered',
+    '0090' => 'nothing altered for any objects within the ALTER request',
+    '0091' => 'mismatched parameter list (software) in Server programs',
+    '0092' => 'dynamic allocation failed',
+    '0093' => 'an ADD request failed for an object within a list',
+    '0094' => 'some objects within the ADD request were added',
+    '0095' => 'nothing added for any objects within the ADD request',
+    '0096' => 'a REMOVE request failed for an object within a list',
+    '0097' => 'some objects within the REMOVE request were removed',
+    '0098' => 'nothing removed for any objects within the REMOVE request',
+    '0099' => 'some objects replaced',
+    '009A' => 'a RENAME request failed for an object within a list',
+    '009B' => 'some objects within the RENAME request were renamed',
+    '009C' => 'nothing renamed for any objects within the RENAME request',
+    '009D' => 'a CICS call (DFHEDAP, EXEC CICS CSD, or CICS SPI) completed with a non-zero return code (see the RC= value) when processing a list of objects. This is similar to RSN=0024. CICS might log in the MSGUSR output information/warning (RC=4) or exception messages (RC > 4) for this condition. Note: RC=04 RSN=009D is a common occurrence that might be associated with a "Group deleted" or "new Group created" information message in the MSGUSR output.',
+    '009E' => 'non default value encountered for an UNSUPPORTED attribute',
+    '009F' => 'non default value encountered for an OBSOLETE attribute',
+    '00A0' => 'attribute data invalid for an object within a list',
+    '00A1' => 'CSD data set name not found in catalog',
+    '00A2' => 'CSD open for update elsewhere',
+    '00A3' => 'CEDA is running in CICS Configuration Manager server',
+    '00A4' => 'CPSM exception received',
+    '00A5' => 'invalid resource type for an object within a list',
+    '00A6' => 'invalid resource version for an object within a list',
+    '00A7' => 'CICSPlex SM maintenance point unavailable',
+    '00A8' => 'context not found',
+    '00A9' => 'resource group not found',
+    '00AA' => 'APPROVE? or MIGRATE? query returned 0 objects',
+    '00AB' => 'some target objects exist for RENAME function',
+    '00AC' => 'READY resulted in no change from the current status',
+    '00AD' => 'Exits Extension Block eyecatcher portion is corrupted',
+    '00AE' => 'Exits Extension Block exit-point name is invalid',
+    '00AF' => 'inappropriate CICS configuration type specified',
+    '00B0' => 'no records on import file matched the selection criteria',
+    '00B1' => 'user exit program issued RC > 8',
+    '00B2' => 'a CICS Configuration Manager control block is corrupted',
+    '00B3' => 'trial-software expiration control was tampered',
+    '00B4' => 'trial-software activation period has expired',
+    '00B5' => 'RLS open failed: CICS SIT RLS=NO or VSAM cluster error',
+    '00B6' => 'enqueue failure for concurrent CCVBHKP utility executions',
+    '00B7' => 'DFHEDAP or CICS SPI command information messages returned',
+    '00B8' => 'the CICS configuration type is not for this API',
+    '00B9' => 'the XML limit number has been exceeded',
+    '00BA' => 'RLS open failed on CICS configuration defined as RLS=YES',
+    '00BB' => 'RLS open failed, the ACB password failed catalog checks',
+    '00BC' => 'the HTTP XML volume limit has been exceeded',
+    '00BD' => 'CPSM object in multiple groups',
+    '00BE' => 'record exceeds file LRECL',
+    '00BF' => 'change has no approval profile',
+    '00C0' => 'XML has no association type',
+    '00C1' => 'COMMAND only for CA record',
+    '00C2' => 'CA COMMAND not found',
+    '00C3' => 'CA object must be CPSM',
+    '00C4' => 'XML control record not found',
+    '00C5' => 'no relationship tag for ADD',
+    '00C6' => 'Readylist list has commands in error',
+    '00C7' => 'Readylist list has objects and commands in error',
+    '00C8' => 'duplicated and/or misplaced element',
+    '00C9' => 'DEPLOY needs at least one verb before it can function',
+    '00CA' => 'at least one of the Deploy verbs failed',
+    '00CB' => 'some migrate commands ignored',
+    '00CC' => 'all migrate commands ignored',
+    '00CD' => 'object in desired state',
+    '00CE' => 'command not for this config',
+    '00CF' => 'one or more Deploy verbs with warning',
+    '00D0' => 'one or more Deploy verbs with error',
+    '00D1' => 'CIC configuration and data set specified',
+    '00D2' => 'incompatible elements',
+    '00D3' => 'different object version already in group',
+    '00D4' => '[Reserved]',
+    '00D5' => '[Reserved]',
+    '00D6' => 'CICS Configuration Manager does not support the install of this object',
+    '00D7' => 'Backout found two updates but the checksums did not match',
+    '00D8' => 'transform resulted in a value that exceeded the attribute length',
+    '00D9' => 'NOSPACE condition returned for a journal write operation',
+    '00DA' => 'no records match backout event ID for a journal write operation',
+    '00DB' => 'NSR CSD not supported with transaction isolation',
+    '00DC' => 'container not found for an ADD',
+    '00DD' => 'the specified KILLTOKEN value is already in use',
+    '00DE' => 'the KILLTOKEN task belongs to a different user ID',
+    '00DF' => 'KILLTOKEN value is missing or invalid',
+    '00E0' => 'the API command was terminated by a KILL request',
+    '00E1' => 'the task matching the KILLTOKEN entry no longer exists',
+    '00E2' => 'the dispatcher has marked a task for KILL termination',
+    '00E3' => 'no matching tasks found for the KILL request',
+    '00E4' => 'no migration scheme information found in the approval profile',
+    '00E5' => 'recovery skipped for ineligible duplicate',
+    '00E6' => 'recovery skipped for delete of non-existent definition',
+    '00E7' => 'recovery failed because the rollback chain was broken',
+    '00E8' => 'object data inconsistent with the object instance BAImage',
+    '00E9' => 'recovery rollback chain broken by this BAImage object',
+    '00EA' => 'recovery failed as CICSPlex SM resource definition has a mismatched version',
+    '00EB' => 'some of the objects recovered',
+    '00EC' => 'none of the objects recovered',
+    '00ED' => 'the referenced CICS configuration is not defined',
+    '00EE' => 'the referenced group or ResGroup is not defined',
+    '00EF' => 'the EXITS record EPCOUNT value is invalid',
+    '00F0' => 'syntax error on EXITS record',
+    '00F1' => 'time limit exceeded starting the Event Timer or Analyzer',
+    '00F2' => 'only export files to process',
+    '00F3' => 'shadow resource definition image (DNF) address is zero',
+    '00F4' => 'invalid or unknown hashing scope',
+    '00F5' => 'object name is already in use by another definition',
+);
+
+sub makeReport {
+    my ($tree) = @_;
+    my $report = $params{'report'};
+    if (length($report) > 0) {
+        my %columns;
+        my $header = '<tr id="headerRow">';
+        my $rows;
+        
+        # Parse $report
+        my @lines = split(/$/, $report); # Split into lines
+        foreach my $line (@lines) {
+            my @pieces = split(/=/, $line, 2); # Split at first = into name and title
+            if (@pieces == 2) {
+                $columns{uc($pieces[0])} = $pieces[1];
+            } else {
+                print "ERROR: Unable to parse Report Name-Title pairs at '$line'!\n";
+                exit -1;
+            }
+        }
+        
+        # Create table header row
+        foreach my $key (keys(%columns)) {
+            $header .= '<th>' . $columns{$key} . '</th>';
+        }
+        $header .= "</tr>\n";
+        
+        if ($tree->{'LISTELEMENT'}) {
+            # Create a table row per <LISTELEMENT>
+            my @list = @{$tree->{'LISTELEMENT'}};
+            for (my $i = 0; $i < scalar(@list); $i++) {
+                $rows .= '<tr id="tableRow">';
+                foreach my $key (keys(%columns)) {
+                    $rows .= '<td>' . $list[$i]{$key} . '</td>';
+                }
+                $rows .= "</tr>\n";
+            }
+        } else {
+            # Create a single table row
+            $rows .= '<tr id="tableRow">';
+            foreach my $key (keys(%columns)) {
+                $rows .= '<td>' . $tree->{$key} . '</td>';
+            }
+            $rows .= "</tr>\n";
+        }
+        
+        my $report = << 'EOTEMPLATE';
+$[/javascript myProcedure.project.ec_report_html_template]'
+EOTEMPLATE
+        
+        $report =~ s/<!-- HEADER -->/$header/g;
+        $report =~ s/<!-- ROWS -->/$rows/g;
+        
+        # Also template common special values
+        $report =~ s/<!-- SOAP_METHOD -->/$soapMethodName/g;
+        $report =~ s/<!-- RETURN_CODE -->/$tree->{'RETURNCODE'}/g;
+        $report =~ s/<!-- RETURN_CODE_MEANING -->/$returnCodeMeaning{$tree->{'RETURNCODE'}}/g;
+        $report =~ s/<!-- REASON_CODE -->/$tree->{'REASONCODE'}/g;
+        my $reasonCodeShort = substr($tree->{'REASONCODE'},4);
+        $report =~ s/<!-- REASON_CODE_SHORT -->/$reasonCodeShort/g;
+        my $reasonCodeShortMeaning = $reasonCodeMeaning{$reasonCodeShort};
+        $reasonCodeShortMeaning =~ s/&/&amp;/g;
+        $reasonCodeShortMeaning =~ s/</&lt;/g;
+        $reasonCodeShortMeaning =~ s/>/&gt;/g;        
+        $report =~ s/<!-- REASON_CODE_SHORT_MEANING -->/$reasonCodeShortMeaning/g;
+        $report =~ s/<!-- TASK_NO -->/$tree->{'TASKNO'}/g;
+        $report =~ s/<!-- LIST_COUNT -->/$tree->{'LISTCOUNT'}/g;
+        
+        print '$report = \'' . $report . "'\n"; #### TODO Remove debug output
+        
+        # Create the actual report
+        mkdir 'artifacts' or die "Cannot create directory: $!";
+        my $randomPostfix = sprintf('%8X', int(rand(2**32)));
+        my $name = $soapMethodName . "_Report";
+        my $reportFilename = $name . "_$randomPostfix.html";
+        open my $fh, ">artifacts/$reportFilename" or die "Cannot open $reportFilename: $!";
+        print $fh $report;
+        close $fh;
+        
+        my $job_step_id = $ENV{COMMANDER_JOBSTEPID};
+        my $link = "/commander/jobSteps/$job_step_id/$reportFilename";
+        
+        eval {$ec->createProperty("/myJob/report-urls/$name", $link)};
+        if ($@) {
+            # Report name collision, move to ugly form
+            $ec->setProperty("/myJob/report-urls/$name" . "_$randomPostfix", $link)
+        }
+        eval {
+            $ec->createProperty("/myPipelineStageRuntime/ec_summary/Results from",
+            qq{<html><a href="$link" target="_blank">$name</a></html>}
+            );
+        };
+        if ($@) {
+            # Possible report name collision, move to ugly form
+            eval {
+                $ec->setProperty("/myPipelineStageRuntime/ec_summary/Results from",
+                qq{<html><a href="$link" target="_blank">$name/_$randomPostfix</a></html>}
+                );
+            };
+        }
+    }
+}
+
 # Check if $outputPropertyOrPropertySheet exists and is a property sheet.
 eval {($ec->getProperty($outputPropertyOrPropertySheet.'/propertySheetId')->findvalue("//value")->value())};
 if ($@) {
@@ -100,29 +459,45 @@ if ($@) {
     # Check if $outputPropertyOrPropertySheet exists
     eval {($ec->getProperty($outputPropertyOrPropertySheet)->findvalue("//value")->value())};
     if ($@) {
-        # print $outputPropertyOrPropertySheet . " doesn't exist, creating it...\n"; #### TODO Remove debug output
+        # print $outputPropertyOrPropertySheet . " doesn't exist, creating it as property sheet...\n"; #### TODO Remove debug output
 
-        $ec->createProperty($outputPropertyOrPropertySheet, $xml);
+        $ec->createProperty($outputPropertyOrPropertySheet, {propertyType => 'sheet'});
+
+        # If $outputPropertyOrPropertySheet didn't exist then parse the results into
+        # a nested property sheet structure, adding index values to repeats child element names
+        my $simple = XML::Simple->new();
+        my $tree = $simple->XMLin('<OUTPUTDATA>' . $xml . '</OUTPUTDATA>', forcearray => [ qw(LISTELEMENT) ]);
+        
+        # print Dumper($tree); #### TODO Remove debug output
+        
+        walkXMLSimpleTree($tree, $outputPropertyOrPropertySheet);
+    
+        makeReport($tree);
     } else {    
         # print $outputPropertyOrPropertySheet . " exists as a property, updating its value to XML result...\n"; #### TODO Remove debug output
 
         $ec->setProperty($outputPropertyOrPropertySheet, $xml);
+
+        # Don't bother to parse unless we're actually going to produce a report
+        if (length($params{'report'}) > 0) {
+            my $simple = XML::Simple->new();
+            my $tree = $simple->XMLin('<OUTPUTDATA>' . $xml . '</OUTPUTDATA>', forcearray => [ qw(LISTELEMENT) ]);
+            makeReport($tree);
+        }
     }
 } else {
     # print $outputPropertyOrPropertySheet . " exists as a property sheet, parsing XML to create nested property sheet result...\n"; #### TODO Remove debug output
     
-    $xml = '<OUTPUTDATA>' . $xml . '</OUTPUTDATA>';
-
-    # print '$xml= \'' . $xml. "'\n"; #### TODO Remove debug output
-
     # If $outputPropertyOrPropertySheet exists and is a property sheet then parse the results into
     # a nested property sheet structure, adding index values to repeats child element names
     my $simple = XML::Simple->new();
-    my $tree = $simple->XMLin($xml, forcearray => [ qw(LISTELEMENT) ]);
+    my $tree = $simple->XMLin('<OUTPUTDATA>' . $xml . '</OUTPUTDATA>', forcearray => [ qw(LISTELEMENT) ]);
     
     # print Dumper($tree); #### TODO Remove debug output
     
     walkXMLSimpleTree($tree, $outputPropertyOrPropertySheet);
+    
+    makeReport($tree);
 }
 
 # Check for and handle nonzero CICS CM return code value
@@ -130,44 +505,90 @@ if ($@) {
 # We do this _after_ outputting the XML, in case a Commander error 
 # handling step wants to access the return code or reason code
 
-#### TODO Convert reason code to test message
-
+my $reasonCodeShort = substr($reasonCode, 4);
+my $reasonCodeShortMeaning = $reasonCodeMeaning{$reasonCodeShort};
 if ($returnCode ne '00000000') {
 
     # Return code '00000004' with certain reason codes should be treated as warnings rather than errors (or possibly even ignored).
     if ($returnCode eq '00000004') { #### TODO Check for lack of strict mode
-        my $conditionCode = substr($reasonCode, 4);
-        if ($conditionCode eq  '00AC') { 
+        if ($reasonCodeShort eq  '00AC') { 
             if ($soapMethodName eq 'Ready') {
-                print "WARNING: Readied a change package that was already ready!\n";
+                print "WARNING: Readied a change package that was already ready! ($reasonCodeShortMeaning)\n";
                 exit 0;
             }
-        } elsif ($conditionCode eq  '0024') { #### TODO Confirm there is no way to check whether this is due to a "new Group created" or "Group deleted" information message in the MSGUSR output.
-            print "WARNING: Reason code 0024 -- probably you created a new group, or deleted an existing group.\n";
+        } elsif ($reasonCodeShort eq  '0024') { #### TODO Confirm there is no way to check whether this is due to a "new Group created" or "Group deleted" information message in the MSGUSR output.
+            print "WARNING: Reason code 0024 -- probably you created a new group, or deleted an existing group. ($reasonCodeShortMeaning)\n";
             exit 0;
-        } elsif ($conditionCode eq  '009D') { #### TODO Confirm there is no way to check whether this is due to a "new Group created" or "Group deleted" information message in the MSGUSR output.
-            print "WARNING: Reason code 009D -- probably you created a new group, or deleted an existing group.\n";
+        } elsif ($reasonCodeShort eq  '009D') { #### TODO Confirm there is no way to check whether this is due to a "new Group created" or "Group deleted" information message in the MSGUSR output.
+            print "WARNING: Reason code 009D -- probably you created a new group, or deleted an existing group. ($reasonCodeShortMeaning)\n";
+            exit 0;
+        } elsif ($reasonCodeShort eq  '0003') {
+            print "WARNING: Reason code $reasonCode -- object was not found ($reasonCodeShortMeaning)\n";
+            exit 0;
+        } elsif ($reasonCodeShort eq  '0004') {
+            print "WARNING: Reason code $reasonCode -- no matching objects were found ($reasonCodeShortMeaning)\n";
+            exit 0;
+        } elsif ($reasonCodeShort eq  '004D') {
+            print "WARNING: Reason code $reasonCode -- change package was already backed out ($reasonCodeShortMeaning)\n";
+            exit 0;
+        } elsif ($reasonCodeShort eq  '005C') {
+            print "WARNING: Reason code $reasonCode -- change package was already backed out ($reasonCodeShortMeaning)\n";
+            exit 0;
+        } elsif ($reasonCodeShort eq  '0060') {
+            print "WARNING: Reason code $reasonCode -- nothing was installed ($reasonCodeShortMeaning)\n";
+            exit 0;
+        } elsif ($reasonCodeShort eq  '0064') {
+            print "WARNING: Reason code $reasonCode -- nothing was installed ($reasonCodeShortMeaning)\n";
+            exit 0;
+        } elsif ($reasonCodeShort eq  '006A') {
+            print "WARNING: Reason code $reasonCode -- nothing was newcopied ($reasonCodeShortMeaning)\n";
+            exit 0;
+        } elsif ($reasonCodeShort eq  '0070') {
+            print "WARNING: Reason code $reasonCode -- nothing was discarded ($reasonCodeShortMeaning)\n";
+            exit 0;
+        } elsif ($reasonCodeShort eq  '0072') {
+            print "WARNING: Reason code $reasonCode -- nothing was discarded ($reasonCodeShortMeaning)\n";
+            exit 0;
+        } elsif ($reasonCodeShort eq  '0073') {
+            print "WARNING: Reason code $reasonCode -- nothing was discarded ($reasonCodeShortMeaning)\n";
+            exit 0;
+        } elsif ($reasonCodeShort eq  '0086') {
+            print "WARNING: Reason code $reasonCode -- nothing was deleted ($reasonCodeShortMeaning)\n";
+            exit 0;
+        } elsif ($reasonCodeShort eq  '0090') {
+            print "WARNING: Reason code $reasonCode -- nothing was altered ($reasonCodeShortMeaning)\n";
+            exit 0;
+        } elsif ($reasonCodeShort eq  '0095') {
+            print "WARNING: Reason code $reasonCode -- nothing was added ($reasonCodeShortMeaning)\n";
+            exit 0;
+        } elsif ($reasonCodeShort eq  '0098') {
+            print "WARNING: Reason code $reasonCode -- nothing was removed ($reasonCodeShortMeaning)\n";
+            exit 0;
+        } elsif ($reasonCodeShort eq  '009C') {
+            print "WARNING: Reason code $reasonCode -- nothing was removed ($reasonCodeShortMeaning)\n";
+            exit 0;
+        } elsif ($reasonCodeShort eq  '00AA') {
+            #### TODO return code 00000004 with a reason code ending in 00AA indicates that APPROVE? or MIGRATE> query returned 0 objects
+            print "WARNING: Reason code $reasonCode -- #### ($reasonCodeShortMeaning)\n";
+            exit 0;
+        } elsif ($reasonCodeShort eq  '00B0') {
+            print "WARNING: Reason code $reasonCode -- nothing was imported ($reasonCodeShortMeaning)\n";
+            exit 0;
+        } elsif ($reasonCodeShort eq  '00CD') {
+            print "WARNING: Reason code $reasonCode -- the object was already in the desired state ($reasonCodeShortMeaning)\n";
+            exit 0;
+        } elsif ($reasonCodeShort eq  '00E3') {
+            print "WARNING: Reason code $reasonCode -- nothing was found for KILL request ($reasonCodeShortMeaning)\n";
+            exit 0;
+        } elsif ($reasonCodeShort eq  '00E6') {
+            print "WARNING: Reason code $reasonCode -- recovery was skipped for delete of non-existent definition ($reasonCodeShortMeaning)\n";
             exit 0;
         }
-        #### TODO return code 00000004 with a reason code ending in 0003 indicates that an object was not found
-        #### TODO return code 00000004 with a reason code ending in 0004 indicates that no matching objects were found
-        #### TODO return code 00000004 with a reason code ending in 004D indicates that chnage package was already backed out
-        #### TODO return code 00000004 with a reason code ending in 005C indicates that chnage package was already backed out
-        #### TODO return code 00000004 with a reason code ending in 0060 or 0064 indicates that nothing was installed
-        #### TODO return code 00000004 with a reason code ending in 006A indicates that nothing was newcopied
-        #### TODO return code 00000004 with a reason code ending in 0070 or 0072 or 0073 indicates that nothing was discarded
-        #### TODO return code 00000004 with a reason code ending in 0086 indicates that nothing was deleted
-        #### TODO return code 00000004 with a reason code ending in 0090 indicates that nothing was altered
-        #### TODO return code 00000004 with a reason code ending in 0095 indicates that nothing was added
-        #### TODO return code 00000004 with a reason code ending in 0098 indicates that nothing was removed
-        #### TODO return code 00000004 with a reason code ending in 009C indicates that nothing was renamed
-        #### TODO return code 00000004 with a reason code ending in 00AA indicates that APPROVE? or MIGRATE> query returned 0 objects
-        #### TODO return code 00000004 with a reason code ending in 00B0 indicates that nothing was imported
-        #### TODO return code 00000004 with a reason code ending in 00CD indicates that object was already in the desired state
-        #### TODO return code 00000004 with a reason code ending in 00E3 indicates that nothing was found for KILL request
-        #### TODO return code 00000004 with a reason code ending in 00E6 indicates that recovery was skipped for delete of non-existent definition
     }
 
-    print "ERROR: Result with non-zero return code '$returnCode' and reason code '$reasonCode':\n" . Dumper($result);
+    print "ERROR: Result with non-zero return code '$returnCode' ($returnCodeMeaning{$returnCode}) and reason code '$reasonCode' ($reasonCodeMeaning{$reasonCodeShort}):\n" . Dumper($result);
+    
+    #### TODO Add EBCDIC-hex -> ASCII conversion for INFO and INFO2 if present (both at top level and under DIAGDATA)
+    
     exit -1;
 }

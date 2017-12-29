@@ -59,6 +59,7 @@ my $dslReponse = $commander->evalDsl(
                      }
               ),
         debug             => 'false',
+        timeout           => 3600,
         serverLibraryPath => File::Spec->catdir( $pluginDir, 'dsl' ),
     },
 );

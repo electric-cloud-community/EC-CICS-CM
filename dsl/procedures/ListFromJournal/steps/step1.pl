@@ -8,6 +8,7 @@ my $soapMethodName = 'List';
 
 # List of the names of optional paramters
 my @optionalParams = (
+    'report',
     'JnlRecType',
     'JnlCCVRel',
     'JnlCICSRel',
@@ -67,7 +68,7 @@ if (scalar(@JnlCriteria) > 0) {
     
     # Validate Object Name exists #### TODO Is this necessary?
     if (!(length($params{'ObjName'}) > 0)) {
-        print "ERROR: Since you have supplied journal criteria, the Object Type specifies the type of a resource image in a BAImage, and you must specify an Object Name (though it can be masked, so if you have no perefernce you could specify *)!\n";
+        print "ERROR: Since you have supplied journal criteria, the Object Type specifies the type of a resource image in a BAImage, and you must also specify an Object Name (though it can be masked, so if you have no prefernce you could specify *)!\n";
         exit -1;
     }
     
@@ -98,7 +99,7 @@ if (scalar(@JnlCriteria) > 0) {
     if (($params{'ObjDefVer'} ne 'EventStart') && ($params{'ObjDefVer'} ne 'BSImage') && ($params{'ObjDefVer'} ne 'EventData') && ($params{'ObjDefVer'} ne 'EventEnd')) {
         print "ERROR: Since you have not supplied any journal criteria, the Object Type must be 'EventStart', 'BAImage', 'EventData', or 'EventEnd'!\n";
         exit -1;    
-    } elsif (length($param{'ObjName'}.$param{'ObjGroup'}.$param{'ObjDefVer'}) > 0) {
+    } elsif (length($params{'ObjName'}.$params{'ObjGroup'}.$params{'ObjDefVer'}) > 0) {
         print "ERROR: Since you have not supplied any journal criteria and the Object Type is a journal object type, the Object Name, Object Group, or Object Definition Version must be left empty!\n";
         exit -1;    
     }

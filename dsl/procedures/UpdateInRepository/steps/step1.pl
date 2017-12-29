@@ -105,7 +105,6 @@ if(scalar(@processParmsResult) > 0) {
 my @data =
     SOAP::Data->name($soapMethodName => \SOAP::Data->value(
         SOAP::Data->name('LocationCriteria' => \SOAP::Data->value(
-            SoapData('LocationName'),
             SoapData('LocationType')
         )),
         SOAP::Data->name('ObjectCriteria' => \SOAP::Data->value(

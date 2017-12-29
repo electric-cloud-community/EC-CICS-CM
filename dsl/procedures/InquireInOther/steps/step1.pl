@@ -8,8 +8,9 @@ my $soapMethodName = 'Inquire';
 
 # List of the names of optional paramters
 my @optionalParams = (
+    'report',
     'ObjGroup',
-    'ObjDefVer'
+    'ObjDefVer',
 );
 
 $[/myPlugin/project/ec_perl_metadata]

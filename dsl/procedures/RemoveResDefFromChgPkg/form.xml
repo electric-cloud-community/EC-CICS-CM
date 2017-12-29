@@ -43,7 +43,7 @@ documentation : Help text for the parameter
         <label>Output Property:</label>
         <property>outputProperty</property>
         <required>1</required>
-        <documentation>The property that results will be returned into.</documentation>
+        <documentation>The property sheet or property that results will be returned into.</documentation>
     </formElement>
     <formElement>
         <type>select</type>

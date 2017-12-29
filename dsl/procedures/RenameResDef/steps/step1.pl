@@ -4,7 +4,7 @@ $[/myPlugin/project/ec_perl_header]
 # ---------------------------
 
 # Name of SOAP method to call
-my $soapMethodName = 'Remove';
+my $soapMethodName = 'Rename';
 
 # List of the names of optional paramters
 my @optionalParams = (
@@ -54,7 +54,7 @@ if (length($params{'InputData'}) == 0) {
     ));
     push(@InputData, @targetElement);
     foreach my $part (@parts) {
-        my @pieces = split(|\/|, $part, 2); # Split at first '/' into name and value
+        my @pieces = split(/\//, $part, 2); # Split at first / into name and value
         if (@pieces == 2) {
             @targetElement = SOAP::Data->name('TargetElement' => \SOAP::Data->value(
                 SOAP::Data->name('TargetName' => $pieces[0]),
@@ -77,7 +77,7 @@ if (length($params{'InputData'}) == 0) {
 # Handle optional Process Parameter
 my @processParmsResult;
 if (length($params{'Replace'}) > 0) {
-    push @processParmsResult, SoapData($param);
+    push @processParmsResult, SoapData('Replace');
 }
 my @ProcessParms;
 if(scalar(@processParmsResult) > 0) {
@@ -93,9 +93,7 @@ SOAP::Data->name($soapMethodName => \SOAP::Data->value(
         SoapData('LocationName'),
         SoapData('LocationType')
     )),
-    SOAP::Data->name('ObjectCriteria' => \SOAP::Data->value(
-        SOAP::Data->name('ObjectCriteria' => @ObjectCriteria),
-    )),
+    @ObjectCriteria,
     SOAP::Data->name('InputData' => \SOAP::Data->value(
         @InputData
     )),

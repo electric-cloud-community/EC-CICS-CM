@@ -8,6 +8,7 @@ my $soapMethodName = 'Inquire';
 
 # List of the names of optional paramters
 my @optionalParams = (
+    'report',
     'ObjName',
     'CPID',
     'CConfig',

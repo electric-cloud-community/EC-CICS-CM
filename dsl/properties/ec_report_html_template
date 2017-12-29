@@ -1,0 +1,12 @@
+<html>
+  <head>EC-CICS-CM <!-- SOAP_METHOD --> Report</head>
+  <body>
+    <h1>EC-CICS-CM <!-- SOAP_METHOD --> Report</h1>
+    Return Code: <!-- RETURN_CODE --> (<!-- RETURN_CODE_MEANING -->)<br>
+    Reason Code: <!-- REASON_CODE_SHORT --> (<!-- REASON_CODE_SHORT_MEANING -->)<br>
+    <table>
+      <!-- HEADER -->
+      <!-- ROWS -->
+    </table>
+  </body>
+</html>

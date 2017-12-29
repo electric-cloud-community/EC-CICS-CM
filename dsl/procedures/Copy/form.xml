@@ -43,7 +43,7 @@ documentation : Help text for the parameter
         <label>Output Property:</label>
         <property>outputProperty</property>
         <required>1</required>
-        <documentation>The property that results will be returned into.</documentation>
+        <documentation>The property sheet or property that results will be returned into.</documentation>
     </formElement>
     <formElement>
         <type>entry</type>
@@ -57,6 +57,14 @@ documentation : Help text for the parameter
         <label>Location Type:</label>
         <property>LocationType</property>
         <required>1</required>
+        <option>
+            <name>CICS Configuration</name>
+            <value>CConfig</value>
+        </option>
+        <option>
+            <name>Context</name>
+            <value>Context</value>
+        </option>
         <option>
             <name>CSD</name>
             <value>CSD</value>
@@ -339,10 +347,10 @@ documentation : Help text for the parameter
     </formElement> 
     <formElement>
         <type>entry</type>
-        <label>Target Location Group:</label>
-        <property>TargetLocationGroup</property>
+        <label>Target Group:</label>
+        <property>TargetGroup</property>
         <required>0</required>
-        <documentation>The resource group of the destination to copy to (optional unless source and target location names and types are the same, if omitted this defaults to matching the source Object Group).</documentation>
+        <documentation>If specified, this identifies the group name that is assigned to the resource definition at the target location (optional unless source and target location names and types are the same).</documentation>
     </formElement> 
     <formElement>
         <type>checkbox</type>
