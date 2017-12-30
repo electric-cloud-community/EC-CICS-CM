@@ -58,49 +58,50 @@ if(scalar(@jnlCriteriaResult) > 0) {
 # Validate ObjectCriteria
 
 if (scalar(@JnlCriteria) > 0) {
-    # Validate ObjectCriteria for where JnlCriteria exist
-    
-    # Check Object type is not a Journal Type
-    if (($params{'ObjDefVer'} eq 'EventStart') || ($params{'ObjDefVer'} eq 'BSImage') || ($params{'ObjDefVer'} eq 'EventData') || ($params{'ObjDefVer'} eq 'EventEnd')) {
-        print "ERROR: Since you have supplied journal criteria, the Object Type specifies the type of a resource image in a BAImage, so it cannot be 'EventStart', 'BAImage', 'EventData', or 'EventEnd'!\n";
-        exit -1;    
-    }
-    
-    # Validate Object Name exists #### TODO Is this necessary?
-    if (!(length($params{'ObjName'}) > 0)) {
-        print "ERROR: Since you have supplied journal criteria, the Object Type specifies the type of a resource image in a BAImage, and you must also specify an Object Name (though it can be masked, so if you have no prefernce you could specify *)!\n";
-        exit -1;
-    }
-    
-    # Validate wildcards are at end
-    if (($params{'ObjName'} =~ /\*.+$/) || ($params{'ObjGroup'} =~ /\*.+$/)) {
-        print "ERROR: The wildcard character '*' must only occur at the end of the Object Name or Object Group!\n";
-        exit -1;
-    }
+    if (length($params{'ObjType'}.$params{'ObjName'}.$params{'ObjGroup'}.$params{'ObjDefVer'}) > 0) {
+        # Validate ObjectCriteria for where both JnlCriteria and ObjectCriteria exist
 
-    # Validate Object Group against Object Type
-    if(($params{'ObjType'} eq 'RESGROUP') || ($params{'ObjType'} eq 'RESDESC')) {
-        if (length($params{'ObjGroup'}) > 0) {
-            print "ERROR: You cannot specify an Object Group when the Object Type is 'ResGroup (Group for CSD)' or 'ResDesc (List for CSD)'!\n";
+        # Check Object type is not a Journal Type
+        if (($params{'ObjType'} eq 'EventStart') || ($params{'ObjType'} eq 'BSImage') || ($params{'ObjType'} eq 'EventData') || ($params{'ObjType'} eq 'EventEnd')) {
+	    print "ERROR: Since you have supplied journal criteria, the Resource Type specifies the type of a resource image in a BAImage, so it cannot be 'EventStart', 'BAImage', 'EventData', or 'EventEnd'!\n";
+            exit -1;    
+        }
+
+        # Validate Object Name exists #### TODO Is this necessary?
+        if (!(length($params{'ObjName'}) > 0)) {
+            print "ERROR: Since you have supplied journal criteria and a Resource Type, Resource Group and/or Resource Definition Version, so you are attempting to match a resource image in a BAImage, in which case you must also provide a Resource Name (though it can be masked, so if you have no prefernce you could specify *)!\n";
+            exit -1;
+        }
+
+        # Validate wildcards are at end
+        if (($params{'ObjName'} =~ /\*.+$/) || ($params{'ObjGroup'} =~ /\*.+$/)) {
+            print "ERROR: The wildcard character '*' must only occur at the end of the Resource Name or Resource Group!\n";
+            exit -1;
+        }
+
+        # Validate Object Group against Object Type
+        if(($params{'ObjType'} eq 'RESGROUP') || ($params{'ObjType'} eq 'RESDESC')) {
+            if (length($params{'ObjGroup'}) > 0) {
+                print "ERROR: You cannot specify a Resource Group when the Resource Type is 'ResGroup (Group for CSD)' or 'ResDesc (List for CSD)'!\n";
+                exit -1;
+            }
+        }
+
+        # Check ObjGroup and ObjDefVer are compatible
+        if ((length($params{'ObjDefVer'}) > 0 )  && (length($params{'ObjGroup'}) > 0)) {
+            print "ERROR: You cannot specify both a Resource Definition Version value and a Resource Group value!";
             exit -1;
         }
     }
-    
-    # Check ObjGroup and ObjDefVer are compatible
-    if ((length($params{'ObjDefVer'}) > 0 )  && (length($params{'ObjGroup'}) > 0)) {
-        print "ERROR: You cannot specify both an Object Definition Version value and an Object Group value!";
-        exit -1;
-    }
-
 } else {
     # Validate ObjectCriteria for where JnlCriteria don't exist
     
     # Check Object type is a Journal Type
     if (($params{'ObjDefVer'} ne 'EventStart') && ($params{'ObjDefVer'} ne 'BSImage') && ($params{'ObjDefVer'} ne 'EventData') && ($params{'ObjDefVer'} ne 'EventEnd')) {
-        print "ERROR: Since you have not supplied any journal criteria, the Object Type must be 'EventStart', 'BAImage', 'EventData', or 'EventEnd'!\n";
+        print "ERROR: Since you have not supplied any journal criteria, the Resource Type must be 'EventStart', 'BAImage', 'EventData', or 'EventEnd'!\n";
         exit -1;    
     } elsif (length($params{'ObjName'}.$params{'ObjGroup'}.$params{'ObjDefVer'}) > 0) {
-        print "ERROR: Since you have not supplied any journal criteria and the Object Type is a journal object type, the Object Name, Object Group, or Object Definition Version must be left empty!\n";
+        print "ERROR: Since you have not supplied any journal criteria and the Resource Type is a journal object type, the Resource Name, Resource Group, or Resource Definition Version must be left empty!\n";
         exit -1;    
     }
 }
@@ -143,7 +144,6 @@ if(scalar(@processParmsResult) > 0) {
 my @data =
     SOAP::Data->name($soapMethodName => \SOAP::Data->value(
         SOAP::Data->name('LocationCriteria' => \SOAP::Data->value(
-            SoapData('LocationName'),
             SoapData('LocationType')
         )),
         @JnlCriteria,

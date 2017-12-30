@@ -23,7 +23,7 @@ $soap->outputxml(1); # Don't automatically deserialize the returned xml (since i
 my $xml = $soap->call($ccVersion, @data);
 
 my $deserializer = SOAP::Deserializer->new;
-my $som = $deserializer ->deserialize($xml);
+my $som = $deserializer->deserialize($xml);
 
 # Check for and handle SOAP error response
 if ($som->fault) {
@@ -530,6 +530,9 @@ if ($returnCode ne '00000000') {
             exit 0;
         } elsif ($reasonCodeShort eq  '004D') {
             print "WARNING: Reason code $reasonCode -- change package was already backed out ($reasonCodeShortMeaning)\n";
+            exit 0;
+        } elsif (($reasonCodeShort eq  '0054') && ($soapMethodName eq 'Copy')) {
+            print "WARNING: Reason code $reasonCode -- the copy operation replaced a previously-existing object or objects ($reasonCodeShortMeaning)\n";
             exit 0;
         } elsif ($reasonCodeShort eq  '005C') {
             print "WARNING: Reason code $reasonCode -- change package was already backed out ($reasonCodeShortMeaning)\n";

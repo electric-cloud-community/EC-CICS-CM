@@ -25,7 +25,7 @@ $[/myPlugin/project/ec_perl_code_block_1]
 
 # Build @ObjectCriteria
 my @ObjectCriteria;
-if ($params{'ObjectCriteria'}.length == 0) {
+if (0 && $params{'ObjectCriteria'}.length == 0) { # The following clause's behavior matches the documentation, but the server doesn't seem to accept it, so is disabled
     
     # No ObjectCriteria, so we only have one element, and can omit the <ListCount> and <ListElement>
     @ObjectCriteria = SOAP::Data->name('ObjectCriteria' => \SOAP::Data->value(
@@ -35,6 +35,7 @@ if ($params{'ObjectCriteria'}.length == 0) {
     ));
 } else {
 
+    #### TODO Should this use the shared code method for building ObjectCriteria?
     # Combine ObjName, ObjGroup, ObjType, and ObjectCriteria into @ObjectCriteria
     my $objectCriteria = $params{'ObjectCriteria'};
     #### TODO Confirm $objectCriteria is a valid XML fragment matching the expected schema
@@ -42,12 +43,12 @@ if ($params{'ObjectCriteria'}.length == 0) {
     my $listCount = 1 + @matches;
     @ObjectCriteria = SOAP::Data->name('ObjectCriteria' => \SOAP::Data->value(
         SOAP::Data->name('ListCount' => $listCount),
+        SOAP::Data->type('xml' => $objectCriteria),
         SOAP::Data->name('ListElement' => \SOAP::Data->value(
             SoapData('ObjName'),
             SoapData('ObjGroup'),
             SoapData('ObjType')
-        )),
-        SOAP::Data->type('xml' => $objectCriteria)
+        ))
     ));    
 }
 
@@ -90,12 +91,8 @@ my @data = SOAP::Data->name($soapMethodName => \SOAP::Data->value(
     )),
     SOAP::Data->name('ObjectCriteria' => @ObjectCriteria),
     SOAP::Data->name('ProcessParms' => \SOAP::Data->value(
-$[/javascript (('' + myParent.Quiesce).length == 0) ? "" :
-"        SoapData('Quiesce'),  # Optional parameter "
-]
-$[/javascript (('' + myParent.QualificationData).length == 0) ? "" :
-"        SoapData('QualificationData'),  # Optional parameter "
-]
+        SoapDataOptional('Quiesce'),
+        SoapDataOptional('QualificationData'),
 $[/javascript (('' + myParent.Connections).length == 0) ? "" :
 "        SOAP::Data->name('CSDParams' => @CSDParams),  # Optional section "
 ]

@@ -347,8 +347,8 @@ documentation : Help text for the parameter
     </formElement> 
     <formElement>
         <type>entry</type>
-        <label>Target Group:</label>
-        <property>TargetGroup</property>
+        <label>Target Location Group:</label>
+        <property>TargetLocationGroup</property>
         <required>0</required>
         <documentation>If specified, this identifies the group name that is assigned to the resource definition at the target location (optional unless source and target location names and types are the same).</documentation>
     </formElement> 

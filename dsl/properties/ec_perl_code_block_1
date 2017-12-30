@@ -495,7 +495,7 @@ sub createObjectCriteria {
         my $objectCriteria = $params{'ObjectCriteria'};
         
         validateXML($objectCriteria);
-        my @matches = $objectCriteria =~ m/<ListElement>/si;
+        my @matches = $objectCriteria =~ m/<ListElement\s*>/si;
         my $listCount = 1 + @matches;
         if ($listCount <= 1) {
             print "ERROR: Serialized Object Criteria did not contain any <ListElement> tags!\n";
@@ -506,10 +506,10 @@ sub createObjectCriteria {
         @ObjectCriteria = SOAP::Data->name('ObjectCriteria' => \SOAP::Data->value(
             @configValue,
             SOAP::Data->name('ListCount' => $listCount),
+            SOAP::Data->type('xml' => $objectCriteria),
             SOAP::Data->name('ListElement' => \SOAP::Data->value(
                 @soapParams
-            )),
-            SOAP::Data->type('xml' => $objectCriteria)
+            )),            
         ));
     }
     return @ObjectCriteria;

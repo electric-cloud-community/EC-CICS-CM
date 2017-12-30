@@ -67,7 +67,7 @@ if (length($params{'InputData'}) == 0) {
             exit -1;
         }
     }
-    my @countOC = ($params{'ObjectCriteria'} =~ /<ListElement>/);
+    my @countOC = ($params{'ObjectCriteria'} =~ /<ListElement\s*>/);
     if ($countID != scalar(@countOC)) {
         print "ERROR: 'Serialized Resource Object Criteria' and 'Resource Name-Group Pairs' should contain the same number of elements!\n";
         exit -1;

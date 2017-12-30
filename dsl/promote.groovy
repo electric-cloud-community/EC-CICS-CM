@@ -51,6 +51,9 @@ def stepsWithAttachedCredentials = [
   [procedureName: 'RenameFromGroup', stepName: 'step1'],
   [procedureName: 'RenameResDef', stepName: 'step1'],
   [procedureName: 'Recover', stepName: 'step1'],
+  [procedureName: 'SerializeCommandObjectCriteria', stepName: 'step1'],
+  [procedureName: 'SerializeOtherObjectCriteria', stepName: 'step1'],
+//  [procedureName: 'SerializeRepositoryObjectCriteria', stepName: 'step1'],
   [procedureName: 'Unready', stepName: 'step1'],
   [procedureName: 'UpdateInOther', stepName: 'step1'],
   [procedureName: 'UpdateInRepository', stepName: 'step1']

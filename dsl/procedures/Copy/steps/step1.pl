@@ -9,7 +9,7 @@ my $soapMethodName = 'Copy';
 # List of the names of optional paramters
 my @optionalParams = (
     'ObjectCriteria',
-    'TargetGroup',
+    'TargetLocationGroup',
     'Replace'
 );
 
@@ -20,13 +20,13 @@ $[/myPlugin/project/ec_perl_code_block_1]
 # Procedure-specific Code
 # -----------------------
 
-# Validate TargetGroup if required
+# Validate TargetLocationGroup if required
 if (($params{'LocationName'} eq $params{'TargetLocationName'}) && ($params{'LocationName'} eq $params{'TargetLocationName'})) {
-    if (!(length($params{'TargetGroup'}) > 0)) {
-        print "ERROR: Target Group must be specified if Target Location Name matches Location Name and Target Location Type matches LocationType!\n";
+    if (!(length($params{'TargetLocationGroup'}) > 0)) {
+        print "ERROR: Target Location Group must be specified if Target Location Name matches Location Name and Target Location Type matches LocationType!\n";
         exit -1;
-    } elsif ((!(length($params{'TargetGroup'}) > 0)) && ($params{'ObjGroup'} eq $params{'TargetGroup'})) {
-        print "ERROR: Target Group must not match Object Group if Target Location Name matches Location Name and Target Location Type matches LocationType!\n";
+    } elsif ((!(length($params{'TargetLocationGroup'}) > 0)) && ($params{'ObjGroup'} eq $params{'TargetLocationGroup'})) {
+        print "ERROR: Target Location Group must not match Object Group if Target Location Name matches Location Name and Target Location Type matches LocationType!\n";
         exit -1;
     }
 }
@@ -45,7 +45,7 @@ my @data =
         SOAP::Data->name('InputData' => \SOAP::Data->value(
             SoapData('TargetLocationName'),
             SoapData('TargetLocationType'),
-            SoapDataOptional('TargetGroup')
+            SoapDataOptional('TargetLocationGroup')
         )),
         SOAP::Data->name('ProcessParms' => \SOAP::Data->value(
             SoapDataOptional('Replace')
