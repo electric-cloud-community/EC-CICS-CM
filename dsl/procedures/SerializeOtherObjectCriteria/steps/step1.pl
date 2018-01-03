@@ -82,13 +82,11 @@ if (($procedure eq 'AddResDefToChgPkg') || ($procedure eq 'RemoveDefFromChgPkg')
         print "ERROR: The only Resource Type value allowed is 'ResGroup (Group for CSD)' when building Object Criteria for use with the $procedure procedure!\n";
         exit -1;
     }
-} elsif (($procedure eq 'DiscardAdHoc') || ($procedure eq 'NewcopyAdHoc')) {
+} elsif ($procedure eq 'NewcopyAdHoc') {
     if (($params{'ObjType'} ne 'MAPDEF') && ($params{'ObjType'} ne 'PROGDEF') && ($params{'ObjType'} ne 'PRTNDEF') && ($params{'ObjType'} ne 'DOCDEF')){
         print "ERROR: The only Resource Type values allowed are 'MapDef', 'ProgDef', 'PrtnDef' and 'DocDef' when building Object Criteria for use with the $procedure procedure!\n";
         exit -1;
     }
-} elsif ($procedure eq 'Recover') {  
-    #### TODO Check documentation for Recover's requirements (it still needs to be converted to a select)
 }
 
 #### TODO Add procedure-specific validation, some inside if ($procedure ne ...) and some in a big switch dependant on $procedure

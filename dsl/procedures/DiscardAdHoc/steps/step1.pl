@@ -11,8 +11,8 @@ my @optionalParams = (
     'ObjectCriteria',
     'Quiesce',
     'QualificationData',
-    'Connections',
-    'ConnectionNames',
+    'connections',
+    'connectionNames',
     'TargetScope'
 );
 
@@ -93,7 +93,7 @@ my @data = SOAP::Data->name($soapMethodName => \SOAP::Data->value(
     SOAP::Data->name('ProcessParms' => \SOAP::Data->value(
         SoapDataOptional('Quiesce'),
         SoapDataOptional('QualificationData'),
-$[/javascript (('' + myParent.Connections).length == 0) ? "" :
+$[/javascript (('' + myParent.connections).length == 0) ? "" :
 "        SOAP::Data->name('CSDParams' => @CSDParams),  # Optional section "
 ]
 $[/javascript (('' + myParent.TargetScope).length == 0) ? "" :

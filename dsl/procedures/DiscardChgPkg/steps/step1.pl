@@ -28,13 +28,8 @@ my @data = SOAP::Data->name($soapMethodName => \SOAP::Data->value(
         SoapData('Scheme')
     )),
     SOAP::Data->name('ProcessParms' => \SOAP::Data->value(
-$[/javascript (('' + myParent.Quiesce).length == 0) ? "" :
-"        SoapData('Quiesce'),  # Optional parameter "
-]
-$[/javascript (('' + myParent.QualificationData).length == 0) ? "" :
-"        SoapData('QualificationData'),  # Optional parameter "
-]
-
+        SoapDataOptional('Quiesce'),
+        SoapDataOptional('QualificationData'),
 $[/javascript (('' + myParent.TargetScope).length == 0) ? "" :
 "        SOAP::Data->name('CPSMParams' => \\SOAP::Data->value( " +
 "            SoapData('TargetScope'),  # Optional parameter \n" +

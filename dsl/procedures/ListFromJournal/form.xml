@@ -183,7 +183,7 @@ documentation : Help text for the parameter
             <value></value>
         </option>
 	<option>
-            <name>*</name> <!-- #### TODO Can a BAImage contain a Repository object type? If so, add those and appropriate object criteria -->
+            <name>*</name> <!-- #### TODO Can a BAImage contain a Repository object type? Probably not, since they apparently can'r be recovered. If so, add those and appropriate object criteria -->
             <value>*</value>
         </option>
 	<option>

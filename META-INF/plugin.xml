@@ -1,7 +1,7 @@
 <plugin>
   <key>EC-CICS-CM</key>
   <label>EC-CICS-CM</label>
-  <version>1.0.1.71</version>
+  <version>1.0.1.72</version>
   <author>Electric Cloud</author>
   <authorUrl>http://www.electric-cloud.com/support</authorUrl>
   <category>Mainframe</category>

@@ -4,8 +4,8 @@
 use strict;
 use ElectricCommander;
 use Data::Dumper;
-#### TODO use SOAP::Lite; 
-use SOAP::Lite on_debug => sub{print@_}; #### TODO Remove debugging output
+use SOAP::Lite; 
+# use SOAP::Lite on_debug => sub{print@_}; #### TODO Remove debugging output
 $SOAP::Constants::DO_NOT_CHECK_CONTENT_TYPE = 1;
 use XML::XPath;
 use XML::LibXML qw( );

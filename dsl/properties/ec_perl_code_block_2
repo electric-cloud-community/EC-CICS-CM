@@ -61,13 +61,7 @@ my $outputPropertyOrPropertySheet = $params{'outputProperty'};
 sub walkXMLSimpleTree {
     my ($tree, $path) = @_;
     
-    # print '$path = \'' . $path . "'\n"; #### TODO Remove debug output
-    # print '$tree = ' . Dumper($tree); #### TODO Remove debug output
-    # print 'ref $tree = \'' . (ref $tree) . "'\n"; #### TODO Remove debug output
-    
     if (ref $tree eq ref []) {
-        # print 'Iterating over array of length ' . scalar(@$tree) . "...\n"; #### TODO Remove debug output
-        
         # Iterate over array entries
         for (my $i = 0; $i < length(@{$tree}); $i++) {
             my $newPath = $path . '_' . $i;
@@ -77,8 +71,6 @@ sub walkXMLSimpleTree {
         # Attempt to treate property sheet at $path
         eval {$ec->createProperty($path, {propertyType => 'sheet'})};
         
-        # print 'Iterating over hash of size ' . scalar(keys(%$tree)) . "...\n"; #### TODO Remove debug output
-        
         # Iterate over hash keys
         foreach my $key (keys(%$tree)) {
             walkXMLSimpleTree(\($tree->{$key}), $path . '/' . $key);
@@ -86,8 +78,6 @@ sub walkXMLSimpleTree {
     } elsif (ref $tree eq 'REF') {
         walkXMLSimpleTree($$tree, $path);
     } else {
-        # print 'Creating property with value \'' . $$tree . "'\n"; #### TODO Remove debug output
-
         # Create or set property at $path with value $$tree
         $ec->setProperty($path, {value => $$tree});
     }
@@ -417,8 +407,6 @@ EOTEMPLATE
         $report =~ s/<!-- TASK_NO -->/$tree->{'TASKNO'}/g;
         $report =~ s/<!-- LIST_COUNT -->/$tree->{'LISTCOUNT'}/g;
         
-        print '$report = \'' . $report . "'\n"; #### TODO Remove debug output
-        
         # Create the actual report
         mkdir 'artifacts' or die "Cannot create directory: $!";
         my $randomPostfix = sprintf('%8X', int(rand(2**32)));
@@ -459,8 +447,6 @@ if ($@) {
     # Check if $outputPropertyOrPropertySheet exists
     eval {($ec->getProperty($outputPropertyOrPropertySheet)->findvalue("//value")->value())};
     if ($@) {
-        # print $outputPropertyOrPropertySheet . " doesn't exist, creating it as property sheet...\n"; #### TODO Remove debug output
-
         $ec->createProperty($outputPropertyOrPropertySheet, {propertyType => 'sheet'});
 
         # If $outputPropertyOrPropertySheet didn't exist then parse the results into
@@ -468,14 +454,10 @@ if ($@) {
         my $simple = XML::Simple->new();
         my $tree = $simple->XMLin('<OUTPUTDATA>' . $xml . '</OUTPUTDATA>', forcearray => [ qw(LISTELEMENT) ]);
         
-        # print Dumper($tree); #### TODO Remove debug output
-        
         walkXMLSimpleTree($tree, $outputPropertyOrPropertySheet);
     
         makeReport($tree);
     } else {    
-        # print $outputPropertyOrPropertySheet . " exists as a property, updating its value to XML result...\n"; #### TODO Remove debug output
-
         $ec->setProperty($outputPropertyOrPropertySheet, $xml);
 
         # Don't bother to parse unless we're actually going to produce a report
@@ -486,14 +468,10 @@ if ($@) {
         }
     }
 } else {
-    # print $outputPropertyOrPropertySheet . " exists as a property sheet, parsing XML to create nested property sheet result...\n"; #### TODO Remove debug output
-    
     # If $outputPropertyOrPropertySheet exists and is a property sheet then parse the results into
     # a nested property sheet structure, adding index values to repeats child element names
     my $simple = XML::Simple->new();
     my $tree = $simple->XMLin('<OUTPUTDATA>' . $xml . '</OUTPUTDATA>', forcearray => [ qw(LISTELEMENT) ]);
-    
-    # print Dumper($tree); #### TODO Remove debug output
     
     walkXMLSimpleTree($tree, $outputPropertyOrPropertySheet);
     
@@ -572,7 +550,7 @@ if ($returnCode ne '00000000') {
             exit 0;
         } elsif ($reasonCodeShort eq  '00AA') {
             #### TODO return code 00000004 with a reason code ending in 00AA indicates that APPROVE? or MIGRATE> query returned 0 objects
-            print "WARNING: Reason code $reasonCode -- #### ($reasonCodeShortMeaning)\n";
+            print "WARNING: Reason code $reasonCode ($reasonCodeShortMeaning)\n";
             exit 0;
         } elsif ($reasonCodeShort eq  '00B0') {
             print "WARNING: Reason code $reasonCode -- nothing was imported ($reasonCodeShortMeaning)\n";
