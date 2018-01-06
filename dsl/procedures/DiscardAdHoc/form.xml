@@ -57,7 +57,7 @@ documentation : Help text for the parameter
         <label>Location Type:</label>
         <property>LocationType</property>
         <required>1</required>
-        <documentation>The type of location to discard from: must be 'CICS Configuration for this procedure (to dicasrd from other location types, use procedure DiscardChgPkg instead).</documentation>
+        <documentation>The type of location to discard from: must be 'CICS Configuration for this procedure (to discard from other location types, use procedure DiscardChgPkg instead).</documentation>
         <option>
             <name>CICS Configuration</name>
             <value>CConfig</value>

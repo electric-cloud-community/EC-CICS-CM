@@ -211,11 +211,11 @@ documentation : Help text for the parameter
             <name>RAsgnDef</name>
             <value>RASGNDEF</value>
         </option>
-        <!-- #### TODO Is this allowed? <option>
+        <!-- <option>
             <name>ResGroup (Group for CSD)</name>
             <value>RESGROUP</value>
         </option> -->
-        <!-- #### TODO Is this allowed? <option>
+        <!-- <option>
             <name>ResDesc (List for CSD)</name>
             <value>RESDESC</value>
         </option> -->

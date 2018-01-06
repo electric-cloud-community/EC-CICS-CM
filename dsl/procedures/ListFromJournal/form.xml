@@ -183,7 +183,7 @@ documentation : Help text for the parameter
             <value></value>
         </option>
 	<option>
-            <name>*</name> <!-- #### TODO Can a BAImage contain a Repository object type? Probably not, since they apparently can'r be recovered. If so, add those and appropriate object criteria -->
+            <name>*</name> <!-- ### It appears that a BAImage cannot contain a Repository object type: they apparently can't be recovered, and testing suggests they aren't stored. -->
             <value>*</value>
         </option>
 	<option>
@@ -427,13 +427,13 @@ documentation : Help text for the parameter
         <required>0</required>
         <documentation>If you have specified some journal criteria above, this is an optional resource group for a resource definition embedded in a BAImage (masked values may be used), otherwise it must be omitted.</documentation>
     </formElement>
-    <formElement> <!-- #### TODO Is this allowed in a BAImage? -->
+    <!-- <formElement>
         <type>entry</type>
         <label>Resource Definition Version:</label>
         <property>ObjDefVer</property>
         <required>0</required>
         <documentation>If you have specified some journal criteria above, this is an optional resource definition version for a resource definition embedded in a BAImage (masked values may be used), otherwise it must be omitted.</documentation>
-    </formElement>
+    </formElement> -->
     <formElement>
         <type>textarea</type>
         <label>Restriction Criteria:</label>
@@ -449,7 +449,7 @@ documentation : Help text for the parameter
             even if they otherwise would not be).
         </documentation>
     </formElement>
-    <formElement> <!-- #### TODO Is this allowed for ListFromJournal? Only allowed when listing 'resource definitions'... -->
+    <!-- <formElement>
         <type>checkbox</type>
         <label>All Attributes:</label>
         <property>AllAttributes</property>
@@ -459,7 +459,7 @@ documentation : Help text for the parameter
         <value>NO</value>
         <required>0</required>
         <documentation>Specifies whether all attributes of the requested resource definitions are returned or only a default subset (optional, defaults to 'NO').</documentation>
-    </formElement>
+    </formElement> -->
     <formElement>
         <type>select</type>
         <label>Hashing Scope:</label>

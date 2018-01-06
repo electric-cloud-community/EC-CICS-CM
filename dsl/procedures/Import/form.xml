@@ -46,11 +46,23 @@ documentation : Help text for the parameter
         <documentation>The property sheet or property that results will be returned into.</documentation>
     </formElement>
     <formElement>
+        <type>select</type>
+        <label>Location Type:</label>
+        <property>LocationType</property>
+        <required>1</required>
+        <documentation>The type of location to import from: must be 'CICS Configuration'.</documentation>
+        <option>
+            <name>CICS Configuration</name>
+            <value>CConfig</value>
+        </option>
+        <value>CConfig</value>
+    </formElement>
+    <formElement>
         <type>entry</type>
         <label>Export File Name:</label>
         <property>LocationName</property>
         <required>1</required>
-        <documentation>The CICS Configuration Manager export file to import from</documentation>
+        <documentation>The name of the CICS Configuration that refers to the Configuration Manager export file to import from.</documentation>
     </formElement>
     <formElement>
         <type>radio</type>
@@ -70,58 +82,266 @@ documentation : Help text for the parameter
         <value>SelectionCriteria</value>
     </formElement>
     <formElement>
-        <type>select</type>
-        <label>Location Type:</label>
-        <property>LocationType</property>
-        <required>1</required>
-        <documentation>Location to import from: must be 'CICS Configuration'</documentation>
-        <option>
-            <name>CICS Configuration</name>
-            <value>CConfig</value>
-        </option>
-        <value>CConfig</value>
-    </formElement>
-    <formElement>
         <type>entry</type>
         <label>CPID:</label>
         <property>CPID</property>
         <required>0</required>
-        <documentation>Change package to import (optional, specify either this or Resource Name, Resource Type, and Resource Group)</documentation>
+        <documentation>The change package to import (optional, specify this if you have selected 'Selection Criteria' above).</documentation>
     </formElement> 
     <formElement>
         <type>entry</type>
         <label>Event ID:</label>
         <property>EventID</property>
         <required>0</required>
-        <documentation>Change package to import (optional, may be specified along with a CPID to select a particular migration for the specified chnage pacakage if it was migrated to the export file more than once)</documentation>
+        <documentation>Change package to import (optional, may be specified along with a CPID if you have selected 'Selection Criteria' above in order to select a particular migration for the specified change pacakage if it was migrated to the export file more than once).</documentation>
     </formElement> 
     <formElement>
         <type>entry</type>
         <label>Resource Name:</label>
         <property>ObjName</property>
         <required>0</required>
-        <documentation>Resource definition to import: resource name (optional, specify either this plus Resource Type and Resource Group, or CPID)</documentation>
+        <documentation>The resource name of the resource definition to import (optional, specify this if you have selected 'Object Criteria' above, a 'masked' value ending in the wildcard * can be used).</documentation>
     </formElement> 
     <formElement>
-        <type>entry</type>
-        <label>Resource Type:</label>
+        <type>select</type> 
+        <label>Object Type:</label>
         <property>ObjType</property>
-        <required>0</required>
-        <documentation>Resource definition to import: resource type (optional, specify either this plus Resource Name and Resource Group, or CPID)</documentation>
-    </formElement> 
+        <option>
+            <name>ApplDef</name>
+            <value>APPLDEF</value>
+        </option>
+        <option>
+            <name>AtomDef (AtomService for CSD)</name>
+            <value>ATOMDEF</value>
+        </option>
+        <option>
+            <name>BundDef (Bundle for CSD)</name>
+            <value>BUNDDEF</value>
+        </option>
+        <option>
+            <name>ConnDef (Connection for CSD)</name>
+            <value>CONNDEF</value>
+        </option>
+        <option>
+            <name>CSGLCGCG</name>
+            <value>CSGLCGCG</value>
+        </option>
+        <option>
+            <name>CSGLCGCS</name>
+            <value>CSGLCGCS</value>
+        </option>
+        <option>
+            <name>DB2CDef (DB2Conn for CSD)</name>
+            <value>DB2CDEF</value>
+        </option>
+        <option>
+            <name>DB2EDef (DB2Entry for CSD)</name>
+            <value>DB2EDEF</value>
+        </option>
+        <option>
+            <name>DB2TDef (DB2Tran for CSD)</name>
+            <value>DB2TDEF</value>
+        </option>
+        <option>
+            <name>DTrInGrp</name>
+            <value>DTRINGRP</value>
+        </option>
+        <option>
+            <name>EJCODef (CORBAServer for CSD)</name>
+            <value>EJCODEF</value>
+        </option>
+        <option>
+            <name>EJDJDef (DJAR for CSD)</name>
+            <value>EJDJDEF</value>
+        </option>
+        <option>
+            <name>DocDef (DocTemplate for CSD)</name>
+            <value>DOCDEF</value>
+        </option>
+        <option>
+            <name>EnQMDef (EnQModel for CSD)</name>
+            <value>ENQMDEF</value>
+        </option>
+        <option>
+            <name>FileDef (File for CSD)</name>
+            <value>FILEDEF</value>
+        </option>
+        <option>
+            <name>IPConDef (IPConn for CSD)</name>
+            <value>IPCONDEF</value>
+        </option>
+        <option>
+            <name>JrnMDef (JournalModel for CSD)</name>
+            <value>JRNMDEF</value>
+        </option>
+        <option>
+            <name>JVMSvDef (JVMServer for CSD)</name>
+            <value>JVMSVDEF</value>
+        </option>
+        <option>
+            <name>LibDef (Library for CSD)</name>
+            <value>LIBDEF</value>
+        </option>
+        <option>
+            <name>LnkSWSCG</name>
+            <value>LNKSWSCG</value>
+        </option>
+        <option>
+            <name>LnkSWSCS</name>
+            <value>LNKSWSCS</value>
+        </option>
+        <option>
+            <name>LSRDef (LSPPool for CSD)</name>
+            <value>LSRDEF</value>
+        </option>
+        <option>
+            <name>MapDef (MapSet for CSD)</name>
+            <value>MAPDEF</value>
+        </option>
+        <option>
+            <name>MQConDef (MQConn for CSD)</name>
+            <value>MQCONDEF</value>
+        </option>
+        <option>
+            <name>PrtnDef (PartitionSet for CSD)</name>
+            <value>PRTNDEF</value>
+        </option>
+        <option>
+            <name>PartDef (Partner for CSD)</name>
+            <value>PARTDEF</value>
+        </option>
+        <option>
+            <name>PerioDef</name>
+            <value>PERIODEF</value>
+        </option>
+        <option>
+            <name>PipeDef (Pipeline for CSD)</name>
+            <value>PIPEDEF</value>
+        </option>
+        <option>
+            <name>PlatDef</name>
+            <value>PLATDEF</value>
+        </option>
+        <option>
+            <name>ProcDef (ProcessType for CSD)</name>
+            <value>PROCDEF</value>
+        </option>
+        <option>
+            <name>ProfDef (Profile for CSD)</name>
+            <value>PROFDEF</value>
+        </option>
+        <option>
+            <name>ProgDef (Program for CSD)</name>
+            <value>PROGDEF</value>
+        </option>
+        <option>
+            <name>RAsInDsc</name>
+            <value>RASINDSC</value>
+        </option>
+        <option>
+            <name>RAsgnDef</name>
+            <value>RASGNDEF</value>
+        </option>
+        <!-- <option>
+            <name>ResGroup (Group for CSD)</name>
+            <value>RESGROUP</value>
+        </option> -->
+        <!-- <option>
+            <name>ResDesc (List for CSD)</name>
+            <value>RESDESC</value>
+        </option> -->
+        <option>
+            <name>ResInDsc</name>
+            <value>RESINDSC</value>
+        </option>
+        <option>
+            <name>RqMDef (RequestModel for CSD)</name>
+            <value>RQMDEF</value>
+        </option>
+        <option>
+            <name>SessDef (Session for CSD)</name>
+            <value>SESSDEF</value>
+        </option>
+        <option>
+            <name>SysLink</name>
+            <value>SYSLINK</value>
+        </option>
+        <option>
+            <name>TCPDef (TCPIPService for CSD)</name>
+            <value>TCPDEF</value>
+        </option>
+        <option>
+            <name>TDQDef (TDQueue for CSD)</name>
+            <value>TDQDEF</value>
+        </option>
+        <option>
+            <name>TermDef (Terminal for CSD)</name>
+            <value>TERMDEF</value>
+        </option>
+        <option>
+            <name>TranDef (Transaction for CSD)</name>
+            <value>TRANDEF</value>
+        </option>
+        <option>
+            <name>TranGrp</name>
+            <value>TRANGRP</value>
+        </option>
+        <option>
+            <name>TrnClDef (TranClass for CSD)</name>
+            <value>TRNCLDEF</value>
+        </option>
+        <option>
+            <name>TSMDef (TSModel for CSD)</name>
+            <value>TSMDEF</value>
+        </option>
+        <option>
+            <name>TypTmDef (TypeTerm for CSD)</name>
+            <value>TYPTMDEF</value>
+        </option>
+        <option>
+            <name>URIMpDef (UIRMap for CSD)</name>
+            <value>URIMPDEF</value>
+        </option>
+        <option>
+            <name>WenSvDef (WebService for CSD)</name>
+            <value>WEBSVDEF</value>
+        </option>
+        <option>
+            <name>WLMDef</name>
+            <value>WLMDEF</value>
+        </option>
+        <option>
+            <name>WLMGroup</name>
+            <value>WLMGROUP</value>
+        </option>
+        <option>
+            <name>WLMInGrp</name>
+            <value>WLMINGRP</value>
+        </option>
+        <option>
+            <name>WLMInSpc</name>
+            <value>WLMINSPC</value>
+        </option>
+        <option>
+            <name>WLMSpec</name>
+            <value>WLMSPEC</value>
+        </option>
+        <required>1</required>
+        <documentation>The resource type of the resource definition to import (optional, smay be specified along with a Resoure Name and Resource Type if you have selected 'Selection Criteria' above).</documentation>
+    </formElement>
     <formElement>
         <type>entry</type>
         <label>Resource Group:</label>
         <property>ObjGroup</property>
         <required>0</required>
-        <documentation>Resource definition to import: resource group (optional, specify either this plus Resource Name and Resource Type, or CPID)</documentation>
+        <documentation>The resource group of the resource definition to import (optional, smay be specified along with a Resoure Name and Resource Type if you have selected 'Selection Criteria' above, a 'masked' value ending in the wildcard * can be used).</documentation>
     </formElement>
     <formElement>
         <type>select</type>
         <label>Target Location Type:</label>
         <property>TargetLocationType</property>
         <required>1</required>
-        <documentation>Location type to import into</documentation>
+        <documentation>The type of the location to import into.</documentation>
         <option>
             <name>CICS Configuration</name>
             <value>CConfig</value>
@@ -140,7 +360,7 @@ documentation : Help text for the parameter
         <label>Target Location Name:</label>
         <property>TargetLocationName</property>
         <required>1</required>
-        <documentation>Location name to import into</documentation>
+        <documentation>The name of the location to import into.</documentation>
     </formElement>
     <formElement>
         <type>checkbox</type>
@@ -158,7 +378,7 @@ documentation : Help text for the parameter
         <label>Purge Imported Records:</label>
         <property>PurgeImportedRecords</property>
         <required>0</required>
-        <documentation>Purge imported records?</documentation>
+        <documentation>Specify whether to purge imported records?</documentation>
 	    <checkedValue>YES</checkedValue>
 	    <uncheckedValue>NO</uncheckedValue>
         <initiallyChecked>0</initiallyChecked>

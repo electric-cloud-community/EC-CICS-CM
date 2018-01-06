@@ -87,7 +87,7 @@ documentation : Help text for the parameter
         <required>1</required>
         <documentation>The type of the object to inquire the contents of.</documentation>
     </formElement>
-    <!-- #### TODO Can Journal objects have object criteria? If so, add (single set of) appropriate object criteria  -->
+    <!-- #### TODO Add Object Criteria: ObjType -- resource types, possible plus others, (ObjName AND ObjGroup) OR Scheme OR CPID -->
     <formElement>
         <type>entry</type>
         <label>Object Instance:</label>
