@@ -68,14 +68,6 @@ documentation : Help text for the parameter
         <label>Resource Type:</label>
         <property>ObjType</property>
         <option>
-            <name>*</name>
-            <value>*</value>
-        </option>
-        <option>
-            <name>All</name>
-            <value>ALL</value>
-        </option>
-        <option>
             <name>ApplDef</name>
             <value>APPLDEF</value>
         </option>
