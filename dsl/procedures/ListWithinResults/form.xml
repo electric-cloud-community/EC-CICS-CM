@@ -309,22 +309,15 @@ documentation : Help text for the parameter
         <type>entry</type>
         <label>Resource Name:</label>
         <property>ObjName</property>
-        <required>1</required> <!-- #### TODO Are wildcards allowed in this case? -->
+        <required>1</required> <!-- #### TODO wildcards are NOT allowed in this case!!! -->
         <documentation>The name of the resource to list within (a 'masked' value ending in the wildcard * can be used).</documentation>
     </formElement> 
     <formElement>
         <type>entry</type>
         <label>Resource Group:</label>
         <property>ObjGroup</property>
-        <required>0</required> <!-- #### TODO Are wildcards allowed in this case? -->
+        <required>1</required> <!-- #### TODO wildcards are NOT allowed in this case!!!  -->
         <documentation>The resource group to list within the resource from (a 'masked' value ending in the wildcard * can be used; required except for the resource types 'ResGroup (Group for CSD)' and 'ResDesc (List for CSD)', which cannot be in a resource group, or omit if a Resource Definition Version is supplied).</documentation>
-    </formElement>
-    <formElement> <!-- #### TODO Is this allowed? -->
-        <type>entry</type>
-        <label>Resource Definition Version:</label>
-        <property>ObjDefVer</property>
-        <required>0</required> <!-- #### TODO Are wildcards allowed in this case? -->
-        <documentation>The resource definition version number of the resource to list within (optional, can be specified instead of Resource Group if the Location Type is Context).</documentation>
     </formElement>
     <formElement>
         <type>textarea</type>
