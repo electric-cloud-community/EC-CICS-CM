@@ -51,6 +51,21 @@
         <documentation>The CICS CM version number (normally the same as the CICS version number).</documentation>
     </formElement>
     <formElement>
+        <type>select</type>
+        <label>EBCDIC Code Page:</label>
+        <property>codePage</property>
+        <required>1</required>
+        <option>
+            <name>037</name>
+            <value>037</value>
+        </option>
+        <option>
+            <name>1047</name>
+            <value>1047</value>
+        </option>
+        <documentation>The EBCDIC code page used by the CICS CM server (currently only the Latin-1-compatible code pages 037 and 1047 are supported -- the distinction between these affects only the characters '[', ']', 'Ý', '¨', '^', and '¬').</documentation>
+    </formElement>
+    <formElement>
         <type>entry</type>
         <label>Name of the connection:</label>
         <property>csdConnectionName</property>

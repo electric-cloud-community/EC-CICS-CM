@@ -50,8 +50,23 @@ if ($xml =~ m!<SOAP-ENV:Body>\s*<$ccVersion>\s*<$upperSoapMethodName>\s*<OUTPUTD
     $xml =~ s/\s+$//; # Trim any trailing whitespace (this should be faster than doing it above, since it avoids speculative matching)
 }
 
-# Apply EBCDIC -> ASCII XML decoding.
+# Apply EBCDIC -> ASCII XML decoding
 $xml =~ s/\%([0-9A-F][0-9A-F])/$asciiXml{$1}/egs;
+
+# Add an EBCDIC-hex -> ASCII converted copy for contents of INFO and INFO2 tags (unless that will produce control characters)
+my @tags = (
+    'INFO',
+    'INFO2'
+);
+for my $tag (@tags) {
+   while ($xml =~ m|<INFO>((?:[4-9A-F][0-9A-F]){1,8})</INFO>|) {
+       my $hex = $1;
+       my $asc = $hex;
+       $asc =~ s/([0-9A-F][0-9A-F])/\%$1/gs;        
+       $asc =~ s/\%([0-9A-F][0-9A-F])/$asciiXml{$1}/egs; # Apply EBCDIC -> ASCII XML decoding (unless that will produce control characters)
+       $xml =~ s/<INFO>$hex<\/INFO>/<INFO>$hex ('$asc' in hex EBCDIC)<\/INFO>/gs;
+   }
+}
 
 my $outputPropertyOrPropertySheet = $params{'outputProperty'};
 
@@ -343,13 +358,14 @@ my %reasonCodeMeaning = (
 sub makeReport {
     my ($tree) = @_;
     my $report = $params{'report'};
+        
     if (length($report) > 0) {
         my %columns;
         my $header = '<tr id="headerRow">';
         my $rows;
         
         # Parse $report
-        my @lines = split(/$/, $report); # Split into lines
+        my @lines = split(/\n/, $report); # Split into lines
         foreach my $line (@lines) {
             my @pieces = split(/=/, $line, 2); # Split at first = into name and title
             if (@pieces == 2) {
@@ -359,8 +375,9 @@ sub makeReport {
                 exit -1;
             }
         }
-        
-        # Create table header row
+        undef $report;
+
+        # Create table header row #### TODO This should preserve column order
         foreach my $key (keys(%columns)) {
             $header .= '<th>' . $columns{$key} . '</th>';
         }
@@ -371,24 +388,24 @@ sub makeReport {
             my @list = @{$tree->{'LISTELEMENT'}};
             for (my $i = 0; $i < scalar(@list); $i++) {
                 $rows .= '<tr id="tableRow">';
-                foreach my $key (keys(%columns)) {
-                    $rows .= '<td>' . $list[$i]{$key} . '</td>';
+                foreach my $key (keys(%columns)) { #### TODO This should preserve column order
+                    $rows .= '<td>' . $list[$i]{$key} . '</td>'; #### TODO Not working?
                 }
                 $rows .= "</tr>\n";
             }
         } else {
             # Create a single table row
             $rows .= '<tr id="tableRow">';
-            foreach my $key (keys(%columns)) {
-                $rows .= '<td>' . $tree->{$key} . '</td>';
+            foreach my $key (keys(%columns)) { #### TODO This should preserve column order
+                $rows .= '<td>' . $tree->{$key} . '</td>'; #### TODO Not working?
             }
             $rows .= "</tr>\n";
         }
         
-        my $report = << 'EOTEMPLATE';
-$[/javascript myProcedure.project.ec_report_html_template]'
+        $report = << 'EOTEMPLATE';
+$[/javascript '' + myProject.ec_report_html_template]
 EOTEMPLATE
-        
+
         $report =~ s/<!-- HEADER -->/$header/g;
         $report =~ s/<!-- ROWS -->/$rows/g;
         
@@ -407,6 +424,8 @@ EOTEMPLATE
         $report =~ s/<!-- TASK_NO -->/$tree->{'TASKNO'}/g;
         $report =~ s/<!-- LIST_COUNT -->/$tree->{'LISTCOUNT'}/g;
         
+        print '$report =' . Dumper($report); #### TODO Remove debug code
+
         # Create the actual report
         mkdir 'artifacts' or die "Cannot create directory: $!";
         my $randomPostfix = sprintf('%8X', int(rand(2**32)));
@@ -416,8 +435,13 @@ EOTEMPLATE
         print $fh $report;
         close $fh;
         
+        print '$reportFilename =' . Dumper($reportFilename); #### TODO Remove debug code
+        print '$name =' . Dumper($name); #### TODO Remove debug code
+        
         my $job_step_id = $ENV{COMMANDER_JOBSTEPID};
         my $link = "/commander/jobSteps/$job_step_id/$reportFilename";
+
+        print '$link =' . Dumper($link); #### TODO Remove debug code
         
         eval {$ec->createProperty("/myJob/report-urls/$name", $link)};
         if ($@) {
@@ -488,16 +512,16 @@ my $reasonCodeShortMeaning = $reasonCodeMeaning{$reasonCodeShort};
 if ($returnCode ne '00000000') {
 
     # Return code '00000004' with certain reason codes should be treated as warnings rather than errors (or possibly even ignored).
-    if ($returnCode eq '00000004') { #### TODO Check for lack of strict mode
+    if ($returnCode eq '00000004') { ### TODO LATER Implement strict mode -- are there any warnings that SHOULDN'T be treated as errors in strict mode (e.g. 0024, 009D)?
         if ($reasonCodeShort eq  '00AC') { 
             if ($soapMethodName eq 'Ready') {
                 print "WARNING: Readied a change package that was already ready! ($reasonCodeShortMeaning)\n";
                 exit 0;
             }
-        } elsif ($reasonCodeShort eq  '0024') { #### TODO Confirm there is no way to check whether this is due to a "new Group created" or "Group deleted" information message in the MSGUSR output.
+        } elsif ($reasonCodeShort eq  '0024') { ### TODO LATER Check whether this is due to a "new Group created" or "Group deleted" information message in the MSGUSR output.
             print "WARNING: Reason code 0024 -- probably you created a new group, or deleted an existing group. ($reasonCodeShortMeaning)\n";
             exit 0;
-        } elsif ($reasonCodeShort eq  '009D') { #### TODO Confirm there is no way to check whether this is due to a "new Group created" or "Group deleted" information message in the MSGUSR output.
+        } elsif ($reasonCodeShort eq  '009D') { ### TODO LATER Check whether this is due to a "new Group created" or "Group deleted" information message in the MSGUSR output.
             print "WARNING: Reason code 009D -- probably you created a new group, or deleted an existing group. ($reasonCodeShortMeaning)\n";
             exit 0;
         } elsif ($reasonCodeShort eq  '0003') {
@@ -549,8 +573,7 @@ if ($returnCode ne '00000000') {
             print "WARNING: Reason code $reasonCode -- nothing was removed ($reasonCodeShortMeaning)\n";
             exit 0;
         } elsif ($reasonCodeShort eq  '00AA') {
-            #### TODO return code 00000004 with a reason code ending in 00AA indicates that APPROVE? or MIGRATE> query returned 0 objects
-            print "WARNING: Reason code $reasonCode ($reasonCodeShortMeaning)\n";
+            print "WARNING: Reason code $reasonCode -- an APPROVE? or MIGRATE? query returned no objects ($reasonCodeShortMeaning)\n";
             exit 0;
         } elsif ($reasonCodeShort eq  '00B0') {
             print "WARNING: Reason code $reasonCode -- nothing was imported ($reasonCodeShortMeaning)\n";
@@ -568,8 +591,6 @@ if ($returnCode ne '00000000') {
     }
 
     print "ERROR: Result with non-zero return code '$returnCode' ($returnCodeMeaning{$returnCode}) and reason code '$reasonCode' ($reasonCodeMeaning{$reasonCodeShort}):\n" . Dumper($result);
-    
-    #### TODO Add EBCDIC-hex -> ASCII conversion for INFO and INFO2 if present (both at top level and under DIAGDATA)
     
     exit -1;
 }

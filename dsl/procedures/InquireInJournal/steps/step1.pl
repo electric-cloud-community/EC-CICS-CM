@@ -8,7 +8,11 @@ my $soapMethodName = 'Inquire';
 
 # List of the names of optional paramters
 my @optionalParams = (
-    'report'
+    'report',
+    'ObjName',
+    'ObjGroup',
+    'CPID',
+    'Scheme'
 );
 
 $[/myPlugin/project/ec_perl_metadata]
@@ -25,6 +29,10 @@ my @data =
         )),
         SOAP::Data->name('ObjectCriteria' => \SOAP::Data->value(
             SoapData('ObjType'),
+            SoapDataOptional('ObjName'),
+            SoapDataOptional('ObjGroup'),
+            SoapDataOptional('CPID'),
+            SoapDataOptional('Scheme'),
             SoapData('ObjectInstance')
         ))
     ));

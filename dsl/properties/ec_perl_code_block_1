@@ -48,6 +48,10 @@ my $ccVersion = $ec->getProperty("/plugins/EC-CICS-CM/project/ec_plugin_cfgs/$pa
 my $credentialName = $ec->getProperty("/plugins/EC-CICS-CM/project/ec_plugin_cfgs/$params{'configurationName'}/credential")
                         ->findnodes("//value")
                         ->string_value();
+my $codePage = $ec->getProperty("/plugins/EC-CICS-CM/project/ec_plugin_cfgs/$params{'configurationName'}/codePage")
+                        ->findnodes("//value")
+                        ->string_value();
+my $cp037 = ($codePage eq '037');                        
 my $plugin = $ec->getPlugin("EC-CICS-CM");
 my $projectName = $plugin->find("//projectName");
 my $fullCredential = $ec->getFullCredential("/projects/$projectName/credentials/$credentialName", {value => "password"});
@@ -153,7 +157,7 @@ my %ebcdic = (
     '*' => '5C',
     ')' => '5D',
     ';' => '5E',
-    '¬' => '5F',
+    '¬' => ($cp037 ? '5F' : 'B0'),
     '-' => '60',
     '/' => '61',
     'Â' => '62',
@@ -231,10 +235,10 @@ my %ebcdic = (
     '¡' => 'AA',
     '¿' => 'AB',
     'Ð' => 'AC',
-    '[' => 'AD',
+    'Ý' => ($cp037 ? 'AD' : 'BA'),
     'Þ' => 'AE',
     '®' => 'AF',
-    '^' => 'B0',
+    '^' => ($cp037 ? 'B0' : '5F'),
     '£' => 'B1',
     '¥' => 'B2',
     '·' => 'B3',
@@ -244,10 +248,10 @@ my %ebcdic = (
     '¼' => 'B7',
     '½' => 'B8',
     '¾' => 'B9',
-    '[' => 'BA',
-    ']' => 'BB',
+    '[' => ($cp037 ? 'BA' : 'AD'),
+    ']' => ($cp037 ? 'BB' : 'BD'),
     '¯' => 'BC',
-    '¨' => 'BD',
+    '¨' => ($cp037 ? 'BD' : 'BB'),
     '´' => 'BE',
     '×' => 'BF',
     '{' => 'C0',
@@ -377,7 +381,7 @@ sub makeRestrictionCriteria {
         # First go through and collect all the counts
         my $restrictionCount = 0;
         my %listCount;
-        my @lines = split(/$/, $restrictionCriteria); # Split into lines
+        my @lines = split(/\n/, $restrictionCriteria); # Split into lines
         foreach my $line (@lines) {
             $listCount{$line} = 0;
             my @parts = split(/\s+/, $line); # Split line on whitespace
@@ -501,7 +505,7 @@ sub createObjectCriteria {
             print "ERROR: Serialized Object Criteria did not contain any <ListElement> tags!\n";
             exit -1;
         }    
-        #### TODO NICE-TO-HAVE Do further checks on $objectCriteria XML content against $wrapper, $params, $wrapSingleElement
+        ### TODO LATER NICE-TO-HAVE Do further checks on $objectCriteria XML content against $wrapper, $params, $wrapSingleElement
         
         @ObjectCriteria = SOAP::Data->name('ObjectCriteria' => \SOAP::Data->value(
             @configValue,
@@ -520,12 +524,12 @@ sub createObjectCriteria {
 sub createObjectData {
     my ($objectData, $xmlValuesAllowed) = @_;
     my @ObjectData;
-    if (!(length($objectData) > 0)) { #### TODO CODE-SMELL Handle case where this can be optional here, and deal with SOAP XML hackery?
+    if (!(length($objectData) > 0)) { ### TODO LATER CODE-SMELL Handle case where this can be optional here, and deal with SOAP XML hackery?
         print "ERROR: Object Data Name-Value Pairs missing!\n";
         exit -1;
     } else {
         # Build @ObjectData
-        my @lines = split(/$/, $objectData); # Split into lines
+        my @lines = split(/\n/, $objectData); # Split into lines
         foreach my $line (@lines) {
             my @pieces = split(/=/, $line, 2); # Split at first = into name and value
             if (@pieces == 2) {

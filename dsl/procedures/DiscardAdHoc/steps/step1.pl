@@ -35,10 +35,10 @@ if (0 && $params{'ObjectCriteria'}.length == 0) { # The following clause's behav
     ));
 } else {
 
-    #### TODO Should this use the shared code method for building ObjectCriteria?
+    ### TODO LATER Should this use the shared code method for building ObjectCriteria?
     # Combine ObjName, ObjGroup, ObjType, and ObjectCriteria into @ObjectCriteria
     my $objectCriteria = $params{'ObjectCriteria'};
-    #### TODO Confirm $objectCriteria is a valid XML fragment matching the expected schema
+    ### TODO LATER Confirm $objectCriteria is a valid XML fragment matching the expected schema
     my @matches = $objectCriteria =~ m/<ObjectData>/si;
     my $listCount = 1 + @matches;
     @ObjectCriteria = SOAP::Data->name('ObjectCriteria' => \SOAP::Data->value(

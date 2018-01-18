@@ -22,12 +22,6 @@ $[/myPlugin/project/ec_perl_code_block_1]
 # Procedure-specific Code
 # -----------------------
 
-# Validate wildcards are at end #### TODO Are wildcards allowed here?
-if (($params{'ObjName'} =~ /\*.+$/) || ($params{'ObjGroup'} =~ /\*.+$/)) {
-    print "ERROR: The wildcard character '*' must only occur at the end of the Object Name or Object Group!\n";
-    exit -1;
-}
-
 # Validate Object Group against Object Type
 if(($params{'ObjType'} eq 'RESGROUP') || ($params{'ObjType'} eq 'RESDESC')) {
     if (length($params{'ObjGroup'}) > 0) {

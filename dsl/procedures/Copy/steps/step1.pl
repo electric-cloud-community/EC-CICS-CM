@@ -33,7 +33,7 @@ if (($params{'LocationName'} eq $params{'TargetLocationName'}) && ($params{'Loca
 
 # Build @ObjectCriteria
 my @mParams = ('ObjName', 'ObjGroup', 'ObjType');
-my @ObjectCriteria = createObjectCriteria(\@mParams, 0, "", \%params); #### TODO Should this include ListCount if it's equal to 1?
+my @ObjectCriteria = createObjectCriteria(\@mParams, 0, "", \%params, 1); # 1 to include <ListCount> and <ListElement> for single-element list
 
 my @data =
     SOAP::Data->name($soapMethodName => \SOAP::Data->value(

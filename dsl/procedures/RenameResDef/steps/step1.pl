@@ -46,7 +46,7 @@ if (length($params{'InputData'}) == 0) {
 } else {
     # Build @InputData
     my $countID = 0;
-    my @parts = split(/\s+/s, $params{'InputData'}); # Split at whitesapece (including line breaks)
+    my @parts = split(/\s+/s, $params{'InputData'}); # Split at whitespace (including line breaks)
     push(@InputData, SOAP::Data->name('TargetCount' => 1 + scalar(@parts)));
     my @targetElement = SOAP::Data->name('TargetElement' => \SOAP::Data->value(
         SOAP::Data->name('TargetName' => $params{'TargetName'}),

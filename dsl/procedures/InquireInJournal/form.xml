@@ -87,7 +87,34 @@ documentation : Help text for the parameter
         <required>1</required>
         <documentation>The type of the object to inquire the contents of.</documentation>
     </formElement>
-    <!-- #### TODO Add Object Criteria: ObjType - resource types, possible plus others, (ObjName AND ObjGroup) OR Scheme OR CPID -->
+    <formElement>
+        <type>entry</type>
+        <label>Object Name:</label>
+        <property>ObjName</property>
+        <required>0</required>
+        <documentation>The name of the object to inquire the contents of.</documentation>
+    </formElement> 
+    <formElement>
+        <type>entry</type>
+        <label>Object Group:</label>
+        <property>ObjGroup</property>
+        <required>0</required>
+        <documentation>The object group of the object to inquire the contents of.</documentation>
+    </formElement>
+    <formElement>
+        <type>entry</type>
+        <label>Change Package ID:</label>
+        <property>CPID</property>
+        <required>0</required>
+        <documentation>The change package of the object to inquire the contents of.</documentation>
+    </formElement>
+    <formElement>
+        <type>entry</type>
+        <label>Migration Scheme:</label>
+        <property>Scheme</property>
+        <required>0</required>
+        <documentation>The migration scheme of the object to inquire the contents of.</documentation>
+    </formElement>    
     <formElement>
         <type>entry</type>
         <label>Object Instance:</label>
