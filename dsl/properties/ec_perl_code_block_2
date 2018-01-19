@@ -360,16 +360,34 @@ sub makeReport {
     my $report = $params{'report'};
         
     if (length($report) > 0) {
-        my %columns;
         my $header = '<tr id="headerRow">';
         my $rows;
         
         # Parse $report
+        my $i = 0;
+        my @keys;
+        my %columns;
         my @lines = split(/\n/, $report); # Split into lines
         foreach my $line (@lines) {
             my @pieces = split(/=/, $line, 2); # Split at first = into name and title
             if (@pieces == 2) {
-                $columns{uc($pieces[0])} = $pieces[1];
+                my $key = uc($pieces[0]);
+                
+                # Add default paths depending on method
+                if ($soapMethodName eq 'List') {
+                    if (substr($key, 0, 11) ne 'OBJECTDATA/') {
+                        $key = 'OBJECTDATA/' . $key;
+                    }
+                } elsif ($soapMethodName eq 'List') {
+                    if (($key ne 'RETURNCODE') && ($key ne 'REASONCODE') && ($key ne 'TASKNO') && ($key ne 'INTEGRITYTOKEN')) {
+                        my $path = uc($params{'ObjType'}) . '/OBJECTDATA/';
+                        if (substr($key, $path, length($path)) ne $path) {
+                            $key = $path . $key;
+                        }                        
+                    }
+                }
+                $keys[$i++] = $key;
+                $columns{$key} = $pieces[1];
             } else {
                 print "ERROR: Unable to parse Report Name-Title pairs at '$line'!\n";
                 exit -1;
@@ -377,8 +395,8 @@ sub makeReport {
         }
         undef $report;
 
-        # Create table header row #### TODO This should preserve column order
-        foreach my $key (keys(%columns)) {
+        # Create table header row
+        foreach my $key (@keys) {
             $header .= '<th>' . $columns{$key} . '</th>';
         }
         $header .= "</tr>\n";
@@ -388,16 +406,27 @@ sub makeReport {
             my @list = @{$tree->{'LISTELEMENT'}};
             for (my $i = 0; $i < scalar(@list); $i++) {
                 $rows .= '<tr id="tableRow">';
-                foreach my $key (keys(%columns)) { #### TODO This should preserve column order
-                    $rows .= '<td>' . $list[$i]{$key} . '</td>'; #### TODO Not working?
+                foreach my $key (@keys) {
+                    my @path = split(/\//, $key);
+                    my $tag = shift @path;
+                    my $here = $list[$i]{$tag};
+                    foreach $tag (@path) {
+                        $here = $here->{$tag};
+                    }
+                    $rows .= '<td>' . $here . '</td>';
                 }
                 $rows .= "</tr>\n";
             }
         } else {
             # Create a single table row
             $rows .= '<tr id="tableRow">';
-            foreach my $key (keys(%columns)) { #### TODO This should preserve column order
-                $rows .= '<td>' . $tree->{$key} . '</td>'; #### TODO Not working?
+            foreach my $key (@keys) {
+                my $here = $tree;
+                my @path = split(/\//, $key);
+                foreach my $tag (@path) {
+                    $here = $here->{$tag};
+                }
+                $rows .= '<td>' . $here . '</td>';
             }
             $rows .= "</tr>\n";
         }
@@ -422,45 +451,29 @@ EOTEMPLATE
         $reasonCodeShortMeaning =~ s/>/&gt;/g;        
         $report =~ s/<!-- REASON_CODE_SHORT_MEANING -->/$reasonCodeShortMeaning/g;
         $report =~ s/<!-- TASK_NO -->/$tree->{'TASKNO'}/g;
+        $report =~ s/<!-- INTEGRITY_TOKEN -->/$tree->{'INTEGRITYTOKEN'}/g;
         $report =~ s/<!-- LIST_COUNT -->/$tree->{'LISTCOUNT'}/g;
-        
-        print '$report =' . Dumper($report); #### TODO Remove debug code
+        $report =~ s/<!-- OBJECT_KEYS_COUNT -->/$tree->{'OBJECTKEYSCOUNT'}/g;
+        $report =~ s/<!-- FILTER_DATE_COUNT -->/$tree->{'FILTERDATECOUNT'}/g;
+        $report =~ s/<!-- FILTER_CRITERIA_COUNT -->/$tree->{'FILTERCRITERIACOUNT'}/g;
+        $report =~ s/<!-- RESULT_COUNT -->/$tree->{'RESULTCOUNT'}/g;
 
         # Create the actual report
         mkdir 'artifacts' or die "Cannot create directory: $!";
-        my $randomPostfix = sprintf('%8X', int(rand(2**32)));
-        my $name = $soapMethodName . "_Report";
-        my $reportFilename = $name . "_$randomPostfix.html";
+        my $name = $soapMethodName . ' Report';
+        my $reportFilename = $soapMethodName . '_Report' . sprintf('_%8X', int(rand(2**32)) + int(rand(2**16))) . '.html';
+        my $job_step_id = $ENV{COMMANDER_JOBSTEPID};
+        my $link = "/commander/jobSteps/$job_step_id/$reportFilename";
         open my $fh, ">artifacts/$reportFilename" or die "Cannot open $reportFilename: $!";
         print $fh $report;
         close $fh;
+        $ec->setProperty("/myJob/report-urls/$name", $link);
         
-        print '$reportFilename =' . Dumper($reportFilename); #### TODO Remove debug code
-        print '$name =' . Dumper($name); #### TODO Remove debug code
-        
-        my $job_step_id = $ENV{COMMANDER_JOBSTEPID};
-        my $link = "/commander/jobSteps/$job_step_id/$reportFilename";
-
-        print '$link =' . Dumper($link); #### TODO Remove debug code
-        
-        eval {$ec->createProperty("/myJob/report-urls/$name", $link)};
-        if ($@) {
-            # Report name collision, move to ugly form
-            $ec->setProperty("/myJob/report-urls/$name" . "_$randomPostfix", $link)
-        }
         eval {
-            $ec->createProperty("/myPipelineStageRuntime/ec_summary/Results from",
+            $ec->setProperty("/myPipelineStageRuntime/ec_summary/Results from",
             qq{<html><a href="$link" target="_blank">$name</a></html>}
             );
         };
-        if ($@) {
-            # Possible report name collision, move to ugly form
-            eval {
-                $ec->setProperty("/myPipelineStageRuntime/ec_summary/Results from",
-                qq{<html><a href="$link" target="_blank">$name/_$randomPostfix</a></html>}
-                );
-            };
-        }
     }
 }
 

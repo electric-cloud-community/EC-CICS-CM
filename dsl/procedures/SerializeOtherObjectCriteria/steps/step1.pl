@@ -48,6 +48,14 @@ if ($procedure ne 'Recover') {
     }
 }
 
+# ObjDefVer isn't allowed for most procedures
+if (($procedure ne 'AddToResGrp') && ($procedure ne 'RemoveFromResGrp') && ($procedure ne 'DeleteFromOther') && ($procedure ne 'ListWithinResults')) {
+    if (length($params{'ObjDefVer'}) > 0) {
+        print "ERROR: You cannot specify a Resource Definition Version when building Object Criteria for use with the $procedure procedure!\n";
+        exit -1;
+    }
+}
+
 # Validate Object Type against procedure
 if (($procedure eq 'AddResDefToChgPkg') || ($procedure eq 'RemoveDefFromChgPkg')) {
     if ($params{'ObjType'} eq 'PLATDEF') {
@@ -60,6 +68,14 @@ if (($procedure eq 'AddResDefToChgPkg') || ($procedure eq 'RemoveDefFromChgPkg')
         print "ERROR: The Resource Type 'ResDesc (List for CSD)' cannot be used when building Object Criteria for use with the $procedure procedure!\n";
         exit -1;
     }
+} elsif (($procedure eq 'AddToResDesc') || ($procedure eq 'RemoveFromResDesc')) {
+    if ($params{'ObjType'} ne 'RESGROUP') {
+        print "ERROR: The only Resource Type value allowed is 'ResGroup (Group for CSD)' when building Object Criteria for use with the $procedure procedure!\n";
+        exit -1;
+    } elsif (length($params{'ObjGroup'}) > 0) {
+        print "ERROR: You cannot specify a Resource Group when building Object Criteria for use with the $procedure procedure!\n";
+        exit -1;
+    }
 } elsif (($procedure eq 'AddToResGrp') || ($procedure eq 'RemoveFromResGrp') || ($procedure eq 'RenameResDef')) {
     if ($params{'ObjType'} eq 'RESGROUP') {
         print "ERROR: The Resource Type 'ResGroup (Group for CSD)' cannot be used when building Object Criteria for use with the $procedure procedure!\n";
@@ -69,17 +85,11 @@ if (($procedure eq 'AddResDefToChgPkg') || ($procedure eq 'RemoveDefFromChgPkg')
         exit -1;
     }
 } elsif ($procedure eq 'Copy') {  
-    #### TODO Find out if this is correct
     if ($params{'ObjType'} eq 'RESGROUP') {
         print "ERROR: The Resource Type 'ResGroup (Group for CSD)' cannot be used when building Object Criteria for use with the $procedure procedure!\n";
         exit -1;
     } elsif ($params{'ObjType'} eq 'RESDESC') {
         print "ERROR: The Resource Type 'ResDesc (List for CSD)' cannot be used when building Object Criteria for use with the $procedure procedure!\n";
-        exit -1;
-    }
-} elsif (($procedure eq 'AddToResDesc') || ($procedure eq 'RemoveFromResDesc')) {
-    if ($params{'ObjType'} ne 'RESGROUP') {
-        print "ERROR: The only Resource Type value allowed is 'ResGroup (Group for CSD)' when building Object Criteria for use with the $procedure procedure!\n";
         exit -1;
     }
 } elsif ($procedure eq 'NewcopyAdHoc') {
@@ -88,9 +98,6 @@ if (($procedure eq 'AddResDefToChgPkg') || ($procedure eq 'RemoveDefFromChgPkg')
         exit -1;
     }
 }
-
-#### TODO Add procedure-specific validation, some inside if ($procedure ne ...) and some in a big switch dependant on $procedure
-#### TODO Search all the candidate procedures for procedure-specific validation
 
 my %tagName = (
     'AddResDefToChgPkg' => 'KeyA',

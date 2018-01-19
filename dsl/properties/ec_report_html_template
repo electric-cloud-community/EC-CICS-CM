@@ -1,12 +1,25 @@
+<!DOCTYPE html>
 <html>
-  <head>EC-CICS-CM <!-- SOAP_METHOD --> Report</head>
+  <head>
+    <title>EC-CICS-CM <!-- SOAP_METHOD --> Report</title>
+    <style>
+      table, th, td {
+        border: 1px solid black;
+        padding: 4px;
+        text-align: left;
+      }
+    </style>
+  </head>
   <body>
     <h1>EC-CICS-CM <!-- SOAP_METHOD --> Report</h1>
     Return Code: <!-- RETURN_CODE --> (<!-- RETURN_CODE_MEANING -->)<br>
     Reason Code: <!-- REASON_CODE_SHORT --> (<!-- REASON_CODE_SHORT_MEANING -->)<br>
-    <table>
-      <!-- HEADER -->
-      <!-- ROWS -->
-    </table>
+    <br>
+    <div style="overflow-x:auto;">
+      <table style="border-collapse: collapse;">
+        <!-- HEADER -->
+        <!-- ROWS -->
+      </table>
+     </div>
   </body>
 </html>

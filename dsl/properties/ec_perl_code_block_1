@@ -498,7 +498,7 @@ sub createObjectCriteria {
     } else {
         my $objectCriteria = $params{'ObjectCriteria'};
         
-        validateXML($objectCriteria);
+        validateXML('<LIST>' . $objectCriteria . '</LIST>');
         my @matches = $objectCriteria =~ m/<ListElement\s*>/si;
         my $listCount = 1 + @matches;
         if ($listCount <= 1) {
