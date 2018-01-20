@@ -497,15 +497,15 @@ sub createObjectCriteria {
         }
     } else {
         my $objectCriteria = $params{'ObjectCriteria'};
-        
         validateXML('<LIST>' . $objectCriteria . '</LIST>');
-        my @matches = $objectCriteria =~ m/<ListElement\s*>/si;
+        my @matches = ( $objectCriteria =~ m/(<\/ListElement>)/gsi );
         my $listCount = 1 + @matches;
         if ($listCount <= 1) {
             print "ERROR: Serialized Object Criteria did not contain any <ListElement> tags!\n";
             exit -1;
-        }    
-        ### TODO LATER NICE-TO-HAVE Do further checks on $objectCriteria XML content against $wrapper, $params, $wrapSingleElement
+        }
+        
+        ### TODO LATER NICE-TO-HAVE Do further checks on $objectCriteria XML content against $wrapper, $params, $wrapSingleElement, $soapMethodName etc.
         
         @ObjectCriteria = SOAP::Data->name('ObjectCriteria' => \SOAP::Data->value(
             @configValue,

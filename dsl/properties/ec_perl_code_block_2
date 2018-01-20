@@ -78,7 +78,7 @@ sub walkXMLSimpleTree {
     
     if (ref $tree eq ref []) {
         # Iterate over array entries
-        for (my $i = 0; $i < length(@{$tree}); $i++) {
+        for (my $i = 0; $i < scalar(@{$tree}); $i++) {
             my $newPath = $path . '_' . $i;
             walkXMLSimpleTree(\($tree->[$i]), $newPath);
         }
