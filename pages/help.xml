@@ -39,7 +39,7 @@
                 <p>Here are the EC-CICS-CM procedures, grouped according to their purpose:</p>
                 <ul>
                     <li>
-                        <p>Manipulating objects and their data:</p>
+                        <p><b>Manipulating objects and their data:</b></p>
                         <p>
                             <strong>Create*</strong>
                             Create a resource definition (<a href="#CreateInOther">CreateInOther</a>) or a CICS
@@ -81,7 +81,7 @@
                         </p>
                     </li>
                     <li>
-                        <p>Associating objects with other objects:</p>
+                        <p><b>Associating objects with other objects:</b></p>
                         <p>
                             <strong>Add*</strong>
                             Add objects to a container object, such as a change package (<a href="#AddResDefToChgPkg">
@@ -101,7 +101,7 @@
                         </p>
                     </li>
                     <li>
-                        <p>Retrieving object information:</p>
+                        <p><b>Retrieving object information:</b></p>
                         <p>
                             <strong>Inquire*</strong>
                             Return all the fields for a single resource definition (<a href="#InquireInOther">
@@ -121,7 +121,7 @@
                         </p>
                     </li>
                     <li>
-                        <p>Packaging changes to resource definitions:</p>
+                        <p><b>Packaging changes to resource definitions:</b></p>
                         <p>
                             <strong>
                                 <a href="#Ready">Ready</a>
@@ -164,7 +164,7 @@
                         </p>
                     </li>
                     <li>
-                        <p>Altering in-memory images of resource definitions in active CICS regions:</p>
+                        <p><b>Altering in-memory images of resource definitions in active CICS regions:</b></p>
                         <p>
                             <strong>Discard*</strong>
                             Discard the in-memory image of resource definitions from active CICS regions (<a
@@ -189,7 +189,7 @@
                         </p>
                     </li>
                     <li>
-                        <p>Importing resource definitions from an export file:</p>
+                        <p><b>Importing resource definitions from an export file:</b></p>
                         <p>
                             <strong>
                                 <a href="#Import">Import</a>
@@ -201,7 +201,7 @@
                         </p>
                     </li>
                     <li>
-                        <p>Recovering historical versions of resource definitions from the journal:</p>
+                        <p><b>Recovering historical versions of resource definitions from the journal:</b></p>
                         <p>
                             <strong>
                                 <a href="#Recover">Recover</a>
@@ -280,6 +280,11 @@
                             <tr>
                                 <td class="required">CICS CM Version</td>
                                 <td>The CICS CM version number (normally the same as the CICS version number).</td>
+                            </tr>
+
+                            <tr>
+                                <td class="required">EBCDIC Code Page</td>
+                                <td>The EBCDIC code page used by the CICS CM server (currently only the Latin-1-compatible code pages 037 and 1047 are supported -- the distinction between these affects only the characters '[', ']', '&#221;', '&#168;', '^', and '&#172;').</td>
                             </tr>
 
                             <tr>
