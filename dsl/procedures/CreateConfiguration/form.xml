@@ -63,7 +63,7 @@
             <name>1047</name>
             <value>1047</value>
         </option>
-        <documentation>The EBCDIC code page used by the CICS CM server (currently only the Latin-1-compatible code pages 037 and 1047 are supported -- the distinction between these affects only the characters '[', ']', 'Ý', '¨', '^', and '¬').</documentation>
+        <documentation>The EBCDIC code page used by the CICS CM server (currently only the Latin-1-compatible code pages 037 and 1047 are supported -- the distinction between these affects only the characters '[', ']', '&#x00AC;', '&#x00DD;', '^', and '&#x00A8;').</documentation>
     </formElement>
     <formElement>
         <type>entry</type>
