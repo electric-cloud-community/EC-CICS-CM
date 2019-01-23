@@ -19,7 +19,7 @@
          <p>
             Revised on
             <!-- REVISION DATE BEGIN -->
-            December 13, 2017
+            January 23, 2019
             <!-- REVISION DATE END -->
          </p>
          <p>
@@ -2773,6 +2773,11 @@
          <!-- PROCEDURES END -->
       </div>
       <!-- RELEASE NOTES BEGIN -->
+      <h1 id="rns">Release Notes</h1>
+      <h2>@PLUGIN_KEY@-1.0.2</h2>
+      <ul>
+          <li>The plugin icon has been updated.</li>
+      </ul>
       <!-- RELEASE NOTES END -->
    </body>
 </html>
